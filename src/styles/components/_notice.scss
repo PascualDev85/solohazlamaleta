@@ -1,0 +1,27 @@
+.notice {
+  padding: var(--space-md);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  &--muted {
+    color: var(--color-text-muted);
+    font-size: var(--step--1);
+    margin-block: var(--space-md);
+  }
+
+  // The draft warning has to be impossible to skim past: the project's whole
+  // claim is first-hand experience, so a half-written guide says so loudly.
+  &--loud {
+    background: var(--color-accent-quiet);
+    color: var(--color-text);
+    margin-block: var(--space-md);
+
+    strong {
+      color: var(--color-accent);
+    }
+  }
+}

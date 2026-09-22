@@ -1,0 +1,44 @@
+@use "sass:map";
+@use "variables" as *;
+
+/// Media query from the breakpoint map. Fails loudly on a typo rather than
+/// emitting a rule that silently never matches.
+@mixin from($name) {
+  @if not map.has-key($breakpoints, $name) {
+    @error "Unknown breakpoint '#{$name}'. Available: #{map.keys($breakpoints)}.";
+  }
+
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+@mixin up-to($name) {
+  @if not map.has-key($breakpoints, $name) {
+    @error "Unknown breakpoint '#{$name}'. Available: #{map.keys($breakpoints)}.";
+  }
+
+  @media (max-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+/// Hidden visually, still announced by screen readers.
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/// Constrained, gutter-padded content column.
+@mixin content-column {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
