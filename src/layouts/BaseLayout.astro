@@ -1,5 +1,5 @@
 ---
-import '../styles/base.css';
+import '../styles/main.scss';
 
 interface Props {
   title: string;
@@ -58,33 +58,5 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
       <p>Yo planifico el viaje. Tú solo haz la maleta.</p>
     </footer>
 
-    <style>
-      .site-header {
-        padding-block: var(--space-md);
-        border-bottom: 1px solid var(--color-border);
-        margin-bottom: var(--space-lg);
-      }
-
-      .brand {
-        font-weight: 700;
-        text-decoration: none;
-        color: var(--color-text);
-      }
-
-      .site-footer {
-        margin-top: var(--space-xl);
-        padding-block: var(--space-lg);
-        border-top: 1px solid var(--color-border);
-        color: var(--color-text-muted);
-        font-size: var(--step--1);
-      }
-
-      .site-footer nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-md);
-        margin-bottom: var(--space-sm);
-      }
-    </style>
   </body>
 </html>

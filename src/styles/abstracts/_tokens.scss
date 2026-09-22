@@ -1,0 +1,66 @@
+// Design tokens.
+//
+// Emitted as CSS custom properties rather than Sass variables so they can be
+// overridden at runtime (dark mode, a future theme switcher) without a
+// rebuild. Sass variables cannot cross that boundary.
+//
+// Colours are placeholders until the brand palette is defined.
+
+:root {
+  // Colour
+  --color-bg: #fffdf9;
+  --color-surface: #f4f1ea;
+  --color-text: #1c1a17;
+  --color-text-muted: #5b554d;
+  --color-accent: #b4552d;
+  --color-accent-soft: #f0e2d8;
+  --color-border: #ddd8d0;
+
+  // Type
+  --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: var(--font-body);
+
+  // Fluid type scale
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.12rem);
+  --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --step-2: clamp(1.56rem, 1.35rem + 1vw, 2.1rem);
+  --step-3: clamp(1.95rem, 1.6rem + 1.8vw, 3rem);
+
+  // Space
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3.5rem;
+
+  // Layout
+  //
+  // In rem, not ch: `ch` resolves against the element's own font-size, so a
+  // smaller-typed block like the footer would compute a narrower column and
+  // stop aligning with the rest of the page.
+  --measure: 42rem;
+  --gutter: 1rem;
+  --radius: 8px;
+}
+
+// Dark mode is opt-out via [data-theme="light"] so a future switcher works.
+@mixin dark-tokens {
+  --color-bg: #16150f;
+  --color-surface: #211f19;
+  --color-text: #f0ece4;
+  --color-text-muted: #b3ab9d;
+  --color-accent: #e08a5f;
+  --color-accent-soft: #33261e;
+  --color-border: #38342b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @include dark-tokens;
+  }
+}
+
+:root[data-theme="dark"] {
+  @include dark-tokens;
+}

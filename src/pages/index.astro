@@ -29,10 +29,10 @@ const sorted = [...guides].sort((a, b) => {
     sorted.length === 0 ? (
       <p>Todavía no hay guías publicadas.</p>
     ) : (
-      <ul class="guides">
+      <ul class="guide-list">
         {sorted.map((guide) => (
           <li>
-            <a href={`/${guide.data.meta.destination}/${guide.id}/`}>
+            <a class="guide-list__link" href={`/${guide.data.meta.destination}/${guide.id}/`}>
               {guide.data.meta.title}
             </a>
             {guide.data.meta.draft && <span class="badge">Borrador</span>}
@@ -44,33 +44,3 @@ const sorted = [...guides].sort((a, b) => {
   }
 </BaseLayout>
 
-<style>
-  .lead {
-    font-size: var(--step-1);
-    color: var(--color-text-muted);
-  }
-
-  .guides {
-    list-style: none;
-    padding: 0;
-  }
-
-  .guides li + li {
-    margin-top: var(--space-lg);
-  }
-
-  .guides a {
-    font-size: var(--step-1);
-    font-weight: 700;
-  }
-
-  .badge {
-    display: inline-block;
-    margin-left: var(--space-xs);
-    padding: 0.1em 0.5em;
-    border: 1px solid var(--color-accent);
-    border-radius: var(--radius);
-    color: var(--color-accent);
-    font-size: var(--step--1);
-  }
-</style>

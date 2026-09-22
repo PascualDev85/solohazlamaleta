@@ -1,0 +1,18 @@
+// Shared shape for the inline notices: affiliate disclosure, draft warning.
+.notice {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+
+  &--muted {
+    color: var(--color-text-muted);
+    font-size: var(--step--1);
+    margin-block: var(--space-md);
+  }
+
+  &--loud {
+    border: 2px solid var(--color-accent);
+    padding: var(--space-md);
+    margin-block: var(--space-md);
+  }
+}

@@ -1,0 +1,11 @@
+.site-header {
+  padding-block: var(--space-md);
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+
+  .brand {
+    color: var(--color-text);
+    font-weight: 700;
+    text-decoration: none;
+  }
+}

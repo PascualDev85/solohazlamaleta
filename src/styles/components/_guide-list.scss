@@ -1,0 +1,18 @@
+.guide-list {
+  list-style: none;
+  padding: 0;
+
+  li + li {
+    margin-top: var(--space-lg);
+  }
+
+  &__link {
+    font-size: var(--step-1);
+    font-weight: 700;
+  }
+}
+
+.lead {
+  font-size: var(--step-1);
+  color: var(--color-text-muted);
+}

@@ -1,0 +1,14 @@
+.site-footer {
+  margin-top: var(--space-xl);
+  padding-block: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: var(--step--1);
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-bottom: var(--space-sm);
+  }
+}
