@@ -44,3 +44,6 @@ playwright-report/
 # Skills de terceros — reproducibles desde skills-lock.json con:
 #   npx -y skills experimental_install
 .claude/skills/
+
+# Astro
+.astro/

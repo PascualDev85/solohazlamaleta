@@ -1,0 +1,90 @@
+---
+import '../styles/base.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Keeps a page out of search results: print views, redirects, offers. */
+  noindex?: boolean;
+  image?: string;
+}
+
+const { title, description, noindex = false, image } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = image ? new URL(image, Astro.site).href : undefined;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="es_ES" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <slot name="head" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Saltar al contenido</a>
+
+    <header class="wrap site-header">
+      <a href="/" class="brand">Solo Haz la Maleta</a>
+    </header>
+
+    <main id="main" class="wrap">
+      <slot />
+    </main>
+
+    <footer class="wrap site-footer">
+      <nav aria-label="Enlaces legales">
+        <a href="/sobre-mi/">Sobre mí</a>
+        <a href="/afiliacion/">Afiliación</a>
+        <a href="/privacidad/">Privacidad</a>
+        <a href="/aviso-legal/">Aviso legal</a>
+      </nav>
+      <p>Yo planifico el viaje. Tú solo haz la maleta.</p>
+    </footer>
+
+    <style>
+      .site-header {
+        padding-block: var(--space-md);
+        border-bottom: 1px solid var(--color-border);
+        margin-bottom: var(--space-lg);
+      }
+
+      .brand {
+        font-weight: 700;
+        text-decoration: none;
+        color: var(--color-text);
+      }
+
+      .site-footer {
+        margin-top: var(--space-xl);
+        padding-block: var(--space-lg);
+        border-top: 1px solid var(--color-border);
+        color: var(--color-text-muted);
+        font-size: var(--step--1);
+      }
+
+      .site-footer nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+        margin-bottom: var(--space-sm);
+      }
+    </style>
+  </body>
+</html>

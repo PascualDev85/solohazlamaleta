@@ -1,0 +1,271 @@
+{
+  "meta": {
+    "lang": "es",
+    "destination": "alsacia",
+    "title": "Alsacia en 2, 3, 4 o 5 días: Estrasburgo, Colmar y la Ruta del Vino",
+    "description": "Ruta por Alsacia adaptable a fin de semana, puente de diciembre o 5 dias: Estrasburgo, Colmar y la Ruta del Vino, por grupo.",
+    "type": "itinerary",
+    "days": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "tripDone": null,
+    "updatedAt": "2026-09-22",
+    "draft": true
+  },
+  "variants": {
+    "2": [
+      1,
+      2
+    ],
+    "3": [
+      1,
+      2,
+      3
+    ],
+    "4": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "5": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "summary": {
+    "forWho": "PENDIENTE AUTOR: definir tras el viaje.",
+    "budgetPerPerson": {
+      "min": 0,
+      "max": 0
+    },
+    "bestSeason": "PENDIENTE AUTOR: contrastar. Los mercados de Navidad concentran la demanda de finales de noviembre a finales de diciembre.",
+    "gettingAround": "Coche de alquiler para la Ruta del Vino. Estrasburgo y Colmar se recorren a pie.",
+    "baseArea": "PENDIENTE AUTOR: decidir base única (Colmar) o dos bases (Estrasburgo + Colmar).",
+    "pace": "medium"
+  },
+  "groups": [
+    "couple",
+    "friends",
+    "family_seniors"
+  ],
+  "days": [
+    {
+      "day": 1,
+      "title": "Estrasburgo: catedral y La Petite France",
+      "summary": "Centro histórico de Estrasburgo, declarado Patrimonio de la Humanidad. Día a pie, sin coche.",
+      "physicalLevel": {
+        "walkingKm": 7,
+        "hills": "none"
+      },
+      "stops": [
+        {
+          "name": "Catedral de Notre-Dame de Estrasburgo",
+          "lat": 48.5819,
+          "lng": 7.7509,
+          "kind": "sight",
+          "durationMin": 90,
+          "notes": "PENDIENTE AUTOR: horarios, precio de la subida a la plataforma y horas del reloj astronómico.",
+          "source": {
+            "label": "Ubicación geográfica, verificable en mapa"
+          }
+        },
+        {
+          "name": "La Petite France",
+          "lat": 48.5804,
+          "lng": 7.7397,
+          "kind": "sight",
+          "durationMin": 120,
+          "travelToNextMin": 10,
+          "notes": "Barrio de casas de entramado y canales. Acceso libre.",
+          "source": {
+            "label": "Ubicación geográfica, verificable en mapa"
+          }
+        },
+        {
+          "name": "Place Broglie",
+          "lat": 48.5846,
+          "lng": 7.7514,
+          "kind": "sight",
+          "durationMin": 45,
+          "notes": "PENDIENTE AUTOR: en diciembre acoge uno de los mercados navideños. Confirmar fechas del año en curso."
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR: aportar tras el viaje.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "family_seniors": "PENDIENTE AUTOR: verificar accesibilidad del adoquinado de La Petite France y si hay alternativa a la subida de la catedral.",
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR."
+      }
+    },
+    {
+      "day": 2,
+      "title": "Colmar y la Petite Venise",
+      "summary": "Casco antiguo de Colmar. Base natural para la Ruta del Vino.",
+      "physicalLevel": {
+        "walkingKm": 6,
+        "hills": "none"
+      },
+      "stops": [
+        {
+          "name": "La Petite Venise, Colmar",
+          "lat": 48.0745,
+          "lng": 7.3585,
+          "kind": "sight",
+          "durationMin": 120,
+          "notes": "Canales del barrio de los curtidores. Acceso libre.",
+          "source": {
+            "label": "Ubicación geográfica, verificable en mapa"
+          }
+        },
+        {
+          "name": "Maison Pfister",
+          "lat": 48.0778,
+          "lng": 7.3567,
+          "kind": "sight",
+          "durationMin": 30,
+          "travelToNextMin": 5,
+          "notes": "PENDIENTE AUTOR: confirmar si es visitable por dentro."
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "family_seniors": "PENDIENTE AUTOR.",
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR."
+      }
+    },
+    {
+      "day": 3,
+      "title": "Ruta del Vino: Eguisheim, Kaysersberg y Riquewihr",
+      "summary": "Tres pueblos de la Route des Vins en coche. Distancias cortas entre ellos.",
+      "physicalLevel": {
+        "walkingKm": 8,
+        "hills": "some"
+      },
+      "stops": [
+        {
+          "name": "Eguisheim",
+          "lat": 48.0428,
+          "lng": 7.3064,
+          "kind": "sight",
+          "durationMin": 120,
+          "travelToNextMin": 25,
+          "notes": "Pueblo de trazado circular concéntrico.",
+          "source": {
+            "label": "Ubicación geográfica, verificable en mapa"
+          }
+        },
+        {
+          "name": "Kaysersberg",
+          "lat": 48.1378,
+          "lng": 7.265,
+          "kind": "sight",
+          "durationMin": 120,
+          "travelToNextMin": 15,
+          "source": {
+            "label": "Ubicación geográfica, verificable en mapa"
+          }
+        },
+        {
+          "name": "Riquewihr",
+          "lat": 48.1667,
+          "lng": 7.2978,
+          "kind": "sight",
+          "durationMin": 150,
+          "notes": "PENDIENTE AUTOR: confirmar dónde aparcar y si el centro es peatonal.",
+          "source": {
+            "label": "Ubicación geográfica, verificable en mapa"
+          }
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "family_seniors": "PENDIENTE AUTOR: los tres pueblos tienen cuestas y adoquín. Verificar y recortar a uno o dos.",
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR."
+      }
+    },
+    {
+      "day": 4,
+      "title": "Castillo de Haut-Koenigsbourg y Ribeauvillé",
+      "summary": "Castillo sobre el valle y pueblo vinícola. Día de coche.",
+      "physicalLevel": {
+        "walkingKm": 6,
+        "hills": "many"
+      },
+      "stops": [
+        {
+          "name": "Château du Haut-Koenigsbourg",
+          "lat": 48.2494,
+          "lng": 7.3444,
+          "kind": "sight",
+          "durationMin": 150,
+          "travelToNextMin": 30,
+          "notes": "PENDIENTE AUTOR: horarios, precio y si hace falta reservar. Comprobar acceso desde el aparcamiento.",
+          "source": {
+            "label": "Ubicación geográfica, verificable en mapa"
+          }
+        },
+        {
+          "name": "Ribeauvillé",
+          "lat": 48.195,
+          "lng": 7.3197,
+          "kind": "sight",
+          "durationMin": 120,
+          "source": {
+            "label": "Ubicación geográfica, verificable en mapa"
+          }
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "family_seniors": "PENDIENTE AUTOR: el castillo tiene desnivel y suelo irregular. Verificar en destino antes de recomendarlo.",
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR."
+      }
+    },
+    {
+      "day": 5,
+      "title": "Día flexible",
+      "summary": "PENDIENTE AUTOR: definir tras el viaje.",
+      "physicalLevel": {
+        "walkingKm": 5,
+        "hills": "some"
+      },
+      "stops": [
+        {
+          "name": "PENDIENTE AUTOR",
+          "lat": 48.0745,
+          "lng": 7.3585,
+          "kind": "sight",
+          "durationMin": 120,
+          "notes": "Marcador provisional. Sustituir tras el viaje."
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    }
+  ],
+  "lodging": [],
+  "bookingChecklist": [],
+  "pitfalls": [],
+  "faq": [],
+  "related": []
+}
