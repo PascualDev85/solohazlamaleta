@@ -47,3 +47,9 @@ playwright-report/
 
 # Astro
 .astro/
+
+# Scripts de depuración de un solo uso (Playwright necesita la raíz del proyecto)
+/qa-*.mjs
+/shot*.mjs
+/probe.mjs
+/contrast.mjs

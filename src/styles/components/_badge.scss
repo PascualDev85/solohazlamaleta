@@ -6,17 +6,18 @@
   color: var(--color-accent);
   font-size: var(--step--1);
   white-space: nowrap;
-}
 
-.badge {
+  // What the author actually travelled. Its own hue, not the accent: if it
+  // rendered the same as every other badge it would claim a distinction the
+  // reader cannot see.
   &--lived {
     margin-left: var(--space-xs);
-    border-color: var(--color-lived, var(--color-accent));
-    color: var(--color-lived, var(--color-accent));
+    border-color: var(--color-lived);
+    color: var(--color-lived);
   }
 
-  // Marks content adapted from the trip rather than lived. Deliberately quiet:
-  // it is a clarification, not a warning.
+  // Content adapted from that trip rather than lived. Deliberately quiet:
+  // a clarification, not a warning.
   &--adapted {
     margin-left: var(--space-xs);
     border-color: var(--color-border);

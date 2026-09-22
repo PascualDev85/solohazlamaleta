@@ -11,4 +11,14 @@
     gap: var(--space-md);
     margin-bottom: var(--space-sm);
   }
+
+  // 24px is the WCAG 2.5.8 minimum. Today the page passes only through the
+  // spacing exception, which depends on the inherited line-height and the
+  // gap — change either and conformance breaks with nothing to warn you.
+  // Making it a property of the CSS removes that accident.
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+  }
 }

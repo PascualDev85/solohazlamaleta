@@ -152,7 +152,7 @@ const faqJsonLd =
               </h3>
 
               {trip && !lived && (
-                <p class="badge badge--adapted">Adaptado · no lo hicimos así</p>
+                <p><span class="badge badge--adapted">Adaptado · no lo hicimos así</span></p>
               )}
 
               <p>{day.summary}</p>
@@ -232,14 +232,15 @@ const faqJsonLd =
 
               {groups.map((group) =>
                 day.groupAdjustments[group] ? (
-                  <p class="guide__adjust">
-                    <strong>{GROUP_LABELS[group]}</strong>
-                    {!groupWasLived(guide.data, group) && (
-                      <span class="badge badge--adapted">Adaptado</span>
-                    )}
-                    <br />
-                    {day.groupAdjustments[group]}
-                  </p>
+                  <div class="guide__adjust">
+                    <h4>
+                      {GROUP_LABELS[group]}
+                      {!groupWasLived(guide.data, group) && (
+                        <span class="badge badge--adapted">Adaptado</span>
+                      )}
+                    </h4>
+                    <p>{day.groupAdjustments[group]}</p>
+                  </div>
                 ) : null,
               )}
             </section>

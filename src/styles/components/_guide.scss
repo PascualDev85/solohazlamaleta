@@ -1,5 +1,4 @@
 @use "../abstracts" as *;
-
 .guide {
   &__dateline {
     color: var(--color-text-muted);
@@ -65,10 +64,17 @@
 
   &__adjust {
     border-left: 3px solid var(--color-accent);
-  }
-}
 
-.guide {
+    h4 {
+      margin: 0;
+      font-size: var(--step-0);
+    }
+
+    p {
+      margin: var(--space-xs) 0 0;
+    }
+  }
+
   &__verified {
     margin: var(--space-xs) 0 0;
     color: var(--color-text-muted);
@@ -81,10 +87,20 @@
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
     margin-block: var(--space-xs);
-    text-decoration: none;
+    // Underlined on purpose. The border sits at 1.4:1 against the page, so
+    // without this the link is distinguished by colour alone — and in dark
+    // mode its colour differs from body text by only 2.24:1, under the 3:1
+    // that WCAG 1.4.1 requires when colour is the sole cue.
+    text-decoration: underline;
+    min-height: 24px;
 
     & + & {
       margin-left: var(--space-xs);
+    }
+
+    &:hover {
+      text-decoration-thickness: 2px;
+      background: var(--color-surface);
     }
   }
 
