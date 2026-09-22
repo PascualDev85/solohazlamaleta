@@ -1,0 +1,46 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Dependencias
+node_modules/
+.pnpm-store/
+
+# Build de Astro
+dist/
+.astro/
+.output/
+
+# Entorno y secretos — NUNCA commitear
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+
+# Caché de herramientas
+.cache/
+.vercel/
+.wrangler/
+coverage/
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Playwright
+test-results/
+playwright-report/
+
+# Skills de terceros — reproducibles desde skills-lock.json con:
+#   npx -y skills experimental_install
+.claude/skills/
