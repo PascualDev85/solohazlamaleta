@@ -23,6 +23,7 @@
   "private": true,
   "description": "Guias de viaje ya planificadas",
   "devDependencies": {
+    "playwright": "^1.63.0",
     "sass": "^1.105.0"
   }
 }
