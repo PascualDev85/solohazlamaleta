@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # A guide that does not satisfy the schema must stop the build.
+      # This is the project's content quality gate, not a formality.
+      - name: Build
+        run: npm run build
+
+      - name: Assert an invalid guide fails the build
+        run: |
+          GUIDE=$(ls src/content/guides/*.json | head -1)
+          cp "$GUIDE" /tmp/guide.bak
+          node -e "
+            const fs = require('fs');
+            const path = process.argv[1];
+            const guide = JSON.parse(fs.readFileSync(path, 'utf8'));
+            const count = String(guide.meta.days[0]);
+            guide.variants[count] = [...(guide.variants[count] ?? []), 999];
+            fs.writeFileSync(path, JSON.stringify(guide, null, 2));
+          " "$GUIDE"
+
+          if npm run build > /tmp/invalid.log 2>&1; then
+            cp /tmp/guide.bak "$GUIDE"
+            echo "::error::The build succeeded with an invalid guide. The schema is not enforcing."
+            exit 1
+          fi
+
+          cp /tmp/guide.bak "$GUIDE"
+          echo "Schema correctly rejected the invalid guide."
+
+      - name: Rebuild after the negative test
+        run: npm run build
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Lighthouse on the home page
+        run: |
+          npx --yes astro preview --port 4321 &
+          npx --yes wait-on http://localhost:4321/ --timeout 60000
+
+          npx --yes lighthouse http://localhost:4321/ \
+            --quiet --chrome-flags="--headless --no-sandbox" \
+            --output=json --output-path=/tmp/lh.json \
+            --only-categories=performance,accessibility,best-practices,seo
+
+          node -e "
+            const report = require('/tmp/lh.json');
+            const failures = [];
+
+            for (const [name, category] of Object.entries(report.categories)) {
+              const score = Math.round(category.score * 100);
+              console.log(name.padEnd(16), score);
+              if (score < 95) failures.push(name + ': ' + score);
+            }
+
+            if (failures.length > 0) {
+              console.error('Below the 95 threshold: ' + failures.join(', '));
+              process.exit(1);
+            }
+          "
