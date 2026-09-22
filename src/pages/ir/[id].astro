@@ -1,0 +1,51 @@
+---
+import affiliates from '../../data/affiliates.json';
+
+/**
+ * Every affiliate link leaves the site through here, so the real URLs live in
+ * one registry instead of being scattered across guides. Changing a partner
+ * means editing affiliates.json, not every page that links to it.
+ *
+ * The id is `<partner>-<key>`, matching the `affiliate` references in guides.
+ */
+export function getStaticPaths() {
+  const paths = [];
+
+  for (const [partnerId, partner] of Object.entries(affiliates.partners)) {
+    if (!partner.active) continue;
+
+    for (const [key, url] of Object.entries(partner.links)) {
+      paths.push({
+        params: { id: `${partnerId}-${key}` },
+        props: { url: String(url), partnerName: partner.name },
+      });
+    }
+  }
+
+  return paths;
+}
+
+interface Props {
+  url: string;
+  partnerName: string;
+}
+
+const { url, partnerName } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content={`0; url=${url}`} />
+    <link rel="canonical" href={url} />
+    <title>Redirigiendo a {partnerName}</title>
+  </head>
+  <body>
+    <p>
+      Te llevamos a {partnerName}. Si no ocurre nada,
+      <a href={url} rel="sponsored nofollow noopener">continúa aquí</a>.
+    </p>
+  </body>
+</html>

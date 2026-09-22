@@ -1,17 +1,76 @@
 ---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
+const guides = await getCollection('guides');
+
+/** Published guides first; drafts are listed but clearly marked. */
+const sorted = [...guides].sort((a, b) => {
+  if (a.data.meta.draft !== b.data.meta.draft) return a.data.meta.draft ? 1 : -1;
+  return b.data.meta.updatedAt.localeCompare(a.data.meta.updatedAt);
+});
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Solo Haz la Maleta — Guías de viaje ya planificadas"
+  description="Itinerarios día a día con mapa, presupuesto real y qué reservar. Basados en viajes hechos y adaptados a cómo viajas: en pareja, con amigos o en familia."
+>
+  <h1>Yo planifico el viaje. Tú solo haz la maleta.</h1>
+
+  <p class="lead">
+    Guías con el itinerario día a día, el mapa, el presupuesto real y qué hay
+    que reservar y cuándo. De viajes hechos, no copiados. Gratis y completas,
+    sin pedirte el correo.
+  </p>
+
+  <h2>Guías</h2>
+
+  {
+    sorted.length === 0 ? (
+      <p>Todavía no hay guías publicadas.</p>
+    ) : (
+      <ul class="guides">
+        {sorted.map((guide) => (
+          <li>
+            <a href={`/${guide.data.meta.destination}/${guide.id}/`}>
+              {guide.data.meta.title}
+            </a>
+            {guide.data.meta.draft && <span class="badge">Borrador</span>}
+            <p>{guide.data.meta.description}</p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .lead {
+    font-size: var(--step-1);
+    color: var(--color-text-muted);
+  }
+
+  .guides {
+    list-style: none;
+    padding: 0;
+  }
+
+  .guides li + li {
+    margin-top: var(--space-lg);
+  }
+
+  .guides a {
+    font-size: var(--step-1);
+    font-weight: 700;
+  }
+
+  .badge {
+    display: inline-block;
+    margin-left: var(--space-xs);
+    padding: 0.1em 0.5em;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius);
+    color: var(--color-accent);
+    font-size: var(--step--1);
+  }
+</style>
