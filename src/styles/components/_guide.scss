@@ -67,3 +67,43 @@
     border-left: 3px solid var(--color-accent);
   }
 }
+
+.guide {
+  &__verified {
+    margin: var(--space-xs) 0 0;
+    color: var(--color-text-muted);
+    font-size: var(--step--1);
+  }
+
+  &__route {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    margin-block: var(--space-xs);
+    text-decoration: none;
+
+    & + & {
+      margin-left: var(--space-xs);
+    }
+  }
+
+  &__zone {
+    margin-top: var(--space-md);
+  }
+
+  &__checklist li + li {
+    margin-top: var(--space-xs);
+  }
+
+  &__faq {
+    dt {
+      font-weight: 700;
+      margin-top: var(--space-md);
+    }
+
+    dd {
+      margin: var(--space-xs) 0 0;
+    }
+  }
+}

@@ -7,3 +7,20 @@
   font-size: var(--step--1);
   white-space: nowrap;
 }
+
+.badge {
+  &--lived {
+    margin-left: var(--space-xs);
+    border-color: var(--color-lived, var(--color-accent));
+    color: var(--color-lived, var(--color-accent));
+  }
+
+  // Marks content adapted from the trip rather than lived. Deliberately quiet:
+  // it is a clarification, not a warning.
+  &--adapted {
+    margin-left: var(--space-xs);
+    border-color: var(--color-border);
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+}

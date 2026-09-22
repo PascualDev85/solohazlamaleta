@@ -3,6 +3,16 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AffiliateNotice from '../../components/AffiliateNotice.astro';
 import DraftNotice from '../../components/DraftNotice.astro';
+import {
+  directionsUrls,
+  dayCost,
+  wasLived,
+  groupWasLived,
+  GROUP_LABELS,
+  PACE_LABELS,
+  HILLS_LABELS,
+  PRICE_LABELS,
+} from '../../lib/guide';
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides');
@@ -18,23 +28,36 @@ interface Props {
 }
 
 const { guide } = Astro.props;
-const { meta, summary, days, variants, groups } = guide.data;
+const { meta, summary, days, variants, groups, lodging, bookingChecklist, pitfalls, faq } =
+  guide.data;
 
 /** Longest variant first: the default view shows the full itinerary. */
 const dayCounts = [...meta.days].sort((a, b) => b - a);
 
-const groupLabels: Record<string, string> = {
-  couple: 'En pareja',
-  friends: 'Con amigos',
-  family_seniors: 'En familia con mayores',
-};
+const trip = meta.tripDone;
 
+/**
+ * The disclosure only belongs on a page that actually carries commission
+ * links. Showing it otherwise is legal noise without a cause.
+ */
+/** A 0–0 € range is placeholder data, and printing it is worse than silence. */
+const hasBudget = summary.budgetPerPerson.max > 0;
+
+const hasAffiliateLinks =
+  bookingChecklist.some((item) => item.affiliate) ||
+  lodging.some((zone) => zone.picks.some((pick) => pick.affiliate)) ||
+  days.some((day) => day.stops.some((stop) => stop.booking));
+
+/**
+ * Structured data must describe content the reader can see, or Google treats
+ * it as spam. Both come from the same array, so they cannot drift apart.
+ */
 const faqJsonLd =
-  guide.data.faq.length > 0
+  faq.length > 0
     ? {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: guide.data.faq.map((item) => ({
+        mainEntity: faq.map((item) => ({
           '@type': 'Question',
           name: item.q,
           acceptedAnswer: { '@type': 'Answer', text: item.a },
@@ -55,25 +78,44 @@ const faqJsonLd =
     )
   }
 
-  <article>
+  <article class="guide">
     <h1>{meta.title}</h1>
 
     <p class="guide__dateline">
       {
-        meta.tripDone
-          ? `Lo hicimos en ${meta.tripDone} · Actualizado ${meta.updatedAt}`
+        trip
+          ? `Lo hicimos en ${trip.season} de ${trip.date.slice(0, 4)}, ${GROUP_LABELS[trip.group].toLowerCase()}, en ${trip.days} días · Actualizado ${meta.updatedAt}`
           : `Actualizado ${meta.updatedAt}`
       }
     </p>
 
-    {meta.draft && <DraftNotice />}
-    <AffiliateNotice />
+    {meta.draft && <DraftNotice tripMade={trip !== null} />}
+    {hasAffiliateLinks && <AffiliateNotice />}
+
+    {
+      trip && (
+        <p class="notice notice--muted">
+          Las versiones de otras duraciones y otros grupos están adaptadas a partir de
+          esta ruta, y van marcadas como tal.
+        </p>
+      )
+    }
 
     <section class="guide__summary" aria-labelledby="resumen">
       <h2 id="resumen">En resumen</h2>
       <dl>
         <dt>Para quién</dt><dd>{summary.forWho}</dd>
-        <dt>Ritmo</dt><dd>{summary.pace}</dd>
+        <dt>Ritmo</dt><dd>{PACE_LABELS[summary.pace] ?? summary.pace}</dd>
+        {
+          hasBudget && (
+            <>
+              <dt>Presupuesto</dt>
+              <dd>
+                {summary.budgetPerPerson.min}–{summary.budgetPerPerson.max} € por persona
+              </dd>
+            </>
+          )
+        }
         <dt>Mejor época</dt><dd>{summary.bestSeason}</dd>
         <dt>Cómo moverse</dt><dd>{summary.gettingAround}</dd>
         <dt>Base</dt><dd>{summary.baseArea}</dd>
@@ -82,15 +124,12 @@ const faqJsonLd =
 
     <section aria-labelledby="duraciones">
       <h2 id="duraciones">Cuántos días tienes</h2>
-      <p>
-        Esta misma ruta sirve para {meta.days.join(', ')} días. Cada versión usa los días
-        que se indican abajo.
-      </p>
       <ul>
         {
           dayCounts.map((count) => (
             <li>
               <strong>{count} días:</strong> días {variants[String(count)]?.join(', ')}
+              {trip?.days === count && <span class="badge badge--lived">Lo que hicimos</span>}
             </li>
           ))
         }
@@ -101,50 +140,207 @@ const faqJsonLd =
       <h2 id="itinerario">Día a día</h2>
 
       {
-        days.map((day) => (
-          <section class="guide__day" aria-labelledby={`dia-${day.day}`}>
-            <h3 id={`dia-${day.day}`}>
-              Día {day.day}. {day.title}
-            </h3>
-            <p>{day.summary}</p>
+        days.map((day) => {
+          const routes = directionsUrls(day.stops);
+          const cost = dayCost(day.stops);
+          const lived = wasLived(guide.data, day.day);
 
-            <p class="guide__effort">
-              A pie: {day.physicalLevel.walkingKm} km · Cuestas: {day.physicalLevel.hills}
-            </p>
+          return (
+            <section class="guide__day" aria-labelledby={`dia-${day.day}`}>
+              <h3 id={`dia-${day.day}`}>
+                Día {day.day}. {day.title}
+              </h3>
 
-            <ol class="guide__stops">
-              {day.stops.map((stop) => (
-                <li>
-                  <strong>{stop.name}</strong>
-                  <span class="guide__stop-meta"> · {stop.durationMin} min</span>
-                  {stop.notes && <p class="guide__note">{stop.notes}</p>}
-                </li>
-              ))}
-            </ol>
+              {trip && !lived && (
+                <p class="badge badge--adapted">Adaptado · no lo hicimos así</p>
+              )}
 
-            {day.localTip && (
-              <p class="guide__tip">
-                <strong>Lo que haríamos distinto:</strong> {day.localTip}
+              <p>{day.summary}</p>
+
+              <p class="guide__effort">
+                A pie: {day.physicalLevel.walkingKm} km ·{' '}
+                {HILLS_LABELS[day.physicalLevel.hills] ?? day.physicalLevel.hills}
+                {cost !== null && ` · Entradas y actividades: ${cost} €`}
               </p>
-            )}
 
-            {day.planB && (
-              <p class="guide__tip">
-                <strong>Plan B:</strong> {day.planB}
-              </p>
-            )}
-
-            {groups.map((group) =>
-              day.groupAdjustments[group] ? (
-                <p class="guide__adjust">
-                  <strong>{groupLabels[group]}:</strong> {day.groupAdjustments[group]}
+              {routes.length > 0 && (
+                <p>
+                  {routes.map((url, index) => (
+                    <a class="guide__route" href={url} rel="noopener" target="_blank">
+                      Abrir la ruta del día {day.day} en Google Maps
+                      {routes.length > 1 && ` (tramo ${index + 1} de ${routes.length})`}
+                    </a>
+                  ))}
                 </p>
-              ) : null,
-            )}
-          </section>
-        ))
+              )}
+
+              <ol class="guide__stops">
+                {day.stops.map((stop) => (
+                  <li>
+                    <strong>{stop.name}</strong>
+                    <span class="guide__stop-meta">
+                      {' · '}
+                      {stop.durationMin} min
+                      {stop.startTime && ` · desde las ${stop.startTime}`}
+                      {stop.cost && ` · ${stop.cost.amount} €`}
+                    </span>
+
+                    {stop.notes && <p class="guide__note">{stop.notes}</p>}
+
+                    {stop.booking && (
+                      <p class="guide__note">
+                        <strong>Reserva:</strong> {stop.booking.advanceNotice}
+                      </p>
+                    )}
+
+                    {stop.source?.checkedAt && (
+                      <p class="guide__verified">Verificado {stop.source.checkedAt}</p>
+                    )}
+                  </li>
+                ))}
+              </ol>
+
+              {day.food.length > 0 && (
+                <>
+                  <h4>Dónde comer</h4>
+                  <ul>
+                    {day.food.map((place) => (
+                      <li>
+                        <strong>{place.name}</strong>
+                        <span class="guide__stop-meta">
+                          {' · '}
+                          {place.area} · {PRICE_LABELS[place.priceLevel] ?? place.priceLevel}
+                        </span>
+                        {place.notes && <p class="guide__note">{place.notes}</p>}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+
+              {day.localTip && (
+                <p class="guide__tip">
+                  <strong>Lo que haríamos distinto:</strong> {day.localTip}
+                </p>
+              )}
+
+              {day.planB && (
+                <p class="guide__tip">
+                  <strong>Plan B:</strong> {day.planB}
+                </p>
+              )}
+
+              {groups.map((group) =>
+                day.groupAdjustments[group] ? (
+                  <p class="guide__adjust">
+                    <strong>{GROUP_LABELS[group]}</strong>
+                    {!groupWasLived(guide.data, group) && (
+                      <span class="badge badge--adapted">Adaptado</span>
+                    )}
+                    <br />
+                    {day.groupAdjustments[group]}
+                  </p>
+                ) : null,
+              )}
+            </section>
+          );
+        })
       }
     </section>
+
+    {
+      lodging.length > 0 && (
+        <section aria-labelledby="dormir">
+          <h2 id="dormir">Dónde dormir</h2>
+          {lodging.map((zone) => (
+            <div class="guide__zone">
+              <h3>{zone.zone}</h3>
+              {zone.pros.length > 0 && (
+                <p>
+                  <strong>A favor:</strong> {zone.pros.join(' · ')}
+                </p>
+              )}
+              {zone.cons.length > 0 && (
+                <p>
+                  <strong>En contra:</strong> {zone.cons.join(' · ')}
+                </p>
+              )}
+              {zone.picks.length > 0 && (
+                <ul>
+                  {zone.picks.map((pick) => (
+                    <li>
+                      {pick.name}
+                      <span class="guide__stop-meta">
+                        {' · '}
+                        {PRICE_LABELS[pick.priceLevel] ?? pick.priceLevel}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </section>
+      )
+    }
+
+    {
+      bookingChecklist.length > 0 && (
+        <section aria-labelledby="reservar">
+          <h2 id="reservar">Qué reservar y cuándo</h2>
+          <ul class="guide__checklist">
+            {bookingChecklist.map((item) => (
+              <li>
+                <strong>{item.when}:</strong> {item.item}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      pitfalls.length > 0 && (
+        <section aria-labelledby="errores">
+          <h2 id="errores">Errores y trampas</h2>
+          <ul>
+            {pitfalls.map((pitfall) => (
+              <li>{pitfall}</li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      faq.length > 0 && (
+        <section aria-labelledby="faq">
+          <h2 id="faq">Preguntas frecuentes</h2>
+          <dl class="guide__faq">
+            {faq.map((item) => (
+              <>
+                <dt>{item.q}</dt>
+                <dd>{item.a}</dd>
+              </>
+            ))}
+          </dl>
+        </section>
+      )
+    }
+
+    {
+      guide.data.related.length > 0 && (
+        <section aria-labelledby="relacionadas">
+          <h2 id="relacionadas">Guías relacionadas</h2>
+          <ul>
+            {guide.data.related.map((slug) => (
+              <li>
+                <a href={`/${meta.destination}/${slug}/`}>{slug}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
   </article>
 </BaseLayout>
-
