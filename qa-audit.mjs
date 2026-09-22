@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 
-const BASE = 'http://localhost:4323';
+const BASE = 'http://localhost:4327';
 const PAGES = ['/', '/alsacia/ruta-pueblos-y-vinos/', '/afiliacion/'];
 const WIDTHS = [320, 390, 768, 1280];
 

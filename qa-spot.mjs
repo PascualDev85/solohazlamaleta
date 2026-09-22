@@ -3,7 +3,7 @@ const b=await chromium.launch();
 for (const scheme of ['light','dark']){
 const ctx=await b.newContext({colorScheme:scheme}); const p=await ctx.newPage();
 await p.setViewportSize({width:320,height:800});
-await p.goto('http://localhost:4325/alsacia/ruta-pueblos-y-vinos/',{waitUntil:'networkidle'});
+await p.goto('http://localhost:4327/alsacia/ruta-pueblos-y-vinos/',{waitUntil:'networkidle'});
 const r=await p.evaluate(()=>{
  const parse=c=>{const m=c.match(/[\d.]+/g).map(Number);return{r:m[0],g:m[1],b:m[2],a:m[3]??1}};
  const lum=({r,g,b})=>{const f=v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)};return .2126*f(r)+.7152*f(g)+.0722*f(b)};

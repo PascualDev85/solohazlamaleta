@@ -1,5 +1,5 @@
 import { chromium } from 'playwright';
-const BASE='http://localhost:4323';
+const BASE='http://localhost:4327';
 const b=await chromium.launch();
 const ctx=await b.newContext(); const p=await ctx.newPage();
 
