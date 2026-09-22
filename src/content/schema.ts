@@ -85,7 +85,14 @@ const day = z.object({
   localTip: z.string().optional(),
   /** If it rains or the place is closed. */
   planB: z.string().optional(),
-  groupAdjustments: z.record(groupName, z.string()).default({}),
+  /** Per-group tweaks for this day. Any subset of groups may be present. */
+  groupAdjustments: z
+    .object({
+      couple: z.string().optional(),
+      friends: z.string().optional(),
+      family_seniors: z.string().optional(),
+    })
+    .default({}),
 });
 
 export const guideSchema = z
