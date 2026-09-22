@@ -1,27 +1,27 @@
 .badge {
-  display: inline-block;
-  padding: 0.1em 0.5em;
-  border: 1px solid var(--color-accent);
-  border-radius: var(--radius);
-  color: var(--color-accent);
-  font-size: var(--step--1);
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15em 0.6em;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   white-space: nowrap;
 
-  // What the author actually travelled. Its own hue, not the accent: if it
-  // rendered the same as every other badge it would claim a distinction the
-  // reader cannot see.
+  // What the author actually travelled. Its own hue, or the distinction
+  // claims something the reader cannot see.
   &--lived {
-    margin-left: var(--space-xs);
-    border-color: var(--color-lived);
-    color: var(--color-lived);
+    background: var(--color-lived);
+    color: var(--color-bg);
   }
 
-  // Content adapted from that trip rather than lived. Deliberately quiet:
-  // a clarification, not a warning.
+  // Adapted from that trip rather than lived. Deliberately quiet: this is a
+  // clarification, not a warning.
   &--adapted {
-    margin-left: var(--space-xs);
-    border-color: var(--color-border);
+    border: 1px solid var(--color-border);
     color: var(--color-text-muted);
-    font-weight: 400;
+    font-weight: 600;
   }
 }

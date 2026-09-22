@@ -2,8 +2,8 @@
   "meta": {
     "lang": "es",
     "destination": "alsacia",
-    "title": "Alsacia en 2, 3, 4 o 5 días: Estrasburgo, Colmar y la Ruta del Vino",
-    "description": "Ruta por Alsacia adaptable a fin de semana, puente de diciembre o 5 dias: Estrasburgo, Colmar y la Ruta del Vino, por grupo.",
+    "title": "Alsacia en 3 días: pueblos de la Ruta del Vino, Colmar y Estrasburgo",
+    "description": "Ruta real por Alsacia en el puente de diciembre: 10 pueblos, dónde aparcar en cada uno y cuánto tiempo necesitas. Hecha en familia con mayores.",
     "type": "itinerary",
     "days": [
       2,
@@ -12,7 +12,7 @@
       5
     ],
     "tripDone": {
-      "date": "2025-12",
+      "date": "2024-12",
       "group": "family_seniors",
       "days": 3,
       "season": "el puente de diciembre"
@@ -45,14 +45,14 @@
     ]
   },
   "summary": {
-    "forWho": "PENDIENTE AUTOR: definir tras el viaje.",
+    "forWho": "Quien quiera ver los pueblos de la Ruta del Vino sin prisas y con el coche como base. Lo hicimos en familia, con personas mayores, y funcionó.",
     "budgetPerPerson": {
       "min": 0,
       "max": 0
     },
-    "bestSeason": "PENDIENTE AUTOR: contrastar. Los mercados de Navidad concentran la demanda de finales de noviembre a finales de diciembre.",
-    "gettingAround": "Coche de alquiler para la Ruta del Vino. Estrasburgo y Colmar se recorren a pie.",
-    "baseArea": "PENDIENTE AUTOR: decidir base única (Colmar) o dos bases (Estrasburgo + Colmar).",
+    "bestSeason": "Diciembre, por los mercados de Navidad. PENDIENTE AUTOR: contrastar si compensa fuera de esa época.",
+    "gettingAround": "Coche imprescindible para los pueblos. Colmar y Estrasburgo se recorren a pie.",
+    "baseArea": "Blienschwiller, en el centro de la Ruta del Vino. Desde allí ningún pueblo queda a más de 35 minutos.",
     "pace": "medium"
   },
   "groups": [
@@ -63,123 +63,37 @@
   "days": [
     {
       "day": 1,
-      "title": "Estrasburgo: catedral y La Petite France",
-      "summary": "Centro histórico de Estrasburgo, declarado Patrimonio de la Humanidad. Día a pie, sin coche.",
+      "title": "Bergheim, Ribeauvillé, Riquewihr y Kaysersberg",
+      "summary": "Cuatro pueblos de la Ruta del Vino en un día, de norte a sur. Trayectos cortos: entre uno y otro nunca más de 15 minutos.",
       "physicalLevel": {
-        "walkingKm": 7,
-        "hills": "none"
-      },
-      "stops": [
-        {
-          "name": "Catedral de Notre-Dame de Estrasburgo",
-          "lat": 48.5819,
-          "lng": 7.7509,
-          "kind": "sight",
-          "durationMin": 90,
-          "notes": "PENDIENTE AUTOR: horarios, precio de la subida a la plataforma y horas del reloj astronómico.",
-          "source": {
-            "label": "Ubicación geográfica, verificable en mapa"
-          }
-        },
-        {
-          "name": "La Petite France",
-          "lat": 48.5804,
-          "lng": 7.7397,
-          "kind": "sight",
-          "durationMin": 120,
-          "travelToNextMin": 10,
-          "notes": "Barrio de casas de entramado y canales. Acceso libre.",
-          "source": {
-            "label": "Ubicación geográfica, verificable en mapa"
-          }
-        },
-        {
-          "name": "Place Broglie",
-          "lat": 48.5846,
-          "lng": 7.7514,
-          "kind": "sight",
-          "durationMin": 45,
-          "notes": "PENDIENTE AUTOR: en diciembre acoge uno de los mercados navideños. Confirmar fechas del año en curso."
-        }
-      ],
-      "food": [],
-      "localTip": "PENDIENTE AUTOR: aportar tras el viaje.",
-      "planB": "PENDIENTE AUTOR.",
-      "groupAdjustments": {
-        "family_seniors": "PENDIENTE AUTOR: verificar accesibilidad del adoquinado de La Petite France y si hay alternativa a la subida de la catedral.",
-        "couple": "PENDIENTE AUTOR.",
-        "friends": "PENDIENTE AUTOR."
-      }
-    },
-    {
-      "day": 2,
-      "title": "Colmar y la Petite Venise",
-      "summary": "Casco antiguo de Colmar. Base natural para la Ruta del Vino.",
-      "physicalLevel": {
-        "walkingKm": 6,
-        "hills": "none"
-      },
-      "stops": [
-        {
-          "name": "La Petite Venise, Colmar",
-          "lat": 48.0745,
-          "lng": 7.3585,
-          "kind": "sight",
-          "durationMin": 120,
-          "notes": "Canales del barrio de los curtidores. Acceso libre.",
-          "source": {
-            "label": "Ubicación geográfica, verificable en mapa"
-          }
-        },
-        {
-          "name": "Maison Pfister",
-          "lat": 48.0778,
-          "lng": 7.3567,
-          "kind": "sight",
-          "durationMin": 30,
-          "travelToNextMin": 5,
-          "notes": "PENDIENTE AUTOR: confirmar si es visitable por dentro."
-        }
-      ],
-      "food": [],
-      "localTip": "PENDIENTE AUTOR.",
-      "planB": "PENDIENTE AUTOR.",
-      "groupAdjustments": {
-        "family_seniors": "PENDIENTE AUTOR.",
-        "couple": "PENDIENTE AUTOR.",
-        "friends": "PENDIENTE AUTOR."
-      }
-    },
-    {
-      "day": 3,
-      "title": "Ruta del Vino: Eguisheim, Kaysersberg y Riquewihr",
-      "summary": "Tres pueblos de la Route des Vins en coche. Distancias cortas entre ellos.",
-      "physicalLevel": {
-        "walkingKm": 8,
+        "walkingKm": 9,
         "hills": "some"
       },
       "stops": [
         {
-          "name": "Eguisheim",
-          "lat": 48.0428,
-          "lng": 7.3064,
+          "name": "Bergheim",
+          "lat": 48.2058,
+          "lng": 7.3617,
           "kind": "sight",
-          "durationMin": 120,
-          "travelToNextMin": 25,
-          "notes": "Pueblo de trazado circular concéntrico.",
+          "durationMin": 90,
+          "startTime": "11:30",
+          "travelToNextMin": 10,
+          "notes": "Aparcamiento: Parkplatz junto a la Porte Haute, entrada por la Route de Sélestat. Amplio, pero alejado del casco antiguo. Murallas medievales, Gran Rue, Place du Dr. Walter, Puerta Haute y la Torre de Brujas, iglesia de Notre-Dame de l'Assomption.",
           "source": {
-            "label": "Ubicación geográfica, verificable en mapa"
+            "label": "Notas propias del viaje (diciembre 2024)"
           }
         },
         {
-          "name": "Kaysersberg",
-          "lat": 48.1378,
-          "lng": 7.265,
+          "name": "Ribeauvillé",
+          "lat": 48.195,
+          "lng": 7.3197,
           "kind": "sight",
-          "durationMin": 120,
-          "travelToNextMin": 15,
+          "durationMin": 200,
+          "startTime": "13:10",
+          "travelToNextMin": 10,
+          "notes": "Aparcamiento: Parking Poste a la entrada del casco histórico, o gratuito en la Rue du 3 décembre, que además es llano. Grand Rue, Fontaine du Vigneron, Casa Oriel, Tour des Bouchers, iglesia de Saint-Grégoire-le-Grand, Place de la Sinne. El tiempo incluye la comida.",
           "source": {
-            "label": "Ubicación geográfica, verificable en mapa"
+            "label": "Notas propias del viaje (diciembre 2024)"
           }
         },
         {
@@ -187,28 +101,43 @@
           "lat": 48.1667,
           "lng": 7.2978,
           "kind": "sight",
-          "durationMin": 150,
-          "notes": "PENDIENTE AUTOR: confirmar dónde aparcar y si el centro es peatonal.",
+          "durationMin": 80,
+          "startTime": "15:40",
+          "travelToNextMin": 15,
+          "notes": "Aparcamiento: gratuito a las afueras del pueblo, o de pago cerca del ayuntamiento (0,30 € cada 10 minutos, de 8h a 22h). Ayuntamiento, Torre Dolder, Museo Torre de los Ladrones, Puerta Alta, Rue du Général de Gaulle.",
           "source": {
-            "label": "Ubicación geográfica, verificable en mapa"
+            "label": "Notas propias del viaje (diciembre 2024)"
+          }
+        },
+        {
+          "name": "Kaysersberg",
+          "lat": 48.1378,
+          "lng": 7.265,
+          "kind": "sight",
+          "durationMin": 210,
+          "startTime": "18:15",
+          "travelToNextMin": 35,
+          "notes": "Aparcamiento: Parking Gouraud al oeste del pueblo, o el P5, ambos a 1 € la hora. Place de la Mairie, Église Sainte-Croix, el puente fortificado sobre el Weiss, la Maison Faller-Brief. Detrás del ayuntamiento está el Marché de Noël en un patio interior, y desde ahí se llega a la Chapelle Saint-Michel, con otro mercado de casetas de madera.",
+          "source": {
+            "label": "Notas propias del viaje (diciembre 2024)"
           }
         }
       ],
       "food": [],
-      "localTip": "PENDIENTE AUTOR.",
+      "localTip": "PENDIENTE AUTOR: qué haríais distinto de este día.",
       "planB": "PENDIENTE AUTOR.",
       "groupAdjustments": {
-        "family_seniors": "PENDIENTE AUTOR: los tres pueblos tienen cuestas y adoquín. Verificar y recortar a uno o dos.",
+        "family_seniors": "PENDIENTE AUTOR: en Ribeauvillé el aparcamiento de la Rue du 3 décembre es llano, lo cual importa. Confirmar qué tal fueron las cuestas de Riquewihr y Kaysersberg.",
         "couple": "PENDIENTE AUTOR.",
         "friends": "PENDIENTE AUTOR."
       }
     },
     {
-      "day": 4,
-      "title": "Castillo de Haut-Koenigsbourg y Ribeauvillé",
-      "summary": "Castillo sobre el valle y pueblo vinícola. Día de coche.",
+      "day": 2,
+      "title": "Castillo de Haut-Koenigsbourg, Eguisheim, Turckheim y Colmar",
+      "summary": "El castillo por la mañana, dos pueblos y la tarde y la cena en Colmar.",
       "physicalLevel": {
-        "walkingKm": 6,
+        "walkingKm": 10,
         "hills": "many"
       },
       "stops": [
@@ -217,21 +146,45 @@
           "lat": 48.2494,
           "lng": 7.3444,
           "kind": "sight",
-          "durationMin": 150,
-          "travelToNextMin": 30,
-          "notes": "PENDIENTE AUTOR: horarios, precio y si hace falta reservar. Comprobar acceso desde el aparcamiento.",
+          "durationMin": 120,
+          "notes": "Murallas y torres con vistas al valle, salones y armaduras en el interior, y el patio gótico-renacentista. PENDIENTE AUTOR: precio de la entrada y si hace falta reservar.",
           "source": {
-            "label": "Ubicación geográfica, verificable en mapa"
+            "label": "Notas propias del viaje (diciembre 2024)"
           }
         },
         {
-          "name": "Ribeauvillé",
-          "lat": 48.195,
-          "lng": 7.3197,
+          "name": "Eguisheim",
+          "lat": 48.0428,
+          "lng": 7.3064,
           "kind": "sight",
-          "durationMin": 120,
+          "durationMin": 180,
+          "travelToNextMin": 20,
+          "notes": "Aparcamiento: los gratuitos de la Rue de la 1re Armée suelen estar llenos. El Parking Tuilerie, en la Rue du Malsbach, es gratis y está a menos de diez minutos andando. El Parking Eguisheim da a la Grand Rue y es amplio. Rue du Rempart Sud es la foto de postal. El tiempo incluye una comida rápida.",
           "source": {
-            "label": "Ubicación geográfica, verificable en mapa"
+            "label": "Notas propias del viaje (diciembre 2024)"
+          }
+        },
+        {
+          "name": "Turckheim",
+          "lat": 48.0872,
+          "lng": 7.2761,
+          "kind": "sight",
+          "durationMin": 60,
+          "travelToNextMin": 15,
+          "notes": "Aparcamiento gratuito en la Place de la République, junto a la Porte de France, y en el Quai du Dr Joseph Pfleger. Las tres puertas de la muralla, la Place Turenne y el calendario de Adviento.",
+          "source": {
+            "label": "Notas propias del viaje (diciembre 2024)"
+          }
+        },
+        {
+          "name": "Colmar",
+          "lat": 48.0779,
+          "lng": 7.3556,
+          "kind": "sight",
+          "durationMin": 330,
+          "notes": "Aparcamiento: el Parking Parcheggio está a cinco minutos del centro. Si está lleno, la Rue de la Cavalerie, justo detrás, suele tener sitio. La Petite Venise, la Rue des Marchands con la Casa Pfister, la Place de l'Ancienne Douane, la Colegiata de San Martín y el Koïfhus. El tiempo incluye la cena.",
+          "source": {
+            "label": "Notas propias del viaje (diciembre 2024)"
           }
         }
       ],
@@ -239,27 +192,100 @@
       "localTip": "PENDIENTE AUTOR.",
       "planB": "PENDIENTE AUTOR.",
       "groupAdjustments": {
-        "family_seniors": "PENDIENTE AUTOR: el castillo tiene desnivel y suelo irregular. Verificar en destino antes de recomendarlo.",
+        "family_seniors": "PENDIENTE AUTOR: el castillo tiene desnivel y suelo irregular. Decir si se pudo hacer entero y qué se recortó.",
         "couple": "PENDIENTE AUTOR.",
         "friends": "PENDIENTE AUTOR."
       }
     },
     {
-      "day": 5,
-      "title": "Día flexible",
-      "summary": "PENDIENTE AUTOR: definir tras el viaje.",
+      "day": 3,
+      "title": "Obernai y Estrasburgo",
+      "summary": "Un pueblo por la mañana y el resto del día en Estrasburgo.",
       "physicalLevel": {
-        "walkingKm": 5,
+        "walkingKm": 12,
+        "hills": "some"
+      },
+      "stops": [
+        {
+          "name": "Obernai",
+          "lat": 48.4625,
+          "lng": 7.4817,
+          "kind": "sight",
+          "durationMin": 90,
+          "startTime": "08:30",
+          "travelToNextMin": 30,
+          "notes": "Aparcamiento gratuito en el Parking de la Salle des Fêtes, cerca del centro. Kappelturm, el pozo de los seis cubos, la Place du Marché con el ayuntamiento y la fuente de Santa Odile, y el campanario.",
+          "source": {
+            "label": "Notas propias del viaje (diciembre 2024)"
+          }
+        },
+        {
+          "name": "Estrasburgo",
+          "lat": 48.5819,
+          "lng": 7.7509,
+          "kind": "sight",
+          "durationMin": 510,
+          "startTime": "11:30",
+          "notes": "Aparcamiento: Place du Cygne, cerca del centro. La Petite France, la catedral de Notre-Dame, la casa Kammerzell, los Ponts Couverts y la presa Vauban, el barrio alemán y el europeo, la Place Kléber y el parque de l'Orangerie.",
+          "source": {
+            "label": "Notas propias del viaje (diciembre 2024)"
+          }
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "family_seniors": "PENDIENTE AUTOR: Estrasburgo son muchas horas a pie. Decir cómo se repartió y dónde se paró a descansar.",
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR."
+      }
+    },
+    {
+      "day": 4,
+      "title": "Día extra (adaptado)",
+      "summary": "PENDIENTE AUTOR: con un día más, qué añadiríais.",
+      "physicalLevel": {
+        "walkingKm": 6,
         "hills": "some"
       },
       "stops": [
         {
           "name": "PENDIENTE AUTOR",
-          "lat": 48.0745,
-          "lng": 7.3585,
+          "lat": 48.0779,
+          "lng": 7.3556,
           "kind": "sight",
           "durationMin": 120,
-          "notes": "Marcador provisional. Sustituir tras el viaje."
+          "notes": "Marcador provisional.",
+          "source": {
+            "label": "Notas propias del viaje (diciembre 2024)"
+          }
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 5,
+      "title": "Día extra (adaptado)",
+      "summary": "PENDIENTE AUTOR.",
+      "physicalLevel": {
+        "walkingKm": 6,
+        "hills": "some"
+      },
+      "stops": [
+        {
+          "name": "PENDIENTE AUTOR",
+          "lat": 48.0779,
+          "lng": 7.3556,
+          "kind": "sight",
+          "durationMin": 120,
+          "notes": "Marcador provisional.",
+          "source": {
+            "label": "Notas propias del viaje (diciembre 2024)"
+          }
         }
       ],
       "food": [],
@@ -268,7 +294,19 @@
       "groupAdjustments": {}
     }
   ],
-  "lodging": [],
+  "lodging": [
+    {
+      "zone": "Blienschwiller",
+      "pros": [
+        "En el centro de la Ruta del Vino: ningún pueblo a más de 35 minutos",
+        "Pueblo pequeño y tranquilo, fuera del bullicio de Colmar"
+      ],
+      "cons": [
+        "PENDIENTE AUTOR: qué tiene en contra"
+      ],
+      "picks": []
+    }
+  ],
   "bookingChecklist": [],
   "pitfalls": [],
   "faq": [],

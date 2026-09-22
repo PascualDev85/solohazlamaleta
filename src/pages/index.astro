@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { GROUP_LABELS } from '../lib/guide';
 
 const guides = await getCollection('guides');
 
@@ -13,34 +14,58 @@ const sorted = [...guides].sort((a, b) => {
 
 <BaseLayout
   title="Solo Haz la Maleta — Guías de viaje ya planificadas"
-  description="Itinerarios día a día con mapa, presupuesto real y qué reservar. Basados en viajes hechos y adaptados a cómo viajas: en pareja, con amigos o en familia."
+  description="Itinerarios día a día con la ruta lista para Google Maps y qué reservar y cuándo. De viajes hechos, no copiados, y adaptados a cómo viajas."
 >
-  <h1>Yo planifico el viaje. Tú solo haz la maleta.</h1>
+  <section class="hero">
+    <h1 class="hero__title">Yo planifico el viaje.<br /><em>Tú solo haz la maleta.</em></h1>
 
-  <p class="lead">
-    Itinerarios día a día, con la ruta lista para abrir en Google Maps y qué
-    hay que reservar y cuándo. De viajes hechos, no copiados. Gratis y
-    completas, sin pedirte el correo.
-  </p>
+    <p class="lede">
+      Itinerarios día a día, con la ruta lista para abrir en Google Maps y qué hay que
+      reservar y cuándo. De viajes hechos, no copiados.
+    </p>
 
-  <h2>Guías</h2>
+    <p>Gratis y completas. Sin pedirte el correo.</p>
+  </section>
+
+  <h2 class="section-label" id="guias">Guías</h2>
 
   {
     sorted.length === 0 ? (
       <p>Todavía no hay guías publicadas.</p>
     ) : (
-      <ul class="guide-list">
-        {sorted.map((guide) => (
-          <li>
-            <a class="guide-list__link" href={`/${guide.data.meta.destination}/${guide.id}/`}>
-              {guide.data.meta.title}
-            </a>
-            {guide.data.meta.draft && <span class="badge">Borrador</span>}
-            <p>{guide.data.meta.description}</p>
-          </li>
-        ))}
+      <ul class="guide-list" aria-labelledby="guias">
+        {sorted.map((guide) => {
+          const { meta } = guide.data;
+          const trip = meta.tripDone;
+
+          return (
+            <li>
+              <a class="guide-list__item" href={`/${meta.destination}/${guide.id}/`}>
+                <p class="guide-list__meta">
+                  <span>{meta.destination}</span>
+                  <span>·</span>
+                  <span>{meta.days.join(' · ')} días</span>
+                  {trip && <span class="badge badge--lived">Lo hicimos</span>}
+                  {meta.draft && <span class="badge badge--adapted">Borrador</span>}
+                </p>
+
+                <h3 class="guide-list__title">{meta.title}</h3>
+                <p class="guide-list__desc">{meta.description}</p>
+
+                {trip && (
+                  <p class="guide-list__desc">
+                    <small>
+                      {GROUP_LABELS[trip.group]} · {trip.season} de {trip.date.slice(0, 4)}
+                    </small>
+                  </p>
+                )}
+
+                <span class="guide-list__go">Ver la guía →</span>
+              </a>
+            </li>
+          );
+        })}
       </ul>
     )
   }
 </BaseLayout>
-

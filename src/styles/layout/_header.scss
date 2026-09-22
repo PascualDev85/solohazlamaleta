@@ -1,14 +1,20 @@
 .site-header {
   padding-block: var(--space-md);
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-xl);
   border-bottom: 1px solid var(--color-border);
 
   .brand {
     display: inline-flex;
     align-items: center;
     min-height: 24px;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    letter-spacing: -0.01em;
     color: var(--color-text);
-    font-weight: 700;
     text-decoration: none;
+  }
+
+  .brand:hover {
+    color: var(--color-accent);
   }
 }

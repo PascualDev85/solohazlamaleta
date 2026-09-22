@@ -34,6 +34,13 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
     <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/instrument-serif-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <slot name="head" />
   </head>
 
@@ -55,7 +62,7 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
         <a href="/privacidad/">Privacidad</a>
         <a href="/aviso-legal/">Aviso legal</a>
       </nav>
-      <p>Yo planifico el viaje. Tú solo haz la maleta.</p>
+      <p class="site-footer__sign">Yo planifico el viaje. Tú solo haz la maleta.</p>
     </footer>
 
   </body>

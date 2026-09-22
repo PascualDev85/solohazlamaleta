@@ -1,8 +1,11 @@
-// Shared shape for the inline notices: affiliate disclosure, draft warning.
 .notice {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--space-md);
   border-radius: var(--radius);
   background: var(--color-surface);
+
+  p:last-child {
+    margin-bottom: 0;
+  }
 
   &--muted {
     color: var(--color-text-muted);
@@ -10,9 +13,15 @@
     margin-block: var(--space-md);
   }
 
+  // The draft warning has to be impossible to skim past: the project's whole
+  // claim is first-hand experience, so a half-written guide says so loudly.
   &--loud {
-    border: 2px solid var(--color-accent);
-    padding: var(--space-md);
+    background: var(--color-accent-quiet);
+    color: var(--color-text);
     margin-block: var(--space-md);
+
+    strong {
+      color: var(--color-accent);
+    }
   }
 }

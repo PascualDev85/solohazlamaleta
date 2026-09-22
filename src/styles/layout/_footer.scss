@@ -1,5 +1,5 @@
 .site-footer {
-  margin-top: var(--space-xl);
+  margin-top: var(--space-2xl);
   padding-block: var(--space-lg);
   border-top: 1px solid var(--color-border);
   color: var(--color-text-muted);
@@ -9,16 +9,28 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-md);
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--space-md);
   }
 
-  // 24px is the WCAG 2.5.8 minimum. Today the page passes only through the
-  // spacing exception, which depends on the inherited line-height and the
+  // 24px is the WCAG 2.5.8 minimum. Without this the page passes only through
+  // the spacing exception, which rests on the inherited line-height and the
   // gap — change either and conformance breaks with nothing to warn you.
-  // Making it a property of the CSS removes that accident.
   nav a {
     display: inline-flex;
     align-items: center;
     min-height: 24px;
+    color: var(--color-text-muted);
+  }
+
+  nav a:hover {
+    color: var(--color-accent);
+  }
+
+  .site-footer__sign {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--step-0);
+    color: var(--color-text);
+    margin: 0;
   }
 }

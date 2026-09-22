@@ -81,13 +81,17 @@ const faqJsonLd =
   <article class="guide">
     <h1>{meta.title}</h1>
 
-    <p class="guide__dateline">
-      {
-        trip
-          ? `Lo hicimos en ${trip.season} de ${trip.date.slice(0, 4)}, ${GROUP_LABELS[trip.group].toLowerCase()}, en ${trip.days} días · Actualizado ${meta.updatedAt}`
-          : `Actualizado ${meta.updatedAt}`
-      }
-    </p>
+    {
+      trip ? (
+        <p class="guide__dateline">
+          Lo hicimos en {trip.season} de {trip.date.slice(0, 4)},{' '}
+          <strong>{GROUP_LABELS[trip.group].toLowerCase()}</strong>, en{' '}
+          <strong>{trip.days} días</strong>.
+        </p>
+      ) : (
+        <p class="guide__dateline">Actualizado {meta.updatedAt}</p>
+      )
+    }
 
     {meta.draft && <DraftNotice tripMade={trip !== null} />}
     {hasAffiliateLinks && <AffiliateNotice />}
@@ -124,11 +128,11 @@ const faqJsonLd =
 
     <section aria-labelledby="duraciones">
       <h2 id="duraciones">Cuántos días tienes</h2>
-      <ul>
+      <ul class="guide__durations">
         {
           dayCounts.map((count) => (
             <li>
-              <strong>{count} días:</strong> días {variants[String(count)]?.join(', ')}
+              <strong>{count} días</strong>
               {trip?.days === count && <span class="badge badge--lived">Lo que hicimos</span>}
             </li>
           ))
@@ -147,8 +151,10 @@ const faqJsonLd =
 
           return (
             <section class="guide__day" aria-labelledby={`dia-${day.day}`}>
+              <span class="guide__daynum" aria-hidden="true">{day.day}</span>
               <h3 id={`dia-${day.day}`}>
-                Día {day.day}. {day.title}
+                <span class="visually-hidden">Día {day.day}. </span>
+                {day.title}
               </h3>
 
               {trip && !lived && (
@@ -167,8 +173,23 @@ const faqJsonLd =
                 <p>
                   {routes.map((url, index) => (
                     <a class="guide__route" href={url} rel="noopener" target="_blank">
-                      Abrir la ruta del día {day.day} en Google Maps
-                      {routes.length > 1 && ` (tramo ${index + 1} de ${routes.length})`}
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M8 1.5c-2.2 0-4 1.8-4 4 0 3 4 9 4 9s4-6 4-9c0-2.2-1.8-4-4-4Z" />
+                        <circle cx="8" cy="5.5" r="1.5" />
+                      </svg>
+                      Ruta del día {day.day} en Google Maps
+                      {routes.length > 1 && ` · tramo ${index + 1}/${routes.length}`}
+                      <span class="visually-hidden">(se abre en una pestaña nueva)</span>
                     </a>
                   ))}
                 </p>
@@ -177,7 +198,7 @@ const faqJsonLd =
               <ol class="guide__stops">
                 {day.stops.map((stop) => (
                   <li>
-                    <strong>{stop.name}</strong>
+                    <span class="guide__stopname">{stop.name}</span>
                     <span class="guide__stop-meta">
                       {' · '}
                       {stop.durationMin} min
@@ -219,15 +240,17 @@ const faqJsonLd =
               )}
 
               {day.localTip && (
-                <p class="guide__tip">
-                  <strong>Lo que haríamos distinto:</strong> {day.localTip}
-                </p>
+                <div class="guide__tip">
+                  <h4>Lo que haríamos distinto</h4>
+                  <p>{day.localTip}</p>
+                </div>
               )}
 
               {day.planB && (
-                <p class="guide__tip">
-                  <strong>Plan B:</strong> {day.planB}
-                </p>
+                <div class="guide__tip">
+                  <h4>Plan B</h4>
+                  <p>{day.planB}</p>
+                </div>
               )}
 
               {groups.map((group) =>
