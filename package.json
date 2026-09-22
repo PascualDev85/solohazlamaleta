@@ -23,6 +23,7 @@
   "private": true,
   "description": "Guias de viaje ya planificadas",
   "devDependencies": {
+    "pdfjs-dist": "^6.3.289",
     "playwright": "^1.63.0",
     "sass": "^1.105.0"
   }
