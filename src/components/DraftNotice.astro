@@ -1,21 +1,29 @@
 ---
 /**
- * A guide the author has not travelled yet. Making this loud is deliberate:
- * the project's whole claim is first-hand experience.
+ * A guide that is not ready to publish. Two different situations produce a
+ * draft, and telling a reader the wrong one would be a lie:
+ *
+ * - the author has not made the trip yet (`tripDone` null)
+ * - the author made it, but has not filled in the details (`tripDone` set)
+ *
+ * The project's whole claim is first-hand experience, so being loud and
+ * precise here is deliberate.
  */
----
-<aside class="draft-notice">
-  <strong>Borrador.</strong> Todavía no hemos hecho este viaje. Las secciones
-  marcadas como pendientes se completarán con datos propios tras recorrerlo.
-  No te fíes de esta página para reservar nada.
-</aside>
+interface Props {
+  tripMade: boolean;
+}
 
-<style>
-  .draft-notice {
-    border: 2px solid var(--color-accent);
-    border-radius: var(--radius);
-    padding: var(--space-md);
-    margin-block: var(--space-md);
-    background: var(--color-surface);
-  }
-</style>
+const { tripMade } = Astro.props;
+---
+
+<aside class="notice notice--loud">
+  <p>
+    <strong>Borrador.</strong>{' '}
+    {
+      tripMade
+        ? 'Hicimos este viaje, pero todavía estamos pasando a limpio los precios, horarios y consejos. Lo que ves marcado como pendiente no está verificado.'
+        : 'Todavía no hemos hecho este viaje. Las secciones marcadas como pendientes se completarán con datos propios tras recorrerlo.'
+    }{' '}
+    No te fíes de esta página para reservar nada.
+  </p>
+</aside>

@@ -1,0 +1,8 @@
+// Sass-only values: things needed at compile time, which CSS custom
+// properties cannot do (media query conditions, loops, maps).
+
+$breakpoints: (
+  "sm": 30rem,
+  "md": 48rem,
+  "lg": 64rem,
+);

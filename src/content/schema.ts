@@ -108,8 +108,26 @@ export const guideSchema = z
        * per variant — see `variants` below and the hard rule in CLAUDE.md.
        */
       days: z.array(z.number().int().positive()).min(1),
-      /** When the author actually travelled. Null means not visited yet. */
-      tripDone: z.string().regex(YEAR_MONTH).nullable(),
+      /**
+       * The trip the author actually made, in full: not just when, but with
+       * whom and for how long. Everything else the guide offers is adapted
+       * from it, and the page marks that difference automatically by
+       * comparing this against the day or group being rendered.
+       *
+       * Being this specific is the credibility argument, not a caveat: it is
+       * more convincing than an unqualified claim of a "real trip".
+       *
+       * Null means the author has not travelled it yet.
+       */
+      tripDone: z
+        .object({
+          date: z.string().regex(YEAR_MONTH),
+          group: groupName,
+          days: z.number().int().positive(),
+          /** How it was travelled, in the author's words: "puente de diciembre". */
+          season: z.string(),
+        })
+        .nullable(),
       updatedAt: z.string().regex(ISO_DATE),
       coverImage: z.string().optional(),
       /** Draft guides render with a banner and are excluded from the sitemap. */
@@ -213,6 +231,24 @@ export const guideSchema = z
         path: ['meta', 'tripDone'],
         message:
           'A published guide needs meta.tripDone. Set meta.draft to true while the author has not made the trip.',
+      });
+    }
+
+    /** The trip that was actually made has to be one of the days offered. */
+    if (guide.meta.tripDone && !guide.meta.days.includes(guide.meta.tripDone.days)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['meta', 'tripDone', 'days'],
+        message: `The trip was made in ${guide.meta.tripDone.days} days, which meta.days does not offer (${guide.meta.days.join(', ')}). The lived version must be one readers can pick.`,
+      });
+    }
+
+    /** Likewise the group: readers must be able to see the version that was lived. */
+    if (guide.meta.tripDone && !guide.groups.includes(guide.meta.tripDone.group)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['meta', 'tripDone', 'group'],
+        message: `The trip was made as "${guide.meta.tripDone.group}", which is not listed in groups. The lived version must be one readers can pick.`,
       });
     }
   });

@@ -1,5 +1,5 @@
 ---
-import '../styles/base.css';
+import '../styles/main.scss';
 
 interface Props {
   title: string;
@@ -34,6 +34,13 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
     <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/instrument-serif-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <slot name="head" />
   </head>
 
@@ -55,36 +62,8 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
         <a href="/privacidad/">Privacidad</a>
         <a href="/aviso-legal/">Aviso legal</a>
       </nav>
-      <p>Yo planifico el viaje. Tú solo haz la maleta.</p>
+      <p class="site-footer__sign">Yo planifico el viaje. Tú solo haz la maleta.</p>
     </footer>
 
-    <style>
-      .site-header {
-        padding-block: var(--space-md);
-        border-bottom: 1px solid var(--color-border);
-        margin-bottom: var(--space-lg);
-      }
-
-      .brand {
-        font-weight: 700;
-        text-decoration: none;
-        color: var(--color-text);
-      }
-
-      .site-footer {
-        margin-top: var(--space-xl);
-        padding-block: var(--space-lg);
-        border-top: 1px solid var(--color-border);
-        color: var(--color-text-muted);
-        font-size: var(--step--1);
-      }
-
-      .site-footer nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-md);
-        margin-bottom: var(--space-sm);
-      }
-    </style>
   </body>
 </html>

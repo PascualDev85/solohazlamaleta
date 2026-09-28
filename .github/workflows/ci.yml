@@ -65,28 +65,70 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      - name: Lighthouse on the home page
+      # A draft guide carries noindex by design, which caps its SEO score at
+      # 66. Measuring one would report a permanent red that means nothing, so
+      # the guide route is measured on a published fixture instead: the
+      # template is what we are testing, not the draft flag.
+      - name: Build a published fixture of the guide route
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+
+            const dir = 'src/content/guides';
+            const source = fs.readdirSync(dir).find((f) => f.endsWith('.json'));
+            const guide = JSON.parse(fs.readFileSync(path.join(dir, source), 'utf8'));
+
+            guide.meta.draft = false;
+            guide.meta.slug = 'ci-lighthouse-fixture';
+            if (!guide.meta.tripDone) {
+              guide.meta.tripDone = {
+                date: '2025-01',
+                group: guide.groups[0],
+                days: guide.meta.days[0],
+                season: 'fixture',
+              };
+            }
+
+            fs.writeFileSync(
+              path.join(dir, 'ci-lighthouse-fixture.json'),
+              JSON.stringify(guide, null, 2),
+            );
+
+            const dest = guide.meta.destination;
+            fs.writeFileSync('/tmp/fixture-url', '/' + dest + '/ci-lighthouse-fixture/');
+          "
+          npm run build
+
+      - name: Lighthouse on the home page and a guide
         run: |
           npx --yes astro preview --port 4321 &
           npx --yes wait-on http://localhost:4321/ --timeout 60000
 
-          npx --yes lighthouse http://localhost:4321/ \
-            --quiet --chrome-flags="--headless --no-sandbox" \
-            --output=json --output-path=/tmp/lh.json \
-            --only-categories=performance,accessibility,best-practices,seo
+          FIXTURE=$(cat /tmp/fixture-url)
 
-          node -e "
-            const report = require('/tmp/lh.json');
-            const failures = [];
+          for PAGE in "/" "$FIXTURE"; do
+            echo "--- $PAGE ---"
+            npx --yes lighthouse "http://localhost:4321$PAGE" \
+              --quiet --chrome-flags="--headless --no-sandbox" \
+              --output=json --output-path=/tmp/lh.json \
+              --only-categories=performance,accessibility,best-practices,seo
 
-            for (const [name, category] of Object.entries(report.categories)) {
-              const score = Math.round(category.score * 100);
-              console.log(name.padEnd(16), score);
-              if (score < 95) failures.push(name + ': ' + score);
-            }
+            node -e "
+              const report = require('/tmp/lh.json');
+              const failures = [];
 
-            if (failures.length > 0) {
-              console.error('Below the 95 threshold: ' + failures.join(', '));
-              process.exit(1);
-            }
-          "
+              for (const [name, category] of Object.entries(report.categories)) {
+                const score = Math.round(category.score * 100);
+                console.log(name.padEnd(16), score);
+                if (score < 95) failures.push(name + ': ' + score);
+              }
+
+              if (failures.length > 0) {
+                console.error('Below the 95 threshold: ' + failures.join(', '));
+                process.exit(1);
+              }
+            "
+          done
+
+          rm -f src/content/guides/ci-lighthouse-fixture.json

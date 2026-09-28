@@ -1,0 +1,92 @@
+// Design tokens.
+//
+// Emitted as CSS custom properties rather than Sass variables so they can be
+// overridden at runtime (dark mode, a future theme switcher) without a
+// rebuild. Sass variables cannot cross that boundary.
+//
+// The world: an editorial travel guide, printed warm. Ink on paper rather
+// than UI on chrome. The content is dense and structured — days, stops,
+// times, distances — so the design lives in type and rhythm, not ornament.
+// That also means it holds up before the author's photographs exist.
+
+:root {
+  // Paper and ink. Not white, not black: both read as unset defaults.
+  --color-bg: #fbf7f0;
+  --color-surface: #f3ece1;
+  --color-surface-deep: #eae0d1;
+  --color-text: #1f1a15;
+  --color-text-muted: #6b6053;
+
+  // Contrast verified against every background this system uses.
+  //   on bg 5.55  ·  on surface 5.11  ·  on surface-deep 4.60
+  --color-accent: #a8431c;
+  --color-accent-quiet: #e8d5c4;
+
+  // What the author actually lived, as opposed to adapted. Its own hue, or
+  // the distinction carries no visual weight.
+  //   on bg 5.98  ·  on surface 5.51  ·  on surface-deep 4.96
+  --color-lived: #2f6b3f;
+
+  --color-border: #ded2c0;
+  --color-rule: #c9b9a2;
+
+  // Type. The serif carries the voice; the body stack stays native for speed.
+  --font-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-numeral: var(--font-display);
+
+  // Fluid scale with real jumps. A flat scale is what made the old page read
+  // as a document rather than a guide.
+  --step--2: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
+  --step--1: clamp(0.84rem, 0.82rem + 0.12vw, 0.92rem);
+  --step-0: clamp(1.02rem, 0.98rem + 0.2vw, 1.14rem);
+  --step-1: clamp(1.3rem, 1.18rem + 0.6vw, 1.6rem);
+  --step-2: clamp(1.7rem, 1.4rem + 1.5vw, 2.4rem);
+  --step-3: clamp(2.4rem, 1.8rem + 3vw, 4rem);
+  --step-4: clamp(3.2rem, 2.2rem + 5vw, 5.5rem);
+
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3.5rem;
+  --space-2xl: 5.5rem;
+
+  // In rem, not ch: `ch` resolves against the element's own font-size, so a
+  // smaller-typed block would compute a narrower column and stop aligning.
+  --measure: 42rem;
+  --gutter: 1.25rem;
+  --radius: 4px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+// Dark is a real mode, not an inversion: evening reading, warm lamp light.
+@mixin dark-tokens {
+  --color-bg: #14110d;
+  --color-surface: #1e1a15;
+  --color-surface-deep: #272219;
+  --color-text: #f2ebe0;
+  --color-text-muted: #a89d8c;
+
+  //   on bg 7.30  ·  on surface 6.48  ·  on surface-deep 5.66
+  --color-accent: #e59468;
+  --color-accent-quiet: #3a2a1d;
+
+  //   on bg 9.29  ·  on surface 8.25  ·  on surface-deep 7.21
+  --color-lived: #85cb9a;
+
+  --color-border: #3a332a;
+  --color-rule: #4e4538;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @include dark-tokens;
+  }
+}
+
+:root[data-theme="dark"] {
+  @include dark-tokens;
+}

@@ -1,0 +1,37 @@
+// The parts of the page nobody draws still carry the design. Left alone they
+// ship the browser's defaults, which belong to no design system.
+::selection {
+  background: var(--color-accent-quiet);
+  color: var(--color-text);
+}
+
+:root {
+  accent-color: var(--color-accent);
+  caret-color: var(--color-accent);
+  color-scheme: light dark;
+  scrollbar-color: var(--color-rule) transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-rule);
+  border: 3px solid var(--color-bg);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+::marker {
+  color: var(--color-text-muted);
+}

@@ -76,16 +76,22 @@ La estructura de Alsacia ya está montada y sirve igual cuando la quieras.
 
 ## Pendientes técnicos
 
-### Protección de ramas — no se pudo activar
+### Protección de ramas — RESUELTO
 
-GitHub reserva la protección de ramas a **Pro** en repositorios privados.
-Ahora mismo `main` y `develop` aceptan push directo. Opciones:
+El repo es público y `main` y `develop` están protegidas: exigen PR con los
+checks `build` y `lighthouse` en verde, y no admiten force-push ni borrado.
 
-1. Hacer el repo público. Gratis, y no hay nada sensible: los secretos están
-   fuera del repo. Es lo que haría.
-2. GitHub Pro, 4 $/mes.
-3. Dejarlo y respetar gitflow por disciplina. Funciona hasta que dejas de
-   respetarlo.
+### Tareas programadas en la nube
+
+Dos rutinas corriendo en la nube de Anthropic, independientes de tu equipo:
+
+| Rutina | Cuándo | Qué hace |
+|---|---|---|
+| Auditoría de dependencias | Lunes 08:00 (Madrid) | `npm audit`, dependencias desactualizadas, comprueba que el build pasa y que el esquema sigue rechazando datos inválidos. PR para parches, issue para mayores o vulnerabilidades. Nunca mergea. |
+| Caducidad de datos (D8) | Día 1 de cada mes, 08:00 | Busca `checkedAt` de más de 12 meses, datos sensibles sin fuente, y marcadores PENDIENTE AUTOR en guías ya publicadas. Solo lectura: abre una issue. |
+
+Ambas callan cuando no hay nada que decir. Se gestionan en
+https://claude.ai/code/routines
 
 ### Otros
 
