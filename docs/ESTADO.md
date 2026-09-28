@@ -108,20 +108,17 @@ Están en `.claude/agents/`. Se invocan por nombre:
 
 | Agente | Para qué |
 |---|---|
-| `architect` | Esquema, estructura, dependencias, decisiones técnicas |
-| `frontend-dev` | Páginas, componentes, islas Vue |
-| `junior-dev` | Tareas pequeñas y bien especificadas |
-| `qa` | Verificar antes de mergear |
-| `product-owner` | Aceptar o rechazar una fase |
-| `seo` | Keywords, datos estructurados, enlazado |
-| `marketing` | Escalera de valor, captación, afiliados, RGPD |
-| `social-content` | Pinterest y carruseles (D7: sin vídeo) |
-| `devops` | CI/CD, Cloudflare, VPS, aislamiento de finanzas |
+| `architect` | Esquema, estructura, dependencias y decisiones técnicas, y la implementación de lo que decide |
+| `qa` | Verificar ejecutando, antes de mergear nada |
+| `seo` | Palabras clave, datos estructurados, enlazado interno |
 
-Cada uno lleva sus límites escritos, para que deleguen en vez de invadirse.
+Se redujeron de nueve a tres el 2026-09-28. Los otros seis (`frontend-dev`,
+`junior-dev`, `product-owner`, `marketing`, `social-content`, `devops` y
+`ui-designer`) describían un equipo que no existe: el trabajo lo hace una
+persona con ~6 h/semana, y mantener nueve definiciones sincronizadas era
+coste sin retorno. Están en el historial de git si alguna vez hacen falta.
+
 `_SHARED.md` tiene gitflow, el estándar de código y la definición de terminado.
-
----
 
 ## Lo que no se pudo hacer, y por qué
 
