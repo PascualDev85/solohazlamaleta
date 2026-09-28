@@ -7,6 +7,15 @@ Las que llevan **(tuya)** dependen de ti y nadie más puede hacerlas.
 
 ---
 
+## Bloquea la automatización — urgente
+
+- [ ] **(tuya) Mergear el PR #2 a `develop`.** Las notas de viaje viven en
+      `docs/fuentes/`, que solo existe en esa rama. La rutina que estructura
+      guías trabaja sobre `develop`, así que el 23 de septiembre se ejecutó,
+      no encontró las notas y se paró sin hacer nada — correctamente, porque
+      se negó a inventar. Hasta que ese PR entre en `develop`, la rutina
+      seguirá sin poder trabajar. Vuelve a dispararse los miércoles.
+
 ## Bloquean la publicación
 
 - [ ] **(tuya)** Rellenar Alsacia con lo que viviste → ver
@@ -60,13 +69,11 @@ Las que llevan **(tuya)** dependen de ti y nadie más puede hacerlas.
 
 ## Diseño
 
-- [ ] **El análisis de competencia visual quedó sin terminar** — el agente
-      cayó por límite de gasto de la cuenta. Relanzarlo:
-      hay un agente `ui-designer` definido en `.claude/agents/`, que usa la
-      skill `impeccable`. Objetivo: una dirección visual concreta (paleta,
-      tipografía, escala, ritmo) que conviva con Lighthouse ≥95.
-- [ ] Decidir tipografía. Una fuente web cuesta rendimiento; hay que
-      justificarla o usar bien las del sistema.
+- [x] Dirección visual: tipografía editorial con Instrument Serif
+      autoalojada (15 KB, precargada), itinerario como línea de tiempo,
+      paleta verificada en claro y oscuro. Lighthouse sigue en 100.
+- [ ] Revisar la dirección cuando existan fotos propias: la maqueta actual
+      está pensada para sostenerse sin ellas.
 
 ## Contenido posterior
 
