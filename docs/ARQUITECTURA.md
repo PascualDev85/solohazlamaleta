@@ -194,21 +194,53 @@ punto.
 
 ---
 
-## Lo que cambiaría del encargo
+## Enmiendas acordadas
 
-1. **Guía de ejemplo: Alsacia, no Roma.** El prompt pide "datos verosímiles de
-   Roma, Florencia y Pisa". Datos verosímiles son datos inventados, y eso
-   choca de frente con §12 y con D2. Además ahora tenemos Alsacia con tus
-   datos reales, que como escaparate es más fuerte: enseña el sistema
-   funcionando sobre contenido de verdad.
+### Datos reales para el sitio, verosímiles solo para maquetar — DECIDIDO
 
-2. **El mapa interactivo es el mayor riesgo del Lighthouse ≥95** que el propio
-   encargo exige. Leaflet más teselas son unos 150 KB de JavaScript en la
-   página que más importa. Propongo: mapa estático en la guía con enlace a
-   Google Maps (que ya funciona), y mapa interactivo solo en `/destinos/`,
-   donde el coste se justifica y no compite con el contenido.
+La guía de ejemplo es **Alsacia con datos reales**. Enseña el sistema
+funcionando sobre contenido de verdad, que es más fuerte que cualquier
+maqueta.
 
-3. **El formulario "Adapta este viaje a ti" se puede construir pero no
-   activar.** Recoger un correo sin privacidad ni aviso legal completos
-   incumple el RGPD, y esas páginas siguen esperando tus datos
-   identificativos.
+Los datos verosímiles siguen siendo útiles para revisar el diseño: hacen falta
+guías con presupuesto, comida, FAQ y alojamiento rellenos para ver esas
+secciones, y Alsacia todavía no los tiene. Pero un fichero inventado dentro de
+`src/content/guides/` es una guía publicable a un descuido de distancia.
+
+**Solución: viven fuera de la colección de contenido.**
+
+```
+src/fixtures/*.json        Datos verosímiles, nunca son contenido
+/_muestra/                 Página de revisión de diseño, noindex
+```
+
+No los carga Content Collections, así que **no pueden generar una página de
+guía ni entrar en el sitemap aunque alguien se equivoque**. La separación es
+estructural, no una convención que haya que recordar. La página `/_muestra/`
+sirve además de escaparate del sistema de diseño para el Bloque 2.
+
+### Formulario "Adapta este viaje a ti" — SE INTEGRA
+
+Se construye e integra en la plantilla de guía.
+
+Aviso que no cambia la decisión pero condiciona el lanzamiento: **no puede
+recoger un solo correo hasta que `privacidad` y `aviso-legal` lleven tus datos
+identificativos reales**. Hasta entonces se monta completo pero con el envío
+desactivado y un aviso visible en desarrollo. Es requisito legal, no una
+preferencia.
+
+### Mapa interactivo — PENDIENTE DE TU DECISIÓN
+
+Leaflet o MapLibre con teselas son del orden de 150 KB de JavaScript en la
+página que más importa, y el propio encargo exige Lighthouse ≥ 95 en las
+cuatro categorías. Las dos cosas tiran en direcciones opuestas.
+
+Opciones:
+
+1. **Mapa interactivo solo en `/destinos/`**, y en las guías el enlace a
+   Google Maps que ya funciona. Protege el rendimiento donde importa.
+2. **Mapa interactivo también en la guía**, cargado con `client:visible` y
+   solo al hacer clic sobre una imagen estática. Se puede llegar a 95, pero
+   hay que cuidarlo.
+3. **Mapa en ambos sitios sin restricciones.** Es lo que pide el brief §6, y
+   costará rendimiento.
