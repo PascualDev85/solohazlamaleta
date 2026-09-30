@@ -1,379 +1,500 @@
-# BRIEF — Solo Haz la Maleta
+# SOLO HAZ LA MALETA — Documento maestro (Blueprint 1.0 → 1.4 consolidado)
 
-> Documento de contexto para Claude Code. Léelo entero antes de escribir código.
-> Autor del proyecto: David (desarrollador: Vue, Node/Express, Python, n8n).
-> Idioma del producto: español. Idioma del código y commits: inglés.
-
----
-
-## 1. Qué es el proyecto
-
-**Solo Haz la Maleta** es una web de viajes con marca personal (sin cara al principio) cuya promesa es:
-
-> **"Yo planifico el viaje. Tú solo haz la maleta."**
-
-Ofrece **guías de viaje ya planificadas** (itinerario día a día, mapa, presupuesto real, qué reservar y cuándo) basadas en viajes reales del autor, **adaptadas al tipo de grupo** (pareja, amigos, familia con personas mayores). Más adelante añade un **canal de ofertas de vuelos desde el sur de España** (Sevilla, Málaga, Jerez) y Madrid para largo recorrido, donde cada oferta enlaza a la guía del destino ya montada.
-
-### Restricciones que mandan sobre todo lo demás
-- **Tiempo del autor: ~6 h/semana de media.** Todo lo que se pueda automatizar, se automatiza. Nada que requiera grabar o editar vídeo.
-- **Coste mínimo.** Infraestructura: el VPS que ya existe (~7 €/mes) + servicios en plan gratuito. Solo pago por uso de APIs.
-- **Calidad y experiencia real por encima de volumen.** 30 guías buenas > 300 genéricas. Google penaliza el contenido masivo de relleno.
-
-### Diferenciación (no perderla nunca de vista)
-1. Experiencia real y verificable (viajes hechos, 8 años viviendo en Mallorca).
-2. Itinerarios accionables (mapa, ruta, PDF, Google Maps, checklist de reservas), no artículos largos.
-3. Adaptación por tipo de grupo (sobre todo "con personas mayores", casi nadie lo hace bien).
-4. Motor propio (Reel2Trips) que genera borradores y personaliza itinerarios.
+> **Punto cero del proyecto.** Contrato estratégico y funcional. Todo lo que se construya debe poder justificarse contra este documento.
+> Versión: 1.6 · Fecha: 30 de septiembre de 2026 · Próxima revisión: mes 6 desde el lanzamiento.
+> Documentos de apoyo: `docs/1.5_producto_mi_viaje.md`, `docs/1.6_modelo_datos.md`, `docs/1.6.4_json_islandia.md`, `docs/1.7_arquitectura.md`, `docs/1.7.1_repository_domain.md`, `docs/1.7.2_data_contract.md`, `docs/redes.md`.
 
 ---
 
-## 2. Arquitectura general
+## 🔴 DECISIONES CERRADAS — NO MODIFICAR SIN NUEVA VALIDACIÓN
 
-Dos piezas separadas, unidas por **un único esquema de guía**:
-
-```
-┌──────────────────────────────┐        ┌──────────────────────────────────┐
-│  WEB PÚBLICA (repo nuevo)    │        │  MOTOR (repo reel2trip, refactor) │
-│  Astro + islas Vue           │        │  FastAPI, Python 3.11             │
-│  Estática → Cloudflare Pages │        │  Docker en el VPS                 │
-│  Guías = ficheros de datos   │◀──────▶│  Genera borradores, personaliza,  │
-│  validados por el esquema    │ esquema│  genera PDF                       │
-└──────────────┬───────────────┘        └───────────────▲──────────────────┘
-               │ formulario "Adapta este viaje"          │
-               ▼                                         │
-        ┌─────────────────────────────┐                  │
-        │  n8n (Docker en el VPS)     │──────────────────┘
-        │  webhooks, emails, ofertas  │──▶ MailerLite/Brevo (email + newsletter)
-        └─────────────────────────────┘──▶ Telegram (ofertas, fase posterior)
-```
-
-### Decisiones cerradas
-| Tema | Decisión | Motivo |
+| # | Decisión | Validada con |
 |---|---|---|
-| Web | **Astro** + componentes **Vue** solo donde haya interactividad (mapa, selector de grupo, formulario) | Web de contenido: HTML estático, mínimo JS, Content Collections con esquema |
-| Hosting web | **Cloudflare Pages** (plan gratuito) | Sin cold start, CDN, gratis |
-| Motor | Reutilizar **módulos limpios** de Reel2Trip; **no** reutilizar `main.py` ni `templates/result.html` | Son la parte difícil de mantener |
-| Hosting motor + n8n | **VPS existente**, Docker Compose, junto al proyecto de finanzas (aislado) | Coste cero adicional, sin cold start |
-| Base de datos | Supabase (plan gratuito, ya en uso) | Ya integrado |
-| Email | **MailerLite o Brevo** (plan gratuito), integrado vía n8n | Gratis para empezar |
-| Transcripción | **Groq (Whisper grande)** en lugar de faster-whisper `tiny` local | Precisión con nombres de lugares en español; el VPS no puede con Whisper local |
-| LLM | `claude-sonnet-5` para generación de guías; `claude-haiku-4-5` para tareas ligeras | Actualizar `planner.py:548` de entrada |
-| Analítica | Umami o Plausible (sin cookies) + Google Search Console | Sin banner de cookies, ligero |
-| PDF | Playwright imprimiendo una ruta `/print/` de la propia guía | Diseño idéntico a la web desde el mismo dato |
+| 1 | **Nombre: Solo Haz la Maleta.** Claim: *"Nosotros hacemos el trabajo difícil."* | Test de posicionamiento (1.3). Pendiente: prueba con 10 personas antes de comprar dominio |
+| 2 | **Es una plataforma de viajes, no un blog.** La unidad es el viaje, no el artículo | 1.0 |
+| 3 | **Cuatro principios: Comprobado · Vivido · Adaptado · Con criterio** | 1.1 y 1.3 |
+| 4 | **Etiquetas de verificación obligatorias y visibles**: Vivido / Comprobado / Estimado, siempre con fecha | 1.1, 1.3 |
+| 5 | **Mallorca = laboratorio SEO. Roma = escaparate de producto. Tailandia = contrapeso de tráfico. Islandia = cuarto pilar** | 1.2 (Keyword Planner + Trends + SERP) |
+| 6 | **Estrategia SEO: colas largas → grupos temáticos → autoridad → búsquedas grandes.** Nunca al revés | 1.2 |
+| 7 | **Ritmo: 2 guías + 2-3 satélites al mes.** Máximo | Tiempo disponible (~6 h/semana) |
+| 8 | **El calendario se adapta al tiempo disponible; la estrategia SEO no se acelera artificialmente para cumplir una fecha** | Regla de proyecto |
+| 9 | **V1 sin cuentas de usuario.** El resultado se lleva en PDF y mapa | 1.0 |
+| 10 | **V1 no reserva, no vende paquetes, no compara precios** | 1.0 |
+| 11 | **Padres mayores: funcionalidad de producto, no eje editorial ni bandera de marca** | 1.2 (volumen 0 en las variantes por destino) |
+| 12 | **Ritmo de viaje: modificador interno. Nunca una página** | 1.2 (volumen 0 en las cinco variantes) |
+| 13 | **Una intención de búsqueda, una URL.** Las variantes de días, grupo o ritmo viven dentro de la página cuando responden a la misma intención. Solo se crea URL propia cuando hay intención de búsqueda propia y volumen demostrado | 1.2 (evitar canibalización) |
+| 14 | **Canal de ofertas desde el sur: canal de adquisición (Telegram y redes), no pilar editorial** | 1.2 (intención transaccional, SERP de Ryanair y Skyscanner) |
+| 15 | **Familias con niños: fuera de la V1** (hay demanda, pero está saturado y sin experiencia propia) | 1.2 |
+| 16 | **Monetización: afiliación contextual desde el día uno; productos propios solo con señales de demanda** | 1.0, 1.4 |
+| 17 | **La IA es infraestructura interna.** No se publica nada generado sin revisión humana. Sin imágenes generadas por IA | 1.0, 1.1 |
+| 18 | **Idioma: español. Mercado: España** | 1.0 |
+| 19 | **"Mi viaje" es el producto; el PDF es una salida.** El concepto del producto no cambia aunque evolucionen los formatos | 1.4 |
+| 20 | **"Adapta este viaje" desde V1** como MVP de personalización, sin construir planificador | 1.4 |
+| 21 | **Las respuestas de adaptación se guardan estructuradas** por destino desde el primer día. Son datos de producto, no logs | 1.4 |
+| 22 | **Competencia directa en español existe.** Spain Seeker tiene posicionamiento casi idéntico. La oportunidad está en combinar experiencia real + verificación + criterio + adaptación + ejecución | 1.4 (benchmarking) |
+| 23 | **Precio del primer producto: a validar.** Rango orientativo 5-15 €. No se fija antes de tener el producto terminado | 1.4 |
+| 24 | **El primer producto se lanza por señales de demanda**, no por número de suscriptores. Señales: clics de afiliado, descargas de mapa, uso de "Adapta este viaje", solicitudes, lista de espera | 1.4 |
+| 25 | **Tiempo estimado de producción por guía: 3-5 h** hasta medir el proceso real. No optimizar antes de medir | 1.4 |
+| 26 | **No construir planificador hasta que los datos de adaptación lo justifiquen** | 1.4 |
+| 27 | **No construir comunidad en V1** | 1.4 |
 
 ---
 
-## 3. Marca, público y contenido
+## A. Visión y objetivo
 
-- **Marca:** Solo Haz la Maleta. Dominio previsto: `solohazlamaleta.com` (+ `.es`). Usuario en redes: `@solohazlamaleta`. Hashtag propio: `#solohazlamaleta`.
-- **Voz:** primera persona, cercana, práctica ("lo hicimos así", "lo que haríamos distinto"). Sin cara, pero con presencia real (fotos propias, anécdotas, datos de gasto reales).
-- **Público:** viajeros hispanohablantes que quieren el viaje resuelto. Para ofertas: quien sale del sur de España.
-- **Aeropuertos de referencia:** SVQ (Sevilla), AGP (Málaga), XRY (Jerez) para Europa; MAD (Madrid) para largo recorrido, con "cómo llegar desde el sur".
+Construir un **activo digital de viajes** que convierta información dispersa en decisiones y viajes ejecutables, con audiencia propia y varias fuentes de ingresos.
 
-### Plan editorial — fase 1 (lanzamiento)
-Priorizado por análisis de competencia en Google (pendiente confirmar volúmenes con Keyword Planner):
-
-1. **Roma, Florencia y Pisa por libre en 7 días** — mucha demanda; en Google dominan paquetes de agencias, pocas guías independientes.
-2. **Islandia en camper 2 semanas (13 días)** — casi todo lo existente es de 10 días; alto valor por visita (alquiler de camper, tours).
-3. **Mallorca en camper: ruta y dónde dormir legalmente** — competencia desactualizada e información contradictoria sobre pernocta.
-4. **Mallorca local, búsquedas concretas** (3-4 artículos satélite): calas sin gente en agosto, calas sin coche, qué hacer en invierno/si llueve, excursiones en barco por zona. + página "Mallorca en 5 días" como hub.
-
-### Fases editoriales posteriores
-- **Fase 2 (largo recorrido):** Tailandia 17 días, Egipto 1 semana, Budapest + Praga (publicar antes del viaje de primavera 2027, actualizar después como "probado").
-- **Fase 3 (escapadas):** París, Londres, Bélgica, Algarve, Alsacia, Ámsterdam, Macedonia del Norte. Con enfoques concretos, no guías genéricas.
-
-### Reglas de contenido
-- Los reels/TikToks son **fuente interna de investigación**. Nunca se publican, copian ni incrustan en la web.
-- Cada dato sensible (precio, horario, norma, acceso) lleva **fecha de verificación**.
-- Nada de texto IA sin revisar. El motor genera borradores; el autor revisa y añade la parte personal.
-- Fotos propias siempre que sea posible.
+- **Año 1:** construir base, autoridad temática y audiencia. Ingresos simbólicos.
+- **Año 2:** ingreso complementario real y primeros productos propios.
+- **Restricción permanente:** ~6 h/semana. Todo lo repetitivo se automatiza; lo que no se puede automatizar es lo que da valor.
 
 ---
 
-## 4. Estructura de URLs
+## B. Usuario
+
+Viajero independiente español, aproximadamente **28-45 años**, que viaja **en pareja, con amigos o con su familia** (incluidos padres mayores). Planifica por su cuenta, no compra paquetes, quiere aprovechar bien unos días limitados de vacaciones. Usa el móvil durante el viaje.
+
+---
+
+## C. Problema
+
+Exceso de información dispersa y dificultad para convertirla en un viaje coherente. Quince pestañas abiertas, reels sin contexto, blogs con la vida del autor antes del itinerario, precios sin fecha y ninguna respuesta a la pregunta real: **¿qué hago yo, con mis días, mi gente y mi presupuesto?**
+
+---
+
+## D. Propuesta de valor
+
+> **Nosotros hacemos el trabajo difícil.**
+> Guías de viaje con precios comprobados, presupuesto real y versiones según cómo viajes.
+
+La cadena de valor del producto:
 
 ```
-/                                   Home
-/{destino}/                         Página hub de destino (país, región o isla)
-/{destino}/{slug-guia}/             Guía de itinerario
-/{destino}/{slug-articulo}/         Artículo satélite
-/print/{destino}/{slug}/            Versión imprimible (noindex) → PDF
-/ir/{id}                            Redirección de afiliado (noindex, nofollow)
-/ofertas/{slug}/                    Oferta temporal (noindex) — fase posterior
-/sobre-mi/  /aviso-legal/  /privacidad/  /afiliacion/
+Información → Comprobación → Criterio → Adaptación → Decisión → Viaje
 ```
 
-Ejemplos: `/italia/roma-florencia-pisa-7-dias/`, `/islandia/camper-2-semanas/`, `/mallorca/calas-sin-gente/`.
-
-Reglas: slugs en español sin acentos; **nunca** páginas separadas para variantes de días de la misma ciudad (una sola "Roma en 3, 4 o 5 días"); las rutas combinadas sí son páginas propias.
+Frase interna de referencia (útil para explicar el proyecto):
+> *ChatGPT te hace un itinerario en diez segundos. Nosotros te decimos cuál de esos sitios cierra los lunes, cuánto cuesta de verdad y qué quitaríamos si solo tienes tres días.*
 
 ---
 
-## 5. Esquema de guía (el contrato)
+## E. Posicionamiento
 
-**Fuente de verdad:** modelo Pydantic en el motor → exportado a JSON Schema → usado para generar el esquema de Content Collections de Astro (p. ej. `json-schema-to-zod`). Si una guía no cumple el esquema, **la web no compila**.
+**Los cuatro principios:**
 
-Campos mínimos (ajustar nombres al implementar, mantener la estructura):
+1. **Comprobado.** Cada dato sensible lleva fecha y fuente. "Comprobado" no significa verdad permanente: significa comprobado **en esa fecha**.
+2. **Vivido.** Cuando hemos estado, se dice. Cuando no, también. La guía editorial es legítima si se etiqueta.
+3. **Adaptado.** El mismo destino cambia según quién viaja, cuántos días, qué ritmo y qué presupuesto. En V1 se resuelve **editorialmente**, no con algoritmo.
+4. **Con criterio.** No listamos todo lo que se puede hacer: ayudamos a decidir qué merece el tiempo disponible. El criterio se firma y se distingue visualmente de los datos.
 
-```yaml
-meta:
-  slug, destination, title, description (SEO), type: itinerary|satellite|hub
-  days: int | [int]            # p.ej. [3,4,5] para variantes en una misma página
-  trip_done: "2024-05"         # cuándo lo hizo el autor (null si no aplica)
-  updated_at, cover_image, gallery[]
-summary:
-  for_who, budget_per_person {min, max, currency}, best_season,
-  getting_around, base_area, pace: relaxed|medium|intense
-groups: [couple, friends, family_seniors]   # grupos soportados por la guía
-days:
-  - day: 1
-    title, summary, physical_level {walking_km, hills: none|some|many}
-    stops:
-      - name, lat, lng, duration_min, kind (sight|food|transport|stay|activity),
-        start_time?, travel_to_next_min?, booking {affiliate_id, advance_notice}?,
-        notes, verified_at?
-    food[]: name, area, price_level, notes
-    local_tip                    # "lo que haríamos distinto"
-    plan_b                       # si llueve / cerrado
-    group_adjustments:
-      couple: text?   friends: text?   family_seniors: text?
-lodging:
-  zones[]: name, pros[], cons[], picks[] {name, price_level, affiliate_id}
-transport: arrival_from {SVQ, AGP, XRY, MAD}, local[], passes[]
-budget_breakdown: flights, lodging, transport, tickets, food, total, notes, verified_at
-booking_checklist[]: item, when (p.ej. "2 meses antes"), affiliate_id?
-pitfalls[]                     # errores y trampas para turistas
-practical: insurance_affiliate_id, documents, plugs, tips, apps[]
-faq[]: q, a
-related[]: slugs
+**Lo que NO defendemos como diferencial** (el mercado ya lo hace): publicar presupuestos, publicar itinerarios día a día, personalizar rápido.
+
+**Contra quién competimos de verdad:** no contra los blogs grandes (ganan en autoridad) ni contra la IA (gana en velocidad), sino contra la **desconfianza**: precios viejos, recomendaciones interesadas y contenido generado sin haber pisado el sitio.
+
+---
+
+## F. Marca y comunicación
+
+```
+SOLO HAZ LA MALETA
+Nosotros hacemos el trabajo difícil.
+Guías de viaje con precios comprobados, presupuesto real y versiones según cómo viajes.
+
+VIVIDO · Estuvimos aquí · marzo 2026
+COMPROBADO · Comprobado · septiembre 2026
+ESTIMADO · Estimación · septiembre 2026
 ```
 
-Validaciones obligatorias: coordenadas dentro del país del destino, `affiliate_id` existente en el registro de afiliados, `verified_at` no mayor de 12 meses (aviso, no error).
+- **Tono:** cercano, directo, sin épica. Primera persona. Cero relleno antes del itinerario.
+- **Marca personal sin cara** (al menos al principio): fotos propias, criterio firmado, página "Sobre mí" con los viajes reales.
+- **Principio editorial de cabecera:** *no estamos aquí para decirte todo lo que puedes hacer, sino para ayudarte a decidir qué merece tu tiempo.*
+- **Frases prohibidas:** "la guía definitiva", "todo lo que necesitas saber", "los mejores X imprescindibles".
+- **Pendiente antes de comprar dominio:** prueba con 10 personas. Pregunta literal: *"Si ves una web que se llama Solo Haz la Maleta, sin saber nada más, ¿qué crees que ofrece? ¿Qué esperarías encontrar dentro?"* Clasificar respuestas en: agencia/reservas · guías para organizar · itinerarios preparados · blog · otro. Si domina "agencia/reservas", el claim necesita más trabajo.
 
 ---
 
-## 6. Plantilla de la guía de itinerario (orden en página)
+## G. Producto V1
 
-1. **Cabecera:** título, foto propia, "Lo hicimos en {trip_done} · Actualizado {updated_at}".
-2. **Aviso de afiliación** (una línea, enlace a `/afiliacion/`).
-3. **Caja de resumen** + botones **Descargar PDF** y **Abrir en Google Maps**.
-4. **Selector de grupo** (isla Vue): pareja / amigos / familia con mayores. Muestra los `group_adjustments` del grupo elegido en cada día. Por defecto: sin selección = itinerario base.
-5. **Mapa interactivo** (isla Vue + Leaflet/MapLibre, tiles OSM): paradas coloreadas por día, filtro por día.
-6. **Itinerario día a día** (con reservas en contexto, comida, consejo propio, plan B, ajustes por grupo).
-7. Dónde dormir · 8. Cómo llegar y moverse · 9. Presupuesto real · 10. Qué reservar y cuándo · 11. Errores y trampas · 12. Lo práctico
-13. **CTA de captación:** "Adapta este viaje a ti" (formulario, ver §8).
-14. **FAQ** (con datos estructurados) · 15. Guías relacionadas · 16. Firma del autor.
+**El producto central es "Mi viaje".** El PDF, el mapa y el presupuesto son salidas del producto, no el producto en sí. Esta distinción permite evolucionar los formatos sin cambiar el concepto ni el nombre.
 
-**Google Maps:** un enlace de ruta por día (respetar el límite de paradas intermedias de las URLs de Google Maps; dividir si hace falta) + descarga **KML** para importar en Google My Maps.
+**La guía gratuita incluye:**
+- Caja de resumen comprensible sin desplazarse en móvil.
+- Selector de ritmo (equilibrado / intensivo / tranquilo).
+- Mapa interactivo con paradas por día + enlace de ruta de Google Maps + KML.
+- Presupuesto estructurado por conceptos, con base de cálculo, fecha y distinción entre gasto real y estimación.
+- Criterio editorial firmado, visualmente distinto de los datos.
+- Etiquetas Vivido / Comprobado / Estimado con fecha en cada dato sensible.
+- PDF sin registro.
 
-**Otros tipos de página:** hub de destino (resumen, mapa general, guías, práctico) y satélite (resumen, contenido, mapa si aplica, enlace a guía principal, FAQ).
+**"Adapta este viaje" — MVP de personalización desde V1:**
+Formulario con campos: destino, días, grupo (pareja / amigos / familia / padres), ritmo, prioridades y presupuesto orientativo. Resultado: PDF de la variante más cercana enviado por email + alta en newsletter (doble confirmación). Las respuestas se almacenan **estructuradas** desde el primer día:
 
----
-
-## 7. SEO y rendimiento (requisitos)
-
-- HTML estático; JS solo en islas. Objetivo **Lighthouse ≥ 95** en rendimiento, accesibilidad, buenas prácticas y SEO.
-- `sitemap.xml`, `robots.txt`, canonical, Open Graph/Twitter cards.
-- Schema.org: `Article`, `BreadcrumbList`, `FAQPage`; `TouristTrip`/`ItemList` para itinerarios si aporta.
-- Imágenes optimizadas (`astro:assets`, AVIF/WebP, tamaños responsivos, `alt` descriptivo).
-- Enlazado interno automático: hub ↔ guías ↔ satélites ↔ relacionadas.
-- `noindex` en `/print/`, `/ir/`, `/ofertas/`.
-
----
-
-## 8. Monetización y captación
-
-### Escalera de valor
-1. **Gratis sin pedir nada:** la guía web completa + lista de Google Maps. **Nunca** esconder la guía tras email o pago.
-2. **Gratis a cambio de email — "Adapta este viaje a ti":** formulario (fechas, grupo, ritmo, intereses) → PDF personalizado por email en minutos.
-3. **Newsletter semanal automatizada:** ofertas desde el sur + guía de la semana (n8n la monta, el autor revisa).
-4. **De pago, 7-15 € (fase posterior, con ~500-1.000 suscriptores):** guías premium solo donde hay conocimiento difícil de encontrar (p. ej. "Mi Mallorca: 60 sitios", "Kit Islandia en camper"). Venta vía Payhip o Stripe + marketplaces (ShareThatTrip, Rexby) como canal extra.
-5. **De pago, 25-60 € (cuando haya demanda):** viaje planificado a medida, plazas limitadas.
-
-### Afiliados
-- **Registro central** `affiliates.(json|yaml)`: `id`, `partner`, `url`, `description`, `active`. Todas las salidas pasan por `/ir/{id}` (rel="sponsored nofollow").
-- Partners previstos: Booking (hoteles), GetYourGuide (tours, ≥8 %), Civitatis, IATI (seguros), alquiler de camper en Islandia y Mallorca, alquiler de coches, Travelpayouts (vuelos, fase ofertas).
-- Enlaces **solo en contexto** (la reserva del Vaticano en el día del Vaticano). Sin banners de publicidad al inicio.
-
-### Flujo "Adapta este viaje" (lead magnet)
+```json
+{
+  "destination": "roma",
+  "trip_days": 3,
+  "group_type": "couple",
+  "pace": "balanced",
+  "budget": "medium",
+  "priorities": ["history", "food"],
+  "created_at": "2026-10-15"
+}
 ```
-Formulario (isla Vue, web estática)
-  → POST webhook n8n (validación + honeypot + rate limit)
-  → Alta en MailerLite/Brevo con DOBLE OPT-IN + etiquetas (destino, grupo, fechas)
-  → Tras confirmar: n8n llama al motor /personalize (guía base + parámetros)
-  → Motor devuelve itinerario ajustado → /pdf → PDF
-  → Email con el PDF + enlace a la guía
+
+Estos datos no son logs: son el input que decidirá si construir el planificador y qué variables debe tener.
+
+**Frontera entre los tres niveles del producto:**
+- **Guía gratuita:** presenta información, posibilidades y criterio. El lector ve todas las opciones y decide.
+- **"Adapta este viaje":** MVP de personalización. Identifica, a partir de las respuestas del formulario, qué variante ya existente encaja mejor con ese usuario. Devuelve una recomendación, no un viaje nuevo.
+- **"Mi viaje":** producto de ejecución. Convierte la variante elegida en un viaje estructurado y listo para llevar a cabo: itinerario definitivo, mapa filtrado, presupuesto adaptado, checklist, enlaces de reserva y avisos prácticos.
+
+El salto de gratis a pago no es de cantidad de información, sino de decisión tomada: la guía da las posibilidades, Mi viaje las convierte en una decisión concreta ya preparada.
+
+**El esquema JSON de adaptación es conceptual.** Los campos y valores mostrados en el documento no constituyen el contrato técnico definitivo. Se validarán durante el Blueprint 1.5 antes de implementar el almacenamiento.
+
+**Qué NO incluye en V1:** cuentas de usuario, guardado, edición, colaboración, reservas, comparador de precios, personalización algorítmica, planificador, comunidad.
+
+---
+
+## H. Arquitectura de contenidos
+
+**Grupos temáticos por destino**: hub + guías + satélites, enlazados entre sí.
+
 ```
-Asíncrono: el visitante nunca espera en pantalla.
+/{destino}/                        Hub
+/{destino}/{slug}/                 Guía o satélite
+/basicos/{tema}/                   Transversal (seguro, equipaje, vuelos)
+/ofertas/{slug}/                   Oferta temporal (noindex)
+/ir/{id}                           Afiliado (noindex, nofollow, sponsored)
+/print/{destino}/{slug}/           Imprimible (noindex)
+/sobre-mi/ /aviso-legal/ /privacidad/ /afiliacion/
+```
 
-### RGPD (obligatorio antes de recoger un solo email)
-Consentimiento explícito (casilla no premarcada), doble opt-in, política de privacidad, aviso legal, página de afiliación, baja en un clic, registro del consentimiento. Sin cookies de terceros.
+**Tres tipos de página, con papeles distintos:**
 
----
+| Tipo | Ejemplos | Papel |
+|---|---|---|
+| **Autoridad** | Qué ver en Roma · Viajar a Tailandia | Construyen el grupo temático. Posicionan tarde |
+| **Intención** | Roma en 3/4 días · Mallorca en 3/5 días · Tailandia 10/15 días | El producto. Tráfico medio |
+| **Comercial** | Dónde alojarse en Roma · Alquilar coche en Mallorca · Alquiler de camper en Islandia · Seguro de viaje | Donde está el dinero. Se publican **desde el principio** |
 
-## 9. El motor (refactor de Reel2Trip)
+**Módulo estándar en todos los destinos:** "¿Cuándo viajar?" ("mejor época para viajar a X" es de las consultas más buscadas en todos los destinos medidos). No como enciclopedia del clima, sino resolviendo: *¿cuándo tiene sentido que vayas tú?*
 
-Repo: `github.com/PascualDev85/reel2trip`. Estado: FastAPI monolito (~5.300 líneas, 11 módulos planos), 458 tests mockeados pasando, desplegado en Render free.
-
-### Limpieza previa (antes de tocar nada)
-1. Resolver el working tree sucio: `templates/index.html` (+90 líneas, modo influencer) y `tests/test_influencer_routes.py` sin trackear → commit en rama o descartar (preguntar al autor).
-2. Borrar `fly.toml` y `railway.toml` (restos de evaluación).
-3. Crear tag `v0-pre-refactor`.
-4. Verificar sincronía con `origin` (el último `git fetch` se colgó por credenciales).
-
-### Qué se reutiliza tal cual
-`database.py`, geocoding con caché, `mapper.py`, scraper, `reality_checker.py`, `content_analyzer.py`, `influencer_scanner.py`, y sus tests.
-
-### Qué NO se reutiliza
-`main.py` como orquestador (rutas + SSE + background tasks + rate limiting mezclados) y `templates/result.html` (129 KB inline). La web pública no depende de ellos.
-
-### Cambios
-- Reorganizar en paquete (`engine/`) sin romper tests existentes.
-- Transcripción → Groq (Whisper grande). Mantener caché de transcripciones.
-- `planner.py:548` → `claude-sonnet-5`.
-- Modelo Pydantic de la guía (§5) + comando para exportar JSON Schema.
-- **API interna nueva** (protegida con token, solo accesible desde n8n / red interna):
-  - `POST /draft-guide` — destino, días, fuentes (URLs de reels, notas) → fichero de guía válido (borrador).
-  - `POST /personalize` — guía base + fechas, grupo, ritmo, intereses → itinerario ajustado.
-  - `POST /pdf` — guía (o itinerario personalizado) → PDF (Playwright sobre la ruta `/print/` o plantilla equivalente).
-- **CLI** `engine draft-guide --destination ... --days ... --sources ...` que escribe el fichero directamente en el repo de la web (flujo de contenido del autor).
-- Tests para todo lo nuevo, en la misma línea (mockeados, rápidos).
-
-### Flujo de contenido
-`engine draft-guide` → fichero en `web/src/content/guides/` → el autor revisa y completa (consejos, comida, fotos, presupuesto real) → commit → despliegue automático en Cloudflare Pages.
+Slugs en español sin acentos. Sin fechas en la URL. Antes de crear una página, comprobar que ninguna existente responde a esa intención.
 
 ---
 
-## 10. Infraestructura en el VPS
+## I. Estrategia SEO
 
-El VPS ya aloja el **proyecto de finanzas personales con datos bancarios sensibles**. Regla de oro: **nada de este proyecto puede leer, tocar ni degradar finanzas.**
+**Secuencia obligatoria:** colas largas → grupos temáticos → autoridad → búsquedas grandes.
 
-### Paso 0 — comprobar recursos (antes de desplegar)
-Ejecutar `free -h && nproc && df -h / && docker stats --no-stream` y decidir:
-- **≥ 2 GB RAM libres tras finanzas:** n8n + motor en el VPS.
-- **Menos:** n8n en el VPS y motor fuera (plan B: VPS pequeño aparte ~4-5 €/mes, o instancia de pago que no duerma). Consultar al autor antes.
+**Reglas:**
+- Una intención, una URL. Variantes de días y de grupo, dentro de la página.
+- Las páginas por cala o lugar concreto **solo si Search Console muestra impresiones reales**. Por defecto, páginas **por zona** con cada lugar como sección.
+- Señales de experiencia visibles: fechas, fotos propias, criterio, "Sobre mí".
+- Datos estructurados: Article, BreadcrumbList, FAQPage; TouristTrip o ItemList en itinerarios.
+- Lighthouse ≥ 95. HTML estático. Imágenes optimizadas.
 
-### Despliegue
-- Docker Compose con **Caddy** (HTTPS automático) como único punto expuesto.
-- **Redes Docker separadas:** finanzas en su red; n8n y motor en otra. Sin acceso cruzado a la base de datos de finanzas.
-- **Límites de CPU y memoria** por contenedor (`deploy.resources.limits` / `mem_limit`).
-- n8n: autenticación activada; solo los webhooks públicos expuestos; panel restringido (IP o auth adicional).
-- Motor: sin exposición pública; solo accesible desde n8n por red interna (o, si hace falta exponerlo, con token y rate limit).
-- Secretos en `.env` fuera del repo; nunca en imágenes.
-- **Backups automáticos** diarios de volúmenes (n8n, finanzas) con rotación y copia fuera del VPS.
-- Actualizaciones de seguridad del sistema y de las imágenes.
-- Retirar el despliegue de Render cuando el motor funcione en el VPS.
+**Jerarquía de fuentes de datos:**
+- **Keyword Planner = hipótesis** (volúmenes redondeados y agrupados; sobreestima: "alquiler camper islandia" marcaba 5.000 y Trends no ve el término).
+- **Google Trends = tendencia y estacionalidad** (interés relativo, no volumen).
+- **Search Console = comportamiento real.** Manda sobre las dos anteriores en cuanto haya datos.
+
+**Aviso estructural:** el interés general medido en Google baja en casi todos los términos analizados desde 2023. Depender solo de Google es un riesgo; de ahí el peso de Pinterest, redes y correo.
 
 ---
 
-## 10b. Redes sociales (resumen — detalle completo en `docs/ANALISIS_REDES_SOLO_HAZ_LA_MALETA.md`)
+## J. Destinos iniciales
 
-### Principio
-Todo el contenido social se **genera desde el fichero de la guía**, sin cámara ni edición manual, y pasa por una **cola de revisión** antes de publicarse. Solo contenido propio (fotos y clips del autor, mapas generados). Nada de contenido de terceros, marcas de agua de otras plataformas ni imágenes generadas por IA.
+| Destino | Papel | Por qué | Cuándo publicar |
+|---|---|---|---|
+| **Mallorca** | Laboratorio SEO | 8 años viviendo allí; universo de colas largas; alta intención comercial; estacionalidad predecible | **Oct-dic** (la curva sube en abril y explota en jul) |
+| **Roma** | Escaparate de producto | Máxima demanda pero SERP durísima; se busca todo el año | **Nov**, antes del pico de ene-mar |
+| **Tailandia** | Contrapeso de tráfico y autoridad | Experiencia real; ventana de planificación sep y ene-mar | **Oct** |
+| **Islandia** | Cuarto pilar | Experiencia real, pero demanda menor y en descenso (-50% desde 2022) | **Nov-dic**, para el pico de enero |
 
-### Catálogo de formatos
-| ID | Formato | Objetivo | Redes | Tamaños |
+**Después:** Budapest, Oporto y Malta, que son las búsquedas que más suben desde Sevilla (+80%, +60%, +70%).
+
+**Primeras páginas por bloque** (orden indicativo, sujeto al ritmo real):
+1. Mallorca: alquilar coche (+ colas largas: aeropuerto, Palma, sin franquicia) · calas por zona · Mallorca en 3/5 días · dónde alojarse
+2. Roma: Roma en 3/4 días · dónde alojarse en Roma · cuánto cuesta un viaje a Roma · satélites (Museos Vaticanos, Trastevere, Roma gratis)
+3. Tailandia: Tailandia en 10/15 días · mejor época · cuánto cuesta · seguro de viaje
+4. Islandia: Islandia en 7/10 días (variante camper dentro) · cuánto cuesta · qué necesito · alquiler de camper
+
+---
+
+## K. Modelo editorial
+
+**Flujo de producción:**
+```
+Investigación automática (motor + APIs)
+ → Borrador automático con huecos marcados como PENDIENTE
+ → Aportación humana (60-90 min): criterio, comida, presupuesto real, errores, fotos
+ → Verificación (máx. 5 datos comprobables por guía) y sellado con fecha
+ → Publicación: web, PDF, mapa, KML, piezas sociales
+ → Mantenimiento: aviso a los 12 meses; precios de temporada, antes de cada temporada
+```
+
+**Estándar de verificación:**
+
+| Estado | Qué significa |
+|---|---|
+| Vivido | Estuvimos allí, con mes y año |
+| Comprobado | Dato contrastado en fuente oficial, con fecha |
+| Estimado | Cálculo propio a partir de precios consultados, con fecha |
+
+**Máximo inicial de 5 verificaciones manuales prioritarias por guía** (entradas principales, transporte clave, alojamiento de referencia, actividad estrella, requisitos de entrada). El resto de datos sensibles deben conservar fuente y fecha cuando corresponda, pero no requieren comprobación manual en cada publicación.
+
+**Fecha de comprobación del dato y fecha de revisión del contenido son conceptos independientes y se almacenan por separado.** `data_verified_at` pertenece al dato individual; `content_reviewed_at` pertenece a la página o guía completa. Una página puede revisarse hoy y contener un precio comprobado hace tres meses: son fechas distintas con significados distintos. Esto permitirá en el futuro detectar automáticamente datos que necesitan nueva comprobación sin revisar toda la guía.
+
+**Presupuesto:** siempre estructurado por conceptos, con base de cálculo explícita, qué incluye y qué no, fecha, y distinción entre gasto real y estimación.
+
+**Proporción primer año:** al menos 3 de cada 4 contenidos de destino publicados en V1 y V2 basados en experiencia real. "Contenido de destino" son guías de itinerario y artículos satélite; no aplica a páginas transversales (seguros, equipaje, vuelos). Las guías editoriales llevan etiqueta explícita y deben cumplir el estándar de fuentes contrastadas. Esta regla es editorial, no una validación automática del sistema.
+
+**Prohibido:** publicar sobre destinos sin haber estado sin etiquetarlo, copiar o incrustar contenido de terceros, imágenes generadas por IA, detalles sensoriales inventados.
+
+---
+
+## L. Monetización
+
+### Dos productos, no uno
+
+**Producto A — La plataforma editorial (gratuita).**
+Canal de adquisición, no el negocio. Guías completas, itinerarios, presupuestos, mapas. Todo gratis, sin registro ni muros de pago. Monetiza vía afiliación contextual.
+
+**Producto B — Mi viaje (de pago, fase 2).**
+El mismo contenido convertido en un kit de ejecución del viaje. El PDF, el mapa, el presupuesto y el checklist son salidas del producto, no el producto en sí. El producto es el viaje estructurado y ejecutable.
+
+### Escalera de activación
+
+| Fase | Palanca | Cuándo |
+|---|---|---|
+| 1 | **Afiliación contextual**: tours (~8%), alojamiento (~4%), seguros, alquiler de coche y camper, eSIM | Desde el día 1 |
+| 2 | **Newsletter + canal de ofertas** (Telegram) — activo propio | Desde el día 1; canal antes de enero |
+| 3 | **"Mi viaje" — primer producto de pago**, precio orientativo 5-15 € (a validar con el producto terminado) | Cuando existan señales de demanda: clics de afiliado, descargas de mapa, uso de "Adapta este viaje", solicitudes directas, lista de espera |
+| 4 | **Packs de mapas** (modelo Salt in our Hair) | Fase 2, si los datos lo validan |
+| 5 | **Suscripción** acceso múltiple | Solo con catálogo + audiencia establecida |
+| 6 | Patrocinios, marketplaces | Año 2 |
+
+**El primer producto no es una enciclopedia.** Es una sola ruta concreta (Roma 3 días, por ejemplo) a precio de validación. Se escala cuando haya testimonios y señales de demanda.
+
+**Referentes de precio contrastados:** Ire de Viaje desde 3,99 €, Spain Seeker desde 5,99 €, Comiviajeros China 14,99 €. El precio depende de la profundidad, no del número de páginas.
+
+**Reglas de afiliación:** enlace donde el lector ya decidió que lo necesita; aviso visible; sin banners; registro central en `affiliates.yaml` con redirección `/ir/{id}`.
+
+**Páginas que más pagan (validadas):** alquilar coche en Mallorca (pujas de 1,00-3,26 €), dónde alojarse en Roma, seguro de viaje Tailandia (0,85-2,80 €), alquiler de camper en Islandia.
+
+**Pendiente:** consulta fiscal antes de los primeros ingresos.
+
+---
+
+## M. Distribución
+
+| Canal | Papel | Formato |
+|---|---|---|
+| **SEO** | Motor a medio plazo | Colas largas primero |
+| **Pinterest** | Tráfico a largo plazo, respuesta rápida | 4-6 pines distintos por guía, espaciados; palabras clave en imagen, título, descripción y tablero |
+| **Instagram y TikTok** | Descubrimiento | Reels de ruta animada (formato firma), carruseles de itinerario, listas, presupuesto |
+| **Telegram (submarca del sur)** | Adquisición | Ofertas desde Sevilla, Málaga y Jerez, enlazando a la guía del destino |
+| **Correo** | Activo propio, no depende de algoritmos | "Adapta este viaje a ti" (doble confirmación) + newsletter semanal |
+
+Todo el contenido social se genera desde el fichero de guía y pasa por cola de revisión. Solo contenido propio, sin marcas de agua de otras plataformas. Detalle en `docs/redes.md`.
+
+---
+
+## M2. Benchmarking y competencia (1.4)
+
+**Spain Seeker** es el referente más cercano en posicionamiento. Opera en inglés y parcialmente en español con guías de España. Su propuesta: "Real editorial judgment — not endless lists. Structured plans so the trip actually works." Precio: desde 5,99 € (3 días) hasta 9,99 € (7 días). **El hueco no es que el espacio esté vacío; es que nadie combina en español experiencia real + verificación fechada + criterio editorial + adaptación + ejecución.**
+
+**Comiviajeros** valida el mercado de pago en español: acaba de lanzar su guía de China a 14,99 € con compradores reales. Su narrativa de venta es la más cercana a la nuestra: "El problema no es encontrar información. Es saber qué hacer con ella." No copiar el modelo (destino complejo, guía de 150 páginas); sí copiar la estructura narrativa de la página de venta.
+
+**Tabla de referentes:**
+
+| Referente | Gratis | Producto de pago | Precio | Lo que adoptamos |
 |---|---|---|---|---|
-| F1 | Carrusel "Itinerario" (portada, mapa de ruta, 1 diapositiva por día, presupuesto/errores, cierre con CTA) | Guardados, clics | IG, TikTok modo foto | 1080×1350 (IG), 1080×1920 (TikTok) |
-| F2 | Reel "Ruta animada" (la ruta se dibuja sobre el mapa, fotos en cada parada, 15-30 s) | Descubrimiento | IG Reels, TikTok, Shorts, pin de vídeo | 1080×1920 |
-| F3 | Lista ("5 calas sin gente…", "7 errores…") | Descubrimiento + guardados | IG, TikTok | 4:5 / 9:16 |
-| F4 | "Presupuesto real" (cifras que aparecen hasta el total) | Compartidos | IG, TikTok | 9:16 |
-| F5 | Pines (4-6 diseños distintos por guía: mapa, foto+título, checklist, presupuesto, vídeo) | Tráfico web a largo plazo | Pinterest | 1000×1500 |
-| F6 | Tarjeta de oferta | Clics a guía | Telegram, historias | 1080×1080 / 1080×1920 |
+| Spain Seeker | Itinerarios web | Guías con criterio y orden | 5,99-9,99 € | Posicionamiento editorial como producto |
+| Comiviajeros | Blog completo | PDF estructurado + planner + checklists | 14,99 € | Narrativa de venta · distinción blog vs. guía |
+| Ire de Viaje | Versión gratuita de cada guía | Guía premium ejecutable | 3,99 €+ | Probar antes de comprar |
+| Salt in our Hair | Contenido web | Packs de mapas + ebooks | ~10-15 $ | Packs de mapas como producto ligero (fase 2) |
+| Earth Trekkers | Todo gratis | Solo afiliación | — | La estructura de contenido, no el modelo |
 
-### Reglas de diseño
-- Diseñar primero en 9:16 y adaptar a 4:5.
-- Infografías legibles en móvil: 5-7 paradas numeradas por imagen como máximo, texto grande.
-- **Palabras clave dentro de la imagen** (TikTok y Pinterest indexan el texto de las diapositivas).
-- Estilo de marca fijo (paleta, tipografía, icono de maleta). **Sin logos ni marcas de agua superpuestos en contenido publicado en TikTok vía API.**
-- Música libre de derechos incrustada en los vídeos generados.
+**Lo que NO copiamos:** destinos complejos como primer producto; suscripción sin catálogo; guías genéricas de 60-100 páginas; depender 100% de redes sin web propia; construir planificador antes de validar.
 
-### Requisitos para el esquema de guía (§5)
-Añadir un bloque `social` opcional por guía: `hooks[]` (textos de gancho), `highlight_stops[]` (5-7 paradas para la infografía), `media[]` con fotos/clips marcados por parada y orientación (`vertical|horizontal`), `pinterest_keywords[]`, `boards[]`.
+---
 
-### Pipeline
+## N. Métricas y criterios de éxito y fracaso
+
+**Expectativas por canal (horizontes, no garantías):**
+
+| Canal | Primeras señales |
+|---|---|
+| Pinterest, redes, Telegram | Semanas |
+| Search Console (impresiones) | 1-3 meses |
+| Colas largas (Mallorca, Islandia, Tailandia) | 3-6 meses |
+| Búsquedas medias | 6-12 meses |
+| Qué ver en Roma, alquilar coche en Mallorca | 12+ meses |
+
+**Aviso estacional:** Mallorca se publica en otoño pero su tráfico no llega hasta abril. Roma y Tailandia se publican en paralelo precisamente para tener señales durante esa espera.
+
+**Métricas del embudo:** visitas → altas en newsletter (1,5-3%) → apertura (>35%) → clics de afiliado → ventas.
+
+**Experimento de variantes**, cuatro niveles: exposición → interacción → consumo → conversión. **No se decide nada hasta 500 sesiones en páginas con selector o hasta la fecha límite fijada.** Se compara la conversión de quien usa la variante frente a quien no; un 12% de uso que convierte el triple es mejor señal que un 30% que no convierte.
+
+**Criterio de fracaso (mes 6):** si las páginas de Mallorca no acumulan impresiones crecientes en Search Console ni han entrado en el top 30 de ninguna cola larga, el problema no es el tiempo: es el enfoque, y se revisa.
+
+---
+
+## O. Roadmap por fases
+
+**Fase 0 — Preparación (manual):** prueba del nombre con 10 personas · dominios · usuarios en redes · tableros de Pinterest · altas de afiliados · Search Console · elegir MailerLite o Brevo.
+
+**Fase 1 — Base técnica (semanas 1-6):** arquitectura, sistema de diseño, componentes, esquema de guía, una guía de ejemplo completa. Sin publicar aún a ritmo.
+
+**Fase 2 — Primeros contenidos (meses 2-3):** 2 guías + 2-3 satélites al mes, según el calendario de J. En paralelo, piezas sociales y primeros pines.
+
+**Fase 3 — Automatización (meses 3-4):** motor (borrador, personalización, PDF), n8n, formulario "Adapta este viaje", newsletter, generador de piezas sociales, canal de Telegram antes de enero.
+
+**Fase 4 — Medir y decidir (meses 4-6):** Search Console manda. Revisión del mes 6 con los criterios de N. Análisis de los datos de "Adapta este viaje": ¿qué variables selecciona la gente? ¿qué destinos piden más adaptación?
+
+**Fase 5 — Producto de pago (cuando haya señales de demanda):** "Mi viaje" en formato PDF de pago para una sola ruta. Precio a validar (orientativo 5-15 €). Primeros testimonios. Escalar solo si convierte.
+
+**Fase 6 — Catálogo y suscripción (año 2):** varios destinos, acceso múltiple, posible suscripción. Solo con audiencia y catálogo establecidos.
+
+**Fase 7 — Planificador (cuando los datos lo justifiquen):** constructor de ruta basado en los patrones reales detectados en "Adapta este viaje". No antes.
+
+---
+
+## P. Qué NO construir en la V1
+
+- Cuentas de usuario, inicio de sesión, guardado en la nube.
+- Personalización algorítmica de itinerarios o planificador de rutas.
+- Reservas, pasarela de viajes, comparador de precios.
+- Aplicación móvil.
+- Buscador interno complejo, filtros avanzados, comparadores de destinos.
+- Páginas separadas por variante de días o de grupo.
+- Páginas individuales por cala o lugar sin datos de Search Console.
+- Publicidad de banners.
+- Contenido masivo: nada de decenas de páginas generadas sin revisión.
+- Suscripción de acceso múltiple (solo con catálogo + audiencia establecida).
+- Comunidad de viajeros o experiencias de usuarios.
+- Producto de pago antes de tener señales de demanda.
+- Un segundo pilar de producto (el proyecto de finanzas se mantiene aparte y aislado).
+
+---
+
+## Q. Principios que Claude Code debe respetar
+
+1. **Este documento manda.** Si una petición contradice una decisión cerrada, avisar antes de implementarla.
+2. **Móvil primero**, siempre. La mayoría del tráfico será móvil.
+3. **Minimalismo y legibilidad** por encima de la exhibición técnica: si un elemento no ayuda a planificar el viaje, fuera.
+4. **Un solo esquema de guía** como contrato entre el motor y la web. Si una guía no lo cumple, la web no compila.
+5. **Nada de texto incrustado en los componentes**: todo sale del fichero de datos.
+6. **Rendimiento antes que funcionalidades.** Lighthouse ≥ 95 es requisito, no aspiración.
+7. **Trabajo por bloques, con revisión humana** al final de cada uno. No avanzar sin visto bueno.
+8. **Preguntar** cuando una decisión dependa del gusto o de información no disponible; no suponerla.
+9. **Aislamiento del servidor:** el proyecto de finanzas no se toca. Redes y volúmenes Docker separados, límites de recursos, copias de seguridad.
+10. **Código y commits en inglés; todo el texto visible, en español.**
+11. **Verificación y etiquetas no son opcionales:** el esquema exige fecha en los datos sensibles y estado (vivido / comprobado / estimado).
+12. **Nada de contenido de relleno** en las páginas de ejemplo: datos verosímiles de destinos reales.
+
+---
+
+## R. Modelo de datos (1.6) — Referencia para Claude Code
+
+> Detalle completo en `docs/1.6_modelo_datos.md` y `docs/1.6.4_json_islandia.md`.
+
+### Principio rector
+
+**El fichero de guía es la única fuente de verdad editorial. Web, PDF gratuito, mapa, email de adaptación y Mi viaje son outputs del mismo dato. Se escribe una vez; se usa en todos los outputs.**
+
+### Regla transversal
+
+> Los datos derivados se calculan. Las referencias se validan. Los datos sensibles se verifican individualmente.
+
+### Jerarquía de entidades
+
 ```
-Guía (JSON) → generador de piezas
-   · Imágenes: plantillas HTML/CSS → PNG con Playwright (4:5, 9:16, 2:3)
-   · Vídeos: Remotion o ffmpeg (F2, F3, F4)
-→ Cola de revisión en n8n (aviso por Telegram con Aprobar / Rechazar / Editar)
-→ Publicación
-   · Instagram: API oficial (reels y carruseles), cuenta profesional
-   · TikTok: modo borrador (MEDIA_UPLOAD), el autor añade sonido en tendencia y publica
-     (la publicación directa queda en privado hasta pasar auditoría de TikTok)
-   · Pinterest: API oficial, programado y espaciado (nunca muchas variantes a la misma URL el mismo día)
-   · YouTube Shorts: opcional, reutilizando F2/F3
-   · Telegram: bot del canal (ofertas)
+GUÍA (type: itinerary | satellite | hub)
+├── META · RESUMEN · CRITERIO · PRÁCTICO · FAQ
+├── VARIANTE (intensivo | equilibrado | tranquilo)
+│     └── DÍA
+│           └── PARADA ──────────► LUGAR GLOBAL (place_id)
+├── PRESUPUESTO (items con basis por_person | per_room | per_group)
+├── ALOJAMIENTO · TRANSPORTE · CHECKLIST
+└── ADAPTATION_NOTES (condiciones declarativas + texto editorial)
+
+Fuera del fichero editorial:
+RESPUESTA_ADAPTACION · COMPRA · AFILIADOS (registro central) · ANALÍTICA
 ```
-Evaluar un programador autoalojado (p. ej. Postiz) en el VPS solo si el consumo de recursos lo permite.
 
-### Cadencia objetivo
-IG 3-4/semana · TikTok 3-5/semana (mismo contenido) · Pinterest 1-3 pines nuevos/día programados · Shorts 2/semana. Revisión del autor: ~1 h/semana.
+### Convenciones de campo
 
-### Métricas
-IG: guardados y envíos por DM · TikTok: finalización · Pinterest: clics salientes · Web: visitas desde redes → altas en newsletter. Revisión mensual para doblar lo que funciona.
+| Nivel | Significado |
+|---|---|
+| **R** | Required: sin esto la guía no compila |
+| **Rc** | Recommended: la guía funciona pero el sistema avisa |
+| **O** | Optional: legítimo que no exista |
+| **D** | Derived: calculado por el sistema; el autor nunca lo edita |
+| **N/A** | No aplica para este type |
+
+### Campos derivados (el autor nunca los escribe)
+
+| Campo | Entidad | Cómo se calcula |
+|---|---|---|
+| `places` | GUÍA | `unique(place_id de todas las PARADAS de todas las VARIANTES)` |
+| `n_stops_total` | VARIANTE | `count(PARADAS de todos los DÍAS)` |
+| `budget.type` | PRESUPUESTO | `real` / `estimado` / `mixed` según items |
+| `budget.verified_at` | PRESUPUESTO | Fecha más antigua entre todos los `item.verified_at` |
+| `budget.total_approx` | PRESUPUESTO | `sum(items[].amount)` según basis de cada item |
+| `budget_delta.total` | VARIANTE | `sum(delta.items[].amount)` |
+| `summary.budget_per_person` | GUÍA | Derivado de `budget` dividido entre viajeros base |
+| `RESPUESTA.converted_to_purchase` | RESPUESTA | `true` si existe COMPRA con ese `adaptation_id` |
+
+### Cálculo de Mi viaje (motor)
+
+```
+para cada item de presupuesto:
+  si basis = per_person:  coste = amount × n_travelers
+  si basis = per_room:    coste = amount × ceil(n_travelers / travelers_per_room)
+  si basis = per_group:   coste = amount
+
+total_viaje     = sum(costes) + sum(budget_delta.items de la variante)
+total_per_person = total_viaje / n_travelers
+```
+
+### Invariantes del modelo (restricciones de implementación, sin excepciones)
+
+| ID | Invariante |
+|---|---|
+| I1 | Un LUGAR existe una sola vez globalmente. Ninguna guía lo copia. |
+| I2 | Una PARADA nunca duplica datos intrínsecos de LUGAR (precio, horario, coords, URL oficial). |
+| I3 | `places` es siempre derivado. |
+| I4 | Los totales de presupuesto son siempre derivados. |
+| I5 | Un `place_id` inexistente impide compilar. Error, no advertencia. |
+| I6 | Un `affiliate_id` inexistente impide compilar. Error, no advertencia. |
+| I7 | Los datos sensibles (precio, horario) tienen su propio `verified_at`. |
+| I8 | `adaptation_notes` es contenido editorial. El motor solo aplica IDs, nunca genera el texto. |
+| I9 | COMPRA almacena referencias, nunca contenido editorial. |
+| I10 | El motor selecciona y calcula; nunca genera información factual. |
+| I11 | El email del usuario pertenece al proveedor de email, nunca al modelo de producto. |
+| I12 | Web, PDF, mapa y Mi viaje consumen la misma fuente editorial. |
+| I13 | La base de cálculo del presupuesto (`basis`) se declara en cada item. El motor no asume `per_person` si no está explícito. |
+| I14 | La experiencia propia solo puede derivarse de `visit_status: visited` en PARADA. Los `not_visited` pueden aparecer como planificación, descarte o criterio, nunca como experiencia propia. Los `unknown` no generan afirmaciones en primera persona hasta confirmar. |
+| I15 | El estado de visita pertenece a PARADA, nunca a LUGAR. Un mismo lugar puede ser `visited` en una guía y `not_visited` en otra. |
+| I16 | Los datos históricos del viaje no sobrescriben los datos actuales de LUGAR. Precio pagado en 2024 vive en PARADA; precio actual verificado vive en LUGAR con su propio `verified_at`. |
 
 ---
 
-## 11. Fases de trabajo y criterios de aceptación
+## Pendientes antes de arrancar
 
-> Trabajar fase a fase. No empezar una fase sin cerrar la anterior. Cada fase termina con tests en verde y un resumen para el autor.
-
-**F0 — Preparación (manual, el autor)**
-Registrar dominios; reservar `@solohazlamaleta` en Instagram, TikTok, YouTube, Pinterest y Telegram; buscar la marca en OEPM/EUIPO; alta en Search Console y en programas de afiliados; cuenta en MailerLite o Brevo; validar volúmenes con Google Keyword Planner; ordenar fotos por viaje.
-
-**F1 — Web base**
-Proyecto Astro + Vue, esquema de guía, layouts y componentes (§6), páginas legales, SEO técnico (§7), analítica, registro de afiliados y `/ir/`, despliegue en Cloudflare Pages.
-✅ Una guía de ejemplo completa se renderiza desde su fichero de datos · Lighthouse ≥ 95 · build falla con una guía inválida.
-
-**F2 — Motor**
-Limpieza del repo, reorganización, Groq, `claude-sonnet-5`, modelo Pydantic + export de esquema, API interna, CLI, PDF.
-✅ `engine draft-guide` genera un fichero que la web valida y renderiza · 458 tests + nuevos en verde.
-
-**F3 — Infraestructura**
-Paso 0, Compose con Caddy, n8n y motor, aislamiento, límites, backups.
-✅ Finanzas sigue funcionando igual · el motor responde solo desde n8n · backup restaurado con éxito en prueba.
-
-**F4 — Captación**
-Formulario "Adapta este viaje", flujo n8n completo, doble opt-in, email con PDF, newsletter automatizada (borrador semanal para revisión).
-✅ Prueba de punta a punta: formulario → confirmación → PDF recibido · baja en un clic funciona.
-
-**F4b — Redes sociales (§10b)**
-Bloque `social` en el esquema, generador de piezas (F1-F5), cola de revisión en n8n, publicación en Instagram y Pinterest por API y borradores en TikTok. Las 2-3 primeras semanas: piezas generadas automáticamente pero publicadas a mano para aprender antes de automatizar la publicación.
-✅ Desde una guía se generan en un solo comando todas las piezas en sus tamaños · el flujo aprobar → publicar funciona en Instagram y Pinterest · el borrador llega a TikTok.
-
-**F5 — Contenido fase 1**
-Las 4 líneas del plan editorial (§3), con revisión del autor.
-
-**F6 — Canal de ofertas (posterior)**
-n8n monitoriza precios (Travelpayouts u otra API) desde SVQ/AGP/XRY (+ MAD largo recorrido), detecta bajadas, genera publicación (texto + carrusel estático, sin vídeo) enlazando a la guía del destino → cola de revisión → Telegram / Instagram.
-
-**F7 — Productos de pago (posterior)**
-Guías premium y servicio a medida (§8).
-
----
-
-## 12. Lo que NO hay que hacer
-
-- No montar la web pública sobre Render free ni sobre el motor.
-- No esconder las guías tras email o pago.
-- No generar guías en masa sin revisión humana.
-- No publicar, copiar ni incrustar contenido de reels/TikToks de terceros.
-- No mezclar redes, volúmenes ni credenciales con el proyecto de finanzas.
-- No añadir banners de publicidad ni cookies de terceros al inicio.
-- No crear páginas duplicadas por variantes de días o de grupo (van dentro de la guía).
-
----
-
-## 13. Pendientes del autor (bloquean o condicionan fases)
-
-- [ ] Proveedor y características exactas del VPS (se resuelve en el Paso 0 de F3).
-- [ ] Registrar dominios y reservar usuarios en redes.
-- [ ] Confirmar volúmenes de búsqueda de la fase 1 (Keyword Planner).
-- [ ] Altas en programas de afiliados.
+- [x] Prueba del nombre con 10 personas — **hecha.** Resultado: 5/6 leen "agencia o viaje organizado". Segunda prueba pendiente con el bloque completo (nombre + claim + subtítulo).
+- [ ] Segunda prueba del nombre con el bloque completo. Criterio: 7/10 deben leer "guías para organizarme yo".
+- [ ] Comprar `solohazlamaleta.com` y `.es`; reservar usuarios en redes (una vez aprobada la segunda prueba).
+- [ ] Buscar la marca en OEPM y EUIPO.
+- [ ] Altas en programas de afiliación (Booking, GetYourGuide, Civitatis, IATI, alquiler de camper Islandia/Mallorca, Travelpayouts).
 - [ ] Elegir MailerLite o Brevo.
-- [ ] Decidir qué hacer con el modo influencer sin commitear de Reel2Trip.
-- [ ] Consultar la fiscalidad de los ingresos por afiliación y venta de guías antes de empezar a facturar.
-- [ ] Pasar Instagram a cuenta profesional y crear la app de desarrollador de Meta, TikTok y Pinterest.
-- [ ] Reunir fotos y clips propios por viaje (vertical y horizontal) para el generador de piezas.
-- [ ] Definir paleta, tipografía e icono de marca (necesario antes de las plantillas).
+- [ ] Comprobar recursos del VPS y decidir si se comparte con finanzas.
+- [ ] Consulta fiscal antes de los primeros ingresos.
+- [ ] Definir paleta y tipografías (3 propuestas de Claude Code).
+- [x] Modelo de datos 1.6 (entidades, campos, relaciones, invariantes, JSON conceptual) — **cerrado.** Ver `docs/1.6_modelo_datos.md` y `docs/1.6.4_json_islandia.md`.
+- [x] Revisión de consistencia completa del Documento Maestro (1.0→1.6) — **revisada y cerrada.**
