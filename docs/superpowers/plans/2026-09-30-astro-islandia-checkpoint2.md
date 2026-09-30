@@ -18,6 +18,7 @@
 - **`placeMapUrl` no vive en `engine-guide.ts`** — utilidad de presentación sin relación con el motor, en su propio fichero `src/lib/maps.ts`.
 - **Enlace de mapa por parada, nunca por día** — Google Maps Directions limita los waypoints (~9-10) y el día 11 tiene 8 paradas; un enlace de ruta completa del día podría superarlo sin que nada lo avise en build.
 - **Presupuesto: se muestra `total_reference`, nunca `total_base`** — confirmado en `engine/types.ts` y 1.7.2 §5. `total_reference` es "el total para el grupo de referencia" (aplica `basis` con `base_travelers`); `total_base` es solo una suma simple interna sin aplicar `basis`.
+- **`budget_per_person` mostrará 2247.61 €, no 2247.62 €.** Verificado: `4495.21 / 2 = 2247.605`, y `(2247.605).toFixed(2)` da `"2247.61"` en Node. La cifra "2.247,62 €" de `docs/1.6.4_json_islandia.md` es anterior a la corrección del desvío de redondeo del Checkpoint 1 (que hizo que el total a 2 viajeros cuadrase exacto en 4495.21). No hay combinación de redondeos que haga coincidir el total y el por-persona a la vez — es una diferencia de 1 céntimo esperada, no un error de esta página.
 - **FAQ estructurado: solo los elementos con `schema: true`** entran en el JSON-LD `FAQPage`. La sección visible de FAQ muestra todas las preguntas igual, sin filtrar.
 - **`noindex: true`** en esta página mientras el contenido esté pendiente de revisión final del autor — y su ruta exacta debe excluirse también del sitemap (`@astrojs/sitemap` no detecta `noindex` automáticamente).
 - **Analítica:** no se instala nada en este plan. No existe ya ningún script de analítica en el repo (comprobado: `grep` sobre `src/` y `astro.config.mjs` no encuentra `plausible|fathom|analytics|gtag|umami`). Instalar Plausible/Fathom requiere una cuenta real y un dominio verificado que no se pueden fabricar aquí — queda como paso manual del autor, anotado en la Tarea 5, nunca como un ID de tracking inventado en el código.
@@ -134,10 +135,23 @@ test('the real guide shows total_reference, not total_base, as the trip total (4
   assert.ok(Math.abs(compiled.budget!.total_reference - 4495.21) < 0.001)
 })
 
-test('the real guide has no affiliate_id anywhere, so the empty AffiliateRegistry never gets exercised silently', async () => {
-  const compiled = await loadCompiledGuide(GUIDE_PATH, PLACES_PATH)
+test('the real guide source has no affiliate_id anywhere, and no compiled stop has a booking (so the empty AffiliateRegistry never gets exercised silently)', async () => {
+  // Checking the compiled output alone is not enough: a resolved affiliate
+  // renames the field to `affiliate`, so a string search for "affiliate_id"
+  // on the CompiledGuide would pass even if resolution happened. Check the
+  // source YAML for the raw key, and the compiled stops for the structural
+  // field that resolution would have populated.
+  const rawYaml = await readFile(GUIDE_PATH, 'utf-8')
+  assert.strictEqual(rawYaml.includes('affiliate_id'), false)
 
-  assert.strictEqual(JSON.stringify(compiled).includes('affiliate_id'), false)
+  const compiled = await loadCompiledGuide(GUIDE_PATH, PLACES_PATH)
+  for (const variant of compiled.variants ?? []) {
+    for (const day of variant.days) {
+      for (const stop of day.stops) {
+        assert.strictEqual(stop.booking, undefined)
+      }
+    }
+  }
 })
 
 test('loadCompiledGuide throws when a stop references a place_id missing from the registry', async () => {
@@ -295,6 +309,14 @@ git commit -m "Exclude the noindex Islandia page from the sitemap"
 
 No hay test automatizado de renderizado (1.8 §12 — no hay Playwright en el proyecto). La verificación de esta tarea es que `npm run build` la genere sin errores; la comprobación detallada del HTML generado se hace en la Tarea 5.
 
+- [ ] **Paso 0: Verificar que `BaseLayout.astro` acepta el slot `head` antes de escribir la página**
+
+```bash
+grep -n 'slot' src/layouts/BaseLayout.astro
+```
+
+Esperado: `<slot name="head" />` dentro de `<head>` (confirmado al escribir este plan, en la línea 44 de `src/layouts/BaseLayout.astro`). Los tres `<script type="application/ld+json" ... slot="head" />` del Paso 1 dependen de que ese slot exista — si no existiera, los scripts JSON-LD acabarían en el `<body>` en vez de en `<head>`, silenciosamente (Astro no avisa de un slot sin destino, simplemente no lo renderiza donde se esperaba). Comprobar esto ahora, no después del build.
+
 - [ ] **Paso 1: Escribir la página completa**
 
 Crear `src/pages/islandia/islandia-en-camper-13-dias.astro`:
@@ -388,6 +410,14 @@ const faqJsonLd =
             <dd>{guide.summary.base_area}</dd>
           </>
         )}
+        {/*
+          guide.summary.budget_per_person = total_reference / base_travelers = 4495.21 / 2 = 2247.605,
+          que con toFixed(2) muestra "2247.61 €", no "2247.62 €" (la cifra por persona citada en
+          docs/1.6.4_json_islandia.md). Es una diferencia de 1 céntimo, inherente a haber corregido
+          el desvío de redondeo del total a 2 viajeros en el Checkpoint 1 — no hay una combinación de
+          redondeos que haga coincidir exactamente el total (4495.21) y el por-persona (2247.62) a la
+          vez. Verificado, no es un bug de esta página.
+        */}
         {guide.summary.budget_per_person != null && (
           <>
             <dt>Presupuesto</dt>
@@ -658,11 +688,17 @@ Esperado: `3` (las tres preguntas reales de `content/guides/islandia/islandia-en
 
 - [ ] **Paso 5: Comprobar que los enlaces de mapa son de un único punto (Foco de revisión)**
 
+El número de paradas puede cambiar si se edita el YAML (ahora mismo son 25 — Skógafoss aparece dos veces, día 2 y día 3 — no 24, que es el número de *lugares únicos*, distinto; ver `npm run content:validate`). Por eso esta comprobación no usa un número fijo: compara contra lo que reporta `content:validate` en el momento de ejecutar el plan.
+
 ```bash
-grep -o 'maps/search/?api=1&query=[0-9.,-]*' dist/islandia/islandia-en-camper-13-dias/index.html | wc -l
+STOPS_EXPECTED=$(npm run content:validate 2>&1 | grep -oE '[0-9]+ paradas' | grep -oE '^[0-9]+')
+STOPS_IN_PAGE=$(grep -o 'maps/search/?api=1&query=[0-9.,-]*' dist/islandia/islandia-en-camper-13-dias/index.html | wc -l | tr -d ' ')
+echo "esperadas: $STOPS_EXPECTED — en la página: $STOPS_IN_PAGE"
+[ "$STOPS_EXPECTED" = "$STOPS_IN_PAGE" ] && echo "OK" || echo "MISMATCH"
+grep -c 'maps/dir/' dist/islandia/islandia-en-camper-13-dias/index.html
 ```
 
-Esperado: un número igual al total de paradas de la guía (24 paradas reales, ver `npm run content:validate`), y ninguna ocurrencia de `maps/dir/` (que indicaría una ruta multi-waypoint, lo que se decidió evitar explícitamente).
+Esperado: `OK`, y el último `grep -c` devuelve `0` (ninguna ocurrencia de `maps/dir/`, que indicaría una ruta multi-waypoint, lo que se decidió evitar explícitamente).
 
 - [ ] **Paso 6: Lighthouse**
 
