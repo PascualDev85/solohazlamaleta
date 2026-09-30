@@ -1,6 +1,6 @@
 import type { StopSource, DaySource, VariantSource } from '../../schemas/index.ts'
-import type { CompiledStop, CompiledDay, CompiledVariant, CompiledPlace, PlaceRegistry, AffiliateRegistry } from '../types.ts'
-import { resolvePlace, resolveAffiliate } from './place.ts'
+import type { CompiledStop, CompiledDay, CompiledVariant, PlaceRegistry, AffiliateRegistry } from '../types.ts'
+import { resolvePlace, resolveAffiliate, uniquePlaces } from './place.ts'
 
 export function compileStop(
   stop: StopSource,
@@ -59,16 +59,6 @@ export function compileDay(
     plan_b: day.plan_b,
     seniors_note: day.seniors_note,
   }
-}
-
-function uniquePlaces(places: CompiledPlace[]): CompiledPlace[] {
-  const seen = new Map<string, CompiledPlace>()
-  for (const place of places) {
-    if (!seen.has(place.place_id)) {
-      seen.set(place.place_id, place)
-    }
-  }
-  return [...seen.values()]
 }
 
 export function compileVariant(

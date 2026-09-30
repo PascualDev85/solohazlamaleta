@@ -1,17 +1,8 @@
 import type { GuideSource } from '../../schemas/index.ts'
-import type { CompiledGuide, CompiledPlace, PlaceRegistry, AffiliateRegistry } from '../types.ts'
+import type { CompiledGuide, PlaceRegistry, AffiliateRegistry } from '../types.ts'
 import { compileVariant } from './itinerary.ts'
 import { compileBudget } from './budget.ts'
-
-function uniquePlaces(places: CompiledPlace[]): CompiledPlace[] {
-  const seen = new Map<string, CompiledPlace>()
-  for (const place of places) {
-    if (!seen.has(place.place_id)) {
-      seen.set(place.place_id, place)
-    }
-  }
-  return [...seen.values()]
-}
+import { uniquePlaces } from './place.ts'
 
 export function compileGuide(
   source: GuideSource,

@@ -41,3 +41,13 @@ export function resolveAffiliate(affiliate: AffiliateRegistryEntry): CompiledAff
     verified_at: affiliate.verified_at,
   }
 }
+
+export function uniquePlaces(places: CompiledPlace[]): CompiledPlace[] {
+  const seen = new Map<string, CompiledPlace>()
+  for (const place of places) {
+    if (!seen.has(place.place_id)) {
+      seen.set(place.place_id, place)
+    }
+  }
+  return [...seen.values()]
+}
