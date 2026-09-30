@@ -1,7 +1,7 @@
 import { loadGuide, loadPlaces, validateGuide, compileGuide, buildPlaceRegistry } from '../engine/index.ts'
 import type { AffiliateRegistry } from '../engine/index.ts'
 
-const GUIDE_PATH = 'content/guides/islandia/islandia-en-camper-13-dias.yaml'
+const DEFAULT_GUIDE_PATH = 'content/guides/islandia/islandia-en-camper-13-dias.yaml'
 const PLACES_PATH = 'content/places/islandia.yaml'
 
 function buildEmptyAffiliateRegistry(): AffiliateRegistry {
@@ -9,10 +9,11 @@ function buildEmptyAffiliateRegistry(): AffiliateRegistry {
 }
 
 async function main() {
-  console.log('Validando contenido...\n')
+  const guidePath = process.argv[2] ?? DEFAULT_GUIDE_PATH
+  console.log(`Validando contenido (${guidePath})...\n`)
 
   const rawPlaces = (await loadPlaces(PLACES_PATH)) as unknown[]
-  const rawGuide = await loadGuide(GUIDE_PATH)
+  const rawGuide = await loadGuide(guidePath)
 
   console.log('✔ Guides loaded: 1')
   console.log(`✔ Places loaded: ${rawPlaces.length}`)
