@@ -1,0 +1,58 @@
+import { test } from 'node:test'
+import assert from 'node:assert'
+import { PlaceSourceSchema } from '../../schemas/place.ts'
+
+test('valid minimal place parses', () => {
+  const result = PlaceSourceSchema.safeParse({
+    place_id: 'thingvellir',
+    name: 'Þingvellir',
+    destination: 'islandia',
+    lat: 64.2559,
+    lng: -21.13,
+    type: 'park',
+    verified_at: '2024-08-15',
+  })
+  assert.strictEqual(result.success, true)
+})
+
+test('review_interval defaults to 12 when omitted', () => {
+  const result = PlaceSourceSchema.parse({
+    place_id: 'x',
+    name: 'X',
+    destination: 'islandia',
+    lat: 1,
+    lng: 1,
+    type: 'other',
+    verified_at: '2024-01-01',
+  })
+  assert.strictEqual(result.review_interval, 12)
+})
+
+test('invalid type is rejected', () => {
+  const result = PlaceSourceSchema.safeParse({
+    place_id: 'x',
+    name: 'X',
+    destination: 'islandia',
+    lat: 1,
+    lng: 1,
+    type: 'not-a-real-type',
+    verified_at: '2024-01-01',
+  })
+  assert.strictEqual(result.success, false)
+})
+
+test('entry and hours can each carry an independent verified_at', () => {
+  const result = PlaceSourceSchema.parse({
+    place_id: 'vestrahorn',
+    name: 'Vestrahorn',
+    destination: 'islandia',
+    lat: 64.2448,
+    lng: -14.9836,
+    type: 'monument',
+    verified_at: '2024-08-15',
+    entry: { price: 900, currency: 'ISK', verified_at: '2024-08-15' },
+    hours: { open: '08:00', close: '22:00', verified_at: '2024-07-01' },
+  })
+  assert.strictEqual(result.entry?.verified_at, '2024-08-15')
+  assert.strictEqual(result.hours?.verified_at, '2024-07-01')
+})
