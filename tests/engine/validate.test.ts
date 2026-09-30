@@ -85,6 +85,23 @@ test('a not_visited stop with first-person variant_note warns, does not error', 
   assert.ok(result.warnings.length > 0)
 })
 
+test('an unknown stop with first-person variant_note warns (I4: unknown branch)', () => {
+  const result = validateGuide(
+    guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'unknown', variant_note: 'Aquí comimos genial y nos encantó.' }),
+    places, affiliates,
+  )
+  assert.strictEqual(result.errors.length, 0)
+  assert.ok(result.warnings.length > 0)
+})
+
+test('a visited stop with first-person variant_note does not warn about first person (control)', () => {
+  const result = validateGuide(
+    guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited', variant_note: 'Aquí comimos genial y nos encantó.' }),
+    places, affiliates,
+  )
+  assert.ok(!result.warnings.some((w) => w.includes('primera persona')))
+})
+
 test('status: draft is an error', () => {
   const result = validateGuide(
     guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' }, { status: 'draft' }),
@@ -97,4 +114,26 @@ test('schema-invalid input produces an error and no guide', () => {
   const result = validateGuide({ nonsense: true }, places, affiliates)
   assert.ok(result.errors.length > 0)
   assert.strictEqual(result.guide, undefined)
+})
+
+test('a place referenced by a stop with a stale verified_at produces a warning, not an error', () => {
+  const stalePlaces: PlaceRegistry = {
+    get: (id) => (id === 'a' ? { place_id: 'a', name: 'A', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2020-01-01', review_interval: 12 } : undefined),
+  }
+  const result = validateGuide(
+    guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' }),
+    stalePlaces, affiliates,
+    new Date('2024-06-01'),
+  )
+  assert.strictEqual(result.errors.length, 0)
+  assert.ok(result.warnings.some((w) => w.includes('a') && w.toLowerCase().includes('caduc')))
+})
+
+test('a place referenced by a stop with a fresh verified_at produces no staleness warning', () => {
+  const result = validateGuide(
+    guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' }),
+    places, affiliates,
+    new Date('2024-06-01'),
+  )
+  assert.ok(!result.warnings.some((w) => w.toLowerCase().includes('caduc')))
 })

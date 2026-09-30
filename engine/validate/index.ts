@@ -14,6 +14,7 @@ export function validateGuide(
   raw: unknown,
   places: PlaceRegistry,
   affiliates: AffiliateRegistry,
+  now: Date = new Date(),
 ): ValidationResult {
   const schemaResult = validateGuideSchema(raw)
   if (!schemaResult.success) {
@@ -27,7 +28,7 @@ export function validateGuide(
 
   const guide = schemaResult.data
   const referenceErrors = validateReferences(guide, places, affiliates)
-  const contentRules = validateContentRules(guide)
+  const contentRules = validateContentRules(guide, places, now)
 
   return {
     errors: [...referenceErrors, ...contentRules.errors],
