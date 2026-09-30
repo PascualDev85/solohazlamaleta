@@ -11,13 +11,13 @@ const ExperienceSchema = z.object({
     amount: z.number(),
     currency: z.string(),
     notes: z.string().optional(),
-  }).optional(),
-})
+  }).strict().optional(),
+}).strict()
 
 const BookingSchema = z.object({
   affiliate_id: z.string(),
   advance_notice: z.string().optional(),
-})
+}).strict()
 
 export const StopSourceSchema = z.object({
   place_id: z.string(),
@@ -31,12 +31,12 @@ export const StopSourceSchema = z.object({
   variant_note: z.string().optional(),
   experience: ExperienceSchema.optional(),
   booking: BookingSchema.optional(),
-})
+}).strict()
 
 const PhysicalLevelSchema = z.object({
   walking_km: z.number().optional(),
   hills: Hills.optional(),
-})
+}).strict()
 
 const FoodItemSchema = z.object({
   name: z.string(),
@@ -44,7 +44,7 @@ const FoodItemSchema = z.object({
   price_level: z.string().optional(),
   notes: z.string().optional(),
   verified_at: z.string().optional(),
-})
+}).strict()
 
 export const DaySourceSchema = z.object({
   day: z.number().int().positive(),
@@ -56,7 +56,7 @@ export const DaySourceSchema = z.object({
   our_take: z.string().optional(),
   plan_b: z.string().optional(),
   seniors_note: z.string().optional(),
-})
+}).strict()
 
 const BudgetItemSourceSchema = z.object({
   category: BudgetCategory,
@@ -67,11 +67,11 @@ const BudgetItemSourceSchema = z.object({
   type: BudgetItemType,
   verified_at: z.string(),
   notes: z.string().optional(),
-})
+}).strict()
 
 const BudgetDeltaSchema = z.object({
   items: z.array(BudgetItemSourceSchema),
-})
+}).strict()
 
 export const VariantSourceSchema = z.object({
   id: Pace,
@@ -80,7 +80,7 @@ export const VariantSourceSchema = z.object({
   days: z.array(DaySourceSchema),
   budget_delta: BudgetDeltaSchema.optional(),
   pace_notes: z.string().optional(),
-})
+}).strict()
 
 export const BudgetSourceSchema = z.object({
   currency: z.string(),
@@ -88,7 +88,7 @@ export const BudgetSourceSchema = z.object({
   excludes: z.array(z.string()),
   items: z.array(BudgetItemSourceSchema),
   notes: z.string().optional(),
-})
+}).strict()
 
 const AccommodationPickSchema = z.object({
   name: z.string(),
@@ -96,7 +96,7 @@ const AccommodationPickSchema = z.object({
   notes: z.string().optional(),
   verified_at: z.string().optional(),
   affiliate_id: z.string().optional(),
-})
+}).strict()
 
 const AccommodationZoneSchema = z.object({
   name: z.string(),
@@ -105,32 +105,32 @@ const AccommodationZoneSchema = z.object({
   cons: z.array(z.string()).optional(),
   best_for: z.array(z.string()).optional(),
   picks: z.array(AccommodationPickSchema).optional(),
-})
+}).strict()
 
 const AccommodationSourceSchema = z.object({
   notes: z.string().optional(),
   zones: z.array(AccommodationZoneSchema),
-})
+}).strict()
 
 const TransportArrivalSchema = z.object({
   from_airport: z.string(),
   description: z.string(),
   notes: z.string().optional(),
   verified_at: z.string().optional(),
-})
+}).strict()
 
 const TransportLocalSchema = z.object({
   mode: z.string(),
   description: z.string(),
   notes: z.string().optional(),
   verified_at: z.string().optional(),
-})
+}).strict()
 
 const TransportSourceSchema = z.object({
   arrival: z.array(TransportArrivalSchema).optional(),
   local: z.array(TransportLocalSchema).optional(),
   passes: z.array(z.string()).optional(),
-})
+}).strict()
 
 const ChecklistItemSourceSchema = z.object({
   label: z.string(),
@@ -139,7 +139,7 @@ const ChecklistItemSourceSchema = z.object({
   affiliate_id: z.string().optional(),
   notes: z.string().optional(),
   group_note: z.string().optional(),
-})
+}).strict()
 
 const PracticalSourceSchema = z.object({
   insurance_affiliate_id: z.string().optional(),
@@ -147,13 +147,13 @@ const PracticalSourceSchema = z.object({
   plugs: z.string().optional(),
   apps: z.array(z.string()).optional(),
   tips: z.array(z.string()).optional(),
-})
+}).strict()
 
 const FaqItemSchema = z.object({
   q: z.string(),
   a: z.string(),
   schema: z.boolean().optional(),
-})
+}).strict()
 
 const AdaptationNoteConditionsSchema = z.object({
   priorities: z.array(z.string()).optional(),
@@ -161,7 +161,7 @@ const AdaptationNoteConditionsSchema = z.object({
   budget: z.array(BudgetLevel).optional(),
   pace: z.array(Pace).optional(),
   trip_days: z.array(z.number()).optional(),
-})
+}).strict()
 
 export const AdaptationNoteSourceSchema = z.object({
   id: z.string(),
@@ -169,7 +169,7 @@ export const AdaptationNoteSourceSchema = z.object({
   text: z.string(),
   target: NoteTarget,
   priority: z.number().optional(),
-})
+}).strict()
 
 const SummarySourceSchema = z.object({
   tagline: z.string(),
@@ -177,7 +177,7 @@ const SummarySourceSchema = z.object({
   getting_around: z.string().optional(),
   base_area: z.string().optional(),
   pace_default: Pace.optional(),
-})
+}).strict()
 
 export const GuideSourceSchema = z.object({
   slug: z.string(),
@@ -207,7 +207,7 @@ export const GuideSourceSchema = z.object({
   adaptation_notes: z.array(AdaptationNoteSourceSchema).optional(),
   faq: z.array(FaqItemSchema).optional(),
   related: z.array(z.string()).optional(),
-})
+}).strict()
 
 export type GuideSource = z.infer<typeof GuideSourceSchema>
 export type VariantSource = z.infer<typeof VariantSourceSchema>

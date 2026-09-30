@@ -80,13 +80,21 @@ test('I14 — experience{} con visit_status: unknown es ERROR', () => {
   assert.ok(result.errors.length > 0)
 })
 
-test('I15 — el estado de visita pertenece a PARADA, nunca a LUGAR', () => {
-  const parsed = PlaceSourceSchema.parse({
+test('I15 — el estado de visita pertenece a PARADA, nunca a LUGAR: un LUGAR con visit_status es rechazado', () => {
+  const result = PlaceSourceSchema.safeParse({
     place_id: 'a', name: 'A', destination: 'islandia', lat: 1, lng: 1,
     type: 'other', verified_at: '2024-01-01',
-    visit_status: 'visited', // not a real field on PlaceSource — Zod strips unknown keys
+    visit_status: 'visited', // not a real field on PlaceSource
   } as never)
-  assert.strictEqual('visit_status' in parsed, false)
+  assert.strictEqual(result.success, false)
+})
+
+test('I15 — un LUGAR sin campos ajenos sí es válido (control)', () => {
+  const result = PlaceSourceSchema.safeParse({
+    place_id: 'a', name: 'A', destination: 'islandia', lat: 1, lng: 1,
+    type: 'other', verified_at: '2024-01-01',
+  })
+  assert.strictEqual(result.success, true)
 })
 
 test('I16 — actual_price_paid (PARADA) y entry.price (LUGAR) coexisten sin sobrescribirse', () => {
