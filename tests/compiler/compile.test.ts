@@ -1,26 +1,24 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
-import { loadGuide, loadPlaces, validateGuide, compileGuide } from '../../engine/index.ts'
-import { PlaceSourceSchema } from '../../schemas/index.ts'
+import { loadGuide, loadPlaces, validateGuide, compileGuide, buildPlaceRegistry } from '../../engine/index.ts'
 import type { PlaceRegistry, AffiliateRegistry } from '../../engine/index.ts'
-import type { PlaceSource } from '../../schemas/index.ts'
 
 const GUIDE_PATH = new URL('../../content/guides/islandia/islandia-en-camper-13-dias.yaml', import.meta.url).pathname
 const PLACES_PATH = new URL('../../content/places/islandia.yaml', import.meta.url).pathname
 
-async function buildPlaceRegistry(): Promise<PlaceRegistry> {
+async function loadPlaceRegistry(): Promise<PlaceRegistry> {
   const raw = await loadPlaces(PLACES_PATH) as unknown[]
-  const map = new Map<string, PlaceSource>()
-  for (const entry of raw) {
-    map.set(PlaceSourceSchema.parse(entry).place_id, PlaceSourceSchema.parse(entry))
+  const { registry, errors } = buildPlaceRegistry(raw)
+  if (errors.length > 0) {
+    throw new Error(`unexpected place registry errors in fixture: ${errors.join('; ')}`)
   }
-  return { get: (id) => map.get(id) }
+  return registry
 }
 
 const emptyAffiliates: AffiliateRegistry = { get: () => undefined }
 
 test('the real Islandia guide loads, validates with zero errors, and compiles', async () => {
-  const places = await buildPlaceRegistry()
+  const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
 
   const result = validateGuide(rawGuide, places, emptyAffiliates)
@@ -32,7 +30,7 @@ test('the real Islandia guide loads, validates with zero errors, and compiles', 
 })
 
 test('the compiled guide keeps exactly the 6 authored days, not all 13', async () => {
-  const places = await buildPlaceRegistry()
+  const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)
   const compiled = compileGuide(result.guide!, places, emptyAffiliates)
@@ -42,7 +40,7 @@ test('the compiled guide keeps exactly the 6 authored days, not all 13', async (
 })
 
 test('places is the deduplicated union of every place actually used by a stop (24 of the 26 registered — jokulsarlon and vestrahorn belong to the excluded days 5-6 and are never referenced)', async () => {
-  const places = await buildPlaceRegistry()
+  const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)
   const compiled = compileGuide(result.guide!, places, emptyAffiliates)
@@ -53,7 +51,7 @@ test('places is the deduplicated union of every place actually used by a stop (2
 })
 
 test('budget compiles with the real 2024 figures: total_base equals the sum of per-person amounts', async () => {
-  const places = await buildPlaceRegistry()
+  const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)
   const compiled = compileGuide(result.guide!, places, emptyAffiliates)
@@ -64,7 +62,7 @@ test('budget compiles with the real 2024 figures: total_base equals the sum of p
 })
 
 test('has_experience is true for this real, lived guide', async () => {
-  const places = await buildPlaceRegistry()
+  const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)
   const compiled = compileGuide(result.guide!, places, emptyAffiliates)

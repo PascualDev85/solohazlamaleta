@@ -1,25 +1,8 @@
-import { loadGuide, loadPlaces, validateGuide, compileGuide, validatePlaceSchema } from '../engine/index.ts'
-import type { PlaceRegistry, AffiliateRegistry } from '../engine/index.ts'
-import type { PlaceSource } from '../schemas/index.ts'
+import { loadGuide, loadPlaces, validateGuide, compileGuide, buildPlaceRegistry } from '../engine/index.ts'
+import type { AffiliateRegistry } from '../engine/index.ts'
 
 const GUIDE_PATH = 'content/guides/islandia/islandia-en-camper-13-dias.yaml'
 const PLACES_PATH = 'content/places/islandia.yaml'
-
-function buildPlaceRegistry(rawPlaces: unknown[]): { registry: PlaceRegistry; errors: string[] } {
-  const errors: string[] = []
-  const map = new Map<string, PlaceSource>()
-
-  for (const raw of rawPlaces) {
-    const result = validatePlaceSchema(raw)
-    if (!result.success) {
-      errors.push(`[ERROR] esquema de lugar inválido: ${result.error.issues.map((i) => i.message).join(', ')}`)
-      continue
-    }
-    map.set(result.data.place_id, result.data)
-  }
-
-  return { registry: { get: (id) => map.get(id) }, errors }
-}
 
 function buildEmptyAffiliateRegistry(): AffiliateRegistry {
   return { get: () => undefined }
