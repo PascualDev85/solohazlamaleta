@@ -104,7 +104,7 @@
   lng: -17.5506
   type: monument
   verified_at: 2024-08-15
-  notes: "Cascada en herradura junto a la Ring Road, cerca de Mývatn."
+  notes: "Cascada en herradura junto a la Ring Road, cerca de Mývatn. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: akureyri
   name: Akureyri
@@ -113,7 +113,7 @@
   lng: -18.0878
   type: area
   verified_at: 2024-08-15
-  notes: "Capital del norte de Islandia, al fondo del fiordo Eyjafjörður."
+  notes: "Capital del norte de Islandia, al fondo del fiordo Eyjafjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hauganes
   name: Avistamiento de ballenas en Hauganes
@@ -122,7 +122,7 @@
   lng: -18.4166
   type: activity
   verified_at: 2024-08-15
-  notes: "Pueblo pesquero al norte de Akureyri, salidas de avistamiento de ballenas en el fiordo Eyjafjörður."
+  notes: "Pueblo pesquero al norte de Akureyri, salidas de avistamiento de ballenas en el fiordo Eyjafjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: migandifoss
   name: Cascada Mígandifoss
@@ -140,7 +140,7 @@
   lng: -18.9100
   type: area
   verified_at: 2024-08-15
-  notes: "Antiguo pueblo arenquero en el extremo norte de la península de Tröllaskagi, accesible por túneles."
+  notes: "Antiguo pueblo arenquero en el extremo norte de la península de Tröllaskagi, accesible por túneles. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: grafarkirkja
   name: Grafarkirkja
@@ -158,7 +158,7 @@
   lng: -19.5000
   type: museum
   verified_at: 2024-08-15
-  notes: "Museo etnográfico en una granja tradicional de turba en Skagafjörður."
+  notes: "Museo etnográfico en una granja tradicional de turba en Skagafjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: vidimyrarkirkja
   name: Víðimýrarkirkja
@@ -167,7 +167,7 @@
   lng: -19.4200
   type: monument
   verified_at: 2024-08-15
-  notes: "Iglesia de turba de 1834, una de las mejor conservadas de Islandia."
+  notes: "Iglesia de turba de 1834, una de las mejor conservadas de Islandia. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: kolugljufur
   name: Cañón de Kolugljúfur
@@ -185,7 +185,7 @@
   lng: -23.2600
   type: area
   verified_at: 2024-08-15
-  notes: "Fiordo en la costa norte de la península de Snæfellsnes, de camino a Grundarfjörður."
+  notes: "Fiordo en la costa norte de la península de Snæfellsnes, de camino a Grundarfjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: kirkjufell
   name: Mirador de Kirkjufell
@@ -194,7 +194,7 @@
   lng: -23.3084
   type: viewpoint
   verified_at: 2024-08-15
-  notes: "La montaña más fotografiada de Islandia, junto a la cascada Kirkjufellsfoss, cerca de Grundarfjörður."
+  notes: "La montaña más fotografiada de Islandia, junto a la cascada Kirkjufellsfoss, cerca de Grundarfjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: olafsvik
   name: Ólafsvík
@@ -203,7 +203,7 @@
   lng: -23.7141
   type: area
   verified_at: 2024-08-15
-  notes: "Pueblo pesquero en la costa norte de la península de Snæfellsnes."
+  notes: "Pueblo pesquero en la costa norte de la península de Snæfellsnes. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: djupalonssandur
   name: Playa de Djúpalónssandur
@@ -212,7 +212,7 @@
   lng: -23.9066
   type: park
   verified_at: 2024-08-15
-  notes: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio y piedras de fuerza tradicionales."
+  notes: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio y piedras de fuerza tradicionales. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: londrangar
   name: Londrangar
@@ -221,16 +221,16 @@
   lng: -23.9130
   type: viewpoint
   verified_at: 2024-08-15
-  notes: "Aparcamiento y mirador de dos formaciones rocosas volcánicas junto al mar."
+  notes: "Aparcamiento y mirador de dos formaciones rocosas volcánicas junto al mar. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hellnar
   name: Mirador de Hellnar
   destination: islandia
-  lat: 64.7500
-  lng: -23.9600
+  lat: 64.7527
+  lng: -23.6674
   type: viewpoint
   verified_at: 2024-08-15
-  notes: "Pequeño pueblo con acantilados y colonias de aves marinas, en la costa sur de Snæfellsnes."
+  notes: "Pequeño pueblo con acantilados y colonias de aves marinas, a unos 2,5 km a pie de Arnarstapi por el sendero costero, en la costa sur de Snæfellsnes. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: arnarstapi
   name: Arnarstapi
@@ -239,7 +239,7 @@
   lng: -23.6260
   type: area
   verified_at: 2024-08-15
-  notes: "Pueblo costero con la ruta de acantilados hacia Hellnar y la estatua de Bárður Snæfellsás."
+  notes: "Pueblo costero con la ruta de acantilados hacia Hellnar y la estatua de Bárður Snæfellsás. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: raudfeldsgja
   name: Garganta de Rauðfeldsgjá
@@ -248,7 +248,7 @@
   lng: -23.5850
   type: activity
   verified_at: 2024-08-15
-  notes: "Grieta estrecha en la montaña que se puede recorrer a pie, cerca de Arnarstapi. Lleva agua en el fondo, calzado adecuado necesario."
+  notes: "Grieta estrecha en la montaña que se puede recorrer a pie, cerca de Arnarstapi. Lleva agua en el fondo, calzado adecuado necesario. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: budakirkja
   name: Búðakirkja
@@ -257,7 +257,7 @@
   lng: -23.3850
   type: monument
   verified_at: 2024-08-15
-  notes: "Iglesia negra de madera de 1848 junto al pueblo de Búðir."
+  notes: "Iglesia negra de madera de 1848 junto al pueblo de Búðir. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: reykjavik
   name: Reikiavik
@@ -266,4 +266,4 @@
   lng: -21.9426
   type: area
   verified_at: 2024-08-15
-  notes: "Capital de Islandia, punto de partida y cierre de la ruta por la Ring Road."
+  notes: "Capital de Islandia, punto de partida y cierre de la ruta por la Ring Road. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
