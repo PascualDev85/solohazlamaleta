@@ -692,11 +692,13 @@ El número de paradas puede cambiar si se edita el YAML (ahora mismo son 25 — 
 
 ```bash
 STOPS_EXPECTED=$(npm run content:validate 2>&1 | grep -oE '[0-9]+ paradas' | grep -oE '^[0-9]+')
-STOPS_IN_PAGE=$(grep -o 'maps/search/?api=1&query=[0-9.,-]*' dist/islandia/islandia-en-camper-13-dias/index.html | wc -l | tr -d ' ')
+STOPS_IN_PAGE=$(grep -o 'maps/search/?api=1&amp;query=[0-9.,-]*' dist/islandia/islandia-en-camper-13-dias/index.html | wc -l | tr -d ' ')
 echo "esperadas: $STOPS_EXPECTED — en la página: $STOPS_IN_PAGE"
 [ "$STOPS_EXPECTED" = "$STOPS_IN_PAGE" ] && echo "OK" || echo "MISMATCH"
 grep -c 'maps/dir/' dist/islandia/islandia-en-camper-13-dias/index.html
 ```
+
+(Nota: Astro escapa `&` como `&amp;` en atributos HTML — comportamiento HTML estándar y correcto. El patrón de `grep` tiene que buscar `&amp;query=`, no `&query=`, o dará 0 coincidencias aunque la página sea correcta.)
 
 Esperado: `OK`, y el último `grep -c` devuelve `0` (ninguna ocurrencia de `maps/dir/`, que indicaría una ruta multi-waypoint, lo que se decidió evitar explícitamente).
 
