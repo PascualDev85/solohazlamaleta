@@ -43,17 +43,42 @@ test('the real guide source has no affiliate_id anywhere, and no compiled stop h
 
 test('loadCompiledGuide throws when a stop references a place_id missing from the registry', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'engine-guide-'))
-  const placesPath = join(dir, 'places.yaml')
-  const brokenPlaces = (await readFile(PLACES_PATH, 'utf-8')).replace(
-    'place_id: thingvellir\n',
-    'place_id: thingvellir-broken\n',
-  )
-  await writeFile(placesPath, brokenPlaces)
+  try {
+    const placesPath = join(dir, 'places.yaml')
+    const brokenPlaces = (await readFile(PLACES_PATH, 'utf-8')).replace(
+      'place_id: thingvellir\n',
+      'place_id: thingvellir-broken\n',
+    )
+    await writeFile(placesPath, brokenPlaces)
 
-  await assert.rejects(
-    () => loadCompiledGuide(GUIDE_PATH, placesPath),
-    /thingvellir/,
-  )
+    await assert.rejects(
+      () => loadCompiledGuide(GUIDE_PATH, placesPath),
+      /thingvellir/,
+    )
+  } finally {
+    await rm(dir, { recursive: true })
+  }
+})
 
-  await rm(dir, { recursive: true })
+test('loadCompiledGuide throws when a guide references an affiliate_id, since the empty AffiliateRegistry never resolves one silently', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'engine-guide-'))
+  try {
+    const guidePath = join(dir, 'guide.yaml')
+    const guideWithAffiliate = (await readFile(GUIDE_PATH, 'utf-8')).replace(
+      'booking_checklist:\n  - label: "Alquiler del camper"\n',
+      'booking_checklist:\n  - label: "Alquiler del camper"\n    affiliate_id: fake-camper-rental\n',
+    )
+    assert.ok(
+      guideWithAffiliate.includes('affiliate_id: fake-camper-rental'),
+      'the fixture replace did not match — GUIDE_PATH format may have changed',
+    )
+    await writeFile(guidePath, guideWithAffiliate)
+
+    await assert.rejects(
+      () => loadCompiledGuide(guidePath, PLACES_PATH),
+      /affiliate_id inexistente/,
+    )
+  } finally {
+    await rm(dir, { recursive: true })
+  }
 })

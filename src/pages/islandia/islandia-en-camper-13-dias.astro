@@ -10,6 +10,20 @@ const guide = await loadCompiledGuide(
 
 const variant = guide.variants?.[0];
 
+/**
+ * Spanish decimal format (1.234,56 €), not toFixed's "1234.56" — this is a
+ * Spanish-language page. `useGrouping: true` is explicit and required: this
+ * Node/ICU build does not group thousands for the "es-ES" locale by default
+ * (verified: `Intl.NumberFormat('es-ES').format(4495.21)` gives "4495,21",
+ * not "4.495,21", while "de-DE" groups the same number correctly with no
+ * extra options).
+ */
+const currencyFormatter = new Intl.NumberFormat('es-ES', {
+  style: 'currency',
+  currency: guide.budget?.currency ?? 'EUR',
+  useGrouping: true,
+});
+
 /** Only the FAQ items the author marked fit for rich results go into the JSON-LD — the visible FAQ section below shows every question regardless. */
 const faqForSchema = (guide.faq ?? []).filter((item) => item.schema === true);
 
@@ -47,7 +61,13 @@ const faqJsonLd =
     : null;
 ---
 
-<BaseLayout title={guide.title} description={guide.description} image={guide.cover_image} noindex>
+{/*
+  No se pasa `image`: guide.cover_image apunta a /images/islandia/kirkjufell.jpg,
+  que no existe en public/ todavía (no hay fotos propias subidas). Pasar una ruta
+  rota generaría un og:image 404 en redes; mejor sin imagen hasta que exista una
+  foto real (nunca un banco de imágenes genérico, por las reglas del proyecto).
+*/}
+<BaseLayout title={guide.title} description={guide.description} noindex>
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} slot="head" />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(articleJsonLd)} slot="head" />
   {faqJsonLd && (
@@ -88,7 +108,7 @@ const faqJsonLd =
         )}
         {/*
           guide.summary.budget_per_person = total_reference / base_travelers = 4495.21 / 2 = 2247.605,
-          que con toFixed(2) muestra "2247.61 €", no "2247.62 €" (la cifra por persona citada en
+          que el formateador muestra como "2.247,61 €", no "2.247,62 €" (la cifra por persona citada en
           docs/1.6.4_json_islandia.md). Es una diferencia de 1 céntimo, inherente a haber corregido
           el desvío de redondeo del total a 2 viajeros en el Checkpoint 1 — no hay una combinación de
           redondeos que haga coincidir exactamente el total (4495.21) y el por-persona (2247.62) a la
@@ -97,7 +117,7 @@ const faqJsonLd =
         {guide.summary.budget_per_person != null && (
           <>
             <dt>Presupuesto</dt>
-            <dd>{guide.summary.budget_per_person.toFixed(2)} € por persona</dd>
+            <dd>{currencyFormatter.format(guide.summary.budget_per_person)} por persona</dd>
           </>
         )}
       </dl>
@@ -213,13 +233,14 @@ const faqJsonLd =
       <section aria-labelledby="presupuesto">
         <h2 id="presupuesto">Presupuesto real</h2>
         <p class="guide__budget-total">
-          <strong>{guide.budget.total_reference.toFixed(2)} € en total</strong>
+          <strong>{currencyFormatter.format(guide.budget.total_reference)} en total</strong>
           {guide.base_travelers && ` para ${guide.base_travelers} viajeros`}
         </p>
+        <p class="guide__verified">Precios comprobados {guide.budget.verified_at}</p>
         <ul>
           {guide.budget.items.map((item) => (
             <li>
-              {item.label}: {item.amount.toFixed(2)} €{' '}
+              {item.label}: {currencyFormatter.format(item.amount)}{' '}
               ({item.basis === 'per_person' ? 'por persona' : item.basis === 'per_room' ? 'por habitación' : 'por grupo'})
             </li>
           ))}
