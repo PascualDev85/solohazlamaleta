@@ -37,5 +37,28 @@ export function validateReferences(
     }
   }
 
+  for (const zone of guide.accommodation?.zones ?? []) {
+    for (const pick of zone.picks ?? []) {
+      if (pick.affiliate_id) {
+        const affiliate = affiliates.get(pick.affiliate_id)
+        if (!affiliate) {
+          errors.push(`[ERROR] affiliate_id inexistente en accommodation: "${pick.affiliate_id}"`)
+        } else if (!affiliate.active) {
+          errors.push(`[ERROR] affiliate_id inactivo en accommodation: "${pick.affiliate_id}"`)
+        }
+      }
+    }
+  }
+
+  const insuranceAffiliateId = guide.practical?.insurance_affiliate_id
+  if (insuranceAffiliateId) {
+    const affiliate = affiliates.get(insuranceAffiliateId)
+    if (!affiliate) {
+      errors.push(`[ERROR] affiliate_id inexistente en practical.insurance_affiliate_id: "${insuranceAffiliateId}"`)
+    } else if (!affiliate.active) {
+      errors.push(`[ERROR] affiliate_id inactivo en practical.insurance_affiliate_id: "${insuranceAffiliateId}"`)
+    }
+  }
+
   return errors
 }

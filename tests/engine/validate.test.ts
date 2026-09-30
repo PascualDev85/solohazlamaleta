@@ -137,3 +137,39 @@ test('a place referenced by a stop with a fresh verified_at produces no stalenes
   )
   assert.ok(!result.warnings.some((w) => w.toLowerCase().includes('caduc')))
 })
+
+test('I3: a missing affiliate_id in accommodation.zones[].picks[] produces an error', () => {
+  const result = validateGuide(
+    guideWithStop(
+      { place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
+      { accommodation: { zones: [{ name: 'Zona', picks: [{ name: 'Camping X', affiliate_id: 'missing-affiliate' }] }] } },
+    ),
+    places, affiliates,
+  )
+  assert.ok(result.errors.some((e) => e.includes('missing-affiliate')))
+})
+
+test('I3: an inactive affiliate_id in practical.insurance_affiliate_id produces an error', () => {
+  const result = validateGuide(
+    guideWithStop(
+      { place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
+      { practical: { insurance_affiliate_id: 'inactive-one' } },
+    ),
+    places, affiliates,
+  )
+  assert.ok(result.errors.some((e) => e.includes('inactivo')))
+})
+
+test('I3: a valid, active affiliate_id in accommodation and practical produces no error', () => {
+  const result = validateGuide(
+    guideWithStop(
+      { place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
+      {
+        accommodation: { zones: [{ name: 'Zona', picks: [{ name: 'Camping X', affiliate_id: 'active-one' }] }] },
+        practical: { insurance_affiliate_id: 'active-one' },
+      },
+    ),
+    places, affiliates,
+  )
+  assert.strictEqual(result.errors.length, 0)
+})
