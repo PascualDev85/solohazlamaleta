@@ -1,0 +1,369 @@
+slug: islandia-en-camper-13-dias
+destination: islandia
+hub: /islandia/
+type: itinerary
+content_type: experience
+status: reviewed
+trip_done: "2024"
+title: "Islandia en camper: ruta de 13 días por la Ring Road"
+description: "Ruta por Islandia en camper (13 días, antihoraria) con presupuesto real: 4.495 € entre dos personas, campings reales y lo que haríamos distinto."
+updated_at: 2026-09-30
+cover_image: /images/islandia/kirkjufell.jpg
+days: 13
+base_travelers: 2
+
+summary:
+  tagline: "13 días recorriendo Islandia en camper, con el sur como aperitivo y el norte como premio"
+  best_season: "Junio-agosto (días largos); septiembre (auroras, menos gente)"
+  getting_around: "Camper alquilado. Ring Road como eje principal. Sin F-roads."
+  base_area: "Sin base fija; camping diferente cada noche"
+  pace_default: intensivo
+
+budget:
+  currency: EUR
+  includes:
+    - "Vuelos MAD-KEF-MAD (por persona)"
+    - "Alquiler camper 13 días (por persona)"
+    - "Gasolina Islandia (por persona)"
+    - "Campings 13 noches (por persona)"
+    - "Excursiones incluyendo trekking en glaciar (por persona)"
+    - "Supermercado Islandia (por persona)"
+    - "Seguro de viaje (por persona)"
+    - "Extras, comidas fuera y parkings Islandia (por persona)"
+  excludes:
+    - "Guardería de mascotas (gasto personal no del viaje)"
+    - "Gasolina y gastos en España hasta el aeropuerto"
+  notes: "Presupuesto real 2024. El camper y la gasolina son las partidas más grandes. Cocinar en el camper reduce mucho el gasto de comidas."
+  items:
+    - category: vuelos
+      label: "Vuelos MAD → KEF → MAD"
+      amount: 285.56
+      basis: per_person
+      type: real
+      verified_at: 2024-01-15
+    - category: transporte
+      label: "Alquiler camper 13 días"
+      amount: 991.30
+      basis: per_person
+      type: real
+      verified_at: 2024-01-15
+      notes: "1.982,60 € total / 2 personas. Incluía seguro básico."
+    - category: transporte
+      label: "Gasolina en Islandia"
+      amount: 180.97
+      basis: per_person
+      type: real
+      verified_at: 2024-08-20
+      notes: "La gasolina es cara. Llenar siempre en ciudades; hay tramos largos sin gasolineras."
+    - category: alojamiento
+      label: "Campings (13 noches)"
+      amount: 153.29
+      basis: per_person
+      type: real
+      verified_at: 2024-08-20
+      notes: "Media ~11,8 €/persona/noche."
+    - category: entradas
+      label: "Excursiones (trekking glaciar y otras)"
+      amount: 251.33
+      basis: per_person
+      type: real
+      verified_at: 2024-08-20
+      notes: "La excursión en glaciar es la más cara y la más impresionante. No la recortaríamos."
+    - category: comidas
+      label: "Supermercado en Islandia"
+      amount: 67.84
+      basis: per_person
+      type: real
+      verified_at: 2024-08-20
+      notes: "Comprar en Bonus (la cadena más barata). Cocinar en el camper = ahorro enorme."
+    - category: seguro
+      label: "Seguro de viaje"
+      amount: 33.45
+      basis: per_person
+      type: real
+      verified_at: 2024-01-15
+    - category: otro
+      label: "Extras, comidas fuera y parkings Islandia"
+      amount: 283.88
+      basis: per_person
+      type: real
+      verified_at: 2024-08-20
+
+variants:
+  - id: intensivo
+    name: "Ruta completa (como la hicimos)"
+    description: "Los 13 días tal como los planificamos. Días de hasta 340 km con muchas paradas. Hay que madrugar."
+    days:
+      - day: 1
+        title: "Círculo Dorado"
+        summary: "Þingvellir, Géiser y Gullfoss. El trío clásico para entrar en calor."
+        physical_level:
+          walking_km: 8
+          hills: some
+        stops:
+          - place_id: thingvellir
+            order: 1
+            duration_min: 70
+            planning_status: required
+            visit_status: visited
+            start_time: "09:00"
+            travel_to_next_min: 50
+            travel_to_next_mode: "coche"
+            variant_note: "En intensivo: parking P3, paseo por la grieta y el lago, sin perder tiempo."
+          - place_id: geysir
+            order: 2
+            duration_min: 50
+            planning_status: required
+            visit_status: visited
+            start_time: "10:40"
+            travel_to_next_min: 10
+            travel_to_next_mode: "coche"
+          - place_id: gullfoss
+            order: 3
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+            start_time: "11:40"
+        our_take: "Si tuviéramos que quitar algo del Círculo Dorado, quitaríamos Þingvellir el primer día y lo dejaríamos para el último, con más calma. El Géiser y Gullfoss son más impactantes como primera impresión."
+        plan_b: "Si llueve: Gullfoss desde el mirador cubierto sigue mereciendo. El Géiser no depende del tiempo."
+
+      - day: 2
+        title: "Cascadas del sur"
+        summary: "Seljalandsfoss y Skógafoss. Impermeable obligatorio."
+        physical_level:
+          walking_km: 6
+          hills: none
+        stops:
+          - place_id: seljalandsfoss
+            order: 1
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+            start_time: "09:30"
+            travel_to_next_min: 30
+            travel_to_next_mode: "coche"
+          - place_id: skogafoss
+            order: 2
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+            start_time: "11:00"
+            variant_note: "Subir las escaleras de la derecha para el mirador superior."
+        our_take: "Estas dos cascadas se pueden hacer con calma en media jornada y seguir ruta hacia el este."
+        plan_b: "La lluvia mejora estas cascadas (más caudal). No es mal plan si llueve."
+
+      - day: 9
+        title: "Goðafoss, Akureyri y la costa de Tröllaskagi"
+        summary: "De la zona de Mývatn a la costa norte, con parada para avistamiento de ballenas y cruce por túneles hacia Siglufjörður."
+        stops:
+          - place_id: godafoss
+            order: 1
+            duration_min: 40
+            planning_status: required
+            visit_status: visited
+          - place_id: akureyri
+            order: 2
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+          - place_id: hauganes
+            order: 3
+            duration_min: 180
+            planning_status: required
+            visit_status: visited
+          - place_id: migandifoss
+            order: 4
+            duration_min: 30
+            planning_status: required
+            visit_status: visited
+          - place_id: siglufjordur
+            order: 5
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+
+      - day: 10
+        title: "Camino al oeste: iglesias de turba y Kolugljúfur"
+        summary: "Cruce de Skagafjörður hacia la península de Snæfellsnes, con paradas en iglesias de turba históricas y el cañón de Kolugljúfur."
+        stops:
+          - place_id: grafarkirkja
+            order: 1
+            duration_min: 20
+            planning_status: required
+            visit_status: visited
+          - place_id: glaumbaer
+            order: 2
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+          - place_id: vidimyrarkirkja
+            order: 3
+            duration_min: 20
+            planning_status: required
+            visit_status: visited
+          - place_id: kolugljufur
+            order: 4
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+          - place_id: kolgrafarfjordur
+            order: 5
+            duration_min: 20
+            planning_status: required
+            visit_status: visited
+
+      - day: 11
+        title: "Snæfellsnes: Kirkjufell, Djúpalónssandur y Arnarstapi"
+        summary: "Día completo recorriendo la península de Snæfellsnes, de Kirkjufell hasta los acantilados del sur."
+        stops:
+          - place_id: kirkjufell
+            order: 1
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+          - place_id: olafsvik
+            order: 2
+            duration_min: 30
+            planning_status: required
+            visit_status: visited
+          - place_id: djupalonssandur
+            order: 3
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+          - place_id: londrangar
+            order: 4
+            duration_min: 30
+            planning_status: required
+            visit_status: visited
+          - place_id: hellnar
+            order: 5
+            duration_min: 30
+            planning_status: required
+            visit_status: visited
+          - place_id: arnarstapi
+            order: 6
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+          - place_id: raudfeldsgja
+            order: 7
+            duration_min: 30
+            planning_status: required
+            visit_status: visited
+          - place_id: budakirkja
+            order: 8
+            duration_min: 20
+            planning_status: required
+            visit_status: visited
+
+      - day: 12
+        title: "Regreso a Reikiavik"
+        summary: "Última etapa de la Ring Road, cierre del círculo en la capital."
+        stops:
+          - place_id: reykjavik
+            order: 1
+            duration_min: 90
+            planning_status: required
+            visit_status: visited
+
+accommodation:
+  notes: "En camper, el alojamiento son campings. Se elige según la posición al final de cada jornada."
+  zones:
+    - name: "Sur de Islandia"
+      description: "Campings más completos y mejor infraestructura."
+      pros: ["Duchas incluidas en muchos", "Bien ubicados cerca de los atractivos"]
+      cons: ["Más llenos en temporada alta"]
+      best_for: [couple, friends]
+      picks:
+        - name: "Hellissandur Camping (Snæfellsnes)"
+          price_level: bajo
+          notes: "26 €/persona en 2024. Duchas incluidas."
+          verified_at: 2024-08-15
+        - name: "Camping Svínafelli (Skaftafell)"
+          price_level: bajo
+          notes: "Bien ubicado para glaciar y Jökulsárlón."
+          verified_at: 2024-08-15
+    - name: "Norte de Islandia"
+      description: "Campings más pequeños y tranquilos."
+      pros: ["Menos gente", "Más baratos"]
+      cons: ["Duchas no siempre incluidas"]
+      best_for: [couple, friends]
+      picks:
+        - name: "Camping Myvatn"
+          price_level: bajo
+          notes: "Bien ubicado para el lago y la zona geotérmica."
+          verified_at: 2024-08-15
+
+transport:
+  arrival:
+    - from_airport: MAD
+      description: "Vuelo a Reikiavik (KEF). El camper se recoge en el aeropuerto o en la ciudad. El aeropuerto está a 50 km de Reikiavik."
+      notes: "Llegamos a la 1:30 de la madrugada y dormimos directamente en un camping cercano al aeropuerto."
+      verified_at: 2024-08-01
+  local:
+    - mode: "camper"
+      description: "Ring Road (Ruta 1) rodea toda la isla, asfaltada. Velocidad máx. 90 km/h en carretera, 30 km/h en pistas de grava. F-roads (pistas del interior): prohibidas para campers estándar."
+      notes: "App Gas Map Iceland para encontrar gasolineras baratas. Llenar siempre al pasar por una ciudad."
+      verified_at: 2024-08-15
+
+booking_checklist:
+  - label: "Alquiler del camper"
+    when: "3-6 meses antes"
+    priority: alta
+    notes: "Los buenos campers se agotan meses antes del verano."
+
+our_criteria:
+  - "El trekking en el glaciar (502 € entre los dos) es lo más caro y lo más impresionante. No lo recortaríamos."
+  - "Cocinar en el camper es lo que hace viable el presupuesto. Comer fuera en Islandia puede ser 3-4 veces más caro que en España."
+  - "Las F-roads están prohibidas para campers estándar. No intentarlo aunque parezca transitable."
+  - "Si tuviéramos que quitar algo, empezaríamos por las paradas que no dieron tiempo en el plan original."
+
+pitfalls:
+  - "No entrar en F-roads: el GPS de la empresa lo detecta y la penalización puede ser mayor que el deducible del seguro."
+  - "Llenar gasolina siempre al pasar por una ciudad. Los tramos remotos pueden tener 150 km sin gasolinera."
+  - "Las puertas del camper pueden dañarse con el viento. Posicionar siempre el vehículo como escudo antes de abrir."
+  - "Los campings sin ducha son más baratos pero en agosto la temperatura nocturna puede bajar a 5-8°C."
+
+terrain_tips:
+  - "App Vedur (tiempo oficial islandés): el tiempo cambia en minutos."
+  - "App Gas Map Iceland para gasolineras más baratas."
+  - "Diamond Beach y Jökulsárlón están separadas por la Ring Road: son dos sitios distintos, cruzar con cuidado."
+  - "Gljúfrafoss está a 500 metros de Seljalandsfoss, poca gente llega."
+
+practical:
+  documents:
+    - "DNI o pasaporte (Islandia es espacio Schengen)"
+    - "Carnet de conducir (el español es válido)"
+    - "Tarjeta de crédito con margen para fianza del camper (puede ser 1.000-2.000 €)"
+  plugs: "Tipo F (igual que España). Sin adaptador."
+  apps:
+    - "Vedur (tiempo oficial)"
+    - "Gas Map Iceland (gasolineras baratas)"
+    - "Maps.me (offline: imprescindible sin cobertura)"
+    - "Safe Travel Iceland (alertas de seguridad vial)"
+
+faq:
+  - q: "¿Cuánto cuesta viajar a Islandia en camper 13 días?"
+    a: "En nuestra experiencia de 2024 (2 personas): 4.495 € en total, unos 2.248 € por persona. Incluye vuelos, camper, gasolina, campings, excursiones, supermercado y seguro."
+    schema: true
+  - q: "¿Qué ruta es mejor, horaria o antihoraria?"
+    a: "Nosotros hicimos la antihoraria (sur primero) y nos gustó: el sur tiene los atractivos más impactantes como aperitivo. El norte tiene menos turistas para el final."
+    schema: true
+  - q: "¿Hace falta 4x4 para la Ring Road?"
+    a: "No. La Ring Road está asfaltada y se hace sin problema con un camper estándar. El 4x4 solo es necesario para las F-roads, prohibidas para campers de alquiler estándar."
+    schema: true
+
+adaptation_notes:
+  - id: parents_road_conditions
+    conditions:
+      group_type: [parents]
+    text: "Para viajar con personas mayores en camper por Islandia conviene reducir los días más largos de conducción (el norte tiene etapas de 300-400 km) partiéndolos en dos. Los campings con mejor infraestructura (duchas, aseos) son especialmente importantes."
+    target: both
+    priority: 1
+  - id: budget_ajustado_camper
+    conditions:
+      budget: [ajustado]
+    text: "Para reducir el presupuesto: cocinar en el camper casi siempre (ahorro estimado 40-70 €/persona), comprar exclusivamente en Bonus, elegir campings sin ducha cuando no sea imprescindible."
+    target: both
+    priority: 1
