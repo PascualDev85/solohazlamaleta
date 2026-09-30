@@ -1,0 +1,269 @@
+- place_id: thingvellir
+  name: Parque Nacional de Þingvellir
+  destination: islandia
+  lat: 64.2559
+  lng: -21.1300
+  type: park
+  verified_at: 2024-08-15
+  source_url: https://www.thingvellir.is
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Gratuito. Solo se paga el parking (~750 ISK/hora en 2024)."
+    verified_at: 2024-08-15
+  notes: "Parking P3 para ver la grieta tectónica y el lago Þingvallavatn. La grieta separa las placas euroasiática y norteamericana."
+
+- place_id: geysir
+  name: Área geotérmica Geysir (Strokkur)
+  destination: islandia
+  lat: 64.3100
+  lng: -20.3021
+  type: monument
+  verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    verified_at: 2024-08-15
+  notes: "El Strokkur erupciona cada 5-10 minutos. No hace falta esperar más de 20 min para verlo."
+
+- place_id: gullfoss
+  name: Cascada Gullfoss
+  destination: islandia
+  lat: 64.3270
+  lng: -20.1210
+  type: monument
+  verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    verified_at: 2024-08-15
+  notes: "Mejor desde el mirador inferior. Con lluvia, el spray moja completamente."
+
+- place_id: seljalandsfoss
+  name: Cascada Seljalandsfoss
+  destination: islandia
+  lat: 63.6156
+  lng: -19.9887
+  type: monument
+  verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    verified_at: 2024-08-15
+  notes: "Se puede rodear por detrás: espectacular pero te empapas. A 500 metros está Gljúfrafoss, escondida en una grieta de roca."
+
+- place_id: skogafoss
+  name: Cascada Skógafoss
+  destination: islandia
+  lat: 63.5320
+  lng: -19.5116
+  type: monument
+  verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    verified_at: 2024-08-15
+  notes: "Subir por las escaleras de la derecha para el mirador superior."
+
+- place_id: jokulsarlon
+  name: Laguna Glaciar Jökulsárlón y Diamond Beach
+  destination: islandia
+  lat: 64.0481
+  lng: -16.1796
+  type: monument
+  verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Laguna y Diamond Beach: gratuito. Excursiones zodiac/barca: precio aparte."
+    verified_at: 2024-08-15
+  notes: "Diamond Beach (playa negra con icebergs) está al otro lado de la Ring Road. Cruzar con cuidado."
+
+- place_id: vestrahorn
+  name: Vestrahorn y Stokksnes
+  destination: islandia
+  lat: 64.2448
+  lng: -14.9836
+  type: monument
+  verified_at: 2024-08-15
+  entry:
+    price: 900
+    currency: ISK
+    notes: "~900 ISK/persona en 2024 (~6 €). Incluye acceso a la playa y al asentamiento vikingo."
+    verified_at: 2024-08-15
+  hours:
+    open: "08:00"
+    close: "22:00"
+    verified_at: 2024-07-01
+  notes: "El asentamiento vikingo es de atrezo de película. Uno de los paisajes más fotografiados de Islandia."
+
+- place_id: godafoss
+  name: Cascada Goðafoss
+  destination: islandia
+  lat: 65.6817
+  lng: -17.5506
+  type: monument
+  verified_at: 2024-08-15
+  notes: "Cascada en herradura junto a la Ring Road, cerca de Mývatn."
+
+- place_id: akureyri
+  name: Akureyri
+  destination: islandia
+  lat: 65.6885
+  lng: -18.0878
+  type: area
+  verified_at: 2024-08-15
+  notes: "Capital del norte de Islandia, al fondo del fiordo Eyjafjörður."
+
+- place_id: hauganes
+  name: Avistamiento de ballenas en Hauganes
+  destination: islandia
+  lat: 65.8973
+  lng: -18.4166
+  type: activity
+  verified_at: 2024-08-15
+  notes: "Pueblo pesquero al norte de Akureyri, salidas de avistamiento de ballenas en el fiordo Eyjafjörður."
+
+- place_id: migandifoss
+  name: Cascada Mígandifoss
+  destination: islandia
+  lat: 66.0333
+  lng: -18.6667
+  type: monument
+  verified_at: 2024-08-15
+  notes: "Cascada de la zona de Héðinsfjörður, en la ruta por los túneles hacia Siglufjörður. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: siglufjordur
+  name: Siglufjörður
+  destination: islandia
+  lat: 66.1500
+  lng: -18.9100
+  type: area
+  verified_at: 2024-08-15
+  notes: "Antiguo pueblo arenquero en el extremo norte de la península de Tröllaskagi, accesible por túneles."
+
+- place_id: grafarkirkja
+  name: Grafarkirkja
+  destination: islandia
+  lat: 65.6270
+  lng: -19.9500
+  type: monument
+  verified_at: 2024-08-15
+  notes: "Pequeña iglesia de turba, una de las más antiguas de Islandia, en la península de Höfðaströnd. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: glaumbaer
+  name: Glaumbær Farm
+  destination: islandia
+  lat: 65.5375
+  lng: -19.5000
+  type: museum
+  verified_at: 2024-08-15
+  notes: "Museo etnográfico en una granja tradicional de turba en Skagafjörður."
+
+- place_id: vidimyrarkirkja
+  name: Víðimýrarkirkja
+  destination: islandia
+  lat: 65.4200
+  lng: -19.4200
+  type: monument
+  verified_at: 2024-08-15
+  notes: "Iglesia de turba de 1834, una de las mejor conservadas de Islandia."
+
+- place_id: kolugljufur
+  name: Cañón de Kolugljúfur
+  destination: islandia
+  lat: 65.3800
+  lng: -20.6700
+  type: viewpoint
+  verified_at: 2024-08-15
+  notes: "Cañón excavado por el río Víðidalsá, con varias cascadas. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: kolgrafarfjordur
+  name: Kolgrafarfjörður
+  destination: islandia
+  lat: 64.9300
+  lng: -23.2600
+  type: area
+  verified_at: 2024-08-15
+  notes: "Fiordo en la costa norte de la península de Snæfellsnes, de camino a Grundarfjörður."
+
+- place_id: kirkjufell
+  name: Mirador de Kirkjufell
+  destination: islandia
+  lat: 64.9377
+  lng: -23.3084
+  type: viewpoint
+  verified_at: 2024-08-15
+  notes: "La montaña más fotografiada de Islandia, junto a la cascada Kirkjufellsfoss, cerca de Grundarfjörður."
+
+- place_id: olafsvik
+  name: Ólafsvík
+  destination: islandia
+  lat: 64.8945
+  lng: -23.7141
+  type: area
+  verified_at: 2024-08-15
+  notes: "Pueblo pesquero en la costa norte de la península de Snæfellsnes."
+
+- place_id: djupalonssandur
+  name: Playa de Djúpalónssandur
+  destination: islandia
+  lat: 64.7642
+  lng: -23.9066
+  type: park
+  verified_at: 2024-08-15
+  notes: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio y piedras de fuerza tradicionales."
+
+- place_id: londrangar
+  name: Londrangar
+  destination: islandia
+  lat: 64.7444
+  lng: -23.9130
+  type: viewpoint
+  verified_at: 2024-08-15
+  notes: "Aparcamiento y mirador de dos formaciones rocosas volcánicas junto al mar."
+
+- place_id: hellnar
+  name: Mirador de Hellnar
+  destination: islandia
+  lat: 64.7500
+  lng: -23.9600
+  type: viewpoint
+  verified_at: 2024-08-15
+  notes: "Pequeño pueblo con acantilados y colonias de aves marinas, en la costa sur de Snæfellsnes."
+
+- place_id: arnarstapi
+  name: Arnarstapi
+  destination: islandia
+  lat: 64.7717
+  lng: -23.6260
+  type: area
+  verified_at: 2024-08-15
+  notes: "Pueblo costero con la ruta de acantilados hacia Hellnar y la estatua de Bárður Snæfellsás."
+
+- place_id: raudfeldsgja
+  name: Garganta de Rauðfeldsgjá
+  destination: islandia
+  lat: 64.7690
+  lng: -23.5850
+  type: activity
+  verified_at: 2024-08-15
+  notes: "Grieta estrecha en la montaña que se puede recorrer a pie, cerca de Arnarstapi. Lleva agua en el fondo, calzado adecuado necesario."
+
+- place_id: budakirkja
+  name: Búðakirkja
+  destination: islandia
+  lat: 64.8270
+  lng: -23.3850
+  type: monument
+  verified_at: 2024-08-15
+  notes: "Iglesia negra de madera de 1848 junto al pueblo de Búðir."
+
+- place_id: reykjavik
+  name: Reikiavik
+  destination: islandia
+  lat: 64.1466
+  lng: -21.9426
+  type: area
+  verified_at: 2024-08-15
+  notes: "Capital de Islandia, punto de partida y cierre de la ruta por la Ring Road."
