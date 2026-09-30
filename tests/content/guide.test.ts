@@ -16,10 +16,10 @@ test('the real Islandia guide matches GuideSourceSchema', async () => {
   )
 })
 
-test('the guide only contains days 1, 2, 9, 10, 11 and 12', async () => {
+test('the guide only contains days 1, 2, 3, 9, 10, 11 and 12', async () => {
   const raw = await loadGuide(GUIDE_PATH) as { variants: { days: { day: number }[] }[] }
   const days = raw.variants[0].days.map((d) => d.day).sort((a, b) => a - b)
-  assert.deepStrictEqual(days, [1, 2, 9, 10, 11, 12])
+  assert.deepStrictEqual(days, [1, 2, 3, 9, 10, 11, 12])
 })
 
 test('every stop place_id exists in the place registry', async () => {
@@ -48,4 +48,17 @@ test('the guide has no source-written derived fields (places, budget.type, etc.)
 test('the guide has no affiliate_id references anywhere', async () => {
   const raw = await loadGuide(GUIDE_PATH)
   assert.strictEqual(JSON.stringify(raw).includes('affiliate_id'), false)
+})
+
+test('days 9-12 flag their stop durations as estimated, not confirmed data', async () => {
+  const raw = await loadGuide(GUIDE_PATH) as { variants: { days: { day: number; summary?: string }[] }[] }
+  const days = raw.variants[0].days.filter((d) => [9, 10, 11, 12].includes(d.day))
+
+  assert.strictEqual(days.length, 4)
+  for (const day of days) {
+    assert.ok(
+      day.summary?.toLowerCase().includes('estimad'),
+      `day ${day.day} summary does not flag durations as estimated: ${JSON.stringify(day.summary)}`,
+    )
+  }
 })

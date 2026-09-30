@@ -129,10 +129,10 @@ variants:
         plan_b: "Si llueve: Gullfoss desde el mirador cubierto sigue mereciendo. El Géiser no depende del tiempo."
 
       - day: 2
-        title: "Cascadas del sur"
-        summary: "Seljalandsfoss y Skógafoss. Impermeable obligatorio."
+        title: "Seljalandsfoss y llegada a Skógafoss"
+        summary: "Seljalandsfoss con calma por la mañana; parada rápida en Skógafoss al llegar al camping, de camino. La visita completa es a la mañana siguiente."
         physical_level:
-          walking_km: 6
+          walking_km: 4
           hills: none
         stops:
           - place_id: seljalandsfoss
@@ -145,17 +145,33 @@ variants:
             travel_to_next_mode: "coche"
           - place_id: skogafoss
             order: 2
+            duration_min: 15
+            planning_status: required
+            visit_status: visited
+            start_time: "18:30"
+            variant_note: "Vista rápida al llegar al camping de al lado, de camino y sin subir al mirador — la visita con calma es a la mañana siguiente."
+        our_take: "Seljalandsfoss se puede hacer con calma por la mañana. Dormir junto a Skógafoss deja la cascada lista para volver temprano, con luz y sin gente."
+        plan_b: "La lluvia mejora estas cascadas (más caudal). No es mal plan si llueve."
+
+      - day: 3
+        title: "Mañana tranquila en Skógafoss"
+        summary: "Vuelta a Skógafoss por la mañana, sin las multitudes del mediodía, para subir al mirador con calma."
+        physical_level:
+          walking_km: 2
+          hills: some
+        stops:
+          - place_id: skogafoss
+            order: 1
             duration_min: 60
             planning_status: required
             visit_status: visited
-            start_time: "11:00"
-            variant_note: "Subir las escaleras de la derecha para el mirador superior."
-        our_take: "Estas dos cascadas se pueden hacer con calma en media jornada y seguir ruta hacia el este."
-        plan_b: "La lluvia mejora estas cascadas (más caudal). No es mal plan si llueve."
+            start_time: "08:30"
+            variant_note: "Subir las escaleras de la derecha para el mirador superior. Con la luz de la mañana y sin las multitudes del mediodía."
+        our_take: "Dormir justo al lado y volver a primera hora es la diferencia entre ver la cascada en foto de postal o entre autobuses de turistas."
 
       - day: 9
         title: "Goðafoss, Akureyri y la costa de Tröllaskagi"
-        summary: "De la zona de Mývatn a la costa norte, con parada para avistamiento de ballenas y cruce por túneles hacia Siglufjörður."
+        summary: "De la zona de Mývatn a la costa norte, con parada para avistamiento de ballenas y cruce por túneles hacia Siglufjörður. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         stops:
           - place_id: godafoss
             order: 1
@@ -185,7 +201,7 @@ variants:
 
       - day: 10
         title: "Camino al oeste: iglesias de turba y Kolugljúfur"
-        summary: "Cruce de Skagafjörður hacia la península de Snæfellsnes, con paradas en iglesias de turba históricas y el cañón de Kolugljúfur."
+        summary: "Cruce de Skagafjörður hacia la península de Snæfellsnes, con paradas en iglesias de turba históricas y el cañón de Kolugljúfur. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         stops:
           - place_id: grafarkirkja
             order: 1
@@ -215,7 +231,7 @@ variants:
 
       - day: 11
         title: "Snæfellsnes: Kirkjufell, Djúpalónssandur y Arnarstapi"
-        summary: "Día completo recorriendo la península de Snæfellsnes, de Kirkjufell hasta los acantilados del sur."
+        summary: "Día completo recorriendo la península de Snæfellsnes, de Kirkjufell hasta los acantilados del sur. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         stops:
           - place_id: kirkjufell
             order: 1
@@ -260,7 +276,7 @@ variants:
 
       - day: 12
         title: "Regreso a Reikiavik"
-        summary: "Última etapa de la Ring Road, cierre del círculo en la capital."
+        summary: "Última etapa de la Ring Road, cierre del círculo en la capital. Duración de la parada estimada, no confirmada — pendiente de ajustar al escribir la guía editorial."
         stops:
           - place_id: reykjavik
             order: 1
