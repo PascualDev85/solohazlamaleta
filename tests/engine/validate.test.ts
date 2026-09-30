@@ -1,6 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
 import { validateGuide } from '../../engine/validate/index.ts'
+import { compileGuide } from '../../engine/compile/index.ts'
 import type { PlaceRegistry, AffiliateRegistry } from '../../engine/types.ts'
 
 const places: PlaceRegistry = { get: (id) => (id === 'a' ? { place_id: 'a', name: 'A', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2024-01-01' } : undefined) }
@@ -76,13 +77,14 @@ test('I14: experience{} with visit_status unknown is an error', () => {
   assert.ok(result.errors.some((e) => e.toLowerCase().includes('experience')))
 })
 
-test('a not_visited stop with first-person variant_note warns, does not error', () => {
+test('a not_visited stop with first-person variant_note warns, does not error, and still compiles (I7)', () => {
   const result = validateGuide(
     guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'not_visited', variant_note: 'Nosotros hicimos esta parte del camino sin prisa.' }),
     places, affiliates,
   )
   assert.strictEqual(result.errors.length, 0)
   assert.ok(result.warnings.length > 0)
+  assert.doesNotThrow(() => compileGuide(result.guide!, places, affiliates))
 })
 
 test('an unknown stop with first-person variant_note warns (I4: unknown branch)', () => {
