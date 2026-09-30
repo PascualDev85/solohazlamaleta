@@ -1,50 +1,50 @@
-# Domain Engine (Islandia fixture) Implementation Plan
+# Plan de implementación: motor de dominio (fixture de Islandia)
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Para agentes de ejecución:** SUB-SKILL REQUERIDO: usar superpowers:subagent-driven-development (recomendado) o superpowers:executing-plans para implementar este plan tarea por tarea. Los pasos usan sintaxis de checkbox (`- [ ]`) para seguimiento.
 
-**Goal:** Implement the domain engine (`schemas/`, `engine/`, `scripts/validate-content.ts`, `tests/`) defined in the architecture Blueprints, and the real Islandia fixture content (`content/places/islandia.yaml`, `content/guides/islandia/islandia-en-camper-13-dias.yaml`), so that `npm run content:validate` exits 0 with no errors for the partial, real Islandia guide (days 1, 2, 9, 10, 11, 12 only) — with zero involvement from Astro, Vue, or any presentation layer.
+**Objetivo:** implementar el motor de dominio (`schemas/`, `engine/`, `scripts/validate-content.ts`, `tests/`) definido en los Blueprints de arquitectura, y el fixture real de Islandia (`content/places/islandia.yaml`, `content/guides/islandia/islandia-en-camper-13-dias.yaml`), de forma que `npm run content:validate` termine con exit 0 y sin errores para la guía real y parcial de Islandia (solo días 1, 2, 9, 10, 11, 12) — sin que Astro, Vue ni ninguna capa de presentación participen.
 
-**Architecture:** Strict one-way dependency chain `content → load → schemas → engine → (presentation, later)`. `GuideSource`/`PlaceSource` (Zod-validated, what the author writes) compile into `CompiledGuide`/`CompiledPlace` (what every output — web, PDF, email — consumes). Three validation layers run in order: schema (Zod) → references (`place_id`/`affiliate_id` exist) → content rules (business rules like `experience{}` requiring `visit_status: visited`). None of this touches `src/`.
+**Arquitectura:** cadena de dependencias estricta y unidireccional `content → load → schemas → engine → (presentación, más adelante)`. `GuideSource`/`PlaceSource` (validados con Zod, lo que escribe el autor) se compilan en `CompiledGuide`/`CompiledPlace` (lo que consume cada output — web, PDF, email). Hay tres capas de validación que se ejecutan en orden: esquema (Zod) → referencias (`place_id`/`affiliate_id` existen) → reglas de contenido (reglas de negocio como que `experience{}` exige `visit_status: visited`). Nada de esto toca `src/`.
 
-**Tech Stack:** TypeScript executed natively by Node 24 (no `tsx`/`ts-node` — verified working via `node script.ts` with no flags). `zod@^4.6.5` for schemas. `yaml@^2.9.1` for parsing content files (verified: it parses `2024-08-15` as a string, not a `Date`). `node:test` + `node:assert` as the test runner (no `vitest` — avoids an unjustified new dependency; verified working with `.test.ts` files natively).
+**Stack técnico:** TypeScript ejecutado nativamente por Node 24 (sin `tsx`/`ts-node` — verificado que `node script.ts` funciona sin flags). `zod@^4.6.5` para los esquemas. `yaml@^2.9.1` para parsear los ficheros de contenido (verificado: parsea `2024-08-15` como string, no como `Date`). `node:test` + `node:assert` como test runner (sin `vitest` — evita una dependencia nueva no justificada; verificado que funciona nativamente con ficheros `.test.ts`).
 
-**Spec:** `docs/1.7.1_repository_domain.md` (repository structure, module boundaries, error system) and `docs/1.7.2_data_contract.md` (exact `GuideSource`/`CompiledGuide` field contracts, Zod schema skeletons, compilation rules, invariant test table). Real trip data: `docs/1.6.4_json_islandia.md`. Invariant definitions: `docs/1.6_modelo_datos.md` (lines 856-871 for I1, I5, I6, I14, I15, I16). Executors should skim these once; this plan already extracts every field/type/rule needed.
+**Spec:** `docs/1.7.1_repository_domain.md` (estructura del repositorio, límites de módulos, sistema de errores) y `docs/1.7.2_data_contract.md` (contrato exacto de campos de `GuideSource`/`CompiledGuide`, esqueletos de esquemas Zod, reglas de compilación, tabla de tests de invariantes). Datos reales del viaje: `docs/1.6.4_json_islandia.md`. Definición de invariantes: `docs/1.6_modelo_datos.md` (líneas 856-871 para I1, I5, I6, I14, I15, I16). Quien ejecute el plan debería hojear estos documentos una vez; este plan ya extrae cada campo/tipo/regla necesarios.
 
-## Global Constraints
+## Restricciones globales
 
-- **Do not touch `src/`, `astro.config.mjs`, `src/content/schema.ts`, or the Alsace guide.** They are out of scope and must be untouched at the end (`git status` on those paths must be clean).
-- **Do not create `data/affiliates.yaml` or `engine/load`'s `loadAffiliates`.** Per `docs/1.7.1_repository_domain.md` §5, the affiliates registry "se añade cuando sea necesario (antes de Fase 4)" — not now. The Islandia fixture in this plan deliberately contains **zero** `affiliate_id` references (booking, checklist items with affiliate, and `practical.insurance_affiliate_id` are all omitted) so the engine's affiliate-resolution code path is real and tested, but not exercised by the real fixture yet.
-- **No abstractions before they're needed** (CLAUDE.md architecture rule): only `schemas/enums.ts`, `schemas/place.ts`, `schemas/guide.ts`, `schemas/index.ts` — no `schemas/variant.ts` etc. Only `engine/load`, `engine/validate`, `engine/compile` — no `engine/budget/`, `engine/adaptation/`, `engine/maps/`, `engine/pdf/` (those are Fase 2+).
-- **Code and commits in English; user-visible content (YAML editorial content, console messages) in Spanish.**
-- **All external consumers import from `engine` (barrel `engine/index.ts`), never from internal paths** like `engine/compile/guide`.
-- **Content is honest and partial.** The Islandia guide only includes days with confirmed `visit_status`. Days 3-8 do not appear — they are not padded with invented or `unknown` content. No invented first-person narrative (`variant_note`, `our_take`) for stops/days where the source material (`docs/1.6.4_json_islandia.md`) doesn't supply real anecdote text, even where `visit_status: visited` would technically permit first-person voice without a warning.
-- **Node ≥ 22.12** (per `package.json` `engines`; this environment runs v24.16.0, confirmed compatible with unflagged TypeScript execution).
+- **No tocar `src/`, `astro.config.mjs`, `src/content/schema.ts`, ni la guía de Alsacia.** Quedan fuera de alcance y deben seguir intactos al final (`git status` sobre esas rutas debe salir limpio).
+- **No crear `data/affiliates.yaml` ni `loadAffiliates` en `engine/load`.** Según `docs/1.7.1_repository_domain.md` §5, el registro de afiliados "se añade cuando sea necesario (antes de Fase 4)" — no ahora. El fixture de Islandia de este plan contiene deliberadamente **cero** referencias a `affiliate_id` (se omiten booking, ítems de checklist con afiliado y `practical.insurance_affiliate_id`) para que el código de resolución de afiliados exista y esté probado, pero el fixture real no lo ejercita todavía.
+- **Nada de abstracciones antes de que se necesiten** (regla de arquitectura de CLAUDE.md): solo `schemas/enums.ts`, `schemas/place.ts`, `schemas/guide.ts`, `schemas/index.ts` — nada de `schemas/variant.ts`, etc. Solo `engine/load`, `engine/validate`, `engine/compile` — nada de `engine/budget/`, `engine/adaptation/`, `engine/maps/`, `engine/pdf/` (eso es Fase 2+).
+- **Código y commits en inglés; contenido visible para el usuario (contenido editorial YAML, mensajes de consola) en español.**
+- **Todo consumidor externo importa desde `engine` (barrel `engine/index.ts`), nunca desde rutas internas** como `engine/compile/guide`.
+- **El contenido es honesto y parcial.** La guía de Islandia solo incluye los días con `visit_status` confirmado. Los días 3-8 no aparecen — no se rellenan con contenido inventado ni con `unknown`. Nada de narrativa en primera persona inventada (`variant_note`, `our_take`) para paradas o días donde el material fuente (`docs/1.6.4_json_islandia.md`) no aporta una anécdota real, aunque `visit_status: visited` permita técnicamente la voz en primera persona sin generar advertencia.
+- **Node ≥ 22.12** (según `engines` de `package.json`; este entorno usa v24.16.0, confirmado compatible con ejecución de TypeScript sin flags).
 
-## Review Focus
+## Foco de revisión
 
-- **Partial guide validity:** the guide has only 6 of its notional 13 days. A person might assume "partial" means "invalid" — it must validate successfully with 0 errors. Covered by Task 13 (`tests/compiler/compile.test.ts` asserts the real fixture compiles with exactly the 6 authored days, not 13).
-- **Same `place_id` reused across days must resolve identically, not diverge or duplicate.** Covered by Task 9's I1 test (two stops sharing a `place_id` resolve to `CompiledPlace` objects with identical field values).
-- **Mixed real/estimado budget items must derive `type: 'mixed'`, not silently default to `'real'`.** Covered by Task 8's budget tests.
-- **A `not_visited` stop with first-person language in `variant_note` must WARN, never ERROR, and must never block compilation.** Easy to over-implement as a hard error. Covered by Task 10's content-rules test.
-- **`total_reference` must apply each item's own `basis` (per_person / per_room / per_group), never assume `per_person` for everything.** A `per_room` item with a traveler count that doesn't divide evenly must round up (`Math.ceil`), not down or exactly. Covered by Task 8's `applyBasis` tests.
+- **Validez de una guía parcial:** la guía solo tiene 6 de sus 13 días nominales. Alguien podría asumir que "parcial" significa "inválida" — debe validar con 0 errores. Cubierto por la Tarea 13 (`tests/compiler/compile.test.ts` comprueba que el fixture real compila exactamente con los 6 días redactados, no 13).
+- **El mismo `place_id` reutilizado en varios días debe resolver de forma idéntica, sin divergir ni duplicarse.** Cubierto por el test de I1 en la Tarea 9 (dos paradas que comparten `place_id` resuelven a objetos `CompiledPlace` con valores de campo idénticos).
+- **Ítems de presupuesto mixtos (real/estimado) deben derivar `type: 'mixed'`, sin caer por defecto en `'real'`.** Cubierto por los tests de presupuesto de la Tarea 8.
+- **Una parada `not_visited` con lenguaje en primera persona en `variant_note` debe generar WARNING, nunca ERROR, y nunca debe bloquear la compilación.** Es fácil implementarlo por error como un error duro. Cubierto por el test de reglas de contenido de la Tarea 10.
+- **`total_reference` debe aplicar el `basis` propio de cada ítem (per_person / per_room / per_group), nunca asumir `per_person` para todos.** Un ítem `per_room` con un número de viajeros que no divide exacto debe redondear hacia arriba (`Math.ceil`), no hacia abajo ni de forma exacta. Cubierto por los tests de `applyBasis` de la Tarea 8.
 
 ---
 
-### Task 1: Project setup — dependencies and native TypeScript execution
+### Tarea 1: Configuración del proyecto — dependencias y ejecución nativa de TypeScript
 
-**Files:**
-- Modify: `package.json`
+**Ficheros:**
+- Modificar: `package.json`
 
 **Interfaces:**
-- Produces: `zod` and `yaml` available as dependencies for all later tasks. A working, empty `npm run content:validate` script slot (real implementation lands in Task 14).
+- Produce: `zod` y `yaml` disponibles como dependencias para el resto de tareas. Un slot vacío para el script `npm run content:validate` (la implementación real llega en la Tarea 14).
 
-- [ ] **Step 1: Install the two new dependencies**
+- [ ] **Paso 1: Instalar las dos dependencias nuevas**
 
 ```bash
 npm install zod@^4.6.5 yaml@^2.9.1
 ```
 
-- [ ] **Step 2: Verify native TypeScript execution still works in this project**
+- [ ] **Paso 2: Verificar que la ejecución nativa de TypeScript sigue funcionando en este proyecto**
 
 ```bash
 mkdir -p /tmp/plan-probe && cat > /tmp/plan-probe/probe.ts <<'EOF'
@@ -56,14 +56,14 @@ node /tmp/plan-probe/probe.ts
 rm -rf /tmp/plan-probe
 ```
 
-Expected: prints `1` with no errors, no flags needed.
+Esperado: imprime `1` sin errores, sin necesidad de flags.
 
-- [ ] **Step 3: Verify `package.json` diff is minimal**
+- [ ] **Paso 3: Verificar que el diff de `package.json` es mínimo**
 
-Run: `git diff package.json`
-Expected: only `zod` and `yaml` added under `dependencies`, nothing else changed (no lockfile-unrelated edits).
+Ejecutar: `git diff package.json`
+Esperado: solo se añaden `zod` y `yaml` bajo `dependencies`, nada más cambia (ningún cambio ajeno al lockfile).
 
-- [ ] **Step 4: Commit**
+- [ ] **Paso 4: Commit**
 
 ```bash
 git add package.json package-lock.json
@@ -72,19 +72,19 @@ git commit -m "Add zod and yaml for the domain engine"
 
 ---
 
-### Task 2: `schemas/enums.ts` and `schemas/place.ts`
+### Tarea 2: `schemas/enums.ts` y `schemas/place.ts`
 
-**Files:**
-- Create: `schemas/enums.ts`
-- Create: `schemas/place.ts`
+**Ficheros:**
+- Crear: `schemas/enums.ts`
+- Crear: `schemas/place.ts`
 - Test: `tests/schemas/place.test.ts`
 
 **Interfaces:**
-- Produces: `PlaceType`, `ContentType`, `GuideStatus`, `GuideType`, `VisitStatus`, `PlanningStatus`, `Pace`, `BudgetLevel`, `BudgetBasis`, `BudgetItemType`, `TravelMode`, `NoteTarget`, `AffiliateCategory`, `Hills`, `BudgetCategory` (all `z.ZodEnum`, from `schemas/enums.ts`). `EntrySchema`, `HoursSchema`, `PlaceSourceSchema`, and types `PlaceSource`, `Entry`, `Hours` (from `schemas/place.ts`).
+- Produce: `PlaceType`, `ContentType`, `GuideStatus`, `GuideType`, `VisitStatus`, `PlanningStatus`, `Pace`, `BudgetLevel`, `BudgetBasis`, `BudgetItemType`, `TravelMode`, `NoteTarget`, `AffiliateCategory`, `Hills`, `BudgetCategory` (todos `z.ZodEnum`, en `schemas/enums.ts`). `EntrySchema`, `HoursSchema`, `PlaceSourceSchema`, y los tipos `PlaceSource`, `Entry`, `Hours` (en `schemas/place.ts`).
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Paso 1: Escribir el test que falla**
 
-Create `tests/schemas/place.test.ts`:
+Crear `tests/schemas/place.test.ts`:
 
 ```ts
 import { test } from 'node:test'
@@ -147,12 +147,12 @@ test('entry and hours can each carry an independent verified_at', () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [ ] **Paso 2: Ejecutar el test y comprobar que falla**
 
-Run: `node --test tests/schemas/place.test.ts`
-Expected: FAIL — `Cannot find module '../../schemas/place.ts'`
+Ejecutar: `node --test tests/schemas/place.test.ts`
+Esperado: FALLA — `Cannot find module '../../schemas/place.ts'`
 
-- [ ] **Step 3: Write `schemas/enums.ts`**
+- [ ] **Paso 3: Escribir `schemas/enums.ts`**
 
 ```ts
 import { z } from 'zod'
@@ -187,7 +187,7 @@ export const BudgetCategory = z.enum([
 ])
 ```
 
-- [ ] **Step 4: Write `schemas/place.ts`**
+- [ ] **Paso 4: Escribir `schemas/place.ts`**
 
 ```ts
 import { z } from 'zod'
@@ -231,12 +231,12 @@ export type Entry = z.infer<typeof EntrySchema>
 export type Hours = z.infer<typeof HoursSchema>
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [ ] **Paso 5: Ejecutar el test y comprobar que pasa**
 
-Run: `node --test tests/schemas/place.test.ts`
-Expected: PASS (4 tests)
+Ejecutar: `node --test tests/schemas/place.test.ts`
+Esperado: PASA (4 tests)
 
-- [ ] **Step 6: Commit**
+- [ ] **Paso 6: Commit**
 
 ```bash
 git add schemas/enums.ts schemas/place.ts tests/schemas/place.test.ts
@@ -245,20 +245,20 @@ git commit -m "Add enums and PlaceSource schema"
 
 ---
 
-### Task 3: `schemas/guide.ts` and `schemas/index.ts`
+### Tarea 3: `schemas/guide.ts` y `schemas/index.ts`
 
-**Files:**
-- Create: `schemas/guide.ts`
-- Create: `schemas/index.ts`
+**Ficheros:**
+- Crear: `schemas/guide.ts`
+- Crear: `schemas/index.ts`
 - Test: `tests/schemas/guide.test.ts`
 
 **Interfaces:**
-- Consumes: enums from `schemas/enums.ts` (Task 2).
-- Produces: `StopSourceSchema`, `DaySourceSchema`, `VariantSourceSchema`, `BudgetSourceSchema`, `AdaptationNoteSourceSchema`, `GuideSourceSchema`, and types `GuideSource`, `VariantSource`, `DaySource`, `StopSource`, `BudgetSource`, `BudgetItemSource`, `AdaptationNoteSource`, `FaqItem`. `schemas/index.ts` re-exports everything from `enums.ts`, `place.ts`, `guide.ts`.
+- Consume: enums de `schemas/enums.ts` (Tarea 2).
+- Produce: `StopSourceSchema`, `DaySourceSchema`, `VariantSourceSchema`, `BudgetSourceSchema`, `AdaptationNoteSourceSchema`, `GuideSourceSchema`, y los tipos `GuideSource`, `VariantSource`, `DaySource`, `StopSource`, `BudgetSource`, `BudgetItemSource`, `AdaptationNoteSource`, `FaqItem`. `schemas/index.ts` re-exporta todo de `enums.ts`, `place.ts`, `guide.ts`.
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Paso 1: Escribir el test que falla**
 
-Create `tests/schemas/guide.test.ts`:
+Crear `tests/schemas/guide.test.ts`:
 
 ```ts
 import { test } from 'node:test'
@@ -350,12 +350,12 @@ test('guide with a full variant/day/stop tree parses', () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [ ] **Paso 2: Ejecutar el test y comprobar que falla**
 
-Run: `node --test tests/schemas/guide.test.ts`
-Expected: FAIL — `Cannot find module '../../schemas/guide.ts'`
+Ejecutar: `node --test tests/schemas/guide.test.ts`
+Esperado: FALLA — `Cannot find module '../../schemas/guide.ts'`
 
-- [ ] **Step 3: Write `schemas/guide.ts`**
+- [ ] **Paso 3: Escribir `schemas/guide.ts`**
 
 ```ts
 import { z } from 'zod'
@@ -579,7 +579,7 @@ export type AdaptationNoteSource = z.infer<typeof AdaptationNoteSourceSchema>
 export type FaqItem = z.infer<typeof FaqItemSchema>
 ```
 
-- [ ] **Step 4: Write `schemas/index.ts`**
+- [ ] **Paso 4: Escribir `schemas/index.ts`**
 
 ```ts
 export * from './enums.ts'
@@ -587,12 +587,12 @@ export * from './place.ts'
 export * from './guide.ts'
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [ ] **Paso 5: Ejecutar el test y comprobar que pasa**
 
-Run: `node --test tests/schemas/guide.test.ts`
-Expected: PASS (5 tests)
+Ejecutar: `node --test tests/schemas/guide.test.ts`
+Esperado: PASA (5 tests)
 
-- [ ] **Step 6: Commit**
+- [ ] **Paso 6: Commit**
 
 ```bash
 git add schemas/guide.ts schemas/index.ts tests/schemas/guide.test.ts
@@ -601,18 +601,18 @@ git commit -m "Add GuideSource schema tree and schemas barrel"
 
 ---
 
-### Task 4: `engine/load`
+### Tarea 4: `engine/load`
 
-**Files:**
-- Create: `engine/load/index.ts`
+**Ficheros:**
+- Crear: `engine/load/index.ts`
 - Test: `tests/engine/load.test.ts`
 
 **Interfaces:**
-- Produces: `loadGuide(path: string): Promise<unknown>`, `loadPlaces(path: string): Promise<unknown>` — read a YAML file and parse it, no validation, no business logic.
+- Produce: `loadGuide(path: string): Promise<unknown>`, `loadPlaces(path: string): Promise<unknown>` — leen un fichero YAML y lo parsean, sin validar, sin lógica de negocio.
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Paso 1: Escribir el test que falla**
 
-Create `tests/engine/load.test.ts`:
+Crear `tests/engine/load.test.ts`:
 
 ```ts
 import { test } from 'node:test'
@@ -650,12 +650,12 @@ test('loadGuide rejects when the file does not exist', async () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [ ] **Paso 2: Ejecutar el test y comprobar que falla**
 
-Run: `node --test tests/engine/load.test.ts`
-Expected: FAIL — `Cannot find module '../../engine/load/index.ts'`
+Ejecutar: `node --test tests/engine/load.test.ts`
+Esperado: FALLA — `Cannot find module '../../engine/load/index.ts'`
 
-- [ ] **Step 3: Write `engine/load/index.ts`**
+- [ ] **Paso 3: Escribir `engine/load/index.ts`**
 
 ```ts
 import { readFile } from 'node:fs/promises'
@@ -672,12 +672,12 @@ export async function loadPlaces(path: string): Promise<unknown> {
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [ ] **Paso 4: Ejecutar el test y comprobar que pasa**
 
-Run: `node --test tests/engine/load.test.ts`
-Expected: PASS (3 tests)
+Ejecutar: `node --test tests/engine/load.test.ts`
+Esperado: PASA (3 tests)
 
-- [ ] **Step 5: Commit**
+- [ ] **Paso 5: Commit**
 
 ```bash
 git add engine/load/index.ts tests/engine/load.test.ts
@@ -686,19 +686,19 @@ git commit -m "Add engine/load: read YAML with no business logic"
 
 ---
 
-### Task 5: `content/places/islandia.yaml` — the real place registry
+### Tarea 5: `content/places/islandia.yaml` — el registro real de lugares
 
-**Files:**
-- Create: `content/places/islandia.yaml`
+**Ficheros:**
+- Crear: `content/places/islandia.yaml`
 - Test: `tests/content/places.test.ts`
 
 **Interfaces:**
-- Consumes: `loadPlaces` (Task 4), `PlaceSourceSchema` (Task 2).
-- Produces: 26 real places from the author's actual 2024 Islandia trip, each parseable by `PlaceSourceSchema`. Consumed by Task 6 onward as the `PlaceRegistry` data source.
+- Consume: `loadPlaces` (Tarea 4), `PlaceSourceSchema` (Tarea 2).
+- Produce: 26 lugares reales del viaje real del autor a Islandia en 2024, cada uno parseable por `PlaceSourceSchema`. Lo consume la Tarea 6 en adelante como fuente de datos del `PlaceRegistry`.
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Paso 1: Escribir el test que falla**
 
-Create `tests/content/places.test.ts`:
+Crear `tests/content/places.test.ts`:
 
 ```ts
 import { test } from 'node:test'
@@ -729,14 +729,14 @@ test('every place_id is unique', async () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [ ] **Paso 2: Ejecutar el test y comprobar que falla**
 
-Run: `node --test tests/content/places.test.ts`
-Expected: FAIL — ENOENT, `content/places/islandia.yaml` does not exist
+Ejecutar: `node --test tests/content/places.test.ts`
+Esperado: FALLA — ENOENT, `content/places/islandia.yaml` no existe
 
-- [ ] **Step 3: Write `content/places/islandia.yaml`**
+- [ ] **Paso 3: Escribir `content/places/islandia.yaml`**
 
-Real data from `docs/1.6.4_json_islandia.md` §1 (7 places) plus 19 more real, publicly-known Icelandic landmarks needed for days 9-12 (§6's `visit_status` table), restricted to stops marked `visited` + `required` in that table. Coordinates for well-known Ring Road / Snæfellsnes landmarks are public geography; the three least certain ones (`migandifoss`, `grafarkirkja`, `kolugljufur`) carry an explicit note flagging them as approximate, pending author confirmation before publication.
+Datos reales de `docs/1.6.4_json_islandia.md` §1 (7 lugares) más 19 lugares reales y públicamente conocidos de Islandia, necesarios para los días 9-12 (tabla de `visit_status` del §6 de ese documento), restringidos a las paradas marcadas como `visited` + `required` en esa tabla. Las coordenadas de los lugares conocidos de la Ring Road / Snæfellsnes son geografía pública; las tres menos seguras (`migandifoss`, `grafarkirkja`, `kolugljufur`) llevan una nota explícita marcándolas como aproximadas, pendientes de confirmación del autor antes de publicar.
 
 ```yaml
 - place_id: thingvellir
@@ -1010,12 +1010,12 @@ Real data from `docs/1.6.4_json_islandia.md` §1 (7 places) plus 19 more real, p
   notes: "Capital de Islandia, punto de partida y cierre de la ruta por la Ring Road."
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [ ] **Paso 4: Ejecutar el test y comprobar que pasa**
 
-Run: `node --test tests/content/places.test.ts`
-Expected: PASS (2 tests)
+Ejecutar: `node --test tests/content/places.test.ts`
+Esperado: PASA (2 tests)
 
-- [ ] **Step 5: Commit**
+- [ ] **Paso 5: Commit**
 
 ```bash
 git add content/places/islandia.yaml tests/content/places.test.ts
@@ -1024,19 +1024,19 @@ git commit -m "Add the real Islandia place registry (26 places, days 1-2 and 9-1
 
 ---
 
-### Task 6: `content/guides/islandia/islandia-en-camper-13-dias.yaml` — the real guide
+### Tarea 6: `content/guides/islandia/islandia-en-camper-13-dias.yaml` — la guía real
 
-**Files:**
-- Create: `content/guides/islandia/islandia-en-camper-13-dias.yaml`
+**Ficheros:**
+- Crear: `content/guides/islandia/islandia-en-camper-13-dias.yaml`
 - Test: `tests/content/guide.test.ts`
 
 **Interfaces:**
-- Consumes: `loadGuide` (Task 4), `GuideSourceSchema` (Task 3), `content/places/islandia.yaml` (Task 5, to check every `place_id` referenced exists in the registry — a lightweight sanity check, not the full reference-validation layer which comes in Task 10).
-- Produces: the real, partial (days 1, 2, 9, 10, 11, 12 only) guide, honest about days 3-8 being absent. Zero `affiliate_id` references anywhere in the file.
+- Consume: `loadGuide` (Tarea 4), `GuideSourceSchema` (Tarea 3), `content/places/islandia.yaml` (Tarea 5, para comprobar que cada `place_id` referenciado existe en el registro — una comprobación ligera, no la capa completa de validación de referencias, que llega en la Tarea 10).
+- Produce: la guía real y parcial (solo días 1, 2, 9, 10, 11, 12), honesta sobre la ausencia de los días 3-8. Cero referencias a `affiliate_id` en todo el fichero.
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Paso 1: Escribir el test que falla**
 
-Create `tests/content/guide.test.ts`:
+Crear `tests/content/guide.test.ts`:
 
 ```ts
 import { test } from 'node:test'
@@ -1092,14 +1092,14 @@ test('the guide has no affiliate_id references anywhere', async () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [ ] **Paso 2: Ejecutar el test y comprobar que falla**
 
-Run: `node --test tests/content/guide.test.ts`
-Expected: FAIL — ENOENT, guide file does not exist
+Ejecutar: `node --test tests/content/guide.test.ts`
+Esperado: FALLA — ENOENT, el fichero de la guía no existe
 
-- [ ] **Step 3: Write `content/guides/islandia/islandia-en-camper-13-dias.yaml`**
+- [ ] **Paso 3: Escribir `content/guides/islandia/islandia-en-camper-13-dias.yaml`**
 
-Real data transcribed from `docs/1.6.4_json_islandia.md` (days 1-2 in full, including real `variant_note`/`our_take`/`plan_b`) plus days 9-12 built from the `visit_status` table in that document's §6, restricted to stops marked `required` + `visited` (the `not_visited` and `optional` stops from that table are honestly left out of this fixture rather than padded in). No invented first-person narrative for days 9-12 stops — only structural facts (place, order, a reasonable duration estimate, status).
+Datos reales transcritos de `docs/1.6.4_json_islandia.md` (días 1-2 completos, incluyendo el `variant_note`/`our_take`/`plan_b` real) más los días 9-12 construidos a partir de la tabla de `visit_status` del §6 de ese documento, restringidos a paradas marcadas `required` + `visited` (las paradas `not_visited` y `optional` de esa tabla se dejan fuera honestamente, en vez de rellenarlas). Sin narrativa inventada en primera persona para las paradas de los días 9-12 — solo hechos estructurales (lugar, orden, una estimación de duración razonable, estado).
 
 ```yaml
 slug: islandia-en-camper-13-dias
@@ -1473,12 +1473,12 @@ adaptation_notes:
     priority: 1
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [ ] **Paso 4: Ejecutar el test y comprobar que pasa**
 
-Run: `node --test tests/content/guide.test.ts`
-Expected: PASS (5 tests)
+Ejecutar: `node --test tests/content/guide.test.ts`
+Esperado: PASA (5 tests)
 
-- [ ] **Step 5: Commit**
+- [ ] **Paso 5: Commit**
 
 ```bash
 git add content/guides/islandia/islandia-en-camper-13-dias.yaml tests/content/guide.test.ts
@@ -1487,20 +1487,20 @@ git commit -m "Add the real, partial Islandia guide (days 1, 2, 9-12)"
 
 ---
 
-### Task 7: `engine/types.ts` and `engine/compile/place.ts`
+### Tarea 7: `engine/types.ts` y `engine/compile/place.ts`
 
-**Files:**
-- Create: `engine/types.ts`
-- Create: `engine/compile/place.ts`
+**Ficheros:**
+- Crear: `engine/types.ts`
+- Crear: `engine/compile/place.ts`
 - Test: `tests/engine/compile-place.test.ts`
 
 **Interfaces:**
-- Consumes: `PlaceSource`, `GuideSource` (from `schemas/`, Tasks 2-3).
-- Produces: all `Compiled*` interfaces (`CompiledPlace`, `CompiledAffiliate`, `CompiledStop`, `CompiledDay`, `CompiledVariant`, `CompiledBudget`, `CompiledSummary`, `CompiledGuide`, `CompiledAccommodation`, `CompiledTransport`, `CompiledChecklistItem`, `CompiledPractical`), plus `PlaceRegistry`, `AffiliateRegistry`, `AffiliateRegistryEntry` (all in `engine/types.ts`). `resolvePlace(place, now?): CompiledPlace` and `resolveAffiliate(entry): CompiledAffiliate` (in `engine/compile/place.ts`) — consumed by Tasks 9 and 11.
+- Consume: `PlaceSource`, `GuideSource` (de `schemas/`, Tareas 2-3).
+- Produce: todas las interfaces `Compiled*` (`CompiledPlace`, `CompiledAffiliate`, `CompiledStop`, `CompiledDay`, `CompiledVariant`, `CompiledBudget`, `CompiledSummary`, `CompiledGuide`, `CompiledAccommodation`, `CompiledTransport`, `CompiledChecklistItem`, `CompiledPractical`), más `PlaceRegistry`, `AffiliateRegistry`, `AffiliateRegistryEntry` (todo en `engine/types.ts`). `resolvePlace(place, now?): CompiledPlace` y `resolveAffiliate(entry): CompiledAffiliate` (en `engine/compile/place.ts`) — los consumen las Tareas 9 y 11.
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Paso 1: Escribir el test que falla**
 
-Create `tests/engine/compile-place.test.ts`:
+Crear `tests/engine/compile-place.test.ts`:
 
 ```ts
 import { test } from 'node:test'
@@ -1558,12 +1558,12 @@ test('resolveAffiliate builds the /ir/{id} redirect url', () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [ ] **Paso 2: Ejecutar el test y comprobar que falla**
 
-Run: `node --test tests/engine/compile-place.test.ts`
-Expected: FAIL — `Cannot find module '../../engine/compile/place.ts'`
+Ejecutar: `node --test tests/engine/compile-place.test.ts`
+Esperado: FALLA — `Cannot find module '../../engine/compile/place.ts'`
 
-- [ ] **Step 3: Write `engine/types.ts`**
+- [ ] **Paso 3: Escribir `engine/types.ts`**
 
 ```ts
 import type { PlaceSource, GuideSource, AdaptationNoteSource, FaqItem, BudgetItemSource } from '../schemas/index.ts'
@@ -1720,7 +1720,7 @@ export interface CompiledGuide {
 }
 ```
 
-- [ ] **Step 4: Write `engine/compile/place.ts`**
+- [ ] **Paso 4: Escribir `engine/compile/place.ts`**
 
 ```ts
 import type { PlaceSource } from '../../schemas/index.ts'
@@ -1768,12 +1768,12 @@ export function resolveAffiliate(affiliate: AffiliateRegistryEntry): CompiledAff
 }
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [ ] **Paso 5: Ejecutar el test y comprobar que pasa**
 
-Run: `node --test tests/engine/compile-place.test.ts`
-Expected: PASS (4 tests)
+Ejecutar: `node --test tests/engine/compile-place.test.ts`
+Esperado: PASA (4 tests)
 
-- [ ] **Step 6: Commit**
+- [ ] **Paso 6: Commit**
 
 ```bash
 git add engine/types.ts engine/compile/place.ts tests/engine/compile-place.test.ts
@@ -1782,19 +1782,19 @@ git commit -m "Add compiled model types and place/affiliate resolution"
 
 ---
 
-### Task 8: `engine/compile/budget.ts`
+### Tarea 8: `engine/compile/budget.ts`
 
-**Files:**
-- Create: `engine/compile/budget.ts`
+**Ficheros:**
+- Crear: `engine/compile/budget.ts`
 - Test: `tests/engine/compile-budget.test.ts`
 
 **Interfaces:**
-- Consumes: `BudgetSource`, `BudgetItemSource` (Task 3), `CompiledBudget` (Task 7).
-- Produces: `applyBasis(item, travelers): number`, `compileBudget(source, baseTravelers): CompiledBudget` — consumed by Task 11.
+- Consume: `BudgetSource`, `BudgetItemSource` (Tarea 3), `CompiledBudget` (Tarea 7).
+- Produce: `applyBasis(item, travelers): number`, `compileBudget(source, baseTravelers): CompiledBudget` — los consume la Tarea 11.
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Paso 1: Escribir el test que falla**
 
-Create `tests/engine/compile-budget.test.ts`:
+Crear `tests/engine/compile-budget.test.ts`:
 
 ```ts
 import { test } from 'node:test'
@@ -1863,12 +1863,12 @@ test('compileBudget: verified_at is the earliest of all items', () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [ ] **Paso 2: Ejecutar el test y comprobar que falla**
 
-Run: `node --test tests/engine/compile-budget.test.ts`
-Expected: FAIL — `Cannot find module '../../engine/compile/budget.ts'`
+Ejecutar: `node --test tests/engine/compile-budget.test.ts`
+Esperado: FALLA — `Cannot find module '../../engine/compile/budget.ts'`
 
-- [ ] **Step 3: Write `engine/compile/budget.ts`**
+- [ ] **Paso 3: Escribir `engine/compile/budget.ts`**
 
 ```ts
 import type { BudgetItemSource, BudgetSource } from '../../schemas/index.ts'
@@ -1913,12 +1913,12 @@ export function compileBudget(source: BudgetSource, baseTravelers: number): Comp
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [ ] **Paso 4: Ejecutar el test y comprobar que pasa**
 
-Run: `node --test tests/engine/compile-budget.test.ts`
-Expected: PASS (7 tests)
+Ejecutar: `node --test tests/engine/compile-budget.test.ts`
+Esperado: PASA (7 tests)
 
-- [ ] **Step 5: Commit**
+- [ ] **Paso 5: Commit**
 
 ```bash
 git add engine/compile/budget.ts tests/engine/compile-budget.test.ts
@@ -1927,19 +1927,19 @@ git commit -m "Add budget compilation: total_base, total_reference, type, verifi
 
 ---
 
-### Task 9: `engine/compile/itinerary.ts` — stops, days, variants
+### Tarea 9: `engine/compile/itinerary.ts` — paradas, días, variantes
 
-**Files:**
-- Create: `engine/compile/itinerary.ts`
+**Ficheros:**
+- Crear: `engine/compile/itinerary.ts`
 - Test: `tests/engine/compile-itinerary.test.ts`
 
 **Interfaces:**
-- Consumes: `resolvePlace`, `resolveAffiliate` (Task 7), `PlaceRegistry`, `AffiliateRegistry` (Task 7), `StopSource`/`DaySource`/`VariantSource` (Task 3).
-- Produces: `compileStop(stop, places, affiliates, now?): CompiledStop`, `compileDay(day, places, affiliates, now?): CompiledDay`, `compileVariant(variant, places, affiliates, now?): CompiledVariant` — consumed by Task 11.
+- Consume: `resolvePlace`, `resolveAffiliate` (Tarea 7), `PlaceRegistry`, `AffiliateRegistry` (Tarea 7), `StopSource`/`DaySource`/`VariantSource` (Tarea 3).
+- Produce: `compileStop(stop, places, affiliates, now?): CompiledStop`, `compileDay(day, places, affiliates, now?): CompiledDay`, `compileVariant(variant, places, affiliates, now?): CompiledVariant` — los consume la Tarea 11.
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Paso 1: Escribir el test que falla**
 
-Create `tests/engine/compile-itinerary.test.ts`:
+Crear `tests/engine/compile-itinerary.test.ts`:
 
 ```ts
 import { test } from 'node:test'
@@ -2020,12 +2020,12 @@ test('compileVariant computes n_stops_total and deduplicated all_places', () => 
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [ ] **Paso 2: Ejecutar el test y comprobar que falla**
 
-Run: `node --test tests/engine/compile-itinerary.test.ts`
-Expected: FAIL — `Cannot find module '../../engine/compile/itinerary.ts'`
+Ejecutar: `node --test tests/engine/compile-itinerary.test.ts`
+Esperado: FALLA — `Cannot find module '../../engine/compile/itinerary.ts'`
 
-- [ ] **Step 3: Write `engine/compile/itinerary.ts`**
+- [ ] **Paso 3: Escribir `engine/compile/itinerary.ts`**
 
 ```ts
 import type { StopSource, DaySource, VariantSource } from '../../schemas/index.ts'
@@ -2128,12 +2128,12 @@ export function compileVariant(
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [ ] **Paso 4: Ejecutar el test y comprobar que pasa**
 
-Run: `node --test tests/engine/compile-itinerary.test.ts`
-Expected: PASS (6 tests)
+Ejecutar: `node --test tests/engine/compile-itinerary.test.ts`
+Esperado: PASA (6 tests)
 
-- [ ] **Step 5: Commit**
+- [ ] **Paso 5: Commit**
 
 ```bash
 git add engine/compile/itinerary.ts tests/engine/compile-itinerary.test.ts
@@ -2142,22 +2142,22 @@ git commit -m "Add stop/day/variant compilation (I1, I5, I16)"
 
 ---
 
-### Task 10: `engine/validate/` — the three validation layers
+### Tarea 10: `engine/validate/` — las tres capas de validación
 
-**Files:**
-- Create: `engine/validate/schema.ts`
-- Create: `engine/validate/references.ts`
-- Create: `engine/validate/content-rules.ts`
-- Create: `engine/validate/index.ts`
+**Ficheros:**
+- Crear: `engine/validate/schema.ts`
+- Crear: `engine/validate/references.ts`
+- Crear: `engine/validate/content-rules.ts`
+- Crear: `engine/validate/index.ts`
 - Test: `tests/engine/validate.test.ts`
 
 **Interfaces:**
-- Consumes: `GuideSourceSchema`, `PlaceSourceSchema` (Task 2-3), `PlaceRegistry`, `AffiliateRegistry` (Task 7).
-- Produces: `validateGuideSchema(raw)`, `validatePlaceSchema(raw)` (schema.ts); `validateReferences(guide, places, affiliates): string[]` (references.ts); `validateContentRules(guide): { errors: string[]; warnings: string[] }` (content-rules.ts); `validateGuide(raw, places, affiliates): { errors: string[]; warnings: string[]; guide?: GuideSource }` (index.ts, the public orchestrator) — consumed by Task 14 and re-exported from `engine/index.ts` in Task 11.
+- Consume: `GuideSourceSchema`, `PlaceSourceSchema` (Tareas 2-3), `PlaceRegistry`, `AffiliateRegistry` (Tarea 7).
+- Produce: `validateGuideSchema(raw)`, `validatePlaceSchema(raw)` (schema.ts); `validateReferences(guide, places, affiliates): string[]` (references.ts); `validateContentRules(guide): { errors: string[]; warnings: string[] }` (content-rules.ts); `validateGuide(raw, places, affiliates): { errors: string[]; warnings: string[]; guide?: GuideSource }` (index.ts, el orquestador público) — lo consume la Tarea 14 y se re-exporta desde `engine/index.ts` en la Tarea 11.
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Paso 1: Escribir el test que falla**
 
-Create `tests/engine/validate.test.ts`:
+Crear `tests/engine/validate.test.ts`:
 
 ```ts
 import { test } from 'node:test'
@@ -2262,12 +2262,12 @@ test('schema-invalid input produces an error and no guide', () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [ ] **Paso 2: Ejecutar el test y comprobar que falla**
 
-Run: `node --test tests/engine/validate.test.ts`
-Expected: FAIL — `Cannot find module '../../engine/validate/index.ts'`
+Ejecutar: `node --test tests/engine/validate.test.ts`
+Esperado: FALLA — `Cannot find module '../../engine/validate/index.ts'`
 
-- [ ] **Step 3: Write `engine/validate/schema.ts`**
+- [ ] **Paso 3: Escribir `engine/validate/schema.ts`**
 
 ```ts
 import { GuideSourceSchema, PlaceSourceSchema } from '../../schemas/index.ts'
@@ -2281,7 +2281,7 @@ export function validatePlaceSchema(raw: unknown) {
 }
 ```
 
-- [ ] **Step 4: Write `engine/validate/references.ts`**
+- [ ] **Paso 4: Escribir `engine/validate/references.ts`**
 
 ```ts
 import type { GuideSource } from '../../schemas/index.ts'
@@ -2327,7 +2327,7 @@ export function validateReferences(
 }
 ```
 
-- [ ] **Step 5: Write `engine/validate/content-rules.ts`**
+- [ ] **Paso 5: Escribir `engine/validate/content-rules.ts`**
 
 ```ts
 import type { GuideSource } from '../../schemas/index.ts'
@@ -2375,7 +2375,7 @@ export function validateContentRules(guide: GuideSource): ContentRuleResult {
 }
 ```
 
-- [ ] **Step 6: Write `engine/validate/index.ts`**
+- [ ] **Paso 6: Escribir `engine/validate/index.ts`**
 
 ```ts
 import type { GuideSource } from '../../schemas/index.ts'
@@ -2417,12 +2417,12 @@ export function validateGuide(
 }
 ```
 
-- [ ] **Step 7: Run test to verify it passes**
+- [ ] **Paso 7: Ejecutar el test y comprobar que pasa**
 
-Run: `node --test tests/engine/validate.test.ts`
-Expected: PASS (10 tests)
+Ejecutar: `node --test tests/engine/validate.test.ts`
+Esperado: PASA (10 tests)
 
-- [ ] **Step 8: Commit**
+- [ ] **Paso 8: Commit**
 
 ```bash
 git add engine/validate tests/engine/validate.test.ts
@@ -2431,21 +2431,21 @@ git commit -m "Add the three validation layers: schema, references, content rule
 
 ---
 
-### Task 11: `engine/compile/guide.ts` and the public `engine/index.ts` barrel
+### Tarea 11: `engine/compile/guide.ts` y el barrel público `engine/index.ts`
 
-**Files:**
-- Create: `engine/compile/guide.ts`
-- Create: `engine/compile/index.ts`
-- Create: `engine/index.ts`
+**Ficheros:**
+- Crear: `engine/compile/guide.ts`
+- Crear: `engine/compile/index.ts`
+- Crear: `engine/index.ts`
 - Test: `tests/engine/compile-guide.test.ts`
 
 **Interfaces:**
-- Consumes: `compileVariant` (Task 9), `compileBudget` (Task 8), `GuideSource` (Task 3).
-- Produces: `compileGuide(source, places, affiliates, now?): CompiledGuide` — the top-level orchestrator. `engine/index.ts` re-exports the full public API per `docs/1.7.1_repository_domain.md` §9, consumed by every later task and by `scripts/validate-content.ts` (Task 14).
+- Consume: `compileVariant` (Tarea 9), `compileBudget` (Tarea 8), `GuideSource` (Tarea 3).
+- Produce: `compileGuide(source, places, affiliates, now?): CompiledGuide` — el orquestador de más alto nivel. `engine/index.ts` re-exporta la API pública completa según `docs/1.7.1_repository_domain.md` §9, la consumen todas las tareas posteriores y `scripts/validate-content.ts` (Tarea 14).
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Paso 1: Escribir el test que falla**
 
-Create `tests/engine/compile-guide.test.ts`:
+Crear `tests/engine/compile-guide.test.ts`:
 
 ```ts
 import { test } from 'node:test'
@@ -2514,12 +2514,12 @@ test('a guide with only days 1 and 2 (no days 3-13) is a valid, partial Compiled
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [ ] **Paso 2: Ejecutar el test y comprobar que falla**
 
-Run: `node --test tests/engine/compile-guide.test.ts`
-Expected: FAIL — `Cannot find module '../../engine/compile/guide.ts'`
+Ejecutar: `node --test tests/engine/compile-guide.test.ts`
+Esperado: FALLA — `Cannot find module '../../engine/compile/guide.ts'`
 
-- [ ] **Step 3: Write `engine/compile/guide.ts`**
+- [ ] **Paso 3: Escribir `engine/compile/guide.ts`**
 
 ```ts
 import type { GuideSource } from '../../schemas/index.ts'
@@ -2588,13 +2588,13 @@ export function compileGuide(
 }
 ```
 
-- [ ] **Step 4: Write `engine/compile/index.ts`**
+- [ ] **Paso 4: Escribir `engine/compile/index.ts`**
 
 ```ts
 export { compileGuide } from './guide.ts'
 ```
 
-- [ ] **Step 5: Write `engine/index.ts`**
+- [ ] **Paso 5: Escribir `engine/index.ts`**
 
 ```ts
 export { loadGuide, loadPlaces } from './load/index.ts'
@@ -2604,14 +2604,14 @@ export { compileGuide } from './compile/index.ts'
 export type { GuideSource, CompiledGuide, PlaceRegistry, AffiliateRegistry, AffiliateRegistryEntry } from './types.ts'
 ```
 
-Note: `validatePlaceSchema` is exported here (in addition to `validateGuide`) because `scripts/validate-content.ts` (Task 14) needs to validate each place in the registry before building it, and per the module-boundary rule, that script — an external consumer of `engine` — must import only from this barrel, never from `engine/validate/schema.ts` directly.
+Nota: `validatePlaceSchema` se exporta aquí (además de `validateGuide`) porque `scripts/validate-content.ts` (Tarea 14) necesita validar cada lugar del registro antes de construirlo, y según la regla de límites de módulos, ese script — un consumidor externo de `engine` — debe importar solo desde este barrel, nunca directamente de `engine/validate/schema.ts`.
 
-- [ ] **Step 6: Run test to verify it passes**
+- [ ] **Paso 6: Ejecutar el test y comprobar que pasa**
 
-Run: `node --test tests/engine/compile-guide.test.ts`
-Expected: PASS (6 tests)
+Ejecutar: `node --test tests/engine/compile-guide.test.ts`
+Esperado: PASA (6 tests)
 
-- [ ] **Step 7: Commit**
+- [ ] **Paso 7: Commit**
 
 ```bash
 git add engine/compile/guide.ts engine/compile/index.ts engine/index.ts tests/engine/compile-guide.test.ts
@@ -2620,18 +2620,18 @@ git commit -m "Add compileGuide orchestrator and the public engine barrel"
 
 ---
 
-### Task 12: `tests/validation/invariants.test.ts` — the named invariant regression suite
+### Tarea 12: `tests/validation/invariants.test.ts` — la suite de invariantes con nombre
 
-**Files:**
-- Create: `tests/validation/invariants.test.ts`
+**Ficheros:**
+- Crear: `tests/validation/invariants.test.ts`
 
 **Interfaces:**
-- Consumes: `validateGuide`, `compileGuide` (from `engine`, i.e. Task 11's barrel — per the module-boundary rule, this test imports only from `../../engine` and `../../schemas`, never from internal paths like `engine/compile/guide`).
-- Produces: nothing consumed elsewhere — this is the explicit, named deliverable the task asked for: one file that documents and proves I1, I5, I6, I14, I15, I16 against the real public API.
+- Consume: `validateGuide`, `compileGuide` (desde `engine`, es decir, el barrel de la Tarea 11 — según la regla de límites de módulos, este test importa solo desde `../../engine` y `../../schemas`, nunca desde rutas internas como `engine/compile/guide`).
+- Produce: nada que consuman otras tareas — es el entregable explícito y nombrado que pedía la tarea original: un fichero que documenta y demuestra I1, I5, I6, I14, I15, I16 contra la API pública real.
 
-- [ ] **Step 1: Write the test file (this task is the test — no separate implementation step, since all six invariants are already implemented by Tasks 7-11; this is the acceptance suite)**
+- [ ] **Paso 1: Escribir el fichero de test (esta tarea ES el test — no hay un paso de implementación aparte, porque los seis invariantes ya están implementados por las Tareas 7-11; esto es la suite de aceptación)**
 
-Create `tests/validation/invariants.test.ts`:
+Crear `tests/validation/invariants.test.ts`:
 
 ```ts
 import { test } from 'node:test'
@@ -2751,12 +2751,12 @@ test('I16 — actual_price_paid (PARADA) y entry.price (LUGAR) coexisten sin sob
 })
 ```
 
-- [ ] **Step 2: Run test to verify it passes**
+- [ ] **Paso 2: Ejecutar el test y comprobar que pasa**
 
-Run: `node --test tests/validation/invariants.test.ts`
-Expected: PASS (8 tests). If any fails, the bug is in the Task 7-11 implementation, not this test — fix the engine code, not the assertion.
+Ejecutar: `node --test tests/validation/invariants.test.ts`
+Esperado: PASA (8 tests). Si alguno falla, el bug está en la implementación de las Tareas 7-11, no en este test — corrige el código del motor, no la aserción.
 
-- [ ] **Step 3: Commit**
+- [ ] **Paso 3: Commit**
 
 ```bash
 git add tests/validation/invariants.test.ts
@@ -2765,18 +2765,18 @@ git commit -m "Add the named invariant regression suite: I1, I5, I6, I14, I15, I
 
 ---
 
-### Task 13: `tests/compiler/compile.test.ts` — the real end-to-end regression
+### Tarea 13: `tests/compiler/compile.test.ts` — la regresión real de extremo a extremo
 
-**Files:**
-- Create: `tests/compiler/compile.test.ts`
+**Ficheros:**
+- Crear: `tests/compiler/compile.test.ts`
 
 **Interfaces:**
-- Consumes: `loadGuide`, `loadPlaces`, `validateGuide`, `compileGuide` (from `engine`), the real `content/places/islandia.yaml` and `content/guides/islandia/islandia-en-camper-13-dias.yaml` (Tasks 5-6) — per `docs/1.7.1_repository_domain.md` §6, this is the real trip data used directly, with no artificial copy in `tests/fixtures/`.
-- Produces: nothing consumed elsewhere — this is the acceptance test matching the checkpoint criterion in `docs/1.7.1_repository_domain.md` §18.
+- Consume: `loadGuide`, `loadPlaces`, `validateGuide`, `compileGuide` (desde `engine`), los ficheros reales `content/places/islandia.yaml` y `content/guides/islandia/islandia-en-camper-13-dias.yaml` (Tareas 5-6) — según `docs/1.7.1_repository_domain.md` §6, se usan los datos reales del viaje directamente, sin copia artificial en `tests/fixtures/`.
+- Produce: nada que consuman otras tareas — es el test de aceptación que corresponde al criterio de cierre en `docs/1.7.1_repository_domain.md` §18.
 
-- [ ] **Step 1: Write the test**
+- [ ] **Paso 1: Escribir el test**
 
-Create `tests/compiler/compile.test.ts`:
+Crear `tests/compiler/compile.test.ts`:
 
 ```ts
 import { test } from 'node:test'
@@ -2852,12 +2852,12 @@ test('has_experience is true for this real, lived guide', async () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it passes**
+- [ ] **Paso 2: Ejecutar el test y comprobar que pasa**
 
-Run: `node --test tests/compiler/compile.test.ts`
-Expected: PASS (5 tests). If `total_base` doesn't match `2247.62`, re-check the amounts transcribed into Task 6's YAML against `docs/1.6.4_json_islandia.md`'s budget table (§ "Presupuesto real del viaje").
+Ejecutar: `node --test tests/compiler/compile.test.ts`
+Esperado: PASA (5 tests). Si `total_base` no coincide con `2247.62`, revisa las cantidades transcritas en el YAML de la Tarea 6 contra la tabla de presupuesto de `docs/1.6.4_json_islandia.md` (sección "Presupuesto real del viaje").
 
-- [ ] **Step 3: Commit**
+- [ ] **Paso 3: Commit**
 
 ```bash
 git add tests/compiler/compile.test.ts
@@ -2866,17 +2866,17 @@ git commit -m "Add the real Islandia end-to-end compile regression test"
 
 ---
 
-### Task 14: `scripts/validate-content.ts` and `npm run content:validate`
+### Tarea 14: `scripts/validate-content.ts` y `npm run content:validate`
 
-**Files:**
-- Create: `scripts/validate-content.ts`
-- Modify: `package.json`
+**Ficheros:**
+- Crear: `scripts/validate-content.ts`
+- Modificar: `package.json`
 
 **Interfaces:**
-- Consumes: `loadGuide`, `loadPlaces`, `validateGuide`, `compileGuide` (from `engine`), `validatePlaceSchema` (from `engine/validate/schema.ts`).
-- Produces: a CLI that exits 0 on success (no errors) and 1 if any error exists, per `docs/1.7.1_repository_domain.md` §15 and the exact console output shape in §18.
+- Consume: `loadGuide`, `loadPlaces`, `validateGuide`, `compileGuide` (desde `engine`), `validatePlaceSchema` (desde el mismo barrel `engine/index.ts`, tal como lo dejó la Tarea 11).
+- Produce: una CLI que termina con exit 0 si no hay errores, y exit 1 si hay al menos uno, según `docs/1.7.1_repository_domain.md` §15 y el formato exacto de salida por consola del §18.
 
-- [ ] **Step 1: Write `scripts/validate-content.ts`**
+- [ ] **Paso 1: Escribir `scripts/validate-content.ts`**
 
 ```ts
 import { loadGuide, loadPlaces, validateGuide, compileGuide, validatePlaceSchema } from '../engine/index.ts'
@@ -2960,23 +2960,23 @@ main().catch((error) => {
 })
 ```
 
-- [ ] **Step 2: Add the npm script**
+- [ ] **Paso 2: Añadir el script de npm**
 
-In `package.json`, add under `"scripts"`:
+En `package.json`, añadir bajo `"scripts"`:
 
 ```json
 "content:validate": "node scripts/validate-content.ts"
 ```
 
-- [ ] **Step 3: Run it and verify exit code 0**
+- [ ] **Paso 3: Ejecutarlo y comprobar el exit code 0**
 
 ```bash
 npm run content:validate; echo "exit: $?"
 ```
 
-Expected output ends with `Content validation passed. (26 lugares únicos, 21 paradas)` and `exit: 0`.
+Salida esperada, terminando con `Content validation passed. (26 lugares únicos, 21 paradas)` y `exit: 0`.
 
-- [ ] **Step 4: Verify it correctly fails on bad content (manual smoke test, then revert)**
+- [ ] **Paso 4: Comprobar que falla correctamente con contenido malo (prueba manual, luego revertir)**
 
 ```bash
 cp content/places/islandia.yaml /tmp/islandia-backup.yaml
@@ -2984,7 +2984,7 @@ sed -i '' 's/place_id: thingvellir/place_id: thingvellir-broken/' content/places
 npm run content:validate; echo "exit: $?"
 ```
 
-Expected: exit code 1, with a `place_id inexistente` error mentioning `thingvellir`.
+Esperado: exit code 1, con un error de `place_id inexistente` mencionando `thingvellir`.
 
 ```bash
 cp /tmp/islandia-backup.yaml content/places/islandia.yaml
@@ -2992,9 +2992,9 @@ rm /tmp/islandia-backup.yaml
 npm run content:validate; echo "exit: $?"
 ```
 
-Expected: back to exit 0.
+Esperado: vuelve a exit 0.
 
-- [ ] **Step 5: Commit**
+- [ ] **Paso 5: Commit**
 
 ```bash
 git add scripts/validate-content.ts package.json
@@ -3003,48 +3003,48 @@ git commit -m "Add scripts/validate-content.ts and npm run content:validate"
 
 ---
 
-### Task 15: Final verification
+### Tarea 15: Verificación final
 
-**Files:** none (verification only)
+**Ficheros:** ninguno (solo verificación)
 
-- [ ] **Step 1: Run the full test suite**
+- [ ] **Paso 1: Ejecutar la suite de tests completa**
 
 ```bash
 node --test
 ```
 
-Run with no arguments from the project root — Node's test runner recursively auto-discovers every `*.test.ts` file under the working directory (verified: passing a directory path like `tests/` explicitly does NOT work and errors with `MODULE_NOT_FOUND`; omitting the argument does).
+Ejecutar sin argumentos desde la raíz del proyecto — el test runner de Node descubre automáticamente y de forma recursiva cada fichero `*.test.ts` bajo el directorio de trabajo (verificado: pasar una ruta de directorio como `tests/` explícitamente NO funciona y da error `MODULE_NOT_FOUND`; omitir el argumento sí funciona).
 
-Expected: every test across all files passes (schemas, engine/load, engine/compile-*, engine/validate, content/places, content/guide, validation/invariants, compiler/compile).
+Esperado: todos los tests de todos los ficheros pasan (schemas, engine/load, engine/compile-*, engine/validate, content/places, content/guide, validation/invariants, compiler/compile).
 
-- [ ] **Step 2: Run the content validator**
+- [ ] **Paso 2: Ejecutar el validador de contenido**
 
 ```bash
 npm run content:validate; echo "exit: $?"
 ```
 
-Expected: `exit: 0`, ending in `Content validation passed.`
+Esperado: `exit: 0`, terminando en `Content validation passed.`
 
-- [ ] **Step 3: Verify `src/` and the Alsace guide are completely untouched**
+- [ ] **Paso 3: Comprobar que `src/` y la guía de Alsacia siguen completamente intactos**
 
 ```bash
 git status --short src/ astro.config.mjs
 ```
 
-Expected: no output (clean).
+Esperado: sin salida (limpio).
 
-- [ ] **Step 4: Verify the existing Astro build still works**
+- [ ] **Paso 4: Comprobar que el build de Astro existente sigue funcionando**
 
 ```bash
 npm run build
 ```
 
-Expected: succeeds exactly as before (the domain engine is not wired into Astro yet — this just proves nothing broke).
+Esperado: éxito exactamente igual que antes (el motor de dominio todavía no está conectado a Astro — esto solo comprueba que nada se ha roto).
 
-- [ ] **Step 5: Final commit if anything is outstanding**
+- [ ] **Paso 5: Commit final si queda algo pendiente**
 
 ```bash
 git status --short
 ```
 
-If clean, nothing to do. If not, stage and commit any stragglers with a message describing what they are.
+Si está limpio, no hay nada que hacer. Si no, añade y commitea lo que falte con un mensaje que describa qué es.
