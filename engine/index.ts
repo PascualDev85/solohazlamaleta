@@ -3,4 +3,8 @@ export { validateGuide } from './validate/index.ts'
 export { validatePlaceSchema } from './validate/schema.ts'
 export { buildPlaceRegistry } from './validate/registry.ts'
 export { compileGuide } from './compile/index.ts'
-export type { GuideSource, CompiledGuide, PlaceRegistry, AffiliateRegistry, AffiliateRegistryEntry } from './types.ts'
+export type {
+  GuideSource, PlaceSource, CompiledGuide, CompiledPlace, CompiledStop, CompiledDay,
+  CompiledVariant, CompiledBudget, CompiledSummary, CompiledAffiliate,
+  PlaceRegistry, AffiliateRegistry, AffiliateRegistryEntry,
+} from './types.ts'

@@ -2,7 +2,7 @@ import type { GuideSource } from '../../schemas/index.ts'
 import type { PlaceRegistry, AffiliateRegistry } from '../types.ts'
 import { validateGuideSchema } from './schema.ts'
 import { validateReferences } from './references.ts'
-import { validateContentRules } from './content-rules.ts'
+import { validateContentRules, type BuildEnv } from './content-rules.ts'
 
 export interface ValidationResult {
   errors: string[]
@@ -15,6 +15,7 @@ export function validateGuide(
   places: PlaceRegistry,
   affiliates: AffiliateRegistry,
   now: Date = new Date(),
+  env?: BuildEnv,
 ): ValidationResult {
   const schemaResult = validateGuideSchema(raw)
   if (!schemaResult.success) {
@@ -28,7 +29,7 @@ export function validateGuide(
 
   const guide = schemaResult.data
   const referenceErrors = validateReferences(guide, places, affiliates)
-  const contentRules = validateContentRules(guide, places, now)
+  const contentRules = validateContentRules(guide, places, now, env)
 
   return {
     errors: [...referenceErrors, ...contentRules.errors],

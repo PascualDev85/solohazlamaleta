@@ -9,17 +9,44 @@ export interface ContentRuleResult {
 
 const FIRST_PERSON = /\b(nosotros|nuestro|nuestra|nuestros|nuestras|nos|hicimos|vimos|fuimos|comimos|llegamos|estuvimos|recomendamos)\b/i
 
+export type BuildEnv = 'development' | 'production'
+
+function defaultEnv(): BuildEnv {
+  return process.env.NODE_ENV === 'production' ? 'production' : 'development'
+}
+
 export function validateContentRules(
   guide: GuideSource,
   places: PlaceRegistry,
   now: Date = new Date(),
+  env: BuildEnv = defaultEnv(),
 ): ContentRuleResult {
   const errors: string[] = []
   const warnings: string[] = []
   const warnedStalePlaces = new Set<string>()
 
   if (guide.status === 'draft') {
-    errors.push('[ERROR] status: draft no puede compilarse en build de producción')
+    if (env === 'production') {
+      errors.push('[ERROR] status: draft no puede compilarse en build de producción')
+    } else {
+      warnings.push('[WARNING] status: draft (bloqueará el build en producción)')
+    }
+  }
+
+  if (guide.budget && guide.base_travelers == null) {
+    warnings.push('[WARNING] budget presente sin base_travelers: se asumirá 1 viajero para total_reference')
+  }
+
+  const allBudgetItems = [
+    ...(guide.budget?.items ?? []),
+    ...(guide.variants ?? []).flatMap((v) => v.budget_delta?.items ?? []),
+  ]
+  for (const item of allBudgetItems) {
+    if (item.basis === 'per_room' && item.travelers_per_room == null) {
+      warnings.push(
+        `[WARNING] ítem de presupuesto "${item.label}" con basis: per_room sin travelers_per_room: se asumirá 1 viajero por habitación`,
+      )
+    }
   }
 
   for (const variant of guide.variants ?? []) {

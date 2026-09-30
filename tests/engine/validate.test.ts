@@ -104,12 +104,23 @@ test('a visited stop with first-person variant_note does not warn about first pe
   assert.ok(!result.warnings.some((w) => w.includes('primera persona')))
 })
 
-test('status: draft is an error', () => {
+test('status: draft is an error in production', () => {
   const result = validateGuide(
     guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' }, { status: 'draft' }),
     places, affiliates,
+    new Date(), 'production',
   )
   assert.ok(result.errors.some((e) => e.includes('draft')))
+})
+
+test('status: draft is only a warning in development', () => {
+  const result = validateGuide(
+    guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' }, { status: 'draft' }),
+    places, affiliates,
+    new Date(), 'development',
+  )
+  assert.ok(!result.errors.some((e) => e.includes('draft')))
+  assert.ok(result.warnings.some((w) => w.includes('draft')))
 })
 
 test('schema-invalid input produces an error and no guide', () => {
@@ -174,4 +185,50 @@ test('I3: a valid, active affiliate_id in accommodation and practical produces n
     places, affiliates,
   )
   assert.strictEqual(result.errors.length, 0)
+})
+
+test('a budget with no base_travelers produces a warning, not an error', () => {
+  const result = validateGuide(
+    guideWithStop(
+      { place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
+      { budget: { currency: 'EUR', includes: [], excludes: [], items: [{ category: 'vuelos', label: 'x', amount: 1, basis: 'per_person', type: 'real', verified_at: '2024-01-01' }] } },
+    ),
+    places, affiliates,
+  )
+  assert.strictEqual(result.errors.length, 0)
+  assert.ok(result.warnings.some((w) => w.includes('base_travelers')))
+})
+
+test('a budget with base_travelers set produces no base_travelers warning', () => {
+  const result = validateGuide(
+    guideWithStop(
+      { place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
+      { base_travelers: 2, budget: { currency: 'EUR', includes: [], excludes: [], items: [{ category: 'vuelos', label: 'x', amount: 1, basis: 'per_person', type: 'real', verified_at: '2024-01-01' }] } },
+    ),
+    places, affiliates,
+  )
+  assert.ok(!result.warnings.some((w) => w.includes('base_travelers')))
+})
+
+test('a per_room budget item with no travelers_per_room produces a warning, not an error', () => {
+  const result = validateGuide(
+    guideWithStop(
+      { place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
+      { base_travelers: 2, budget: { currency: 'EUR', includes: [], excludes: [], items: [{ category: 'alojamiento', label: 'x', amount: 1, basis: 'per_room', type: 'real', verified_at: '2024-01-01' }] } },
+    ),
+    places, affiliates,
+  )
+  assert.strictEqual(result.errors.length, 0)
+  assert.ok(result.warnings.some((w) => w.includes('travelers_per_room')))
+})
+
+test('a per_room budget item with travelers_per_room set produces no such warning', () => {
+  const result = validateGuide(
+    guideWithStop(
+      { place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
+      { base_travelers: 2, budget: { currency: 'EUR', includes: [], excludes: [], items: [{ category: 'alojamiento', label: 'x', amount: 1, basis: 'per_room', travelers_per_room: 2, type: 'real', verified_at: '2024-01-01' }] } },
+    ),
+    places, affiliates,
+  )
+  assert.ok(!result.warnings.some((w) => w.includes('travelers_per_room')))
 })
