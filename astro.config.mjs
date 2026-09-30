@@ -24,7 +24,17 @@ function draftGuidePaths() {
     .map((guide) => `/${guide.data.meta.destination}/${guide.slug}/`);
 }
 
-const excludedPaths = draftGuidePaths();
+/**
+ * Pages outside the legacy `guides` content collection that are still
+ * noindex and must stay out of the sitemap too. @astrojs/sitemap does not
+ * inspect each page's own <meta name="robots"> tag, so this has to be
+ * listed by hand.
+ */
+const MANUALLY_EXCLUDED_PATHS = [
+  '/islandia/islandia-en-camper-13-dias/',
+];
+
+const excludedPaths = [...draftGuidePaths(), ...MANUALLY_EXCLUDED_PATHS];
 
 export default defineConfig({
   site: 'https://solohazlamaleta.com',
