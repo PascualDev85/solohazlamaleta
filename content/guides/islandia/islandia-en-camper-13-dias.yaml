@@ -64,24 +64,25 @@ budget:
       notes: "Media ~11,8 €/persona/noche."
     - category: entradas
       label: "Excursiones (trekking glaciar y otras)"
-      amount: 251.33
+      amount: 251.325
       basis: per_person
       type: real
       verified_at: 2024-08-20
-      notes: "La excursión en glaciar es la más cara y la más impresionante. No la recortaríamos."
+      notes: "La excursión en glaciar es la más cara y la más impresionante. No la recortaríamos. Mitad exacta de 502,65 € a dos personas."
     - category: comidas
       label: "Supermercado en Islandia"
-      amount: 67.84
+      amount: 67.835
       basis: per_person
       type: real
       verified_at: 2024-08-20
-      notes: "Comprar en Bonus (la cadena más barata). Cocinar en el camper = ahorro enorme."
+      notes: "Comprar en Bonus (la cadena más barata). Cocinar en el camper = ahorro enorme. Mitad exacta de 135,67 € a dos personas."
     - category: seguro
       label: "Seguro de viaje"
-      amount: 33.45
+      amount: 33.445
       basis: per_person
       type: real
       verified_at: 2024-01-15
+      notes: "Mitad exacta de 66,89 € a dos personas."
     - category: otro
       label: "Extras, comidas fuera y parkings Islandia"
       amount: 283.88

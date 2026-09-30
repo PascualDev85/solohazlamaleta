@@ -57,8 +57,17 @@ test('budget compiles with the real 2024 figures: total_base equals the sum of p
   const compiled = compileGuide(result.guide!, places, emptyAffiliates)
 
   assert.ok(compiled.budget)
-  assert.ok(Math.abs(compiled.budget!.total_base - 2247.62) < 0.01)
+  assert.ok(Math.abs(compiled.budget!.total_base - 2247.605) < 0.001)
   assert.strictEqual(compiled.budget!.type, 'real')
+})
+
+test('total_reference for the real base_travelers (2) matches the real 2024 trip total exactly (4495.21 €), not a rounding-drifted 4495.24', async () => {
+  const places = await loadPlaceRegistry()
+  const rawGuide = await loadGuide(GUIDE_PATH)
+  const result = validateGuide(rawGuide, places, emptyAffiliates)
+  const compiled = compileGuide(result.guide!, places, emptyAffiliates)
+
+  assert.ok(Math.abs(compiled.budget!.total_reference - 4495.21) < 0.001)
 })
 
 test('has_experience is true for this real, lived guide', async () => {
