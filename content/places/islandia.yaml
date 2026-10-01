@@ -596,3 +596,48 @@
   verified_at: 2024-08-15
   description: "Río termal de origen geotérmico en un valle junto a Hveragerði, en el suroeste de Islandia, con tramos habilitados para el baño al aire libre."
   notes: "Se sube caminando desde el aparcamiento de Reykjadalur, en Hveragerði. Entrada gratuita. Zona de cambio con paneles de madera parcial cerca de la parte alta del río. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: haifoss
+  name: Cascada Háifoss
+  destination: islandia
+  lat: 64.1331
+  lng: -19.9342
+  type: monument
+  verified_at: 2024-08-15
+  description: "Una de las cascadas más altas de Islandia, en el valle de Þjórsárdalur, junto a su cascada gemela, Granni."
+  notes: "El mirador se llega en vehículo por una pista sin asfaltar. La ruta de descenso hasta la base es una caminata larga aparte. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: nauthusagil
+  name: Nauthúsagil
+  destination: islandia
+  lat: 63.7836
+  lng: -19.8358
+  type: viewpoint
+  verified_at: 2024-08-15
+  description: "Barranco estrecho con una cascada escondida en su interior, en la zona de Fljótshlíð, en el sur de Islandia."
+  notes: "Se accede caminando por el interior del cañón; puede haber que vadear agua en algunos tramos. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: dc3_eyvindarholt
+  name: "Restos de avión DC-3 (Eyvindarholt)"
+  destination: islandia
+  lat: 63.6488
+  lng: -19.9336
+  type: viewpoint
+  verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Gratuito. Aparcamiento de pago, unos 1.000 ISK (6-7 €) en 2024."
+    verified_at: 2024-08-15
+  description: "Restos de un avión DC-3 cerca de la granja de Eyvindarholt, en el sur de Islandia."
+  notes: "No es el pecio de Sólheimasandur (el más conocido, cerca de Vík); es otro avión distinto, menos masificado."
+
+- place_id: gljufrafoss
+  name: Gljúfrafoss (Gljúfrabúi)
+  destination: islandia
+  lat: 63.6181
+  lng: -19.9909
+  type: monument
+  verified_at: 2024-08-15
+  description: "Cascada escondida en una grieta de roca, a poca distancia de Seljalandsfoss."
+  notes: "Se entra caminando por el cauce del río hasta la grieta; es fácil mojarse. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
