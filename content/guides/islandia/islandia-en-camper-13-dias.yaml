@@ -188,7 +188,8 @@ variants:
             planning_status: optional
             visit_status: not_visited
             variant_note: "Se ve desde el aparcamiento sin necesidad de hacer la excursión guiada. Queda fuera del itinerario si el trekking ocupa toda la tarde."
-        our_take: "El trekking en el glaciar es la excursión más cara del viaje (502 € entre los dos) y la más impresionante. No la recortaríamos. Svínafellsjökull se ve desde el aparcamiento sin hacer el trekking guiado, pero no nos dio tiempo de parar ahí después de la excursión — no lo echamos de menos."
+            skip_reason: "Ese mismo día habíamos hecho el trekking guiado sobre el glaciar, así que acercarnos al mirador de Svínafellsjökull habría sido repetir paisaje. Si no haces una excursión de glaciar, este mirador es una forma fácil y gratuita de ver una lengua glaciar de cerca; para nosotros, después del trekking, sobraba."
+        our_take: "El trekking en el glaciar es la excursión más cara del viaje (502 € entre los dos) y la más impresionante. No la recortaríamos."
 
       - day: 5
         title: "Jökulsárlón, Diamond Beach y Vestrahorn"
@@ -464,8 +465,14 @@ variants:
         title: "Regreso a Reikiavik"
         summary: "Última etapa de la Ring Road, cierre del círculo en la capital. Duración de la parada estimada, no confirmada — pendiente de ajustar al escribir la guía editorial."
         stops:
-          - place_id: reykjavik
+          - place_id: glymur
             order: 1
+            duration_min: 150
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "La subida a Glymur es una excursión de 2 a 3 horas ida y vuelta. Es una de las cascadas más altas de Islandia, pero el último día, con el vuelo de vuelta cerca y el camper que entregar, no quisimos arriesgarnos a ir con prisa. Si tienes la mañana libre y buen tiempo, merece la pena; si es tu día de cierre, mejor dejarla."
+          - place_id: reykjavik
+            order: 2
             duration_min: 90
             planning_status: required
             visit_status: visited

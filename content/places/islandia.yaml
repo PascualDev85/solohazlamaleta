@@ -321,7 +321,8 @@
   lng: -16.8697
   type: viewpoint
   verified_at: 2024-08-15
-  notes: "Lengua del glaciar Vatnajökull, visible desde el aparcamiento sin necesidad de excursión guiada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Lengua del glaciar Vatnajökull, con un mirador en la zona de Skaftafell."
+  notes: "Visible desde el aparcamiento sin necesidad de excursión guiada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: mulagljufur
   name: "Cañón de Múlagljúfur"
@@ -575,3 +576,13 @@
   type: viewpoint
   verified_at: 2024-08-15
   notes: "Grupo de pseudocráteres volcánicos junto al lago Mývatn, con sendero circular corto. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: glymur
+  name: Cascada Glymur
+  destination: islandia
+  lat: 64.3972
+  lng: -21.2567
+  type: monument
+  verified_at: 2024-08-15
+  description: "Una de las cascadas más altas de Islandia, en el fondo del fiordo de Hvalfjörður."
+  notes: "Accesible solo a pie, por una ruta de montaña de 2-3 horas ida y vuelta hasta la base. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
