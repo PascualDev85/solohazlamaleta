@@ -124,7 +124,13 @@ variants:
             planning_status: required
             visit_status: visited
             start_time: "11:40"
-        our_take: "Si tuviéramos que quitar algo del Círculo Dorado, quitaríamos Þingvellir el primer día y lo dejaríamos para el último, con más calma. El Géiser y Gullfoss son más impactantes como primera impresión."
+          - place_id: reykjadalur
+            order: 4
+            duration_min: 180
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Dicen que la subida son hasta 1h30, pero a nosotros nos costó unos 45 minutos. Nos bañamos entre 1 y 1h30 en un tramo que sentimos casi como una piscina para nosotros solos — la sensación fue increíble. Lo único malo: al salir del agua pasamos mucho frío mientras nos vestíamos."
+        our_take: "Si tuviéramos que quitar algo del Círculo Dorado, quitaríamos Þingvellir el primer día y lo dejaríamos para el último, con más calma. El Géiser y Gullfoss son más impactantes como primera impresión. Cambiamos Kerið por subir a Reykjadalur a bañarnos en el río termal al final del día: no nos arrepentimos, mereció la pena el cambio."
         plan_b: "Si llueve: Gullfoss desde el mirador cubierto sigue mereciendo. El Géiser no depende del tiempo."
 
       - day: 2

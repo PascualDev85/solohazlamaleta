@@ -586,3 +586,13 @@
   verified_at: 2024-08-15
   description: "Una de las cascadas más altas de Islandia, en el fondo del fiordo de Hvalfjörður."
   notes: "Accesible solo a pie, por una ruta de montaña de 2-3 horas ida y vuelta hasta la base. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: reykjadalur
+  name: "Reykjadalur (valle termal)"
+  destination: islandia
+  lat: 63.9775
+  lng: -21.1875
+  type: activity
+  verified_at: 2024-08-15
+  description: "Río termal de origen geotérmico en un valle junto a Hveragerði, en el suroeste de Islandia, con tramos habilitados para el baño al aire libre."
+  notes: "Se sube caminando desde el aparcamiento de Reykjadalur, en Hveragerði. Entrada gratuita. Zona de cambio con paneles de madera parcial cerca de la parte alta del río. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
