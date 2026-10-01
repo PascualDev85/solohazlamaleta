@@ -10,7 +10,7 @@
 
 | # | Decisión | Validada con |
 |---|---|---|
-| 1 | **Nombre: Solo Haz la Maleta.** Claim: *"Nosotros hacemos el trabajo difícil."* | Test de posicionamiento (1.3). Pendiente: prueba con 10 personas antes de comprar dominio |
+| 1 | **Nombre: Solo Haz la Maleta.** Claim: *"Nosotros hacemos el trabajo difícil. Tú solo haz la maleta."* | Test de posicionamiento (1.3). Pendiente: prueba con 10 personas antes de comprar dominio |
 | 2 | **Es una plataforma de viajes, no un blog.** La unidad es el viaje, no el artículo | 1.0 |
 | 3 | **Cuatro principios: Comprobado · Vivido · Adaptado · Con criterio** | 1.1 y 1.3 |
 | 4 | **Etiquetas de verificación obligatorias y visibles**: Vivido / Comprobado / Estimado, siempre con fecha | 1.1, 1.3 |
@@ -64,7 +64,7 @@ Exceso de información dispersa y dificultad para convertirla en un viaje cohere
 
 ## D. Propuesta de valor
 
-> **Nosotros hacemos el trabajo difícil.**
+> **Nosotros hacemos el trabajo difícil. Tú solo haz la maleta.**
 > Guías de viaje con precios comprobados, presupuesto real y versiones según cómo viajes.
 
 La cadena de valor del producto:
@@ -97,7 +97,7 @@ Frase interna de referencia (útil para explicar el proyecto):
 
 ```
 SOLO HAZ LA MALETA
-Nosotros hacemos el trabajo difícil.
+Nosotros hacemos el trabajo difícil. Tú solo haz la maleta.
 Guías de viaje con precios comprobados, presupuesto real y versiones según cómo viajes.
 
 VIVIDO · Estuvimos aquí · marzo 2026
