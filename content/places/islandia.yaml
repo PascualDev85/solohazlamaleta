@@ -11,7 +11,7 @@
     currency: ISK
     notes: "Gratuito. Solo se paga el parking (~750 ISK/hora en 2024)."
     verified_at: 2024-08-15
-  description: "Parque Nacional declarado Patrimonio de la Humanidad por la UNESCO. En su falla tectónica se puede caminar entre las placas euroasiática y norteamericana, y fue sede del primer parlamento vikingo (Alþingi), fundado en el año 930."
+  description: "Parque Nacional declarado Patrimonio de la Humanidad por la UNESCO. Se puede caminar por la falla que marca el límite entre las placas euroasiática y norteamericana, y fue sede del primer parlamento vikingo (Alþingi), fundado en el año 930."
   notes: "Parking P3 para ver la grieta tectónica y el lago Þingvallavatn. La grieta separa las placas euroasiática y norteamericana."
 
 - place_id: geysir
@@ -39,7 +39,7 @@
     price: 0
     currency: ISK
     verified_at: 2024-08-15
-  description: "Cascada de dos saltos escalonados en el río Hvítá, parada central del circuito del Círculo Dorado y una de las más caudalosas y visitadas de Islandia."
+  description: "Cascada de dos saltos escalonados en el río Hvítá, parada central del Círculo Dorado y una de las cascadas más visitadas de Islandia."
   notes: "Mejor desde el mirador inferior. Con lluvia, el spray moja completamente."
 
 - place_id: seljalandsfoss
@@ -67,7 +67,7 @@
     price: 0
     currency: ISK
     verified_at: 2024-08-15
-  description: "Cascada de unos 60 metros de caída en el río Skógá, una de las más grandes del sur de Islandia. Un mirador en lo alto se alcanza por una escalera junto a la cascada."
+  description: "Cascada de unos 60 metros de caída en el río Skógá, en el sur de Islandia."
   notes: "Subir por las escaleras de la derecha para el mirador superior."
 
 - place_id: jokulsarlon
@@ -101,7 +101,7 @@
     open: "08:00"
     close: "22:00"
     verified_at: 2024-07-01
-  description: "Macizo montañoso de picos afilados junto a la península de Stokksnes, en el sureste de Islandia. Uno de los paisajes más fotografiados del país, con dunas de arena negra en primer plano."
+  description: "Macizo montañoso de picos afilados junto a la península de Stokksnes, en el sureste de Islandia. Un clásico de la fotografía de paisaje en Islandia, con dunas de arena negra en primer plano."
   notes: "El asentamiento vikingo es de atrezo de película. Uno de los paisajes más fotografiados de Islandia."
 
 - place_id: godafoss
@@ -111,7 +111,7 @@
   lng: -17.5506
   type: monument
   verified_at: 2024-08-15
-  description: "Cascada en forma de herradura en el río Skjálfandafljóð, en el norte de Islandia. Su nombre significa \"cascada de los dioses\"."
+  description: "Cascada en forma de herradura en el río Skjálfandafljót, en el norte de Islandia. Su nombre significa \"cascada de los dioses\"."
   notes: "Cascada en herradura junto a la Ring Road, cerca de Mývatn. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: akureyri
@@ -271,7 +271,7 @@
   lng: -23.5850
   type: activity
   verified_at: 2024-08-15
-  description: "Grieta estrecha en la montaña que se puede recorrer a pie, con un arroyo en el fondo, cerca de Arnarstapi."
+  description: "Grieta estrecha en la montaña con un arroyo en el fondo, cerca de Arnarstapi."
   notes: "Grieta estrecha en la montaña que se puede recorrer a pie, cerca de Arnarstapi. Lleva agua en el fondo, calzado adecuado necesario. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: budakirkja
@@ -311,7 +311,7 @@
   lng: -16.9770
   type: monument
   verified_at: 2024-08-15
-  description: "Cascada del Parque Nacional de Vatnajökull, en la zona de Skaftafell, enmarcada por columnas de basalto negro que han servido de inspiración en la arquitectura islandesa."
+  description: "Cascada del Parque Nacional de Vatnajökull, en la zona de Skaftafell, enmarcada por columnas de basalto negro de formación hexagonal."
   notes: "Cascada rodeada de columnas de basalto negro, en el área de Skaftafell. Se llega con una excursión corta a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: svinafellsjokull
@@ -330,7 +330,7 @@
   lng: -16.3755
   type: viewpoint
   verified_at: 2024-08-15
-  description: "Cañón poco transitado junto al glaciar Öræfajökull, con vistas al valle y a la lengua glaciar cercana."
+  description: "Cañón junto al glaciar Öræfajökull, con vistas al valle y a la lengua glaciar."
   notes: "Cañón poco transitado cerca de Fjallsárlón, con vistas al glaciar. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: fjallsarlon
@@ -407,7 +407,7 @@
   lng: -14.2000
   type: area
   verified_at: 2024-08-15
-  description: "Pueblo industrial en el fondo de Reyðarfjörður, el fiordo más largo del este de Islandia."
+  description: "Pueblo industrial en el fondo del fiordo de Reyðarfjörður, en el este de Islandia."
   notes: "Pueblo industrial en el fondo del fiordo más largo del este de Islandia. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: fardagafoss
@@ -417,7 +417,7 @@
   lng: -14.3833
   type: monument
   verified_at: 2024-08-15
-  description: "Cascada cercana a Egilsstaðir con una cueva detrás de la caída de agua, accesible por un sendero corto."
+  description: "Cascada cercana a Egilsstaðir con una cueva detrás de la caída de agua."
   notes: "Cascada con una cueva detrás, accesible con una caminata corta cerca de Egilsstaðir. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: gufufoss
@@ -486,7 +486,7 @@
   lng: -16.3833
   type: monument
   verified_at: 2024-08-15
-  description: "Dos cascadas del río Jökulsá á Fjöllum, en el Parque Nacional de Vatnajökull: Dettifoss, considerada la más caudalosa de Europa, y Selfoss, río arriba, de menor tamaño."
+  description: "Dos cascadas del río Jökulsá á Fjöllum, en el Parque Nacional de Vatnajökull: Dettifoss, una de las cascadas más potentes de Europa, y Selfoss, río arriba, de menor tamaño."
   notes: "Dos cascadas del río Jökulsá á Fjöllum a poca distancia a pie entre sí: Dettifoss (la más caudalosa de Europa) y Selfoss, río arriba. Lugar agrupado (un solo place_id para una visita única, igual que jokulsarlon): al confirmar coordenadas, deben ser las del parking/punto de acceso común a ambas cascadas, no las de una sola, para que el marcador del mapa no quede desplazado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: grjotagja
@@ -496,7 +496,7 @@
   lng: -16.8833
   type: viewpoint
   verified_at: 2024-08-15
-  description: "Cueva de lava con una poza de agua termal en su interior, cerca del lago Mývatn. El baño está prohibido desde que la actividad volcánica de los años 70 elevó la temperatura del agua."
+  description: "Cueva de lava con una poza de agua termal en su interior, cerca del lago Mývatn. El baño está prohibido desde que las erupciones de Krafla elevaron la temperatura del agua."
   notes: "Cueva de lava con agua termal, cerca de Mývatn. El baño está prohibido por la temperatura del agua. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hengifoss
@@ -535,7 +535,7 @@
   lng: -16.8575
   type: viewpoint
   verified_at: 2024-08-15
-  description: "Cráter de un volcán de tipo anillo de toba, de casi un kilómetro de diámetro, junto al lago Mývatn. Se puede subir y recorrer el borde a pie."
+  description: "Cráter de un volcán de tipo anillo de toba, de casi un kilómetro de diámetro, junto al lago Mývatn."
   notes: "Cráter volcánico de casi 1 km de diámetro, se puede subir y rodear por el borde. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: dimmuborgir
