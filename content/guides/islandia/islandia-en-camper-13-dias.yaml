@@ -98,7 +98,6 @@ variants:
         title: "Círculo Dorado"
         summary: "Þingvellir, Géiser y Gullfoss. El trío clásico para entrar en calor."
         physical_level:
-          walking_km: 8
           hills: some
         stops:
           - place_id: thingvellir
@@ -137,7 +136,6 @@ variants:
         title: "Háifoss, cañones del sur y llegada a Skógafoss"
         summary: "De Þjórsárdalur hacia el sur, con paradas en cañones y rincones poco conocidos antes de Seljalandsfoss; parada rápida en Skógafoss al llegar al camping, de camino. La visita completa es a la mañana siguiente. Duraciones y horas de las paradas de la mañana estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         physical_level:
-          walking_km: 4
           hills: none
         stops:
           - place_id: haifoss
@@ -181,7 +179,6 @@ variants:
         title: "Mañana tranquila en Skógafoss"
         summary: "Vuelta a Skógafoss por la mañana, sin las multitudes del mediodía, para subir al mirador con calma."
         physical_level:
-          walking_km: 2
           hills: some
         stops:
           - place_id: skogafoss
