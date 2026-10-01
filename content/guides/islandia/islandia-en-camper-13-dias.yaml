@@ -22,14 +22,14 @@ summary:
 budget:
   currency: EUR
   includes:
-    - "Vuelos MAD-KEF-MAD (por persona)"
-    - "Alquiler camper 13 días (por persona)"
-    - "Gasolina Islandia (por persona)"
-    - "Campings 13 noches (por persona)"
-    - "Excursiones incluyendo trekking en glaciar (por persona)"
-    - "Supermercado Islandia (por persona)"
-    - "Seguro de viaje (por persona)"
-    - "Extras, comidas fuera y parkings Islandia (por persona)"
+    - "Vuelos MAD-KEF-MAD"
+    - "Alquiler camper 13 días"
+    - "Gasolina Islandia"
+    - "Campings 13 noches"
+    - "Excursiones incluyendo trekking en glaciar"
+    - "Supermercado Islandia"
+    - "Seguro de viaje"
+    - "Extras, comidas fuera y parkings Islandia"
   excludes:
     - "Guardería de mascotas (gasto personal no del viaje)"
     - "Gasolina y gastos en España hasta el aeropuerto"
@@ -37,56 +37,55 @@ budget:
   items:
     - category: vuelos
       label: "Vuelos MAD → KEF → MAD"
-      amount: 285.56
-      basis: per_person
+      amount: 571.12
+      basis: per_group
       type: real
       verified_at: 2024-01-15
     - category: transporte
       label: "Alquiler camper 13 días"
-      amount: 991.30
-      basis: per_person
+      amount: 1982.60
+      basis: per_group
       type: real
       verified_at: 2024-01-15
-      notes: "1.982,60 € total / 2 personas. Incluía seguro básico."
+      notes: "Incluía seguro básico."
     - category: transporte
       label: "Gasolina en Islandia"
-      amount: 180.97
-      basis: per_person
+      amount: 361.94
+      basis: per_group
       type: real
       verified_at: 2024-08-20
       notes: "La gasolina es cara. Llenar siempre en ciudades; hay tramos largos sin gasolineras."
     - category: alojamiento
       label: "Campings (13 noches)"
-      amount: 153.29
-      basis: per_person
+      amount: 306.58
+      basis: per_group
       type: real
       verified_at: 2024-08-20
       notes: "Media ~11,8 €/persona/noche."
     - category: entradas
       label: "Excursiones (trekking glaciar y otras)"
-      amount: 251.325
-      basis: per_person
+      amount: 502.65
+      basis: per_group
       type: real
       verified_at: 2024-08-20
-      notes: "La excursión en glaciar es la más cara y la más impresionante. No la recortaríamos. Mitad exacta de 502,65 € a dos personas."
+      notes: "La excursión en glaciar es la más cara y la más impresionante. No la recortaríamos."
     - category: comidas
       label: "Supermercado en Islandia"
-      amount: 67.835
-      basis: per_person
+      amount: 135.67
+      basis: per_group
       type: real
       verified_at: 2024-08-20
-      notes: "Comprar en Bonus (la cadena más barata). Cocinar en el camper = ahorro enorme. Mitad exacta de 135,67 € a dos personas."
+      notes: "Comprar en Bonus (la cadena más barata). Cocinar en el camper = ahorro enorme."
     - category: seguro
       label: "Seguro de viaje"
-      amount: 33.445
-      basis: per_person
+      amount: 66.89
+      basis: per_group
       type: real
       verified_at: 2024-01-15
-      notes: "Mitad exacta de 66,89 € a dos personas."
     - category: otro
       label: "Extras, comidas fuera y parkings Islandia"
-      amount: 283.88
-      basis: per_person
+      amount: 567.76
+      basis: per_group
       type: real
       verified_at: 2024-08-20
 
@@ -110,7 +109,7 @@ variants:
             start_time: "09:00"
             travel_to_next_min: 50
             travel_to_next_mode: "coche"
-            variant_note: "En intensivo: parking P3, paseo por la grieta y el lago, sin perder tiempo."
+            variant_note: "Parking P3, paseo por la grieta y el lago, sin perder tiempo."
           - place_id: geysir
             order: 2
             duration_min: 50
@@ -480,10 +479,6 @@ accommodation:
       cons: ["Más llenos en temporada alta"]
       best_for: [couple, friends]
       picks:
-        - name: "Hellissandur Camping (Snæfellsnes)"
-          price_level: bajo
-          notes: "26 €/persona en 2024. Duchas incluidas."
-          verified_at: 2024-08-15
         - name: "Camping Svínafelli (Skaftafell)"
           price_level: bajo
           notes: "Bien ubicado para glaciar y Jökulsárlón."
@@ -498,6 +493,16 @@ accommodation:
           price_level: bajo
           notes: "Bien ubicado para el lago y la zona geotérmica."
           verified_at: 2024-08-15
+    - name: "Snæfellsnes (oeste)"
+      description: "Campings sencillos al cierre de la ruta, junto a los puntos clave de la península."
+      pros: ["Bien situados para Kirkjufell y los acantilados del sur de la península"]
+      cons: ["Oferta más limitada que en el sur"]
+      best_for: [couple, friends]
+      picks:
+        - name: "Hellissandur Camping"
+          price_level: bajo
+          notes: "26 €/persona en 2024. Duchas incluidas."
+          verified_at: 2024-08-15
 
 transport:
   arrival:
@@ -506,7 +511,7 @@ transport:
       notes: "Llegamos a la 1:30 de la madrugada y dormimos directamente en un camping cercano al aeropuerto."
       verified_at: 2024-08-01
   local:
-    - mode: "camper"
+    - mode: "Camper"
       description: "Ring Road (Ruta 1) rodea toda la isla, asfaltada. Velocidad máx. 90 km/h en carretera, 30 km/h en pistas de grava. F-roads (pistas del interior): prohibidas para campers estándar."
       notes: "App Gas Map Iceland para encontrar gasolineras baratas. Llenar siempre al pasar por una ciudad."
       verified_at: 2024-08-15
@@ -516,6 +521,13 @@ booking_checklist:
     when: "3-6 meses antes"
     priority: alta
     notes: "Los buenos campers se agotan meses antes del verano."
+  - label: "Trekking en el glaciar"
+    when: "1-2 meses antes"
+    priority: alta
+    notes: "Las plazas se agotan en temporada alta. Es la excursión más cara del viaje y la más impresionante — no dejarla para el último momento."
+  - label: "Seguro de viaje"
+    when: "Antes de salir"
+    priority: media
 
 our_criteria:
   - "El trekking en el glaciar (502 € entre los dos) es lo más caro y lo más impresionante. No lo recortaríamos."
@@ -549,7 +561,7 @@ practical:
 
 faq:
   - q: "¿Cuánto cuesta viajar a Islandia en camper 13 días?"
-    a: "En nuestra experiencia de 2024 (2 personas): 4.495 € en total, unos 2.248 € por persona. Incluye vuelos, camper, gasolina, campings, excursiones, supermercado y seguro."
+    a: "En nuestra experiencia de 2024 (2 personas): 4.495,21 € en total, 2.247,61 € por persona. Incluye vuelos, camper, gasolina, campings, excursiones, supermercado y seguro."
     schema: true
   - q: "¿Qué ruta es mejor, horaria o antihoraria?"
     a: "Nosotros hicimos la antihoraria (sur primero) y nos gustó: el sur tiene los atractivos más impactantes como aperitivo. El norte tiene menos turistas para el final."
