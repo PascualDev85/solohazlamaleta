@@ -12,7 +12,7 @@ test('loadCompiledGuide compiles the real Islandia guide successfully', async ()
   const compiled = await loadCompiledGuide(GUIDE_PATH, PLACES_PATH)
 
   assert.strictEqual(compiled.slug, 'islandia-en-camper-13-dias')
-  assert.strictEqual(compiled.variants?.[0].days.length, 7)
+  assert.strictEqual(compiled.variants?.[0].days.length, 12)
 })
 
 test('the real guide shows total_reference, not total_base, as the trip total (4495.21 EUR for 2 travelers)', async () => {

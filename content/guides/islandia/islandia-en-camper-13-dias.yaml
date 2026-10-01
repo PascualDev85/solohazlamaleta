@@ -169,6 +169,193 @@ variants:
             variant_note: "Subir las escaleras de la derecha para el mirador superior. Con la luz de la mañana y sin las multitudes del mediodía."
         our_take: "Dormir justo al lado y volver a primera hora es la diferencia entre ver la cascada en foto de postal o entre autobuses de turistas."
 
+      - day: 4
+        title: "Trekking en el glaciar"
+        summary: "Día centrado en el trekking guiado sobre el glaciar Svínafellsjökull, con Svartifoss de propina antes de instalarse en el camping. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
+        stops:
+          - place_id: trekking_glaciar_svinafellsjokull
+            order: 1
+            duration_min: 300
+            planning_status: required
+            visit_status: visited
+          - place_id: svartifoss
+            order: 2
+            duration_min: 90
+            planning_status: required
+            visit_status: visited
+          - place_id: svinafellsjokull
+            order: 3
+            duration_min: 20
+            planning_status: optional
+            visit_status: not_visited
+            variant_note: "Se ve desde el aparcamiento sin necesidad de hacer la excursión guiada. Queda fuera del itinerario si el trekking ocupa toda la tarde."
+        our_take: "El trekking en el glaciar es la excursión más cara del viaje (502 € entre los dos) y la más impresionante. No la recortaríamos. Svínafellsjökull se ve desde el aparcamiento sin hacer el trekking guiado, pero no nos dio tiempo de parar ahí después de la excursión — no lo echamos de menos."
+
+      - day: 5
+        title: "Jökulsárlón, Diamond Beach y Vestrahorn"
+        summary: "De Skaftafell a Djúpivogur, con parada en las dos lagunas glaciares y los paisajes del sureste. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
+        stops:
+          - place_id: mulagljufur
+            order: 1
+            duration_min: 40
+            planning_status: optional
+            visit_status: visited
+          - place_id: fjallsarlon
+            order: 2
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+          - place_id: jokulsarlon
+            order: 3
+            duration_min: 90
+            planning_status: required
+            visit_status: visited
+          - place_id: vestrahorn
+            order: 4
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+          - place_id: eystrahorn
+            order: 5
+            duration_min: 30
+            planning_status: optional
+            visit_status: visited
+          - place_id: thjodvegur_renos
+            order: 6
+            duration_min: 15
+            planning_status: optional
+            visit_status: not_visited
+            variant_note: "Tramo donde suele haber renos, sin garantía de avistamiento."
+          - place_id: laekjavik
+            order: 7
+            duration_min: 20
+            planning_status: optional
+            visit_status: not_visited
+          - place_id: djupavogskorin
+            order: 8
+            duration_min: 15
+            planning_status: optional
+            visit_status: not_visited
+        our_take: "Diamond Beach y Jökulsárlón son dos sitios distintos separados por la Ring Road: cruzar con cuidado entre ambos. No vimos ningún reno en el tramo donde suelen estar — no lo contaríamos como parada en sí, es solo un tramo de carretera con posibilidad de avistamiento."
+
+      - day: 6
+        title: "Fiordos del este"
+        summary: "Recorrido por los fiordos del este hasta Egilsstaðir, con parada en Seyðisfjörður y sus cascadas de acceso. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
+        stops:
+          - place_id: breiddalsvik
+            order: 1
+            duration_min: 20
+            planning_status: optional
+            visit_status: visited
+          - place_id: stodvarfjordur
+            order: 2
+            duration_min: 30
+            planning_status: optional
+            visit_status: visited
+          - place_id: reydarfjordur
+            order: 3
+            duration_min: 20
+            planning_status: optional
+            visit_status: visited
+          - place_id: fardagafoss
+            order: 4
+            duration_min: 60
+            planning_status: optional
+            visit_status: visited
+          - place_id: gufufoss
+            order: 5
+            duration_min: 20
+            planning_status: optional
+            visit_status: visited
+          - place_id: seydisfjordur
+            order: 6
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+          - place_id: vok_baths
+            order: 7
+            duration_min: 90
+            planning_status: optional
+            visit_status: visited
+          - place_id: vestdalsfossar
+            order: 8
+            duration_min: 60
+            planning_status: optional
+            visit_status: not_visited
+        our_take: "Seyðisfjörður con la calle arcoíris merece parar aunque no se vaya a coger el ferry."
+
+      - day: 7
+        title: "Cañones y cascadas del este"
+        summary: "De Egilsstaðir hacia Mývatn, con los grandes cañones y cascadas del norte-este como protagonistas. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
+        stops:
+          - place_id: rjukandifoss
+            order: 1
+            duration_min: 20
+            planning_status: optional
+            visit_status: visited
+          - place_id: studlagil
+            order: 2
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+          - place_id: dettifoss_selfoss
+            order: 3
+            duration_min: 90
+            planning_status: required
+            visit_status: visited
+          - place_id: grjotagja
+            order: 4
+            duration_min: 20
+            planning_status: optional
+            visit_status: visited
+          - place_id: hengifoss
+            order: 5
+            duration_min: 150
+            planning_status: optional
+            visit_status: not_visited
+        our_take: "Stuðlagil desde el lado este no cruza el río: cómodo, pero las fotos más espectaculares se ven desde el otro lado."
+
+      - day: 8
+        title: "Mývatn y Krafla"
+        summary: "Día dedicado a la zona volcánica y geotérmica de Mývatn y Krafla. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
+        stops:
+          - place_id: krafla_viti
+            order: 1
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+          - place_id: hverir_namafjall
+            order: 2
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+          - place_id: hverfjall
+            order: 3
+            duration_min: 60
+            planning_status: optional
+            visit_status: visited
+          - place_id: dimmuborgir
+            order: 4
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+          - place_id: myvatn_viewpoint
+            order: 5
+            duration_min: 20
+            planning_status: optional
+            visit_status: visited
+          - place_id: leirhnjukur
+            order: 6
+            duration_min: 45
+            planning_status: optional
+            visit_status: not_visited
+          - place_id: skutustadagigar
+            order: 7
+            duration_min: 30
+            planning_status: optional
+            visit_status: not_visited
+        our_take: "Hverir huele mal por el azufre pero es de los paisajes más marcianos del viaje. Merece la pena aunque sea rápido."
+
       - day: 9
         title: "Goðafoss, Akureyri y la costa de Tröllaskagi"
         summary: "De la zona de Mývatn a la costa norte, con parada para avistamiento de ballenas y cruce por túneles hacia Siglufjörður. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
