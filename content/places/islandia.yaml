@@ -9,10 +9,10 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Gratuito. Solo se paga el parking (~750 ISK/hora en 2024)."
+    notes: "Gratuito. Aparcamiento de pago, 1.000 ISK en 2024."
     verified_at: 2024-08-15
   description: "Parque Nacional declarado Patrimonio de la Humanidad por la UNESCO. Se puede caminar por la falla que marca el límite entre las placas euroasiática y norteamericana, y fue sede del primer parlamento vikingo (Alþingi), fundado en el año 930."
-  notes: "Parking P3 para ver la grieta tectónica y el lago Þingvallavatn. La grieta separa las placas euroasiática y norteamericana."
+  notes: "Aparcamiento P1, con acceso a la grieta tectónica y el lago Þingvallavatn. Hay más aparcamientos en el parque, como el P3, algo más alejado. La grieta separa las placas euroasiática y norteamericana."
 
 - place_id: geysir
   name: Área geotérmica Geysir (Strokkur)
@@ -24,6 +24,7 @@
   entry:
     price: 0
     currency: ISK
+    notes: "Parking de pago, 1.000 ISK en 2024."
     verified_at: 2024-08-15
   description: "Área geotérmica del valle de Haukadalur que da nombre a la palabra \"géiser\" en todos los idiomas. El géiser activo hoy es el Strokkur, que erupciona cada pocos minutos."
   notes: "El Strokkur erupciona cada 5-10 minutos. No hace falta esperar más de 20 min para verlo."
@@ -38,6 +39,7 @@
   entry:
     price: 0
     currency: ISK
+    notes: "Parking gratuito."
     verified_at: 2024-08-15
   description: "Cascada de dos saltos escalonados en el río Hvítá, parada central del Círculo Dorado y una de las cascadas más visitadas de Islandia."
   notes: "Mejor desde el mirador inferior. Con lluvia, el spray moja completamente."
@@ -52,6 +54,7 @@
   entry:
     price: 0
     currency: ISK
+    notes: "Parking de pago, 1.000 ISK en 2024."
     verified_at: 2024-08-15
   description: "Cascada de unos 60 metros en el sur de Islandia, conocida por el sendero que permite rodearla y pasar por detrás de la cortina de agua."
   notes: "Se puede rodear por detrás: espectacular pero te empapas. A 500 metros está Gljúfrafoss, escondida en una grieta de roca."
@@ -66,6 +69,7 @@
   entry:
     price: 0
     currency: ISK
+    notes: "Parking de pago, 1.000 ISK en 2024."
     verified_at: 2024-08-15
   description: "Cascada de unos 60 metros de caída en el río Skógá, en el sur de Islandia."
   notes: "Subir por las escaleras de la derecha para el mirador superior."
@@ -604,6 +608,11 @@
   lng: -19.9342
   type: monument
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito."
+    verified_at: 2024-08-15
   description: "Una de las cascadas más altas de Islandia, en el valle de Þjórsárdalur, junto a su cascada gemela, Granni."
   notes: "El mirador se llega en vehículo por una pista sin asfaltar. La ruta de descenso hasta la base es una caminata larga aparte. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -614,6 +623,11 @@
   lng: -19.8358
   type: viewpoint
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito."
+    verified_at: 2024-08-15
   description: "Barranco estrecho con una cascada escondida en su interior, en la zona de Fljótshlíð, en el sur de Islandia."
   notes: "Se accede caminando por el interior del cañón; puede haber que vadear agua en algunos tramos. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -641,3 +655,18 @@
   verified_at: 2024-08-15
   description: "Cascada escondida en una grieta de roca, a poca distancia de Seljalandsfoss."
   notes: "Se entra caminando por el cauce del río hasta la grieta; es fácil mojarse. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: hjalparfoss
+  name: Cascada Hjálparfoss
+  destination: islandia
+  lat: 64.1072
+  lng: -19.8731
+  type: monument
+  verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito."
+    verified_at: 2024-08-15
+  description: "Cascada formada por la confluencia de dos brazos del río Fossá, sobre un lecho de columnas de basalto, en el valle de Þjórsárdalur."
+  notes: "Se llega con un paseo corto desde el aparcamiento. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."

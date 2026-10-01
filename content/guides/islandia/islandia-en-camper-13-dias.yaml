@@ -138,35 +138,40 @@ variants:
         physical_level:
           hills: none
         stops:
-          - place_id: haifoss
+          - place_id: hjalparfoss
             order: 1
+            duration_min: 20
+            planning_status: optional
+            visit_status: visited
+          - place_id: haifoss
+            order: 2
             duration_min: 30
             planning_status: optional
             visit_status: visited
             variant_note: "Teníamos muchas expectativas por las fotos, pero nos tocó un viento muy fuerte ese día y no pudimos disfrutarla con calma. Vimos el mirador; la ruta de descenso hasta la base no la hicimos por tiempo."
           - place_id: nauthusagil
-            order: 2
+            order: 3
             duration_min: 45
             planning_status: optional
             visit_status: visited
           - place_id: dc3_eyvindarholt
-            order: 3
+            order: 4
             duration_min: 40
             planning_status: optional
             visit_status: visited
             variant_note: "No conocíamos el pecio famoso de Sólheimasandur, pero este nos gustó bastante. Lo único negativo es que hay que pagar el parking; aun así nos pareció que merecía la pena verlo."
           - place_id: seljalandsfoss
-            order: 4
+            order: 5
             duration_min: 45
             planning_status: required
             visit_status: visited
           - place_id: gljufrafoss
-            order: 5
+            order: 6
             duration_min: 30
             planning_status: optional
             visit_status: visited
           - place_id: skogafoss
-            order: 6
+            order: 7
             duration_min: 15
             planning_status: required
             visit_status: visited
@@ -508,6 +513,18 @@ accommodation:
       cons: ["Más llenos en temporada alta"]
       best_for: [couple, friends]
       picks:
+        - name: "Camping Þingvellir"
+          price_level: bajo
+          notes: "Baño y ducha incluidos. 4.400 ISK para 2 personas y camper sin electricidad en 2024."
+          verified_at: 2024-08-15
+        - name: "Camping Árnes"
+          price_level: bajo
+          notes: "El peor camping del viaje: amplio y sencillo pero sucio (ropa interior tirada en el suelo), sin electricidad ni sala común. Dos duchas de agua caliente sin límite de tiempo, una averiada. Los baños (2 de mujeres, 2 de hombres) eran lo mejor, limpios. 4.400 ISK para 2 personas y camper sin electricidad en 2024 — no vino nadie a cobrar y no llegamos a pagar."
+          verified_at: 2024-08-15
+        - name: "Camping Skógafoss"
+          price_level: bajo
+          notes: "4.000 ISK para 2 personas y camper sin electricidad en 2024. Baños gratis; duchas de pago, 400 ISK (unos 5 minutos). Encontramos los baños y las duchas recién limpios al llegar y pudimos ducharnos los dos a la vez."
+          verified_at: 2024-08-15
         - name: "Camping Svínafelli (Skaftafell)"
           price_level: bajo
           notes: "Bien ubicado para glaciar y Jökulsárlón."
