@@ -60,6 +60,12 @@ export function validateContentRules(
           )
         }
 
+        if (stop.skip_reason && visitStatus !== 'not_visited') {
+          errors.push(
+            `[ERROR] skip_reason presente en parada con visit_status: ${visitStatus} (variante ${variant.id}, día ${day.day}, place_id ${stop.place_id})`,
+          )
+        }
+
         if (stop.variant_note && FIRST_PERSON.test(stop.variant_note) && visitStatus !== 'visited') {
           warnings.push(
             `[WARNING] primera persona en variant_note sin visit_status: visited (día ${day.day}, place_id ${stop.place_id})`,

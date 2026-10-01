@@ -40,6 +40,17 @@ test('entry.verified_at is checked independently of the place-level verified_at'
   assert.deepStrictEqual(compiled.stale_fields, ['entry.price'])
 })
 
+test('description flows through to CompiledPlace unchanged, independent of notes', () => {
+  const place: PlaceSource = {
+    ...basePlace,
+    description: 'Cascada de 60 m accesible desde la Ring Road.',
+    notes: 'Parking de pago junto a la cascada.',
+  }
+  const compiled = resolvePlace(place, new Date('2024-06-01'))
+  assert.strictEqual(compiled.description, 'Cascada de 60 m accesible desde la Ring Road.')
+  assert.strictEqual(compiled.notes, 'Parking de pago junto a la cascada.')
+})
+
 test('resolveAffiliate builds the /ir/{id} redirect url', () => {
   const compiled = resolveAffiliate({
     id: 'iati-seguro-europa',

@@ -77,6 +77,31 @@ test('I14: experience{} with visit_status unknown is an error', () => {
   assert.ok(result.errors.some((e) => e.toLowerCase().includes('experience')))
 })
 
+test('skip_reason on a not_visited stop is valid and compiles', () => {
+  const result = validateGuide(
+    guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'optional', visit_status: 'not_visited', skip_reason: 'No daba tiempo.' }),
+    places, affiliates,
+  )
+  assert.strictEqual(result.errors.length, 0)
+  assert.doesNotThrow(() => compileGuide(result.guide!, places, affiliates))
+})
+
+test('skip_reason on a visited stop is an error', () => {
+  const result = validateGuide(
+    guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'optional', visit_status: 'visited', skip_reason: 'No daba tiempo.' }),
+    places, affiliates,
+  )
+  assert.ok(result.errors.some((e) => e.toLowerCase().includes('skip_reason')))
+})
+
+test('skip_reason on an unknown-status stop is an error', () => {
+  const result = validateGuide(
+    guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'optional', visit_status: 'unknown', skip_reason: 'No daba tiempo.' }),
+    places, affiliates,
+  )
+  assert.ok(result.errors.some((e) => e.toLowerCase().includes('skip_reason')))
+})
+
 test('a not_visited stop with first-person variant_note warns, does not error, and still compiles (I7)', () => {
   const result = validateGuide(
     guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'not_visited', variant_note: 'Nosotros hicimos esta parte del camino sin prisa.' }),

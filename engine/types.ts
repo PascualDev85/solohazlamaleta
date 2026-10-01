@@ -46,6 +46,7 @@ export interface CompiledStop {
   travel_to_next_min?: number
   travel_to_next_mode?: string
   variant_note?: string
+  skip_reason?: string
   experience?: {
     visited_at: string
     actual_price_paid?: { amount: number; currency: string; notes?: string }

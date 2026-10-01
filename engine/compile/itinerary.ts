@@ -23,6 +23,7 @@ export function compileStop(
     travel_to_next_min: stop.travel_to_next_min,
     travel_to_next_mode: stop.travel_to_next_mode,
     variant_note: stop.variant_note,
+    skip_reason: stop.skip_reason,
     experience: stop.experience,
   }
 

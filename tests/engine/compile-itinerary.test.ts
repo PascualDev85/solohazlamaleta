@@ -49,6 +49,14 @@ test('I16: actual_price_paid (stop) and entry.price (place) coexist independentl
   assert.notStrictEqual(compiled.experience?.actual_price_paid?.amount, compiled.place.entry?.price)
 })
 
+test('skip_reason flows through to CompiledStop unchanged', () => {
+  const compiled = compileStop(
+    { place_id: 'a', order: 1, duration_min: 30, planning_status: 'optional', visit_status: 'not_visited', skip_reason: 'No daba tiempo con el ritmo del día.' },
+    placeRegistry, emptyAffiliates, now,
+  )
+  assert.strictEqual(compiled.skip_reason, 'No daba tiempo con el ritmo del día.')
+})
+
 test('compileDay computes n_stops', () => {
   const day = compileDay(
     { day: 1, title: 'D1', stops: [

@@ -31,6 +31,7 @@ export const PlaceSourceSchema = z.object({
   source_url: z.string().url().optional(),
   entry: EntrySchema.optional(),
   hours: HoursSchema.optional(),
+  description: z.string().optional(),
   notes: z.string().optional(),
 }).strict()
 
