@@ -115,8 +115,13 @@
   lng: -17.5506
   type: monument
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito en el lado este. Entrada a los baños de pago, 200-300 ISK según precios actuales."
+    verified_at: 2024-08-15
   description: "Cascada en forma de herradura en el río Skjálfandafljót, en el norte de Islandia. Su nombre significa \"cascada de los dioses\"."
-  notes: "Cascada en herradura junto a la Ring Road, cerca de Mývatn. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Cascada en herradura junto a la Ring Road, cerca de Mývatn. El lado este tiene cafetería, tienda, baños y gasolinera justo al lado, y las mejores vistas: un paseo lleva hasta la orilla junto a la cascada y arriba hay un mirador. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: akureyri
   name: Akureyri
@@ -590,7 +595,12 @@
   lng: -16.8575
   type: viewpoint
   verified_at: 2024-08-15
-  description: "Cráter de un volcán de tipo anillo de toba, de casi un kilómetro de diámetro, junto al lago Mývatn."
+  entry:
+    price: 1200
+    currency: ISK
+    notes: "Parking de pago, 1.200 ISK en 2024. Baños incluidos, amplios y limpios."
+    verified_at: 2024-08-15
+  description: "Cráter de un volcán de tipo anillo de toba, de casi un kilómetro de diámetro (unos 3 km de recorrido por el borde), junto al lago Mývatn."
   notes: "Cráter volcánico de casi 1 km de diámetro, se puede subir y rodear por el borde. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: dimmuborgir
@@ -600,6 +610,11 @@
   lng: -16.8972
   type: park
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito. Hay baños."
+    verified_at: 2024-08-15
   description: "Campo de lava con formaciones rocosas irregulares, resultado del colapso de burbujas de gas en una antigua colada de lava, cerca del lago Mývatn."
   notes: "Campo de formaciones de lava con forma de castillos, varias rutas de senderismo señalizadas. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -610,6 +625,11 @@
   lng: -17.0000
   type: viewpoint
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito. No hay baños."
+    verified_at: 2024-08-15
   description: "Punto panorámico sobre el lago Mývatn y sus pseudocráteres, en el norte de Islandia."
   notes: "Punto panorámico sobre el lago Mývatn y sus pseudocráteres. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -760,3 +780,13 @@
   verified_at: 2024-08-15
   description: "Puerto en Borgarfjörður Eystri, en el este de Islandia, con una colonia de frailecillos visitable en temporada."
   notes: "La época habitual de avistamiento de frailecillos es de abril a agosto aproximadamente; fuera de esas fechas no hay garantía de verlos. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: jardgangalaug
+  name: "Jarðgangalaug (poza termal)"
+  destination: islandia
+  lat: 65.6939
+  lng: -18.0594
+  type: activity
+  verified_at: 2024-08-15
+  description: "Poza termal natural en el curso de un río que cae en una cascada de unos 15 metros hacia el mar, en el norte de Islandia. El agua es más caliente río arriba, cerca del nacimiento del manantial."
+  notes: "Aparcamiento muy limitado, en un apartadero de la carretera para pocos coches."

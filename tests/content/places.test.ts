@@ -7,7 +7,7 @@ const PLACES_PATH = new URL('../../content/places/islandia.yaml', import.meta.ur
 
 test('islandia.yaml loads and every entry matches PlaceSourceSchema', async () => {
   const raw = await loadPlaces(PLACES_PATH) as unknown[]
-  assert.strictEqual(raw.length, 66)
+  assert.strictEqual(raw.length, 67)
 
   for (const entry of raw) {
     const result = PlaceSourceSchema.safeParse(entry)
@@ -32,7 +32,7 @@ const AUTHOR_VERIFIED_PLACE_IDS = new Set([
 
 // Places the author gave exact GPS coordinates for directly in conversation (not the 1.6.4 §1
 // sample, but just as confirmed) — these don't need a pending-confirmation note either.
-const AUTHOR_CONFIRMED_COORDS_PLACE_IDS = new Set(['dc3_eyvindarholt', 'red_chair'])
+const AUTHOR_CONFIRMED_COORDS_PLACE_IDS = new Set(['dc3_eyvindarholt', 'red_chair', 'jardgangalaug'])
 
 test('every place added for days 4-12 (not author-verified or author-confirmed-coords) flags its coordinates/notes as pending author confirmation', async () => {
   const raw = await loadPlaces(PLACES_PATH) as { place_id: string; notes?: string }[]

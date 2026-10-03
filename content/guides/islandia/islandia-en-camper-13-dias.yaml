@@ -409,19 +409,22 @@ variants:
             variant_note: "Toda la zona es un recorrido bastante largo con fumarolas, parece de otro planeta, como estar en Marte — es increíble. Lo que nos parece es que el precio del parking y el baño es abusivo."
           - place_id: hverfjall
             order: 3
-            duration_min: 60
+            duration_min: 30
             planning_status: optional
             visit_status: visited
+            variant_note: "Solo hicimos la subida para verlo: 1,5 km entre ida y vuelta, unos 15 minutos, bastante empinada, pero el cráter es muy guapo y las vistas espectaculares."
           - place_id: dimmuborgir
             order: 4
             duration_min: 60
             planning_status: required
             visit_status: visited
+            variant_note: "Hay varios senderos; hicimos el más largo, recorriendo casi toda la zona. Las formaciones de lava son curiosas, el paseo es muy agradable y lo recomendamos mucho — con niños les encantará."
           - place_id: myvatn_viewpoint
             order: 5
             duration_min: 20
             planning_status: optional
             visit_status: visited
+            variant_note: "Un spot bonito para disfrutar del lago con tranquilidad y hacer buenas fotos."
           - place_id: leirhnjukur
             order: 6
             duration_min: 45
@@ -432,6 +435,12 @@ variants:
             duration_min: 30
             planning_status: optional
             visit_status: not_visited
+          - place_id: jardgangalaug
+            order: 8
+            duration_min: 40
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Nos bañamos junto a la cascada, donde el agua está más fresca que río arriba pero aun así calentita — estábamos a 0°C fuera y el contraste fue único. Solo entré yo. Lo hicimos justo antes de dormir, de camino al camping Systragil."
         our_take: "Hverir huele mal por el azufre pero es de los paisajes más marcianos del viaje. Merece la pena aunque sea rápido."
 
       - day: 9
@@ -597,6 +606,10 @@ accommodation:
         - name: "Laugar Camping"
           price_level: bajo
           notes: "Alternativa que usamos cuando el Camping Mývatn estaba cerrado. Amplio y con servicios completos: 4 duchas interiores de agua caliente sin límite de tiempo en un vestuario compartido (uno para hombres, otro para mujeres), 4 baños más 1 dentro del vestuario, sala común amplia con muchas mesas y sofá, una vitrocerámica, utensilios, un fregadero, tostadora, hervidores y nevera. 4.800 ISK para 2 personas y camper sin electricidad en 2024 — por el precio, merece muchísimo la pena, es como un polideportivo bien adaptado. Si llueve, cuidado dónde aparcas la camper por el barro. Por la noche viene una persona a cobrar. Lo recomendamos sin dudarlo."
+          verified_at: 2024-08-15
+        - name: "Systragil Camping Ground"
+          price_level: bajo
+          notes: "Camping amplio para la camper, enclavado justo en la montaña: pequeño pero precioso, adaptado para familias. Servicios: 2 duchas exteriores de agua caliente sin límite de tiempo, 2 baños, sala común pequeña (para 6 personas), 2 fuegos para cocinar, utensilios básicos, 2 fregaderos de agua caliente exteriores pero cubiertos. Lavandería aparte (lavadora y secadora), 1.000 ISK. 4.200 ISK para 2 personas y camper sin electricidad en 2024 — por el precio, merece muchísimo la pena. Nos nevó por la noche y nos despertamos con todo blanco, fue mágico. Lo recomendamos sin dudarlo."
           verified_at: 2024-08-15
     - name: "Snæfellsnes (oeste)"
       description: "Campings sencillos al cierre de la ruta, junto a los puntos clave de la península."
