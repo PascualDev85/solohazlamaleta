@@ -230,9 +230,10 @@ variants:
         stops:
           - place_id: mulagljufur
             order: 1
-            duration_min: 40
+            duration_min: 110
             planning_status: optional
             visit_status: visited
+            variant_note: "Una de las joyas de Islandia: pudimos disfrutar de todo el recorrido y de los miradores, en plena naturaleza. Nos encantó. Desde el parking al mirador son unos 45 minutos de ida y otros 45 de vuelta."
           - place_id: fjallsarlon
             order: 2
             duration_min: 45
@@ -243,32 +244,45 @@ variants:
             duration_min: 90
             planning_status: required
             visit_status: visited
+            variant_note: "Diamond Beach es espectacular: llena de trozos de icebergs grandes y pequeños que parecen diamantes. Desde Jökulsárlón salen excursiones en barca para ver de cerca cómo caen los icebergs al mar — no las hicimos, pero es un espectáculo a la vez precioso y un poco triste de ver desde la orilla."
           - place_id: vestrahorn
             order: 4
             duration_min: 60
             planning_status: required
             visit_status: visited
-          - place_id: eystrahorn
+            variant_note: "Para nosotros sí mereció la pena pagar por verlo: el recorrido es bastante amplio y el entorno, con las montañas y el poblado vikingo, es espectacular. Comimos en las mesas cerca del parking y pudimos usar también la zona de baño del camping."
+          - place_id: red_chair
             order: 5
+            duration_min: 10
+            planning_status: optional
+            visit_status: visited
+          - place_id: eystrahorn
+            order: 6
             duration_min: 30
             planning_status: optional
             visit_status: visited
           - place_id: thjodvegur_renos
-            order: 6
+            order: 7
             duration_min: 15
             planning_status: optional
             visit_status: not_visited
             variant_note: "Tramo donde suele haber renos, sin garantía de avistamiento."
           - place_id: laekjavik
-            order: 7
+            order: 8
             duration_min: 20
             planning_status: optional
             visit_status: not_visited
           - place_id: djupavogskorin
-            order: 8
+            order: 9
             duration_min: 15
             planning_status: optional
             visit_status: not_visited
+          - place_id: raudafell
+            order: 10
+            duration_min: 90
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Después de hacer muchos kilómetros ese día, paramos aquí y empezamos a ver bailar las auroras boreales — de las mejores que vimos en todo el viaje, de montaña a montaña y con todos los colores. Fue tanta la adrenalina que decidimos pasar la noche ahí mismo, durmiendo en este mirador."
         our_take: "Diamond Beach y Jökulsárlón son dos sitios distintos separados por la Ring Road: cruzar con cuidado entre ambos. No vimos ningún reno en el tramo donde suelen estar — no lo contaríamos como parada en sí, es solo un tramo de carretera con posibilidad de avistamiento."
 
       - day: 6
@@ -615,6 +629,8 @@ practical:
     - "Gas Map Iceland (gasolineras baratas)"
     - "Maps.me (offline: imprescindible sin cobertura)"
     - "Safe Travel Iceland (alertas de seguridad vial)"
+  tips:
+    - "Se puede rellenar la botella de agua gratis en casi cualquier parking, gasolinera o restaurante — el agua del grifo es potable en toda Islandia."
 
 faq:
   - q: "¿Cuánto cuesta viajar a Islandia en camper 13 días?"

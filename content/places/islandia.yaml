@@ -84,7 +84,7 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Laguna y Diamond Beach: gratuito. Excursiones zodiac/barca: precio aparte."
+    notes: "Laguna y Diamond Beach: gratuito. Hay 3 aparcamientos en la zona; pagando uno (1.200 ISK en 2024) se puede usar cualquiera de los tres. Baños gratuitos y cafeterías cerca. Excursiones en barca/zódiac hasta el borde del glaciar: precio aparte."
     verified_at: 2024-08-15
   description: "Laguna glaciar formada por el deshielo del glaciar Breiðamerkurjökull, con icebergs a la deriva hacia el mar. Al otro lado de la Ring Road, los fragmentos de hielo varan en la playa negra de Diamond Beach."
   notes: "Diamond Beach (playa negra con icebergs) está al otro lado de la Ring Road. Cruzar con cuidado."
@@ -97,15 +97,15 @@
   type: monument
   verified_at: 2024-08-15
   entry:
-    price: 900
+    price: 1100
     currency: ISK
-    notes: "~900 ISK/persona en 2024 (~6 €). Incluye acceso a la playa y al asentamiento vikingo."
+    notes: "1.100 ISK/persona en 2024, en el recinto del Viking Café. Incluye acceso a la playa y al asentamiento vikingo."
     verified_at: 2024-08-15
   hours:
     open: "08:00"
     close: "22:00"
     verified_at: 2024-07-01
-  description: "Macizo montañoso de picos afilados junto a la península de Stokksnes, en el sureste de Islandia. Un clásico de la fotografía de paisaje en Islandia, con dunas de arena negra en primer plano."
+  description: "Macizo montañoso de picos afilados junto a la península de Stokksnes, en el sureste de Islandia. Un clásico de la fotografía de paisaje en Islandia, con dunas de arena negra, el reflejo de la montaña en el agua y, hacia el sur, una playa con el esqueleto de una ballena donde a veces se avistan focas."
   notes: "El asentamiento vikingo es de atrezo de película. Uno de los paisajes más fotografiados de Islandia."
 
 - place_id: godafoss
@@ -335,6 +335,11 @@
   lng: -16.3755
   type: viewpoint
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking de pago, 1.000 ISK en 2024. Hay baños y se puede rellenar agua."
+    verified_at: 2024-08-15
   description: "Cañón junto al glaciar Öræfajökull, con vistas al valle y a la lengua glaciar."
   notes: "Cañón poco transitado cerca de Fjallsárlón, con vistas al glaciar. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -345,6 +350,11 @@
   lng: -16.3799
   type: monument
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito. Baños de pago, 200 ISK en 2024."
+    verified_at: 2024-08-15
   description: "Laguna glaciar alimentada por Fjallsjökull, una salida del Vatnajökull. Más pequeña y menos concurrida que Jökulsárlón, a pocos kilómetros de distancia."
   notes: "Laguna glaciar más pequeña y tranquila que Jökulsárlón, a pocos minutos en coche. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -680,3 +690,23 @@
   verified_at: 2024-08-15
   description: "Cascada en el sendero de Skaftafell hacia Svartifoss, dentro del Parque Nacional de Vatnajökull."
   notes: "Parada corta de camino a Svartifoss, en la misma ruta señalizada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: red_chair
+  name: "Red Chair"
+  destination: islandia
+  lat: 64.3417
+  lng: -14.9282
+  type: viewpoint
+  verified_at: 2024-08-15
+  description: "Parada junto a la carretera con una silla gigante de color rojo, para contemplar el paisaje del este de Islandia."
+  notes: "Parada rápida, muy cerca de la carretera."
+
+- place_id: raudafell
+  name: "Rauðafell mountain view point"
+  destination: islandia
+  lat: 64.7500
+  lng: -14.1500
+  type: viewpoint
+  verified_at: 2024-08-15
+  description: "Mirador de montaña en el este de Islandia, junto a la carretera, con vistas abiertas al cielo nocturno."
+  notes: "Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
