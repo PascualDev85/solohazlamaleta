@@ -523,36 +523,64 @@ variants:
             planning_status: required
             visit_status: visited
             variant_note: "Dimos un paseo tranquilo por el pueblo."
-          - place_id: djupalonssandur
+          - place_id: svortuloft
             order: 3
+            duration_min: 30
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Nos encantó el faro: mirador espectacular con acantilados y muchas aves."
+          - place_id: djupalonssandur
+            order: 4
             duration_min: 45
             planning_status: required
             visit_status: visited
+            variant_note: "Paseamos por la playa de Dritvik y Djúpalónssandur."
           - place_id: londrangar
-            order: 4
-            duration_min: 30
-            planning_status: required
-            visit_status: visited
-          - place_id: hellnar
             order: 5
             duration_min: 30
             planning_status: required
             visit_status: visited
-          - place_id: arnarstapi
+          - place_id: hellnar
             order: 6
-            duration_min: 45
-            planning_status: required
-            visit_status: visited
-          - place_id: raudfeldsgja
-            order: 7
             duration_min: 30
             planning_status: required
             visit_status: visited
-          - place_id: budakirkja
+            variant_note: "Espectacular. Aquí vimos nuestras primeras focas, pequeñitas — nos encantó."
+          - place_id: arnarstapi
+            order: 7
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+            variant_note: "Una zona muy chula: todo se recorre andando. Los acantilados están genial y el puente de piedra (Gatklettur) es una pasada. Muy recomendable."
+          - place_id: raudfeldsgja
             order: 8
+            duration_min: 30
+            planning_status: required
+            visit_status: visited
+            variant_note: "Nos gustó mucho. La entrada hacia el interior de la montaña es muy fotogénica, con una pequeña cascada dentro, pero no pudimos ascender a través de ella."
+          - place_id: budakirkja
+            order: 9
             duration_min: 20
             planning_status: required
             visit_status: visited
+          - place_id: ytri_tunga
+            order: 10
+            duration_min: 45
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Lo bonito de aquí es la playa: uno de los sitios para ver focas de cerca, respetuosamente y sin molestarlas. Vimos muchas, fue mágico. Comimos en las mesas de picnic de la playa."
+          - place_id: landbrotalaug
+            order: 11
+            duration_min: 15
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Fuimos, pero estaba lleno de gente y el agua cubría poco. No nos metimos — no mereció la pena la parada."
+          - place_id: raudhals
+            order: 12
+            duration_min: 20
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Llegar aquí fue como estar en otro planeta, muy espectacular y poco conocido."
 
       - day: 12
         title: "Regreso a Reikiavik"
@@ -631,6 +659,10 @@ accommodation:
           price_level: bajo
           notes: "Camping amplio con servicios: 2 duchas interiores de agua caliente sin límite de tiempo (2 de hombres, 2 de mujeres), 2 baños (2 de hombres, 2 de mujeres), sala común pequeña pero completa, 2 fregaderos cubiertos con agua caliente. 4.000 ISK para 2 personas y camper sin electricidad en 2024 (de los más baratos del viaje), subido a 5.000 ISK actualmente. Enclavado justo en un campo de lava. Muy concurrido, con gente empezando y terminando la ruta de Snæfellsjökull — conviene ir temprano. Por la noche viene un guardia a cobrar. Lo recomendamos sin dudarlo."
           verified_at: 2024-08-15
+        - name: "Mosskógar"
+          price_level: bajo
+          notes: "Camping amplio y muy cuco: 4 duchas de agua caliente sin límite de tiempo, 4 baños, 4 fregaderos cubiertos con agua caliente (solo 2 de ellos; los otros 2 son solo para rellenar agua). Sala común muy cuidada, en un invernadero, con 2 fuegos para cocinar y utensilios. Tiene un sistema estupendo: productos que deja la gente que termina su viaje, disponibles para quien lo empieza. 5.000 ISK para 2 personas y camper sin electricidad — el único camping del viaje que solo acepta efectivo, hay que llevar coronas encima. John, el dueño, muy amable y risueño; todo organizado por parcelas. Por su precio y lo que ofrece, lo recomendamos sin dudarlo."
+          verified_at: 2024-08-15
 
 transport:
   arrival:
@@ -670,6 +702,7 @@ pitfalls:
   - "Los campings sin ducha son más baratos pero en agosto la temperatura nocturna puede bajar a 5-8°C."
   - "Si la nevera de la camper funciona con la batería del vehículo sin estar enchufada a electricidad, apagarla por la noche: dejarla encendida puede agotar la batería y dejar la camper sin arrancar a la mañana siguiente."
   - "La calefacción del habitáculo delantero puede averiarse; si pasa en pleno temporal de nieve o lluvia, puede dejarte mojado y sin calor de golpe. Llevar ropa de abrigo de repuesto a mano."
+  - "Casi todo en Islandia se paga con tarjeta, pero algún camping aislado puede pedir solo efectivo. Llevar algunas coronas encima por si acaso."
 
 terrain_tips:
   - "App Vedur (tiempo oficial islandés): el tiempo cambia en minutos."

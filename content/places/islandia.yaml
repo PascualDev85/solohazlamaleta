@@ -265,7 +265,12 @@
   lng: -23.9066
   type: park
   verified_at: 2024-08-15
-  description: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio pesquero y piedras tradicionales usadas antiguamente para medir la fuerza de los pescadores."
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito."
+    verified_at: 2024-08-15
+  description: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio pesquero y piedras tradicionales usadas antiguamente para medir la fuerza de los pescadores. Junto a la playa de Dritvik."
   notes: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio y piedras de fuerza tradicionales. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: londrangar
@@ -285,18 +290,28 @@
   lng: -23.6674
   type: viewpoint
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito."
+    verified_at: 2024-08-15
   description: "Pequeño asentamiento costero con acantilados y colonias de aves marinas, unido a Arnarstapi por un sendero costero."
   notes: "Pequeño pueblo con acantilados y colonias de aves marinas, a unos 2,5 km a pie de Arnarstapi por el sendero costero, en la costa sur de Snæfellsnes. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: arnarstapi
   name: Arnarstapi
   destination: islandia
-  lat: 64.7717
-  lng: -23.6260
+  lat: 64.76634019756787
+  lng: -23.627827329417897
   type: area
   verified_at: 2024-08-15
-  description: "Pueblo costero en la base del glaciar Snæfellsjökull, conocido por su ruta de acantilados y formaciones de basalto junto al mar."
-  notes: "Pueblo costero con la ruta de acantilados hacia Hellnar y la estatua de Bárður Snæfellsás. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito."
+    verified_at: 2024-08-15
+  description: "Pueblo costero en la base del glaciar Snæfellsjökull, conocido por su ruta de acantilados y formaciones de basalto junto al mar. En la zona están la estatua de Bárður Snæfellsás, el mirador de los acantilados, el arco de roca Gatklettur y un puente natural de piedra."
+  notes: "Pueblo costero con la ruta de acantilados hacia Hellnar. Todo se recorre andando en una misma zona. Coordenadas confirmadas por el autor."
 
 - place_id: raudfeldsgja
   name: Garganta de Rauðfeldsgjá
@@ -305,8 +320,13 @@
   lng: -23.5850
   type: activity
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito. No hay baños."
+    verified_at: 2024-08-15
   description: "Grieta estrecha en la montaña con un arroyo en el fondo, cerca de Arnarstapi."
-  notes: "Grieta estrecha en la montaña que se puede recorrer a pie, cerca de Arnarstapi. Lleva agua en el fondo, calzado adecuado necesario. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Grieta estrecha en la montaña que se puede recorrer a pie, cerca de Arnarstapi. Lleva agua en el fondo, calzado adecuado necesario. La entrada hacia el interior de la montaña es muy fotogénica, con una pequeña cascada dentro que no se puede ascender. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: budakirkja
   name: Búðakirkja
@@ -315,7 +335,12 @@
   lng: -23.3850
   type: monument
   verified_at: 2024-08-15
-  description: "Iglesia negra de madera construida en 1848, junto al pueblo de Búðir, en la costa sur de la península de Snæfellsnes."
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito."
+    verified_at: 2024-08-15
+  description: "Iglesia negra de madera construida en 1848, junto al pueblo de Búðir, en la costa sur de la península de Snæfellsnes. Junto a ella hay un cementerio paseable y un sendero que lleva hasta la playa."
   notes: "Iglesia negra de madera de 1848 junto al pueblo de Búðir. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: reykjavik
@@ -815,3 +840,58 @@
   verified_at: 2024-08-15
   description: "Poza termal natural en el curso de un río que cae en una cascada de unos 15 metros hacia el mar, en el norte de Islandia. El agua es más caliente río arriba, cerca del nacimiento del manantial."
   notes: "Aparcamiento muy limitado, en un apartadero de la carretera para pocos coches."
+
+- place_id: svortuloft
+  name: "Faro de Svörtuloft"
+  destination: islandia
+  lat: 64.8744
+  lng: -24.0217
+  type: viewpoint
+  verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito."
+    verified_at: 2024-08-15
+  description: "Faro en el extremo occidental de la península de Snæfellsnes, sobre un mirador de acantilados con colonias de aves marinas."
+  notes: "El camino de acceso tiene baches. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: ytri_tunga
+  name: "Playa de Ytri Tunga"
+  destination: islandia
+  lat: 64.8056
+  lng: -23.3017
+  type: park
+  verified_at: 2024-08-15
+  entry:
+    price: 1100
+    currency: ISK
+    notes: "Parking de pago, 1.100 ISK en 2024. Baño pequeño y sucio."
+    verified_at: 2024-08-15
+  description: "Playa en la costa sur de Snæfellsnes, uno de los puntos habituales para ver focas de cerca sin molestarlas."
+  notes: "Tiene mesas de picnic. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: landbrotalaug
+  name: "Landbrotalaug (poza termal)"
+  destination: islandia
+  lat: 64.7867
+  lng: -22.8333
+  type: activity
+  verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito."
+    verified_at: 2024-08-15
+  description: "Poza termal natural pequeña, junto a la carretera en el sur de la península de Snæfellsnes."
+  notes: "Poza pequeña; puede estar llena de gente y con poca profundidad de agua según el momento. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: raudhals
+  name: "Volcán Raudhals"
+  destination: islandia
+  lat: 64.842896
+  lng: -22.236739
+  type: viewpoint
+  verified_at: 2024-08-15
+  description: "Paisaje volcánico poco conocido en el sur de Islandia, de aspecto lunar."
+  notes: "Parada poco frecuentada."
