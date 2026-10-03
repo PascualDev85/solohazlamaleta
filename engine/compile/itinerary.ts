@@ -54,6 +54,8 @@ export function compileDay(
     summary: day.summary,
     physical_level: day.physical_level,
     stops,
+    route_stops: stops.filter((stop) => stop.visit_status !== 'not_visited'),
+    skipped_stops: stops.filter((stop) => stop.visit_status === 'not_visited'),
     n_stops: stops.length,
     food: day.food,
     our_take: day.our_take,

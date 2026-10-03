@@ -79,7 +79,7 @@ const faqJsonLd =
     <h1>{guide.title}</h1>
 
     {guide.has_experience && guide.trip_done ? (
-      <p class="guide__dateline">Lo hicimos en {guide.trip_done}.</p>
+      <p class="guide__dateline">Lo hicimos en {formatDate(guide.trip_done)}.</p>
     ) : (
       <p class="guide__dateline">Actualizado {formatDate(guide.updated_at)}</p>
     )}
@@ -137,7 +137,7 @@ const faqJsonLd =
             {day.summary && <p>{day.summary}</p>}
 
             <ol class="guide__stops">
-              {day.stops.map((stop) => (
+              {day.route_stops.map((stop) => (
                 <li>
                   <span class="guide__stopname">
                     {stop.place.name}

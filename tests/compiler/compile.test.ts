@@ -55,13 +55,13 @@ test('I1: skogafoss appears on both day 3 (brief arrival) and day 4 (full mornin
   assert.deepStrictEqual(day3Stop.place, day4Stop.place)
 })
 
-test('places is the deduplicated union of every place actually used by a stop (72 of 72 registered — skogafoss is referenced by two stops but counts once)', async () => {
+test('places is the deduplicated union of every place actually used by a stop (71 of 71 registered — skogafoss is referenced by two stops but counts once)', async () => {
   const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)
   const compiled = compileGuide(result.guide!, places, emptyAffiliates)
 
-  assert.strictEqual(compiled.places.length, 72)
+  assert.strictEqual(compiled.places.length, 71)
   assert.strictEqual(compiled.places.filter((p) => p.place_id === 'skogafoss').length, 1)
 })
 

@@ -63,6 +63,8 @@ export interface CompiledDay {
   summary?: string
   physical_level?: { walking_km?: number; hills?: 'none' | 'some' | 'many' }
   stops: CompiledStop[]
+  route_stops: CompiledStop[]
+  skipped_stops: CompiledStop[]
   n_stops: number
   food?: object[]
   our_take?: string

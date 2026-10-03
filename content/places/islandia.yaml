@@ -414,14 +414,14 @@
   notes: "Laguna glaciar más pequeña y tranquila que Jökulsárlón, a pocos minutos en coche. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: eystrahorn
-  name: "Eystrahorn (Silla Roja)"
+  name: "Eystrahorn (Silla Roja / Red Chair)"
   destination: islandia
   lat: 64.3028
   lng: -14.8350
   type: monument
   verified_at: 2025-09-16
-  description: "Montaña en el extremo sureste de Islandia, junto a la Ring Road, conocida por una formación rocosa cercana que le da el apodo de \"silla roja\"."
-  notes: "Montaña y playa de guijarros negros junto a la carretera, conocida como 'la silla roja' por una formación roja cercana. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Montaña en el extremo sureste de Islandia, junto a la Ring Road, con una silla gigante de color rojo que le da el apodo de \"silla roja\" (Red Chair) y desde la que se contempla el paisaje."
+  notes: "Montaña y playa de guijarros negros junto a la carretera. Parada rápida, muy cerca de la carretera. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: thjodvegur_renos
   name: "Þjóðvegur (zona de renos)"
@@ -800,16 +800,6 @@
   verified_at: 2025-09-15
   description: "Cascada en el sendero de Skaftafell hacia Svartifoss, dentro del Parque Nacional de Vatnajökull."
   notes: "Parada corta de camino a Svartifoss, en la misma ruta señalizada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
-
-- place_id: red_chair
-  name: "Red Chair"
-  destination: islandia
-  lat: 64.3417
-  lng: -14.9282
-  type: viewpoint
-  verified_at: 2025-09-16
-  description: "Parada junto a la carretera con una silla gigante de color rojo, para contemplar el paisaje del este de Islandia."
-  notes: "Parada rápida, muy cerca de la carretera."
 
 - place_id: raudafell
   name: "Rauðafell mountain view point"
