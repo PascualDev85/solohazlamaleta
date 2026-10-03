@@ -95,6 +95,24 @@ variants:
     description: "Los 13 días tal como los planificamos. Días de hasta 340 km con muchas paradas. Hay que madrugar."
     days:
       - day: 1
+        title: "Llegada y paseo por Reikiavik"
+        summary: "Llegada de madrugada, noche corta en un parking de la ciudad, y primer día paseando por Reikiavik antes de salir hacia el Círculo Dorado, con parada en Þórufoss. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
+        stops:
+          - place_id: reykjavik
+            order: 1
+            duration_min: 120
+            planning_status: required
+            visit_status: visited
+            variant_note: "Paseamos por Laugavegur, Höfði, el Sun Voyager, Þúfa y el estanque de Tjörnin."
+          - place_id: thorufoss
+            order: 2
+            duration_min: 40
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Comimos en este entorno — fue la primera cascada del viaje y flipamos con el paisaje."
+        our_take: "Llegamos a la 1:30 de la madrugada y dormimos pocas horas en un parking de la ciudad antes de arrancar el día. Aun con poco sueño, mereció la pena hacer Reikiavik con calma este primer día en vez de dejarlo para el regreso."
+
+      - day: 2
         title: "Círculo Dorado"
         summary: "Þingvellir, Géiser y Gullfoss. El trío clásico para entrar en calor."
         physical_level:
@@ -132,7 +150,7 @@ variants:
         our_take: "Si tuviéramos que quitar algo del Círculo Dorado, quitaríamos Þingvellir el primer día y lo dejaríamos para el último, con más calma. El Géiser y Gullfoss son más impactantes como primera impresión. Cambiamos Kerið por subir a Reykjadalur a bañarnos en el río termal al final del día: no nos arrepentimos, mereció la pena el cambio."
         plan_b: "Si llueve: Gullfoss desde el mirador cubierto sigue mereciendo. El Géiser no depende del tiempo."
 
-      - day: 2
+      - day: 3
         title: "Háifoss, cañones del sur y llegada a Skógafoss"
         summary: "De Þjórsárdalur hacia el sur, con paradas en cañones y rincones poco conocidos antes de Seljalandsfoss; parada rápida en Skógafoss al llegar al camping, de camino. La visita completa es a la mañana siguiente. Duraciones y horas de las paradas de la mañana estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         physical_level:
@@ -180,7 +198,7 @@ variants:
         our_take: "Seljalandsfoss se puede hacer con calma por la mañana. Dormir junto a Skógafoss deja la cascada lista para volver temprano, con luz y sin gente."
         plan_b: "La lluvia mejora estas cascadas (más caudal). No es mal plan si llueve."
 
-      - day: 3
+      - day: 4
         title: "Mañana tranquila en Skógafoss"
         summary: "Vuelta a Skógafoss por la mañana, sin las multitudes del mediodía, para subir al mirador con calma."
         physical_level:
@@ -195,7 +213,7 @@ variants:
             variant_note: "Subir las escaleras de la derecha para el mirador superior. Con la luz de la mañana y sin las multitudes del mediodía."
         our_take: "Dormir justo al lado y volver a primera hora es la diferencia entre ver la cascada en foto de postal o entre autobuses de turistas."
 
-      - day: 4
+      - day: 5
         title: "Trekking en el glaciar"
         summary: "Día centrado en el trekking guiado sobre el glaciar Svínafellsjökull, con Svartifoss de propina antes de instalarse en el camping. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         stops:
@@ -224,7 +242,7 @@ variants:
             skip_reason: "Ese mismo día habíamos hecho el trekking guiado sobre el glaciar, así que acercarnos al mirador de Svínafellsjökull habría sido repetir paisaje. Si no haces una excursión de glaciar, este mirador es una forma fácil y gratuita de ver una lengua glaciar de cerca; para nosotros, después del trekking, sobraba."
         our_take: "El trekking en el glaciar es la excursión más cara del viaje (502 € entre los dos) y la más impresionante. No la recortaríamos."
 
-      - day: 5
+      - day: 6
         title: "Jökulsárlón, Diamond Beach y Vestrahorn"
         summary: "De Skaftafell a Djúpivogur, con parada en las dos lagunas glaciares y los paisajes del sureste. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         stops:
@@ -285,7 +303,7 @@ variants:
             variant_note: "Después de hacer muchos kilómetros ese día, paramos aquí y empezamos a ver bailar las auroras boreales — de las mejores que vimos en todo el viaje, de montaña a montaña y con todos los colores. Fue tanta la adrenalina que decidimos pasar la noche ahí mismo, durmiendo en este mirador."
         our_take: "Diamond Beach y Jökulsárlón son dos sitios distintos separados por la Ring Road: cruzar con cuidado entre ambos. No vimos ningún reno en el tramo donde suelen estar — no lo contaríamos como parada en sí, es solo un tramo de carretera con posibilidad de avistamiento."
 
-      - day: 6
+      - day: 7
         title: "Fiordos del este"
         summary: "Recorrido por los fiordos del este hasta Egilsstaðir, con parada en Seyðisfjörður y sus cascadas de acceso. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         stops:
@@ -344,7 +362,7 @@ variants:
             verified_at: 2024-08-15
         our_take: "Seyðisfjörður con la calle arcoíris merece parar aunque no se vaya a coger el ferry. Esa noche dormimos en un hueco junto a la carretera yendo hacia el norte — sabemos que no está permitido, pero lo vivimos como una de esas experiencias propias de Islandia, siendo respetuosos con el entorno."
 
-      - day: 7
+      - day: 8
         title: "Cañones y cascadas del este"
         summary: "De Egilsstaðir hacia Mývatn, con los grandes cañones y cascadas del norte-este como protagonistas. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         stops:
@@ -385,7 +403,7 @@ variants:
             verified_at: 2024-08-15
         our_take: "Stuðlagil desde el lado este no cruza el río: cómodo, pero las fotos más espectaculares se ven desde el otro lado."
 
-      - day: 8
+      - day: 9
         title: "Mývatn y Krafla"
         summary: "Día dedicado a la zona volcánica y geotérmica de Mývatn y Krafla. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         stops:
@@ -443,7 +461,7 @@ variants:
             variant_note: "Nos bañamos junto a la cascada, donde el agua está más fresca que río arriba pero aun así calentita — estábamos a 0°C fuera y el contraste fue único. Solo entré yo. Lo hicimos justo antes de dormir, de camino al camping Systragil."
         our_take: "Hverir huele mal por el azufre pero es de los paisajes más marcianos del viaje. Merece la pena aunque sea rápido."
 
-      - day: 9
+      - day: 10
         title: "Goðafoss, Akureyri y la costa de Tröllaskagi"
         summary: "De la zona de Mývatn a la costa norte, con parada para avistamiento de ballenas y cruce por túneles hacia Siglufjörður. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         stops:
@@ -476,7 +494,7 @@ variants:
             visit_status: visited
             variant_note: "No bajamos al pueblo: estábamos cansados y queríamos seguir hasta el camping, así que lo vimos a través del coche. Parece un pueblo pesquero bonito, pero no lo recorrimos de verdad."
 
-      - day: 10
+      - day: 11
         title: "Camino al oeste: iglesias de turba y Kolugljúfur"
         summary: "Cruce de Skagafjörður hacia la península de Snæfellsnes, con paradas en iglesias de turba históricas y el cañón de Kolugljúfur. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         stops:
@@ -508,7 +526,7 @@ variants:
             planning_status: required
             visit_status: visited
 
-      - day: 11
+      - day: 12
         title: "Snæfellsnes: Kirkjufell, Djúpalónssandur y Arnarstapi"
         summary: "Día completo recorriendo la península de Snæfellsnes, de Kirkjufell hasta los acantilados del sur. Duraciones de las paradas estimadas, no confirmadas — pendientes de ajustar al escribir la guía editorial."
         stops:
@@ -582,7 +600,7 @@ variants:
             visit_status: visited
             variant_note: "Llegar aquí fue como estar en otro planeta, muy espectacular y poco conocido."
 
-      - day: 12
+      - day: 13
         title: "Regreso a Reikiavik"
         summary: "Última etapa de la Ring Road, cierre del círculo en la capital. Duración de la parada estimada, no confirmada — pendiente de ajustar al escribir la guía editorial."
         stops:
@@ -597,6 +615,7 @@ variants:
             duration_min: 90
             planning_status: required
             visit_status: visited
+        our_take: "Después de este día no hicimos nada más: nos levantamos más tarde para descansar y fuimos directos a entregar la camper y dejarla limpia."
 
 accommodation:
   notes: "En camper, el alojamiento son campings. Se elige según la posición al final de cada jornada."
@@ -668,7 +687,7 @@ transport:
   arrival:
     - from_airport: MAD
       description: "Vuelo a Reikiavik (KEF). El camper se recoge en el aeropuerto o en la ciudad. El aeropuerto está a 50 km de Reikiavik."
-      notes: "Llegamos a la 1:30 de la madrugada y dormimos directamente en un camping cercano al aeropuerto."
+      notes: "Llegamos a la 1:30 de la madrugada, recogimos la camper y dormimos directamente en un parking entre los supermercados Bonus y Kronan, en Reikiavik (63.97318428783835, -22.5445651829879)."
       verified_at: 2024-08-01
   local:
     - mode: "Camper"

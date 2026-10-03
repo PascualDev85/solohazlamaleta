@@ -16,10 +16,10 @@ test('the real Islandia guide matches GuideSourceSchema', async () => {
   )
 })
 
-test('the guide contains days 1 through 12 (day 13 is the departure, no stops)', async () => {
+test('the guide contains days 1 through 13', async () => {
   const raw = await loadGuide(GUIDE_PATH) as { variants: { days: { day: number }[] }[] }
   const days = raw.variants[0].days.map((d) => d.day).sort((a, b) => a - b)
-  assert.deepStrictEqual(days, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+  assert.deepStrictEqual(days, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
 })
 
 test('every stop place_id exists in the place registry', async () => {
@@ -50,9 +50,9 @@ test('the guide has no affiliate_id references anywhere', async () => {
   assert.strictEqual(JSON.stringify(raw).includes('affiliate_id'), false)
 })
 
-test('days 9-12 flag their stop durations as estimated, not confirmed data', async () => {
+test('days 10-13 flag their stop durations as estimated, not confirmed data', async () => {
   const raw = await loadGuide(GUIDE_PATH) as { variants: { days: { day: number; summary?: string }[] }[] }
-  const days = raw.variants[0].days.filter((d) => [9, 10, 11, 12].includes(d.day))
+  const days = raw.variants[0].days.filter((d) => [10, 11, 12, 13].includes(d.day))
 
   assert.strictEqual(days.length, 4)
   for (const day of days) {

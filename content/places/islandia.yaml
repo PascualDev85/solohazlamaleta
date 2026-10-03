@@ -895,3 +895,18 @@
   verified_at: 2024-08-15
   description: "Paisaje volcánico poco conocido en el sur de Islandia, de aspecto lunar."
   notes: "Parada poco frecuentada."
+
+- place_id: thorufoss
+  name: Þórufoss
+  destination: islandia
+  lat: 64.3333
+  lng: -21.2667
+  type: monument
+  verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito."
+    verified_at: 2024-08-15
+  description: "Cascada en el río Laxá í Kjós, de camino hacia el Círculo Dorado desde Reikiavik."
+  notes: "Tiene mesas para comer en el entorno. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
