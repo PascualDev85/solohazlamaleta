@@ -4,7 +4,7 @@ hub: /islandia/
 type: itinerary
 content_type: experience
 status: reviewed
-trip_done: "2024"
+trip_done: "2025-09"
 title: "Islandia en camper: ruta de 13 días por la Ring Road"
 description: "Ruta por Islandia en camper (13 días, antihoraria) con presupuesto real detallado, campings reales y lo que haríamos distinto."
 updated_at: 2026-09-30
@@ -33,61 +33,61 @@ budget:
   excludes:
     - "Guardería de mascotas (gasto personal no del viaje)"
     - "Gasolina y gastos en España hasta el aeropuerto"
-  notes: "Presupuesto real 2024. El camper y la gasolina son las partidas más grandes. Cocinar en el camper reduce mucho el gasto de comidas."
+  notes: "Presupuesto real 2025. El camper y la gasolina son las partidas más grandes. Cocinar en el camper reduce mucho el gasto de comidas."
   items:
     - category: vuelos
       label: "Vuelos MAD → KEF → MAD"
       amount: 571.12
       basis: per_group
       type: real
-      verified_at: 2024-01-15
+      verified_at: 2025-09
     - category: transporte
       label: "Alquiler camper 13 días"
       amount: 1982.60
       basis: per_group
       type: real
-      verified_at: 2024-01-15
+      verified_at: 2025-09
       notes: "Incluía seguro básico."
     - category: transporte
       label: "Gasolina en Islandia"
       amount: 361.94
       basis: per_group
       type: real
-      verified_at: 2024-08-20
+      verified_at: 2025-09
       notes: "La gasolina es cara. Llenar siempre en ciudades; hay tramos largos sin gasolineras."
     - category: alojamiento
       label: "Campings (13 noches)"
       amount: 306.58
       basis: per_group
       type: real
-      verified_at: 2024-08-20
+      verified_at: 2025-09
       notes: "Media ~11,8 €/persona/noche."
     - category: entradas
       label: "Excursiones (trekking glaciar y otras)"
       amount: 502.65
       basis: per_group
       type: real
-      verified_at: 2024-08-20
+      verified_at: 2025-09
       notes: "La excursión en glaciar es la más cara y la más impresionante. No la recortaríamos."
     - category: comidas
       label: "Supermercado en Islandia"
       amount: 135.67
       basis: per_group
       type: real
-      verified_at: 2024-08-20
+      verified_at: 2025-09
       notes: "Comprar en Bonus (la cadena más barata). Cocinar en el camper = ahorro enorme."
     - category: seguro
       label: "Seguro de viaje"
       amount: 66.89
       basis: per_group
       type: real
-      verified_at: 2024-01-15
+      verified_at: 2025-09
     - category: otro
       label: "Extras, comidas fuera y parkings Islandia"
       amount: 567.76
       basis: per_group
       type: real
-      verified_at: 2024-08-20
+      verified_at: 2025-09
 
 variants:
   - id: intensivo
@@ -358,8 +358,8 @@ variants:
           - name: "Askur Pizzeria (Egilsstaðir)"
             area: Egilsstaðir
             price_level: medio
-            notes: "2 pizzas y un refresco de 2L, unos 7.200 ISK (unos 50 €) para 2 personas en 2024. Pizzas espectaculares."
-            verified_at: 2024-08-15
+            notes: "2 pizzas y un refresco de 2L, unos 7.200 ISK (unos 50 €) para 2 personas en 2025. Pizzas espectaculares."
+            verified_at: 2025-09-17
         our_take: "Seyðisfjörður con la calle arcoíris merece parar aunque no se vaya a coger el ferry. Esa noche dormimos en un hueco junto a la carretera yendo hacia el norte — sabemos que no está permitido, pero lo vivimos como una de esas experiencias propias de Islandia, siendo respetuosos con el entorno."
 
       - day: 8
@@ -399,8 +399,8 @@ variants:
           - name: "Fish and Chips Lake Mývatn"
             area: Mývatn
             price_level: medio
-            notes: "3.500 ISK por persona en 2024. El mejor fish and chips de Islandia — y de los mejores que hemos probado nunca. Lo recomendamos sin dudarlo."
-            verified_at: 2024-08-15
+            notes: "3.500 ISK por persona en 2025. El mejor fish and chips de Islandia — y de los mejores que hemos probado nunca. Lo recomendamos sin dudarlo."
+            verified_at: 2025-09-18
         our_take: "Stuðlagil desde el lado este no cruza el río: cómodo, pero las fotos más espectaculares se ven desde el otro lado."
 
       - day: 9
@@ -414,7 +414,7 @@ variants:
             visit_status: visited
             variant_note: "Hizo tanto viento y frío que la verdad no mereció mucho la pena: estuvimos solo unos minutos fuera porque era imposible aguantar más. El entorno nevado fue épico, pero si volviéramos no iríamos de nuevo, y menos al precio actual del parking."
             experience:
-              visited_at: "2024-08"
+              visited_at: "2025-09"
               actual_price_paid:
                 amount: 800
                 currency: ISK
@@ -628,24 +628,24 @@ accommodation:
       picks:
         - name: "Camping Þingvellir"
           price_level: bajo
-          notes: "Baño y ducha incluidos. 4.400 ISK para 2 personas y camper sin electricidad en 2024."
-          verified_at: 2024-08-15
+          notes: "Baño y ducha incluidos. 4.400 ISK para 2 personas y camper sin electricidad en 2025."
+          verified_at: 2025-09-15
         - name: "Camping Árnes"
           price_level: bajo
-          notes: "El peor camping del viaje: amplio y sencillo pero sucio (ropa interior tirada en el suelo), sin electricidad ni sala común. Dos duchas de agua caliente sin límite de tiempo, una averiada. Los baños (2 de mujeres, 2 de hombres) eran lo mejor, limpios. 4.400 ISK para 2 personas y camper sin electricidad en 2024 — no vino nadie a cobrar y no llegamos a pagar."
-          verified_at: 2024-08-15
+          notes: "El peor camping del viaje: amplio y sencillo pero sucio (ropa interior tirada en el suelo), sin electricidad ni sala común. Dos duchas de agua caliente sin límite de tiempo, una averiada. Los baños (2 de mujeres, 2 de hombres) eran lo mejor, limpios. 4.400 ISK para 2 personas y camper sin electricidad en 2025 — no vino nadie a cobrar y no llegamos a pagar."
+          verified_at: 2025-09-15
         - name: "Camping Skógafoss"
           price_level: bajo
-          notes: "4.000 ISK para 2 personas y camper sin electricidad en 2024. Baños gratis; duchas de pago, 400 ISK (unos 5 minutos). Encontramos los baños y las duchas recién limpios al llegar y pudimos ducharnos los dos a la vez."
-          verified_at: 2024-08-15
+          notes: "4.000 ISK para 2 personas y camper sin electricidad en 2025. Baños gratis; duchas de pago, 400 ISK (unos 5 minutos). Encontramos los baños y las duchas recién limpios al llegar y pudimos ducharnos los dos a la vez."
+          verified_at: 2025-09-15
         - name: "Camping Svínafelli (Skaftafell)"
           price_level: bajo
-          notes: "Camping muy amplio y completo: 4 duchas interiores y 2 exteriores de agua caliente sin límite de tiempo, 4 baños, sala común amplia con muchas mesas, 4 fuegos para cocinar, utensilios, 3 fregaderos y nevera. Lavandería aparte (lavadora y secadora), 1.800 ISK — el día que fuimos estaba rota. 5.000 ISK para 2 personas y camper sin electricidad en 2024. Lo recomendamos sin dudarlo."
-          verified_at: 2024-08-15
+          notes: "Camping muy amplio y completo: 4 duchas interiores y 2 exteriores de agua caliente sin límite de tiempo, 4 baños, sala común amplia con muchas mesas, 4 fuegos para cocinar, utensilios, 3 fregaderos y nevera. Lavandería aparte (lavadora y secadora), 1.800 ISK — el día que fuimos estaba rota. 5.000 ISK para 2 personas y camper sin electricidad en 2025. Lo recomendamos sin dudarlo."
+          verified_at: 2025-09-15
         - name: "Skaftafell Campground"
           price_level: medio
-          notes: "Camping muy concurrido junto al centro de visitantes del Parque Nacional de Vatnajökull, con salida directa a las rutas al glaciar y a Svartifoss. 8 duchas interiores de agua caliente sin límite de tiempo, 2 baños (4 WC en el de mujeres, 3 en el de hombres), sin sala común, 4 fregaderos de agua caliente exteriores pero cubiertos. Lavandería incluida en el precio; si no llevas detergente, se vende en el centro de visitantes (bolsita, 350 ISK). 5.500 ISK para 2 personas y camper sin electricidad en 2024 — de los más caros del viaje, pero merece la pena por la ubicación. Muy concurrido: conviene llegar temprano, pueden faltar baños y duchas para la cantidad de gente."
-          verified_at: 2024-08-15
+          notes: "Camping muy concurrido junto al centro de visitantes del Parque Nacional de Vatnajökull, con salida directa a las rutas al glaciar y a Svartifoss. 8 duchas interiores de agua caliente sin límite de tiempo, 2 baños (4 WC en el de mujeres, 3 en el de hombres), sin sala común, 4 fregaderos de agua caliente exteriores pero cubiertos. Lavandería incluida en el precio; si no llevas detergente, se vende en el centro de visitantes (bolsita, 350 ISK). 5.500 ISK para 2 personas y camper sin electricidad en 2025 — de los más caros del viaje, pero merece la pena por la ubicación. Muy concurrido: conviene llegar temprano, pueden faltar baños y duchas para la cantidad de gente."
+          verified_at: 2025-09-15
     - name: "Norte de Islandia"
       description: "Campings más pequeños y tranquilos."
       pros: ["Menos gente", "Más baratos"]
@@ -655,19 +655,19 @@ accommodation:
         - name: "Camping Myvatn"
           price_level: bajo
           notes: "Bien ubicado para el lago y la zona geotérmica."
-          verified_at: 2024-08-15
+          verified_at: 2025-09-15
         - name: "Laugar Camping"
           price_level: bajo
-          notes: "Alternativa que usamos cuando el Camping Mývatn estaba cerrado. Amplio y con servicios completos: 4 duchas interiores de agua caliente sin límite de tiempo en un vestuario compartido (uno para hombres, otro para mujeres), 4 baños más 1 dentro del vestuario, sala común amplia con muchas mesas y sofá, una vitrocerámica, utensilios, un fregadero, tostadora, hervidores y nevera. 4.800 ISK para 2 personas y camper sin electricidad en 2024 — por el precio, merece muchísimo la pena, es como un polideportivo bien adaptado. Si llueve, cuidado dónde aparcas la camper por el barro. Por la noche viene una persona a cobrar. Lo recomendamos sin dudarlo."
-          verified_at: 2024-08-15
+          notes: "Alternativa que usamos cuando el Camping Mývatn estaba cerrado. Amplio y con servicios completos: 4 duchas interiores de agua caliente sin límite de tiempo en un vestuario compartido (uno para hombres, otro para mujeres), 4 baños más 1 dentro del vestuario, sala común amplia con muchas mesas y sofá, una vitrocerámica, utensilios, un fregadero, tostadora, hervidores y nevera. 4.800 ISK para 2 personas y camper sin electricidad en 2025 — por el precio, merece muchísimo la pena, es como un polideportivo bien adaptado. Si llueve, cuidado dónde aparcas la camper por el barro. Por la noche viene una persona a cobrar. Lo recomendamos sin dudarlo."
+          verified_at: 2025-09-15
         - name: "Systragil Camping Ground"
           price_level: bajo
-          notes: "Camping amplio para la camper, enclavado justo en la montaña: pequeño pero precioso, adaptado para familias. Servicios: 2 duchas exteriores de agua caliente sin límite de tiempo, 2 baños, sala común pequeña (para 6 personas), 2 fuegos para cocinar, utensilios básicos, 2 fregaderos de agua caliente exteriores pero cubiertos. Lavandería aparte (lavadora y secadora), 1.000 ISK. 4.200 ISK para 2 personas y camper sin electricidad en 2024 — por el precio, merece muchísimo la pena. Nos nevó por la noche y nos despertamos con todo blanco, fue mágico. Lo recomendamos sin dudarlo."
-          verified_at: 2024-08-15
+          notes: "Camping amplio para la camper, enclavado justo en la montaña: pequeño pero precioso, adaptado para familias. Servicios: 2 duchas exteriores de agua caliente sin límite de tiempo, 2 baños, sala común pequeña (para 6 personas), 2 fuegos para cocinar, utensilios básicos, 2 fregaderos de agua caliente exteriores pero cubiertos. Lavandería aparte (lavadora y secadora), 1.000 ISK. 4.200 ISK para 2 personas y camper sin electricidad en 2025 — por el precio, merece muchísimo la pena. Nos nevó por la noche y nos despertamos con todo blanco, fue mágico. Lo recomendamos sin dudarlo."
+          verified_at: 2025-09-15
         - name: "Camping Lambeyri"
           price_level: bajo
-          notes: "Camping muy amplio y con servicios completos: 4 duchas (en la zona de la piscina) de agua caliente sin límite de tiempo, 4 baños, 2 salas comunes completas con vitrocerámica, utensilios, fregadero, horno y tostadora. Tiene una piscina pequeña con agua caliente (no la usamos) y lavandería. 5.500 ISK para 2 personas y camper sin electricidad en 2024 — por el precio, merece muchísimo la pena. Enclavado junto a un río, tranquilo y mágico: de los mejores campings de todo el viaje. Lo recomendamos sin dudarlo."
-          verified_at: 2024-08-15
+          notes: "Camping muy amplio y con servicios completos: 4 duchas (en la zona de la piscina) de agua caliente sin límite de tiempo, 4 baños, 2 salas comunes completas con vitrocerámica, utensilios, fregadero, horno y tostadora. Tiene una piscina pequeña con agua caliente (no la usamos) y lavandería. 5.500 ISK para 2 personas y camper sin electricidad en 2025 — por el precio, merece muchísimo la pena. Enclavado junto a un río, tranquilo y mágico: de los mejores campings de todo el viaje. Lo recomendamos sin dudarlo."
+          verified_at: 2025-09-15
     - name: "Snæfellsnes (oeste)"
       description: "Campings sencillos al cierre de la ruta, junto a los puntos clave de la península."
       pros: ["Bien situados para Kirkjufell y los acantilados del sur de la península"]
@@ -676,24 +676,24 @@ accommodation:
       picks:
         - name: "Hellissandur Camping"
           price_level: bajo
-          notes: "Camping amplio con servicios: 2 duchas interiores de agua caliente sin límite de tiempo (2 de hombres, 2 de mujeres), 2 baños (2 de hombres, 2 de mujeres), sala común pequeña pero completa, 2 fregaderos cubiertos con agua caliente. 4.000 ISK para 2 personas y camper sin electricidad en 2024 (de los más baratos del viaje), subido a 5.000 ISK actualmente. Enclavado justo en un campo de lava. Muy concurrido, con gente empezando y terminando la ruta de Snæfellsjökull — conviene ir temprano. Por la noche viene un guardia a cobrar. Lo recomendamos sin dudarlo."
-          verified_at: 2024-08-15
+          notes: "Camping amplio con servicios: 2 duchas interiores de agua caliente sin límite de tiempo (2 de hombres, 2 de mujeres), 2 baños (2 de hombres, 2 de mujeres), sala común pequeña pero completa, 2 fregaderos cubiertos con agua caliente. 4.000 ISK para 2 personas y camper sin electricidad en 2025 (de los más baratos del viaje), subido a 5.000 ISK actualmente. Enclavado justo en un campo de lava. Muy concurrido, con gente empezando y terminando la ruta de Snæfellsjökull — conviene ir temprano. Por la noche viene un guardia a cobrar. Lo recomendamos sin dudarlo."
+          verified_at: 2025-09-15
         - name: "Mosskógar"
           price_level: bajo
           notes: "Camping amplio y muy cuco: 4 duchas de agua caliente sin límite de tiempo, 4 baños, 4 fregaderos cubiertos con agua caliente (solo 2 de ellos; los otros 2 son solo para rellenar agua). Sala común muy cuidada, en un invernadero, con 2 fuegos para cocinar y utensilios. Tiene un sistema estupendo: productos que deja la gente que termina su viaje, disponibles para quien lo empieza. 5.000 ISK para 2 personas y camper sin electricidad — el único camping del viaje que solo acepta efectivo, hay que llevar coronas encima. John, el dueño, muy amable y risueño; todo organizado por parcelas. Por su precio y lo que ofrece, lo recomendamos sin dudarlo."
-          verified_at: 2024-08-15
+          verified_at: 2025-09-15
 
 transport:
   arrival:
     - from_airport: MAD
       description: "Vuelo a Reikiavik (KEF). El camper se recoge en el aeropuerto o en la ciudad. El aeropuerto está a 50 km de Reikiavik."
       notes: "Llegamos a la 1:30 de la madrugada, recogimos la camper y dormimos directamente en un parking entre los supermercados Bonus y Kronan, en Reikiavik (63.97318428783835, -22.5445651829879)."
-      verified_at: 2024-08-01
+      verified_at: 2025-09-11
   local:
     - mode: "Camper"
       description: "Ring Road (Ruta 1) rodea toda la isla, asfaltada. Velocidad máx. 90 km/h en carretera, 30 km/h en pistas de grava. F-roads (pistas del interior): prohibidas para campers estándar."
       notes: "App Gas Map Iceland para encontrar gasolineras baratas. Llenar siempre al pasar por una ciudad."
-      verified_at: 2024-08-15
+      verified_at: 2025-09-15
 
 booking_checklist:
   - label: "Alquiler del camper"
@@ -745,7 +745,7 @@ practical:
 
 faq:
   - q: "¿Cuánto cuesta viajar a Islandia en camper 13 días?"
-    a: "Depende del año y de los precios, así que el total y el precio por persona exactos están en la sección de presupuesto de esta guía, con el desglose completo: vuelos, camper, gasolina, campings, excursiones, supermercado y seguro. Son datos reales de nuestro viaje de 2024, en pareja."
+    a: "Depende del año y de los precios, así que el total y el precio por persona exactos están en la sección de presupuesto de esta guía, con el desglose completo: vuelos, camper, gasolina, campings, excursiones, supermercado y seguro. Son datos reales de nuestro viaje de 2025, en pareja."
     schema: true
   - q: "¿Qué ruta es mejor, horaria o antihoraria?"
     a: "Nosotros hicimos la antihoraria (sur primero) y nos gustó: el sur tiene los atractivos más impactantes como aperitivo. El norte tiene menos turistas para el final."

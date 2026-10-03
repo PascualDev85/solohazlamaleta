@@ -65,7 +65,7 @@ test('places is the deduplicated union of every place actually used by a stop (7
   assert.strictEqual(compiled.places.filter((p) => p.place_id === 'skogafoss').length, 1)
 })
 
-test('budget compiles with the real 2024 figures: total_base equals the raw sum of per_group item amounts (4495.21 €)', async () => {
+test('budget compiles with the real 2025 figures: total_base equals the raw sum of per_group item amounts (4495.21 €)', async () => {
   const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)
@@ -76,7 +76,7 @@ test('budget compiles with the real 2024 figures: total_base equals the raw sum 
   assert.strictEqual(compiled.budget!.type, 'real')
 })
 
-test('total_reference for the real base_travelers (2) matches the real 2024 trip total exactly (4495.21 €), not a rounding-drifted 4495.24', async () => {
+test('total_reference for the real base_travelers (2) matches the real 2025 trip total exactly (4495.21 €), not a rounding-drifted 4495.24', async () => {
   const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)
