@@ -291,27 +291,27 @@ variants:
         stops:
           - place_id: breiddalsvik
             order: 1
-            duration_min: 20
+            duration_min: 45
             planning_status: optional
             visit_status: visited
           - place_id: stodvarfjordur
             order: 2
-            duration_min: 30
+            duration_min: 15
             planning_status: optional
             visit_status: visited
           - place_id: reydarfjordur
             order: 3
-            duration_min: 20
+            duration_min: 40
             planning_status: optional
             visit_status: visited
           - place_id: fardagafoss
             order: 4
-            duration_min: 60
+            duration_min: 70
             planning_status: optional
             visit_status: visited
           - place_id: gufufoss
             order: 5
-            duration_min: 20
+            duration_min: 15
             planning_status: optional
             visit_status: visited
           - place_id: seydisfjordur
@@ -319,17 +319,30 @@ variants:
             duration_min: 60
             planning_status: required
             visit_status: visited
-          - place_id: vok_baths
+          - place_id: borgarfjardarhofn
             order: 7
+            duration_min: 30
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Buscábamos ver frailecillos y no era la época: no había ninguno cuando pasamos. Si vas en temporada de avistamiento, sí merece la pena acercarse."
+          - place_id: vok_baths
+            order: 8
             duration_min: 90
             planning_status: optional
             visit_status: visited
+            variant_note: "Nos encantaron estos baños: el entorno donde están es precioso. No fuimos a otros para comparar, pero esto solo ya mereció la pena. Nos tomamos una cerveza dentro del agua y un té al salir."
           - place_id: vestdalsfossar
-            order: 8
+            order: 9
             duration_min: 60
             planning_status: optional
             visit_status: not_visited
-        our_take: "Seyðisfjörður con la calle arcoíris merece parar aunque no se vaya a coger el ferry."
+        food:
+          - name: "Askur Pizzeria (Egilsstaðir)"
+            area: Egilsstaðir
+            price_level: medio
+            notes: "2 pizzas y un refresco de 2L, unos 7.200 ISK (unos 50 €) para 2 personas en 2024. Pizzas espectaculares."
+            verified_at: 2024-08-15
+        our_take: "Seyðisfjörður con la calle arcoíris merece parar aunque no se vaya a coger el ferry. Esa noche dormimos en un hueco junto a la carretera yendo hacia el norte — sabemos que no está permitido, pero lo vivimos como una de esas experiencias propias de Islandia, siendo respetuosos con el entorno."
 
       - day: 7
         title: "Cañones y cascadas del este"

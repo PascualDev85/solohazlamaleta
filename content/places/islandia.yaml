@@ -432,8 +432,13 @@
   lng: -14.3833
   type: monument
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito."
+    verified_at: 2024-08-15
   description: "Cascada cercana a Egilsstaðir con una cueva detrás de la caída de agua."
-  notes: "Cascada con una cueva detrás, accesible con una caminata corta cerca de Egilsstaðir. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Cascada con una cueva detrás, accesible con una caminata corta cerca de Egilsstaðir. Unos 30 minutos de caminata desde el parking hasta la cascada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: gufufoss
   name: Gufufoss
@@ -442,8 +447,13 @@
   lng: -13.9833
   type: monument
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito."
+    verified_at: 2024-08-15
   description: "Cascada escalonada junto a la carretera entre Egilsstaðir y Seyðisfjörður."
-  notes: "Cascada escalonada junto a la carretera entre Egilsstaðir y Seyðisfjörður. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Cascada escalonada junto a la carretera entre Egilsstaðir y Seyðisfjörður, a unos 5 minutos a pie del parking. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: seydisfjordur
   name: Seyðisfjörður
@@ -452,8 +462,8 @@
   lng: -13.9558
   type: area
   verified_at: 2024-08-15
-  description: "Pueblo del este de Islandia construido alrededor de un fiordo estrecho, con arquitectura de principios del siglo XX y puerto de ferry hacia las Islas Feroe y Dinamarca."
-  notes: "Pueblo del este con casas de colores y la calle arcoíris, puerto del ferry a Europa continental. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  description: "Pueblo del este de Islandia construido alrededor de un fiordo estrecho, con arquitectura de principios del siglo XX y puerto de ferry hacia las Islas Feroe y Dinamarca. Su iglesia azul, Seyðisfjarðarkirkja, da nombre a la calle arcoíris pintada en el suelo que lleva hasta ella."
+  notes: "Pueblo del este con casas de colores y la calle arcoíris, puerto del ferry a Europa continental. Hay aparcamiento gratuito dentro del pueblo. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: vok_baths
   name: Vök Baths
@@ -710,3 +720,13 @@
   verified_at: 2024-08-15
   description: "Mirador de montaña en el este de Islandia, junto a la carretera, con vistas abiertas al cielo nocturno."
   notes: "Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: borgarfjardarhofn
+  name: Borgarfjarðarhöfn
+  destination: islandia
+  lat: 65.5219
+  lng: -13.8167
+  type: viewpoint
+  verified_at: 2024-08-15
+  description: "Puerto en Borgarfjörður Eystri, en el este de Islandia, con una colonia de frailecillos visitable en temporada."
+  notes: "La época habitual de avistamiento de frailecillos es de abril a agosto aproximadamente; fuera de esas fechas no hay garantía de verlos. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
