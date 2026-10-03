@@ -49,6 +49,30 @@ test('I16: actual_price_paid (stop) and entry.price (place) coexist independentl
   assert.notStrictEqual(compiled.experience?.actual_price_paid?.amount, compiled.place.entry?.price)
 })
 
+test('skip_reason flows through to CompiledStop unchanged', () => {
+  const compiled = compileStop(
+    { place_id: 'a', order: 1, duration_min: 30, planning_status: 'optional', visit_status: 'not_visited', skip_reason: 'No daba tiempo con el ritmo del día.' },
+    placeRegistry, emptyAffiliates, now,
+  )
+  assert.strictEqual(compiled.skip_reason, 'No daba tiempo con el ritmo del día.')
+})
+
+test('compileDay splits stops into route_stops and skipped_stops, with no not_visited stop leaking into route_stops', () => {
+  const day = compileDay(
+    { day: 1, title: 'D1', stops: [
+      { place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
+      { place_id: 'a', order: 2, duration_min: 15, planning_status: 'optional', visit_status: 'not_visited' },
+      { place_id: 'a', order: 3, duration_min: 20, planning_status: 'optional', visit_status: 'unknown' },
+    ] },
+    placeRegistry, emptyAffiliates, now,
+  )
+  assert.strictEqual(day.stops.length, 3)
+  assert.strictEqual(day.route_stops.length, 2)
+  assert.strictEqual(day.skipped_stops.length, 1)
+  assert.ok(day.route_stops.every((stop) => stop.visit_status !== 'not_visited'))
+  assert.ok(day.skipped_stops.every((stop) => stop.visit_status === 'not_visited'))
+})
+
 test('compileDay computes n_stops', () => {
   const day = compileDay(
     { day: 1, title: 'D1', stops: [

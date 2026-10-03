@@ -29,6 +29,7 @@ export const StopSourceSchema = z.object({
   travel_to_next_min: z.number().int().optional(),
   travel_to_next_mode: TravelMode.optional(),
   variant_note: z.string().optional(),
+  skip_reason: z.string().optional(),
   experience: ExperienceSchema.optional(),
   booking: BookingSchema.optional(),
 }).strict()

@@ -46,6 +46,7 @@ export interface CompiledStop {
   travel_to_next_min?: number
   travel_to_next_mode?: string
   variant_note?: string
+  skip_reason?: string
   experience?: {
     visited_at: string
     actual_price_paid?: { amount: number; currency: string; notes?: string }
@@ -62,6 +63,8 @@ export interface CompiledDay {
   summary?: string
   physical_level?: { walking_km?: number; hills?: 'none' | 'some' | 'many' }
   stops: CompiledStop[]
+  route_stops: CompiledStop[]
+  skipped_stops: CompiledStop[]
   n_stops: number
   food?: object[]
   our_take?: string

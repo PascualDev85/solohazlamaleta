@@ -1,0 +1,321 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadCompiledGuide } from '../../lib/engine-guide.ts';
+import { placeMapUrl } from '../../lib/maps.ts';
+import { formatDate } from '../../lib/formatDate.ts';
+
+const guide = await loadCompiledGuide(
+  'content/guides/islandia/islandia-en-camper-13-dias.yaml',
+  'content/places/islandia.yaml',
+);
+
+const variant = guide.variants?.[0];
+
+/**
+ * Spanish decimal format (1.234,56 €), not toFixed's "1234.56" — this is a
+ * Spanish-language page. `useGrouping: true` is explicit and required: this
+ * Node/ICU build does not group thousands for the "es-ES" locale by default
+ * (verified: `Intl.NumberFormat('es-ES').format(4495.21)` gives "4495,21",
+ * not "4.495,21", while "de-DE" groups the same number correctly with no
+ * extra options).
+ */
+const currencyFormatter = new Intl.NumberFormat('es-ES', {
+  style: 'currency',
+  currency: guide.budget?.currency ?? 'EUR',
+  useGrouping: true,
+});
+
+/** Only the FAQ items the author marked fit for rich results go into the JSON-LD — the visible FAQ section below shows every question regardless. */
+const faqForSchema = (guide.faq ?? []).filter((item) => item.schema === true);
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: 'Islandia', item: new URL('/islandia/', Astro.site).href },
+    { '@type': 'ListItem', position: 3, name: guide.title, item: pageUrl },
+  ],
+};
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: guide.title,
+  description: guide.description,
+  dateModified: guide.updated_at,
+};
+
+const faqJsonLd =
+  faqForSchema.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqForSchema.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
+      }
+    : null;
+---
+
+{/*
+  No se pasa `image`: guide.cover_image apunta a /images/islandia/kirkjufell.jpg,
+  que no existe en public/ todavía (no hay fotos propias subidas). Pasar una ruta
+  rota generaría un og:image 404 en redes; mejor sin imagen hasta que exista una
+  foto real (nunca un banco de imágenes genérico, por las reglas del proyecto).
+*/}
+<BaseLayout title={guide.title} description={guide.description} noindex>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} slot="head" />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(articleJsonLd)} slot="head" />
+  {faqJsonLd && (
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(faqJsonLd)} slot="head" />
+  )}
+
+  <article class="guide">
+    <h1>{guide.title}</h1>
+
+    {guide.has_experience && guide.trip_done ? (
+      <p class="guide__dateline">Lo hicimos en {formatDate(guide.trip_done)}.</p>
+    ) : (
+      <p class="guide__dateline">Actualizado {formatDate(guide.updated_at)}</p>
+    )}
+
+    <section class="guide__summary" aria-labelledby="resumen">
+      <h2 id="resumen">En resumen</h2>
+      <dl>
+        <dt>Resumen</dt>
+        <dd>{guide.summary.tagline}</dd>
+        {guide.summary.best_season && (
+          <>
+            <dt>Mejor época</dt>
+            <dd>{guide.summary.best_season}</dd>
+          </>
+        )}
+        {guide.summary.getting_around && (
+          <>
+            <dt>Cómo moverse</dt>
+            <dd>{guide.summary.getting_around}</dd>
+          </>
+        )}
+        {guide.summary.base_area && (
+          <>
+            <dt>Base</dt>
+            <dd>{guide.summary.base_area}</dd>
+          </>
+        )}
+        {/*
+          guide.summary.budget_per_person = total_reference / base_travelers = 4495.21 / 2 = 2247.605,
+          que el formateador muestra como "2.247,61 €", no "2.247,62 €" (la cifra por persona citada en
+          docs/1.6.4_json_islandia.md). Es una diferencia de 1 céntimo entre dividir el total real entre
+          2 y la cifra que cita ese documento — no hay un redondeo que haga coincidir exactamente el
+          total (4495.21) y el por-persona (2247.62) a la vez. Verificado, no es un bug de esta página.
+        */}
+        {guide.summary.budget_per_person != null && (
+          <>
+            <dt>Presupuesto</dt>
+            <dd>{currencyFormatter.format(guide.summary.budget_per_person)} por persona</dd>
+          </>
+        )}
+      </dl>
+    </section>
+
+    {variant && (
+      <section aria-labelledby="itinerario">
+        <h2 id="itinerario">Día a día</h2>
+        {variant.days.map((day) => (
+          <section class="guide__day" aria-labelledby={`dia-${day.day}`}>
+            <span class="guide__daynum" aria-hidden="true">{day.day}</span>
+            <h3 id={`dia-${day.day}`}>
+              <span class="visually-hidden">Día {day.day}. </span>
+              {day.title}
+            </h3>
+
+            {day.summary && <p>{day.summary}</p>}
+
+            <ol class="guide__stops">
+              {day.route_stops.map((stop) => (
+                <li>
+                  <span class="guide__stopname">
+                    {stop.place.name}
+                    {stop.visit_status === 'visited' && <span class="badge badge--lived">Vivido</span>}
+                  </span>
+                  <span class="guide__stop-meta">
+                    {' · '}
+                    {stop.duration_min} min
+                    {stop.start_time && ` · desde las ${stop.start_time}`}
+                  </span>
+
+                  <p>
+                    <a
+                      class="guide__route"
+                      href={placeMapUrl(stop.place.lat, stop.place.lng)}
+                      rel="noopener"
+                      target="_blank"
+                    >
+                      Ver en Google Maps
+                      <span class="visually-hidden">(se abre en una pestaña nueva)</span>
+                    </a>
+                  </p>
+
+                  {stop.variant_note && <p class="guide__note">{stop.variant_note}</p>}
+
+                  <p class="guide__verified">
+                    Comprobado {formatDate(stop.place.verified_at)}
+                    {stop.place.is_stale && ' · dato antiguo, puede haber cambiado'}
+                  </p>
+                </li>
+              ))}
+            </ol>
+
+            {day.our_take && (
+              <div class="guide__tip">
+                <h4>Lo que haríamos distinto</h4>
+                <p>{day.our_take}</p>
+              </div>
+            )}
+
+            {day.plan_b && (
+              <div class="guide__tip">
+                <h4>Plan B</h4>
+                <p>{day.plan_b}</p>
+              </div>
+            )}
+          </section>
+        ))}
+      </section>
+    )}
+
+    {guide.accommodation && guide.accommodation.zones.length > 0 && (
+      <section aria-labelledby="dormir">
+        <h2 id="dormir">Dónde dormir</h2>
+        {guide.accommodation.notes && <p>{guide.accommodation.notes}</p>}
+        {guide.accommodation.zones.map((zone) => (
+          <div class="guide__zone">
+            <h3>{zone.name}</h3>
+            {zone.pros && zone.pros.length > 0 && (
+              <p><strong>A favor:</strong> {zone.pros.join(' · ')}</p>
+            )}
+            {zone.cons && zone.cons.length > 0 && (
+              <p><strong>En contra:</strong> {zone.cons.join(' · ')}</p>
+            )}
+            {zone.picks && zone.picks.length > 0 && (
+              <ul>
+                {zone.picks.map((pick) => (
+                  <li>
+                    {pick.name}
+                    {pick.notes && <span class="guide__stop-meta">{' · '}{pick.notes}</span>}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+      </section>
+    )}
+
+    {guide.transport && (
+      <section aria-labelledby="llegar">
+        <h2 id="llegar">Cómo llegar y moverse</h2>
+        {guide.transport.arrival?.map((arrival) => (
+          <p><strong>Desde {arrival.from_airport}:</strong> {arrival.description}</p>
+        ))}
+        {guide.transport.local?.map((local) => (
+          <p><strong>{local.mode}:</strong> {local.description}</p>
+        ))}
+      </section>
+    )}
+
+    {guide.budget && (
+      <section aria-labelledby="presupuesto">
+        <h2 id="presupuesto">Presupuesto real</h2>
+        <p class="guide__budget-total">
+          <strong>{currencyFormatter.format(guide.budget.total_reference)} en total</strong>
+          {guide.base_travelers && ` para ${guide.base_travelers} viajeros`}
+        </p>
+        <p class="guide__verified">Precios comprobados {formatDate(guide.budget.verified_at)}</p>
+        <ul>
+          {guide.budget.items.map((item) => (
+            <li>
+              {item.label}: {currencyFormatter.format(item.amount)}{' '}
+              ({item.basis === 'per_person' ? 'por persona' : item.basis === 'per_room' ? 'por habitación' : 'por grupo'})
+            </li>
+          ))}
+        </ul>
+        {guide.budget.includes.length > 0 && (
+          <p><strong>Incluye:</strong> {guide.budget.includes.join(' · ')}</p>
+        )}
+        {guide.budget.excludes.length > 0 && (
+          <p><strong>No incluye:</strong> {guide.budget.excludes.join(' · ')}</p>
+        )}
+        {guide.budget.notes && <p>{guide.budget.notes}</p>}
+      </section>
+    )}
+
+    {guide.booking_checklist && guide.booking_checklist.length > 0 && (
+      <section aria-labelledby="reservar">
+        <h2 id="reservar">Qué reservar y cuándo</h2>
+        <ul class="guide__checklist">
+          {guide.booking_checklist.map((item) => (
+            <li><strong>{item.when}:</strong> {item.label}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {guide.our_criteria && guide.our_criteria.length > 0 && (
+      <section aria-labelledby="criterio">
+        <h2 id="criterio">Nuestro criterio</h2>
+        <ul>
+          {guide.our_criteria.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+    )}
+
+    {((guide.pitfalls && guide.pitfalls.length > 0) || (guide.terrain_tips && guide.terrain_tips.length > 0)) && (
+      <section aria-labelledby="errores">
+        <h2 id="errores">Errores y trampas</h2>
+        <ul>
+          {guide.pitfalls?.map((item) => <li>{item}</li>)}
+          {guide.terrain_tips?.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+    )}
+
+    {guide.practical && (
+      <section aria-labelledby="practico">
+        <h2 id="practico">Lo práctico</h2>
+        {guide.practical.documents && guide.practical.documents.length > 0 && (
+          <>
+            <h3>Documentos</h3>
+            <ul>{guide.practical.documents.map((item) => <li>{item}</li>)}</ul>
+          </>
+        )}
+        {guide.practical.plugs && <p><strong>Enchufes:</strong> {guide.practical.plugs}</p>}
+        {guide.practical.apps && guide.practical.apps.length > 0 && (
+          <>
+            <h3>Apps</h3>
+            <ul>{guide.practical.apps.map((item) => <li>{item}</li>)}</ul>
+          </>
+        )}
+      </section>
+    )}
+
+    {guide.faq && guide.faq.length > 0 && (
+      <section aria-labelledby="faq">
+        <h2 id="faq">Preguntas frecuentes</h2>
+        <dl class="guide__faq">
+          {guide.faq.map((item) => (
+            <>
+              <dt>{item.q}</dt>
+              <dd>{item.a}</dd>
+            </>
+          ))}
+        </dl>
+      </section>
+    )}
+  </article>
+</BaseLayout>

@@ -28,3 +28,20 @@ test('a schema-invalid place produces an error naming the offending entry', () =
   ])
   assert.ok(errors.some((e) => e.includes('bad')))
 })
+
+test('two places with near-identical coordinates produce a WARNING, not an ERROR', () => {
+  const { errors, warnings } = buildPlaceRegistry([
+    { place_id: 'eystrahorn', name: 'Eystrahorn', destination: 'islandia', lat: 64.3028, lng: -14.8350, type: 'monument', verified_at: '2024-01-01' },
+    { place_id: 'duplicate_viewpoint', name: 'Same spot, different name', destination: 'islandia', lat: 64.30285, lng: -14.83505, type: 'viewpoint', verified_at: '2024-01-01' },
+  ])
+  assert.deepStrictEqual(errors, [])
+  assert.ok(warnings.some((w) => w.includes('eystrahorn') && w.includes('duplicate_viewpoint')))
+})
+
+test('two places a few kilometers apart (genuinely distinct) produce no near-duplicate warning', () => {
+  const { warnings } = buildPlaceRegistry([
+    { place_id: 'seljalandsfoss', name: 'Seljalandsfoss', destination: 'islandia', lat: 63.6156, lng: -19.9887, type: 'monument', verified_at: '2024-01-01' },
+    { place_id: 'gljufrafoss', name: 'Gljúfrafoss', destination: 'islandia', lat: 63.6181, lng: -19.9909, type: 'monument', verified_at: '2024-01-01' },
+  ])
+  assert.deepStrictEqual(warnings, [])
+})

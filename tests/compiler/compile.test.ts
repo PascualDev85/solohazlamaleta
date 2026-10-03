@@ -29,55 +29,54 @@ test('the real Islandia guide loads, validates with zero errors, and compiles', 
   assert.strictEqual(compiled.slug, 'islandia-en-camper-13-dias')
 })
 
-test('the compiled guide keeps exactly the 7 authored days, not all 13', async () => {
+test('the compiled guide keeps exactly the 13 authored days', async () => {
   const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)
   const compiled = compileGuide(result.guide!, places, emptyAffiliates)
 
   const days = compiled.variants![0].days.map((d) => d.day).sort((a, b) => a - b)
-  assert.deepStrictEqual(days, [1, 2, 3, 9, 10, 11, 12])
+  assert.deepStrictEqual(days, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
 })
 
-test('I1: skogafoss appears on both day 2 (brief arrival) and day 3 (full morning visit) and resolves to the same place', async () => {
+test('I1: skogafoss appears on both day 3 (brief arrival) and day 4 (full morning visit) and resolves to the same place', async () => {
   const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)
   const compiled = compileGuide(result.guide!, places, emptyAffiliates)
 
   const days = compiled.variants![0].days
-  const day2Stop = days.find((d) => d.day === 2)!.stops.find((s) => s.place.place_id === 'skogafoss')
   const day3Stop = days.find((d) => d.day === 3)!.stops.find((s) => s.place.place_id === 'skogafoss')
+  const day4Stop = days.find((d) => d.day === 4)!.stops.find((s) => s.place.place_id === 'skogafoss')
 
-  assert.ok(day2Stop && day3Stop)
-  assert.strictEqual(day2Stop.visit_status, 'visited')
+  assert.ok(day3Stop && day4Stop)
   assert.strictEqual(day3Stop.visit_status, 'visited')
-  assert.deepStrictEqual(day2Stop.place, day3Stop.place)
+  assert.strictEqual(day4Stop.visit_status, 'visited')
+  assert.deepStrictEqual(day3Stop.place, day4Stop.place)
 })
 
-test('places is the deduplicated union of every place actually used by a stop (24 of the 26 registered — jokulsarlon and vestrahorn belong to the excluded days 5-6 and are never referenced)', async () => {
+test('places is the deduplicated union of every place actually used by a stop (71 of 71 registered — skogafoss is referenced by two stops but counts once)', async () => {
   const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)
   const compiled = compileGuide(result.guide!, places, emptyAffiliates)
 
-  assert.strictEqual(compiled.places.length, 24)
-  assert.ok(!compiled.places.some((p) => p.place_id === 'jokulsarlon'))
-  assert.ok(!compiled.places.some((p) => p.place_id === 'vestrahorn'))
+  assert.strictEqual(compiled.places.length, 71)
+  assert.strictEqual(compiled.places.filter((p) => p.place_id === 'skogafoss').length, 1)
 })
 
-test('budget compiles with the real 2024 figures: total_base equals the sum of per-person amounts', async () => {
+test('budget compiles with the real 2025 figures: total_base equals the raw sum of per_group item amounts (4495.21 €)', async () => {
   const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)
   const compiled = compileGuide(result.guide!, places, emptyAffiliates)
 
   assert.ok(compiled.budget)
-  assert.ok(Math.abs(compiled.budget!.total_base - 2247.605) < 0.001)
+  assert.ok(Math.abs(compiled.budget!.total_base - 4495.21) < 0.001)
   assert.strictEqual(compiled.budget!.type, 'real')
 })
 
-test('total_reference for the real base_travelers (2) matches the real 2024 trip total exactly (4495.21 €), not a rounding-drifted 4495.24', async () => {
+test('total_reference for the real base_travelers (2) matches the real 2025 trip total exactly (4495.21 €), not a rounding-drifted 4495.24', async () => {
   const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)

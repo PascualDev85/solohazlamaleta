@@ -18,7 +18,7 @@ async function main() {
   console.log('✔ Guides loaded: 1')
   console.log(`✔ Places loaded: ${rawPlaces.length}`)
 
-  const { registry: places, errors: placeErrors } = buildPlaceRegistry(rawPlaces)
+  const { registry: places, errors: placeErrors, warnings: placeWarnings } = buildPlaceRegistry(rawPlaces)
   const affiliates = buildEmptyAffiliateRegistry()
 
   if (placeErrors.length > 0) {
@@ -26,6 +26,11 @@ async function main() {
     for (const error of placeErrors) console.error(`  ${error}`)
     process.exitCode = 1
     return
+  }
+
+  if (placeWarnings.length > 0) {
+    console.warn('\n⚠ Avisos de lugares:')
+    for (const warning of placeWarnings) console.warn(`  ${warning}`)
   }
 
   const result = validateGuide(rawGuide, places, affiliates)

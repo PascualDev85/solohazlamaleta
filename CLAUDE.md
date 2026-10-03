@@ -1,7 +1,7 @@
 # Solo Haz la Maleta
 
-Web de guías de viaje ya planificadas. Promesa: *"Yo planifico el viaje.
-Tú solo haz la maleta."*
+Web de guías de viaje ya planificadas. Promesa: *"Nosotros hacemos el
+trabajo difícil. Tú solo haz la maleta."*
 
 ## Antes de trabajar, lee
 

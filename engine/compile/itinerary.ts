@@ -23,6 +23,7 @@ export function compileStop(
     travel_to_next_min: stop.travel_to_next_min,
     travel_to_next_mode: stop.travel_to_next_mode,
     variant_note: stop.variant_note,
+    skip_reason: stop.skip_reason,
     experience: stop.experience,
   }
 
@@ -53,6 +54,8 @@ export function compileDay(
     summary: day.summary,
     physical_level: day.physical_level,
     stops,
+    route_stops: stops.filter((stop) => stop.visit_status !== 'not_visited'),
+    skipped_stops: stops.filter((stop) => stop.visit_status === 'not_visited'),
     n_stops: stops.length,
     food: day.food,
     our_take: day.our_take,

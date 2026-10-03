@@ -80,6 +80,33 @@ test('I14 — experience{} con visit_status: unknown es ERROR', () => {
   assert.ok(result.errors.length > 0)
 })
 
+test('I17 — skip_reason con visit_status: not_visited es válido', () => {
+  const source = guideWithStop({
+    place_id: 'a', order: 1, duration_min: 30, planning_status: 'optional',
+    visit_status: 'not_visited', skip_reason: 'No daba tiempo con el ritmo del día.',
+  })
+  const result = validateGuide(source, places, emptyAffiliates)
+  assert.strictEqual(result.errors.length, 0)
+})
+
+test('I17 — skip_reason con visit_status: visited es ERROR', () => {
+  const source = guideWithStop({
+    place_id: 'a', order: 1, duration_min: 30, planning_status: 'optional',
+    visit_status: 'visited', skip_reason: 'No daba tiempo con el ritmo del día.',
+  })
+  const result = validateGuide(source, places, emptyAffiliates)
+  assert.ok(result.errors.length > 0)
+})
+
+test('I17 — skip_reason con visit_status: unknown es ERROR', () => {
+  const source = guideWithStop({
+    place_id: 'a', order: 1, duration_min: 30, planning_status: 'optional',
+    visit_status: 'unknown', skip_reason: 'No daba tiempo con el ritmo del día.',
+  })
+  const result = validateGuide(source, places, emptyAffiliates)
+  assert.ok(result.errors.length > 0)
+})
+
 test('I15 — el estado de visita pertenece a PARADA, nunca a LUGAR: un LUGAR con visit_status es rechazado', () => {
   const result = PlaceSourceSchema.safeParse({
     place_id: 'a', name: 'A', destination: 'islandia', lat: 1, lng: 1,
