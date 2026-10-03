@@ -457,11 +457,13 @@ variants:
             duration_min: 60
             planning_status: required
             visit_status: visited
+            variant_note: "Visitamos las zonas principales, la iglesia y el jardín botánico — una ciudad con mucho encanto. Aprovechamos para arreglar la calefacción del habitáculo delantero en un taller de la ciudad: un 10."
           - place_id: hauganes
             order: 3
             duration_min: 180
             planning_status: required
             visit_status: visited
+            variant_note: "Espectacular: la primera vez que vimos ballenas y nos encantó. Fue respetuoso, vimos un montón, el capitán genial explicando todo el rato. Fuimos de los primeros ese día y repartieron café o chocolate con galletas de canela. Una experiencia preciosa."
           - place_id: migandifoss
             order: 4
             duration_min: 30
@@ -469,9 +471,10 @@ variants:
             visit_status: visited
           - place_id: siglufjordur
             order: 5
-            duration_min: 60
+            duration_min: 15
             planning_status: required
             visit_status: visited
+            variant_note: "No bajamos al pueblo: estábamos cansados y queríamos seguir hasta el camping, así que lo vimos a través del coche. Parece un pueblo pesquero bonito, pero no lo recorrimos de verdad."
 
       - day: 10
         title: "Camino al oeste: iglesias de turba y Kolugljúfur"
@@ -610,6 +613,10 @@ accommodation:
         - name: "Systragil Camping Ground"
           price_level: bajo
           notes: "Camping amplio para la camper, enclavado justo en la montaña: pequeño pero precioso, adaptado para familias. Servicios: 2 duchas exteriores de agua caliente sin límite de tiempo, 2 baños, sala común pequeña (para 6 personas), 2 fuegos para cocinar, utensilios básicos, 2 fregaderos de agua caliente exteriores pero cubiertos. Lavandería aparte (lavadora y secadora), 1.000 ISK. 4.200 ISK para 2 personas y camper sin electricidad en 2024 — por el precio, merece muchísimo la pena. Nos nevó por la noche y nos despertamos con todo blanco, fue mágico. Lo recomendamos sin dudarlo."
+          verified_at: 2024-08-15
+        - name: "Camping Lambeyri"
+          price_level: bajo
+          notes: "Camping muy amplio y con servicios completos: 4 duchas (en la zona de la piscina) de agua caliente sin límite de tiempo, 4 baños, 2 salas comunes completas con vitrocerámica, utensilios, fregadero, horno y tostadora. Tiene una piscina pequeña con agua caliente (no la usamos) y lavandería. 5.500 ISK para 2 personas y camper sin electricidad en 2024 — por el precio, merece muchísimo la pena. Enclavado junto a un río, tranquilo y mágico: de los mejores campings de todo el viaje. Lo recomendamos sin dudarlo."
           verified_at: 2024-08-15
     - name: "Snæfellsnes (oeste)"
       description: "Campings sencillos al cierre de la ruta, junto a los puntos clave de la península."

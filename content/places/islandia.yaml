@@ -130,7 +130,7 @@
   lng: -18.0878
   type: area
   verified_at: 2024-08-15
-  description: "Capital no oficial del norte de Islandia, situada al fondo del fiordo de Eyjafjörður."
+  description: "Capital no oficial del norte de Islandia, situada al fondo del fiordo de Eyjafjörður. Conocida por los semáforos con forma de corazón en el centro."
   notes: "Capital del norte de Islandia, al fondo del fiordo Eyjafjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hauganes
@@ -151,7 +151,7 @@
   type: monument
   verified_at: 2024-08-15
   description: "Cascada en la zona de Héðinsfjörður, en la ruta por los túneles de montaña hacia Siglufjörður."
-  notes: "Cascada de la zona de Héðinsfjörður, en la ruta por los túneles hacia Siglufjörður. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se ve bien desde un terraplén junto a la carretera, sin necesidad de bajar; si apetece, se puede bajar para verla más de cerca. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: siglufjordur
   name: Siglufjörður
@@ -170,8 +170,13 @@
   lng: -19.9500
   type: monument
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Gratuito, pero actualmente cerrada por dentro."
+    verified_at: 2024-08-15
   description: "Una de las iglesias de turba más antiguas de Islandia, en la península de Höfðaströnd, en el norte del país."
-  notes: "Pequeña iglesia de turba, una de las más antiguas de Islandia, en la península de Höfðaströnd. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Pequeña iglesia de turba, una de las más antiguas de Islandia, en la península de Höfðaströnd. Muy paisajística, con techo de césped. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: glaumbaer
   name: Glaumbær Farm
