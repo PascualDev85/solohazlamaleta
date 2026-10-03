@@ -185,6 +185,11 @@
   lng: -19.5000
   type: museum
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito. Hay baños."
+    verified_at: 2024-08-15
   description: "Granja tradicional de turba convertida en museo etnográfico, en la región de Skagafjörður."
   notes: "Museo etnográfico en una granja tradicional de turba en Skagafjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
@@ -195,6 +200,11 @@
   lng: -19.4200
   type: monument
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito. Hay baños. Solo se puede ver por fuera."
+    verified_at: 2024-08-15
   description: "Iglesia de turba construida en 1834, una de las mejor conservadas de Islandia."
   notes: "Iglesia de turba de 1834, una de las mejor conservadas de Islandia. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
@@ -205,6 +215,11 @@
   lng: -20.6700
   type: viewpoint
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito a ambos lados del puente. No hay baños."
+    verified_at: 2024-08-15
   description: "Cañón excavado por el río Víðidalsá, con varias cascadas a lo largo de su recorrido, en el norte de Islandia."
   notes: "Cañón excavado por el río Víðidalsá, con varias cascadas. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -225,6 +240,11 @@
   lng: -23.3084
   type: viewpoint
   verified_at: 2024-08-15
+  entry:
+    price: 1400
+    currency: ISK
+    notes: "Parking de pago junto a la cascada (Kirkjufell Waterfall Viewpoint), 1.400 ISK en 2024. Hay un mirador alternativo gratuito (Kirkjufell Viewpoint) a unos 500 m, con un paseo de unos 15 minutos a pie para evitar el pago."
+    verified_at: 2024-08-15
   description: "Montaña de forma cónica junto a la costa norte de Snæfellsnes, una de las más fotografiadas de Islandia, especialmente junto a la cascada cercana de Kirkjufellsfoss."
   notes: "La montaña más fotografiada de Islandia, junto a la cascada Kirkjufellsfoss, cerca de Grundarfjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 

@@ -490,6 +490,7 @@ variants:
             duration_min: 45
             planning_status: required
             visit_status: visited
+            variant_note: "Muy chula, aunque cuando llegamos no habían abierto. La vimos toda por fuera, que ya merece la pena, y aprovechamos para hacer fotos."
           - place_id: vidimyrarkirkja
             order: 3
             duration_min: 20
@@ -497,9 +498,10 @@ variants:
             visit_status: visited
           - place_id: kolugljufur
             order: 4
-            duration_min: 45
+            duration_min: 60
             planning_status: required
             visit_status: visited
+            variant_note: "¡Pequeño pero impresionante! Nos alegramos mucho de haber parado aquí durante el viaje. Pasamos alrededor de una hora dando un breve paseo río arriba y río abajo, con vistas espectaculares."
           - place_id: kolgrafarfjordur
             order: 5
             duration_min: 20
@@ -520,6 +522,7 @@ variants:
             duration_min: 30
             planning_status: required
             visit_status: visited
+            variant_note: "Dimos un paseo tranquilo por el pueblo."
           - place_id: djupalonssandur
             order: 3
             duration_min: 45
@@ -626,7 +629,7 @@ accommodation:
       picks:
         - name: "Hellissandur Camping"
           price_level: bajo
-          notes: "26 €/persona en 2024. Duchas incluidas."
+          notes: "Camping amplio con servicios: 2 duchas interiores de agua caliente sin límite de tiempo (2 de hombres, 2 de mujeres), 2 baños (2 de hombres, 2 de mujeres), sala común pequeña pero completa, 2 fregaderos cubiertos con agua caliente. 4.000 ISK para 2 personas y camper sin electricidad en 2024 (de los más baratos del viaje), subido a 5.000 ISK actualmente. Enclavado justo en un campo de lava. Muy concurrido, con gente empezando y terminando la ruta de Snæfellsjökull — conviene ir temprano. Por la noche viene un guardia a cobrar. Lo recomendamos sin dudarlo."
           verified_at: 2024-08-15
 
 transport:
