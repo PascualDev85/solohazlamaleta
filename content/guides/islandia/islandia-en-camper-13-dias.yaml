@@ -204,13 +204,19 @@ variants:
             duration_min: 300
             planning_status: required
             visit_status: visited
-          - place_id: svartifoss
+            variant_note: "Excursión de 6 horas y dificultad moderada, con la base de operaciones muy bien situada, tranquila y rodeada de naturaleza, cerca del parque de Skaftafell. No nos tocó un día espectacular de tiempo, pero la experiencia de caminar sobre el glaciar fue impresionante igualmente. Por el precio, merece muchísimo la pena."
+          - place_id: hundafoss
             order: 2
+            duration_min: 10
+            planning_status: optional
+            visit_status: visited
+          - place_id: svartifoss
+            order: 3
             duration_min: 90
             planning_status: required
             visit_status: visited
           - place_id: svinafellsjokull
-            order: 3
+            order: 4
             duration_min: 20
             planning_status: optional
             visit_status: not_visited
@@ -527,7 +533,11 @@ accommodation:
           verified_at: 2024-08-15
         - name: "Camping Svínafelli (Skaftafell)"
           price_level: bajo
-          notes: "Bien ubicado para glaciar y Jökulsárlón."
+          notes: "Camping muy amplio y completo: 4 duchas interiores y 2 exteriores de agua caliente sin límite de tiempo, 4 baños, sala común amplia con muchas mesas, 4 fuegos para cocinar, utensilios, 3 fregaderos y nevera. Lavandería aparte (lavadora y secadora), 1.800 ISK — el día que fuimos estaba rota. 5.000 ISK para 2 personas y camper sin electricidad en 2024. Lo recomendamos sin dudarlo."
+          verified_at: 2024-08-15
+        - name: "Skaftafell Campground"
+          price_level: medio
+          notes: "Camping muy concurrido junto al centro de visitantes del Parque Nacional de Vatnajökull, con salida directa a las rutas al glaciar y a Svartifoss. 8 duchas interiores de agua caliente sin límite de tiempo, 2 baños (4 WC en el de mujeres, 3 en el de hombres), sin sala común, 4 fregaderos de agua caliente exteriores pero cubiertos. Lavandería incluida en el precio; si no llevas detergente, se vende en el centro de visitantes (bolsita, 350 ISK). 5.500 ISK para 2 personas y camper sin electricidad en 2024 — de los más caros del viaje, pero merece la pena por la ubicación. Muy concurrido: conviene llegar temprano, pueden faltar baños y duchas para la cantidad de gente."
           verified_at: 2024-08-15
     - name: "Norte de Islandia"
       description: "Campings más pequeños y tranquilos."
@@ -586,6 +596,7 @@ pitfalls:
   - "Llenar gasolina siempre al pasar por una ciudad. Los tramos remotos pueden tener 150 km sin gasolinera."
   - "Las puertas del camper pueden dañarse con el viento. Posicionar siempre el vehículo como escudo antes de abrir."
   - "Los campings sin ducha son más baratos pero en agosto la temperatura nocturna puede bajar a 5-8°C."
+  - "Si la nevera de la camper funciona con la batería del vehículo sin estar enchufada a electricidad, apagarla por la noche: dejarla encendida puede agotar la batería y dejar la camper sin arrancar a la mañana siguiente."
 
 terrain_tips:
   - "App Vedur (tiempo oficial islandés): el tiempo cambia en minutos."

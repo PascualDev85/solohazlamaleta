@@ -670,3 +670,13 @@
     verified_at: 2024-08-15
   description: "Cascada formada por la confluencia de dos brazos del río Fossá, sobre un lecho de columnas de basalto, en el valle de Þjórsárdalur."
   notes: "Se llega con un paseo corto desde el aparcamiento. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: hundafoss
+  name: Cascada Hundafoss
+  destination: islandia
+  lat: 64.0145
+  lng: -16.9760
+  type: monument
+  verified_at: 2024-08-15
+  description: "Cascada en el sendero de Skaftafell hacia Svartifoss, dentro del Parque Nacional de Vatnajökull."
+  notes: "Parada corta de camino a Svartifoss, en la misma ruta señalizada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
