@@ -1,0 +1,36 @@
+---
+interface Props {
+  sections: { id: string; label: string }[];
+  routeId?: string;
+  days?: { day: number; title: string }[];
+}
+
+const { sections, routeId, days = [] } = Astro.props;
+---
+
+{/* Folded at every width: <details> has no CSS-only way to start open on desktop without its toggle state lying to assistive tech. */}
+<nav class="guide-index" aria-labelledby="guide-index-title">
+  <details>
+    <summary><span id="guide-index-title">En esta guía</span></summary>
+    <ol class="guide-index__sections">
+      {sections.map((section) => (
+        <li>
+          <a href={`#${section.id}`}>{section.label}</a>
+          {section.id === routeId && days.length > 0 && (
+            <ol class="guide-index__days">
+              {days.map((day) => (
+                <li>
+                  <a href={`#dia-${day.day}`}>
+                    <span class="guide-index__daynum">{String(day.day).padStart(2, '0')}</span>
+                    {' · '}
+                    {day.title}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          )}
+        </li>
+      ))}
+    </ol>
+  </details>
+</nav>

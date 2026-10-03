@@ -3,6 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCompiledGuide } from '../../lib/engine-guide.ts';
 import { placeMapUrl } from '../../lib/maps.ts';
 import { formatDate } from '../../lib/formatDate.ts';
+import TrustBlock from '../../components/guide/TrustBlock.astro';
+import GuideIndex from '../../components/guide/GuideIndex.astro';
 
 const guide = await loadCompiledGuide(
   'content/guides/islandia/islandia-en-camper-13-dias.yaml',
@@ -10,6 +12,32 @@ const guide = await loadCompiledGuide(
 );
 
 const variant = guide.variants?.[0];
+
+// One source for "does this section render": the index and the sections below
+// read the same flags, so the index can never link to a section that is absent.
+const show = {
+  route: Boolean(variant),
+  sleep: (guide.accommodation?.zones.length ?? 0) > 0,
+  transport: Boolean(guide.transport),
+  budget: Boolean(guide.budget),
+  booking: (guide.booking_checklist?.length ?? 0) > 0,
+  criteria: (guide.our_criteria?.length ?? 0) > 0,
+  pitfalls: (guide.pitfalls?.length ?? 0) > 0 || (guide.terrain_tips?.length ?? 0) > 0,
+  practical: Boolean(guide.practical),
+  faq: (guide.faq?.length ?? 0) > 0,
+};
+
+const indexSections = [
+  { id: 'itinerario', label: 'La ruta', visible: show.route },
+  { id: 'dormir', label: 'Dónde dormir', visible: show.sleep },
+  { id: 'llegar', label: 'Cómo llegar y moverse', visible: show.transport },
+  { id: 'presupuesto', label: 'Presupuesto real', visible: show.budget },
+  { id: 'reservar', label: 'Qué reservar y cuándo', visible: show.booking },
+  { id: 'criterio', label: 'Nuestro criterio', visible: show.criteria },
+  { id: 'errores', label: 'Errores y trampas', visible: show.pitfalls },
+  { id: 'practico', label: 'Lo práctico', visible: show.practical },
+  { id: 'faq', label: 'Preguntas frecuentes', visible: show.faq },
+].filter((section) => section.visible);
 
 /**
  * Spanish decimal format (1.234,56 €), not toFixed's "1234.56" — this is a
@@ -79,7 +107,12 @@ const faqJsonLd =
     <h1>{guide.title}</h1>
 
     {guide.has_experience && guide.trip_done ? (
-      <p class="guide__dateline">Lo hicimos en {formatDate(guide.trip_done)}.</p>
+      <TrustBlock
+        tripDone={guide.trip_done}
+        travelers={guide.base_travelers}
+        days={guide.days}
+        stops={variant?.n_route_stops_total ?? 0}
+      />
     ) : (
       <p class="guide__dateline">Actualizado {formatDate(guide.updated_at)}</p>
     )}
@@ -123,9 +156,15 @@ const faqJsonLd =
       </dl>
     </section>
 
-    {variant && (
+    <GuideIndex
+      sections={indexSections}
+      routeId="itinerario"
+      days={variant?.days.map((day) => ({ day: day.day, title: day.title }))}
+    />
+
+    {show.route && variant && (
       <section aria-labelledby="itinerario">
-        <h2 id="itinerario">Día a día</h2>
+        <h2 id="itinerario">La ruta</h2>
         {variant.days.map((day) => (
           <section class="guide__day" aria-labelledby={`dia-${day.day}`}>
             <span class="guide__daynum" aria-hidden="true">{day.day}</span>
@@ -139,10 +178,7 @@ const faqJsonLd =
             <ol class="guide__stops">
               {day.route_stops.map((stop) => (
                 <li>
-                  <span class="guide__stopname">
-                    {stop.place.name}
-                    {stop.visit_status === 'visited' && <span class="badge badge--lived">Vivido</span>}
-                  </span>
+                  <span class="guide__stopname">{stop.place.name}</span>
                   <span class="guide__stop-meta">
                     {' · '}
                     {stop.duration_min} min
@@ -189,7 +225,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.accommodation && guide.accommodation.zones.length > 0 && (
+    {show.sleep && guide.accommodation && (
       <section aria-labelledby="dormir">
         <h2 id="dormir">Dónde dormir</h2>
         {guide.accommodation.notes && <p>{guide.accommodation.notes}</p>}
@@ -217,7 +253,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.transport && (
+    {show.transport && guide.transport && (
       <section aria-labelledby="llegar">
         <h2 id="llegar">Cómo llegar y moverse</h2>
         {guide.transport.arrival?.map((arrival) => (
@@ -229,7 +265,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.budget && (
+    {show.budget && guide.budget && (
       <section aria-labelledby="presupuesto">
         <h2 id="presupuesto">Presupuesto real</h2>
         <p class="guide__budget-total">
@@ -255,7 +291,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.booking_checklist && guide.booking_checklist.length > 0 && (
+    {show.booking && guide.booking_checklist && (
       <section aria-labelledby="reservar">
         <h2 id="reservar">Qué reservar y cuándo</h2>
         <ul class="guide__checklist">
@@ -266,7 +302,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.our_criteria && guide.our_criteria.length > 0 && (
+    {show.criteria && guide.our_criteria && (
       <section aria-labelledby="criterio">
         <h2 id="criterio">Nuestro criterio</h2>
         <ul>
@@ -275,7 +311,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {((guide.pitfalls && guide.pitfalls.length > 0) || (guide.terrain_tips && guide.terrain_tips.length > 0)) && (
+    {show.pitfalls && (
       <section aria-labelledby="errores">
         <h2 id="errores">Errores y trampas</h2>
         <ul>
@@ -285,7 +321,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.practical && (
+    {show.practical && guide.practical && (
       <section aria-labelledby="practico">
         <h2 id="practico">Lo práctico</h2>
         {guide.practical.documents && guide.practical.documents.length > 0 && (
@@ -304,7 +340,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.faq && guide.faq.length > 0 && (
+    {show.faq && guide.faq && (
       <section aria-labelledby="faq">
         <h2 id="faq">Preguntas frecuentes</h2>
         <dl class="guide__faq">

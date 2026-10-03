@@ -78,6 +78,7 @@ export interface CompiledVariant {
   description: string
   days: CompiledDay[]
   n_stops_total: number
+  n_route_stops_total: number
   all_places: CompiledPlace[]
   budget_delta?: {
     items: BudgetItemSource[]

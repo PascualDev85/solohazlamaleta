@@ -79,6 +79,7 @@ export function compileVariant(
     description: variant.description,
     days,
     n_stops_total: days.reduce((sum, day) => sum + day.n_stops, 0),
+    n_route_stops_total: days.reduce((sum, day) => sum + day.route_stops.length, 0),
     all_places: uniquePlaces(allStopPlaces),
     budget_delta: variant.budget_delta
       ? {
