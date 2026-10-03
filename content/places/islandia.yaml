@@ -435,7 +435,7 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking gratuito."
+    notes: "Parking gratuito. No hay baños."
     verified_at: 2024-08-15
   description: "Cascada cercana a Egilsstaðir con una cueva detrás de la caída de agua."
   notes: "Cascada con una cueva detrás, accesible con una caminata corta cerca de Egilsstaðir. Unos 30 minutos de caminata desde el parking hasta la cascada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
@@ -450,7 +450,7 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking gratuito."
+    notes: "Parking gratuito. No hay baños."
     verified_at: 2024-08-15
   description: "Cascada escalonada junto a la carretera entre Egilsstaðir y Seyðisfjörður."
   notes: "Cascada escalonada junto a la carretera entre Egilsstaðir y Seyðisfjörður, a unos 5 minutos a pie del parking. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
@@ -491,6 +491,11 @@
   lng: -14.9333
   type: monument
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito. No hay baños."
+    verified_at: 2024-08-15
   description: "Cascada escalonada visible desde la Ring Road en el valle de Jökuldalur, en el este de Islandia."
   notes: "Cascada escalonada bien visible desde la Ring Road en Jökuldalur. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -501,18 +506,28 @@
   lng: -15.5597
   type: viewpoint
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking de pago, 1.000 ISK en 2024. Hay baños."
+    verified_at: 2024-08-15
   description: "Cañón de columnas de basalto formado por el río Jökla. Quedó al descubierto y se hizo conocido después de que un embalse aguas arriba redujera el caudal del río."
-  notes: "Cañón de columnas de basalto, acceso desde el lado este sin cruzar el río. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Cañón de columnas de basalto, acceso desde el lado este sin cruzar el río — es el único de los dos lados desde el que se puede bajar al cañón (con cuidado); el otro lado solo permite verlo desde arriba. Ruta de unos 5 km, unos 45 minutos de ida y otros 45 de vuelta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: dettifoss_selfoss
-  name: "Dettifoss y Selfoss"
+  name: "Dettifoss (lado oeste) y Selfoss"
   destination: islandia
   lat: 65.8142
   lng: -16.3833
   type: monument
   verified_at: 2024-08-15
-  description: "Dos cascadas del río Jökulsá á Fjöllum, en el Parque Nacional de Vatnajökull: Dettifoss, una de las cascadas más potentes de Europa, y Selfoss, río arriba, de menor tamaño."
-  notes: "Dos cascadas del río Jökulsá á Fjöllum a poca distancia a pie entre sí: Dettifoss (la más caudalosa de Europa) y Selfoss, río arriba. Lugar agrupado (un solo place_id para una visita única, igual que jokulsarlon): al confirmar coordenadas, deben ser las del parking/punto de acceso común a ambas cascadas, no las de una sola, para que el marcador del mapa no quede desplazado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking grande y gratuito. Baños limpios."
+    verified_at: 2024-08-15
+  description: "Dos cascadas del río Jökulsá á Fjöllum, en el Parque Nacional de Vatnajökull: Dettifoss, una de las cascadas más potentes de Europa, y Selfoss, río arriba, de menor tamaño. Accesibles juntas desde el lado oeste del cañón."
+  notes: "Dettifoss tiene dos lados de acceso, oeste y este, con aparcamientos distintos y sin conexión directa entre ellos — no comparten parking. Desde el lado oeste (este place_id) se llega también a Selfoss, a poca distancia a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: grjotagja
   name: Grjótagjá
@@ -521,6 +536,11 @@
   lng: -16.8833
   type: viewpoint
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking gratuito. No hay baños."
+    verified_at: 2024-08-15
   description: "Cueva de lava con una poza de agua termal en su interior, cerca del lago Mývatn. El baño está prohibido desde que las erupciones de Krafla elevaron la temperatura del agua."
   notes: "Cueva de lava con agua termal, cerca de Mývatn. El baño está prohibido por la temperatura del agua. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -540,6 +560,11 @@
   lng: -16.7667
   type: viewpoint
   verified_at: 2024-08-15
+  entry:
+    price: 1200
+    currency: ISK
+    notes: "Parking de pago; subió de 800 ISK (lo que pagó el autor en 2024) a 1.200 ISK. No hay baños."
+    verified_at: 2024-08-15
   description: "Cráter volcánico con un lago de color turquesa, dentro del área geotérmica de Krafla, en el norte de Islandia."
   notes: "Cráter volcánico con lago turquesa en el área geotérmica de Krafla. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -550,6 +575,11 @@
   lng: -16.8056
   type: area
   verified_at: 2024-08-15
+  entry:
+    price: 0
+    currency: ISK
+    notes: "Parking de pago, 1.400 ISK en 2024. Baños de pago, 300 ISK."
+    verified_at: 2024-08-15
   description: "Área geotérmica de fumarolas y pozas de barro hirviendo, junto a la montaña Námafjall, cerca del lago Mývatn."
   notes: "Área geotérmica con fumarolas y pozas de barro hirviendo, junto a la montaña Námafjall. Lugar agrupado (un solo place_id para una visita única, igual que jokulsarlon): al confirmar coordenadas, deben ser las del parking/punto de acceso común a Hverir y Námafjall, no las de uno solo de los dos, para que el marcador del mapa no quede desplazado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 

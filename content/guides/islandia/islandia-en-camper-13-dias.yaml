@@ -353,26 +353,36 @@ variants:
             duration_min: 20
             planning_status: optional
             visit_status: visited
+            variant_note: "Cascada a pie de carretera, muy fácil de ver. Después de tantas cascadas de la ruta, nos sorprendió gratamente."
           - place_id: studlagil
             order: 2
-            duration_min: 60
+            duration_min: 100
             planning_status: required
             visit_status: visited
+            variant_note: "Nos gustó mucho. El agua no estaba verde el día que fuimos — verla así es más suerte que otra cosa — pero las formaciones rocosas por la erosión del agua merecen la pena igual. Es un spot de 10 en Islandia."
           - place_id: dettifoss_selfoss
             order: 3
             duration_min: 90
             planning_status: required
             visit_status: visited
+            variant_note: "Nos pilló una nevada fuerte justo al llegar: los copos caían con tanta fuerza que llegaban a hacer daño, no fue agradable, y no pudimos ver bien la cascada por lo nublado. Mala suerte de tiempo, no del lugar — volveremos a intentarlo. Creemos que el lado oeste es mejor, pero si tienes tiempo, merece la pena ver los dos lados."
           - place_id: grjotagja
             order: 4
             duration_min: 20
             planning_status: optional
             visit_status: visited
+            variant_note: "Estaba lleno de gente y, para nosotros, no mereció mucho la pena — quizás interesa más a quien sea fan de Juego de Tronos (aquí se rodó una escena de la serie), poco más."
           - place_id: hengifoss
             order: 5
             duration_min: 150
             planning_status: optional
             visit_status: not_visited
+        food:
+          - name: "Fish and Chips Lake Mývatn"
+            area: Mývatn
+            price_level: medio
+            notes: "3.500 ISK por persona en 2024. El mejor fish and chips de Islandia — y de los mejores que hemos probado nunca. Lo recomendamos sin dudarlo."
+            verified_at: 2024-08-15
         our_take: "Stuðlagil desde el lado este no cruza el río: cómodo, pero las fotos más espectaculares se ven desde el otro lado."
 
       - day: 8
@@ -384,11 +394,19 @@ variants:
             duration_min: 60
             planning_status: required
             visit_status: visited
+            variant_note: "Hizo tanto viento y frío que la verdad no mereció mucho la pena: estuvimos solo unos minutos fuera porque era imposible aguantar más. El entorno nevado fue épico, pero si volviéramos no iríamos de nuevo, y menos al precio actual del parking."
+            experience:
+              visited_at: "2024-08"
+              actual_price_paid:
+                amount: 800
+                currency: ISK
+                notes: "El parking subió a 1.200 ISK después de nuestro viaje."
           - place_id: hverir_namafjall
             order: 2
             duration_min: 45
             planning_status: required
             visit_status: visited
+            variant_note: "Toda la zona es un recorrido bastante largo con fumarolas, parece de otro planeta, como estar en Marte — es increíble. Lo que nos parece es que el precio del parking y el baño es abusivo."
           - place_id: hverfjall
             order: 3
             duration_min: 60
@@ -576,6 +594,10 @@ accommodation:
           price_level: bajo
           notes: "Bien ubicado para el lago y la zona geotérmica."
           verified_at: 2024-08-15
+        - name: "Laugar Camping"
+          price_level: bajo
+          notes: "Alternativa que usamos cuando el Camping Mývatn estaba cerrado. Amplio y con servicios completos: 4 duchas interiores de agua caliente sin límite de tiempo en un vestuario compartido (uno para hombres, otro para mujeres), 4 baños más 1 dentro del vestuario, sala común amplia con muchas mesas y sofá, una vitrocerámica, utensilios, un fregadero, tostadora, hervidores y nevera. 4.800 ISK para 2 personas y camper sin electricidad en 2024 — por el precio, merece muchísimo la pena, es como un polideportivo bien adaptado. Si llueve, cuidado dónde aparcas la camper por el barro. Por la noche viene una persona a cobrar. Lo recomendamos sin dudarlo."
+          verified_at: 2024-08-15
     - name: "Snæfellsnes (oeste)"
       description: "Campings sencillos al cierre de la ruta, junto a los puntos clave de la península."
       pros: ["Bien situados para Kirkjufell y los acantilados del sur de la península"]
@@ -624,6 +646,7 @@ pitfalls:
   - "Las puertas del camper pueden dañarse con el viento. Posicionar siempre el vehículo como escudo antes de abrir."
   - "Los campings sin ducha son más baratos pero en agosto la temperatura nocturna puede bajar a 5-8°C."
   - "Si la nevera de la camper funciona con la batería del vehículo sin estar enchufada a electricidad, apagarla por la noche: dejarla encendida puede agotar la batería y dejar la camper sin arrancar a la mañana siguiente."
+  - "La calefacción del habitáculo delantero puede averiarse; si pasa en pleno temporal de nieve o lluvia, puede dejarte mojado y sin calor de golpe. Llevar ropa de abrigo de repuesto a mano."
 
 terrain_tips:
   - "App Vedur (tiempo oficial islandés): el tiempo cambia en minutos."
