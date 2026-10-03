@@ -1,0 +1,96 @@
+[data-design="v2"] .guide-index {
+  margin-block: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-soft);
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 3.5rem;
+    padding-inline: var(--space-md);
+    cursor: pointer;
+    font-weight: 800;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    // Chevron drawn with borders: no icon request, no glyph read aloud.
+    &::after {
+      content: "";
+      width: 0.55rem;
+      height: 0.55rem;
+      margin-right: 0.35rem;
+      border-right: 2px solid var(--color-accent);
+      border-bottom: 2px solid var(--color-accent);
+      transform: translateY(-25%) rotate(45deg);
+      transition: transform 0.25s var(--ease-out);
+    }
+  }
+
+  details[open] > summary::after {
+    transform: translateY(25%) rotate(-135deg);
+  }
+
+  :where(ol) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__sections {
+    padding: 0 var(--space-md) var(--space-sm);
+
+    > li {
+      border-top: 1px solid var(--color-border);
+
+      > a {
+        display: block;
+        padding-block: var(--space-sm);
+        color: var(--color-text);
+        font-weight: 750;
+        text-decoration: none;
+      }
+
+      > a:hover {
+        color: var(--color-accent);
+      }
+    }
+  }
+
+  &__days {
+    padding: 0 0 var(--space-sm);
+    font-size: var(--step--1);
+
+    // Flex keeps a wrapped title hanging off the number, not under it.
+    a {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6em;
+      padding-block: 0.3rem;
+      color: var(--color-text-muted);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--color-accent);
+    }
+  }
+
+  &__daynum {
+    flex: none;
+    min-width: 2.2em;
+    padding: 0.05em 0.5em;
+    border-radius: 999px;
+    background: var(--color-pill-bg);
+    color: var(--color-pill-text);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+}

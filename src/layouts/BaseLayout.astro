@@ -7,16 +7,20 @@ interface Props {
   /** Keeps a page out of search results: print views, redirects, offers. */
   noindex?: boolean;
   image?: string;
+  /** Opt-in to the redesign; scoped so pages without it render unchanged. */
+  design?: 'v2';
 }
 
-const { title, description, noindex = false, image } = Astro.props;
+const { title, description, noindex = false, image, design } = Astro.props;
+
+const preloadFont = design === 'v2' ? '/fonts/nunito-latin-var.woff2' : '/fonts/instrument-serif-latin.woff2';
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = image ? new URL(image, Astro.site).href : undefined;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" data-design={design}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -36,7 +40,7 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link
       rel="preload"
-      href="/fonts/instrument-serif-latin.woff2"
+      href={preloadFont}
       as="font"
       type="font/woff2"
       crossorigin

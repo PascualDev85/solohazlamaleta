@@ -5,6 +5,11 @@ import { placeMapUrl } from '../../lib/maps.ts';
 import { formatDate } from '../../lib/formatDate.ts';
 import TrustBlock from '../../components/guide/TrustBlock.astro';
 import GuideIndex from '../../components/guide/GuideIndex.astro';
+import GuidePhoto from '../../components/guide/GuidePhoto.astro';
+import Breadcrumb from '../../components/guide/Breadcrumb.astro';
+import { guideImage } from '../../lib/guide-images.ts';
+import { getImage } from 'astro:assets';
+import '../../styles/guide-v2.scss';
 
 const guide = await loadCompiledGuide(
   'content/guides/islandia/islandia-en-camper-13-dias.yaml',
@@ -12,6 +17,14 @@ const guide = await loadCompiledGuide(
 );
 
 const variant = guide.variants?.[0];
+
+const destinationName = 'Islandia';
+
+const cover = guideImage(guide.cover_image);
+// Temporary: the model has no alt for cover_image yet; it belongs with the photo amendment of 1.10 §3.7 (C3.4).
+const coverAlt =
+  'Cascada de Gljúfrafoss dentro de una grieta cubierta de musgo, con una persona agachada y los brazos abiertos frente al agua';
+const ogImage = await getImage({ src: cover, width: 1200, format: 'jpg', quality: 70 });
 
 // One source for "does this section render": the index and the sections below
 // read the same flags, so the index can never link to a section that is absent.
@@ -63,7 +76,7 @@ const breadcrumbJsonLd = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', Astro.site).href },
-    { '@type': 'ListItem', position: 2, name: 'Islandia', item: new URL('/islandia/', Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: destinationName, item: new URL('/islandia/', Astro.site).href },
     { '@type': 'ListItem', position: 3, name: guide.title, item: pageUrl },
   ],
 };
@@ -90,13 +103,7 @@ const faqJsonLd =
     : null;
 ---
 
-{/*
-  No se pasa `image`: guide.cover_image apunta a /images/islandia/kirkjufell.jpg,
-  que no existe en public/ todavía (no hay fotos propias subidas). Pasar una ruta
-  rota generaría un og:image 404 en redes; mejor sin imagen hasta que exista una
-  foto real (nunca un banco de imágenes genérico, por las reglas del proyecto).
-*/}
-<BaseLayout title={guide.title} description={guide.description} noindex>
+<BaseLayout title={guide.title} description={guide.description} image={ogImage.src} design="v2" noindex>
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} slot="head" />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(articleJsonLd)} slot="head" />
   {faqJsonLd && (
@@ -104,18 +111,32 @@ const faqJsonLd =
   )}
 
   <article class="guide">
-    <h1>{guide.title}</h1>
+    <header class="guide-hero">
+      <div class="guide-hero__text">
+        {/* /islandia/ does not exist yet, so the destination crumb is not a link (1.10 §3.8). */}
+        <Breadcrumb crumbs={[{ label: 'Inicio', href: '/' }, { label: destinationName }]} />
+        <h1>{guide.title}</h1>
 
-    {guide.has_experience && guide.trip_done ? (
-      <TrustBlock
-        tripDone={guide.trip_done}
-        travelers={guide.base_travelers}
-        days={guide.days}
-        stops={variant?.n_route_stops_total ?? 0}
+        {guide.has_experience && guide.trip_done ? (
+          <TrustBlock
+            tripDone={guide.trip_done}
+            travelers={guide.base_travelers}
+            days={guide.days}
+            stops={variant?.n_route_stops_total ?? 0}
+          />
+        ) : (
+          <p class="guide__dateline">Actualizado {formatDate(guide.updated_at)}</p>
+        )}
+      </div>
+
+      <GuidePhoto
+        class="guide-hero__photo"
+        image={cover}
+        alt={coverAlt}
+        sizes="(min-width: 64rem) 32rem, (min-width: 48rem) 45vw, calc(100vw - 2.5rem)"
+        priority
       />
-    ) : (
-      <p class="guide__dateline">Actualizado {formatDate(guide.updated_at)}</p>
-    )}
+    </header>
 
     <section class="guide__summary" aria-labelledby="resumen">
       <h2 id="resumen">En resumen</h2>

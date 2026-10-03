@@ -1,0 +1,62 @@
+// Light and airy: near-white paper, soft rounded surfaces, a glacier teal for
+// action and a warm coral for labels. Contrast ratios are against --color-bg.
+
+:root[data-design="v2"] {
+  --color-bg: #fdfcfa;
+  --color-surface: #f4f1ec;
+  --color-surface-deep: #ebe6de;
+  --color-text: #2a2826; //   14.3
+  --color-text-muted: #5f5a54; //   6.7 · on surface 6.1
+
+  --color-accent: #17706a; //   5.8 · on pill-bg 5.0
+  --color-label: #b2472a; //   5.4 · on surface 4.9
+  --color-lived: var(--color-accent);
+
+  --color-pill-bg: #e2efec;
+  --color-pill-text: #174f4a; //   7.9 on pill-bg
+
+  --color-border: #e7e1d8;
+  --color-rule: #d6cec2;
+
+  --shadow-soft: 0 1px 2px rgb(42 40 38 / 0.04), 0 10px 30px rgb(42 40 38 / 0.06);
+
+  --font-display: "Nunito", ui-rounded, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: var(--font-display);
+  --font-numeral: var(--font-display);
+
+  --step-3: clamp(2.1rem, 1.5rem + 2.8vw, 3.5rem);
+
+  --measure: 72rem;
+  --measure-text: 44rem;
+  --radius: 14px;
+  --radius-lg: 28px;
+}
+
+@mixin dark-tokens {
+  --color-bg: #141716;
+  --color-surface: #1d2120;
+  --color-surface-deep: #252a29;
+  --color-text: #eeebe6; //   15.2
+  --color-text-muted: #a9a49c; //   7.3
+
+  --color-accent: #6fcdc2; //   9.6
+  --color-label: #f0a585; //   9.0
+
+  --color-pill-bg: #1f3532;
+  --color-pill-text: #bfe6df; //   9.7 on pill-bg
+
+  --color-border: #2e3433;
+  --color-rule: #3d4443;
+
+  --shadow-soft: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-design="v2"]:not([data-theme="light"]) {
+    @include dark-tokens;
+  }
+}
+
+:root[data-design="v2"][data-theme="dark"] {
+  @include dark-tokens;
+}

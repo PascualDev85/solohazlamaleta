@@ -22,6 +22,8 @@ const facts = [
 
 <div class="trust">
   <p class="trust__title">Ruta realizada por nosotros</p>
-  <p class="trust__facts">{facts.join(' · ')}</p>
+  <ul class="trust__facts">
+    {facts.map((fact) => <li>{fact}</li>)}
+  </ul>
   <p class="trust__about"><a href="/sobre-mi/">Quién está detrás</a></p>
 </div>
