@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
-import { GuideSourceSchema, StopSourceSchema } from '../../schemas/guide.ts'
+import { GuideSourceSchema, StopSourceSchema, DaySourceSchema } from '../../schemas/guide.ts'
 
 function minimalGuide(overrides: Record<string, unknown> = {}) {
   return {
@@ -84,4 +84,35 @@ test('guide with a full variant/day/stop tree parses', () => {
     }),
   )
   assert.strictEqual(result.success, true, JSON.stringify('error' in result ? result.error?.issues : []))
+})
+
+function minimalDay(overrides: Record<string, unknown> = {}) {
+  return { day: 1, title: 'D1', stops: [], ...overrides }
+}
+
+test('day with photo, highlight, drive and overnight parses', () => {
+  const result = DaySourceSchema.safeParse(minimalDay({
+    photo: { src: 'islandia/x.jpg', alt: 'A waterfall', caption: 'X, 2025' },
+    highlight: 'The best bit.',
+    drive: { km: 275, minutes: 225 },
+    overnight: 'Camping X',
+  }))
+  assert.strictEqual(result.success, true)
+})
+
+test('day photo without alt is rejected', () => {
+  const result = DaySourceSchema.safeParse(minimalDay({ photo: { src: 'islandia/x.jpg' } }))
+  assert.strictEqual(result.success, false)
+})
+
+test('day photo with an empty alt is rejected', () => {
+  const result = DaySourceSchema.safeParse(minimalDay({ photo: { src: 'islandia/x.jpg', alt: '  ' } }))
+  assert.strictEqual(result.success, false)
+})
+
+test('day drive with non-positive values is rejected', () => {
+  for (const drive of [{ km: 0, minutes: 60 }, { km: 100, minutes: 0 }, { km: -5, minutes: 60 }]) {
+    const result = DaySourceSchema.safeParse(minimalDay({ drive }))
+    assert.strictEqual(result.success, false, JSON.stringify(drive))
+  }
 })

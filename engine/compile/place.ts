@@ -21,6 +21,9 @@ export function resolvePlace(place: PlaceSource, now: Date = new Date()): Compil
   if (place.hours && monthsSince(place.hours.verified_at, now) > reviewInterval) {
     staleFields.push('hours')
   }
+  if (place.parking && monthsSince(place.parking.verified_at, now) > reviewInterval) {
+    staleFields.push('parking')
+  }
 
   return {
     ...place,

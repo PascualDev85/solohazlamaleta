@@ -1,5 +1,6 @@
 - place_id: thingvellir
   name: Parque Nacional de Þingvellir
+  short_name: Þingvellir
   destination: islandia
   lat: 64.2559
   lng: -21.1300
@@ -11,11 +12,16 @@
     currency: ISK
     notes: "Gratuito. Aparcamiento de pago, 1.000 ISK en 2025. Hay baños."
     verified_at: 2025-09-12
+  parking:
+    price: 1000
+    currency: ISK
+    verified_at: 2025-09-12
   description: "Parque Nacional declarado Patrimonio de la Humanidad por la UNESCO. Se puede caminar por la falla que marca el límite entre las placas euroasiática y norteamericana, y fue sede del primer parlamento vikingo (Alþingi), fundado en el año 930."
   notes: "Aparcamiento P1, con acceso a la grieta tectónica y el lago Þingvallavatn. Hay más aparcamientos en el parque, como el P3, algo más alejado. La grieta separa las placas euroasiática y norteamericana."
 
 - place_id: geysir
   name: Área geotérmica Geysir (Strokkur)
+  short_name: Geysir
   destination: islandia
   lat: 64.3100
   lng: -20.3021
@@ -26,11 +32,16 @@
     currency: ISK
     notes: "Parking de pago, 1.000 ISK en 2025. Hay baños."
     verified_at: 2025-09-12
+  parking:
+    price: 1000
+    currency: ISK
+    verified_at: 2025-09-12
   description: "Área geotérmica del valle de Haukadalur que da nombre a la palabra \"géiser\" en todos los idiomas. El géiser activo hoy es el Strokkur, que erupciona cada pocos minutos."
   notes: "El Strokkur erupciona cada 5-10 minutos. No hace falta esperar más de 20 min para verlo."
 
 - place_id: gullfoss
   name: Cascada Gullfoss
+  short_name: Gullfoss
   destination: islandia
   lat: 64.3270
   lng: -20.1210
@@ -40,6 +51,10 @@
     price: 0
     currency: ISK
     notes: "Parking gratuito. Hay baños."
+    verified_at: 2025-09-12
+  parking:
+    price: 0
+    currency: ISK
     verified_at: 2025-09-12
   description: "Cascada de dos saltos escalonados en el río Hvítá, parada central del Círculo Dorado y una de las cascadas más visitadas de Islandia."
   notes: "Mejor desde el mirador inferior. Con lluvia, el spray moja completamente."
@@ -713,6 +728,7 @@
 
 - place_id: reykjadalur
   name: "Reykjadalur (valle termal)"
+  short_name: Reykjadalur
   destination: islandia
   lat: 63.9775
   lng: -21.1875

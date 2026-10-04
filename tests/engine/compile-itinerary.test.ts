@@ -118,3 +118,37 @@ test('compileVariant computes n_route_stops_total excluding not_visited stops', 
   assert.strictEqual(variant.n_stops_total, 3)
   assert.strictEqual(variant.n_route_stops_total, 2)
 })
+
+test('compileDay derives route_line from short_name, falling back to name, and only for route stops', () => {
+  const registry: PlaceRegistry = {
+    get: (id) => ({
+      long: { place_id: 'long', name: 'Parque Nacional de Þingvellir', short_name: 'Þingvellir', destination: 'islandia', lat: 1, lng: 1, type: 'park', verified_at: '2024-01-01', review_interval: 12 },
+      plain: { place_id: 'plain', name: 'Gullfoss', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2024-01-01', review_interval: 12 },
+      skipped: { place_id: 'skipped', name: 'Kerið', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2024-01-01', review_interval: 12 },
+    } as Record<string, PlaceSource>)[id],
+  }
+  const day = compileDay({
+    day: 2, title: 'D2',
+    stops: [
+      { place_id: 'long', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
+      { place_id: 'skipped', order: 2, duration_min: 30, planning_status: 'optional', visit_status: 'not_visited' },
+      { place_id: 'plain', order: 3, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
+    ],
+  }, registry, emptyAffiliates, now)
+  assert.deepStrictEqual(day.route_line, ['Þingvellir', 'Gullfoss'])
+  assert.strictEqual(day.n_route_stops, 2)
+})
+
+test('compileDay keeps photo, highlight, drive and overnight unchanged', () => {
+  const extras = {
+    photo: { src: 'islandia/x.jpg', alt: 'A waterfall', caption: 'X, 2025' },
+    highlight: 'The best bit.',
+    drive: { km: 275, minutes: 225 },
+    overnight: 'Camping X',
+  }
+  const day = compileDay({ day: 1, title: 'D1', stops: [], ...extras }, placeRegistry, emptyAffiliates, now)
+  assert.deepStrictEqual(
+    { photo: day.photo, highlight: day.highlight, drive: day.drive, overnight: day.overnight },
+    extras,
+  )
+})

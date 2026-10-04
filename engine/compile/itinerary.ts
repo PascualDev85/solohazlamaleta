@@ -48,19 +48,26 @@ export function compileDay(
   now: Date = new Date(),
 ): CompiledDay {
   const stops = day.stops.map((stop) => compileStop(stop, places, affiliates, now))
+  const routeStops = stops.filter((stop) => stop.visit_status !== 'not_visited')
   return {
     day: day.day,
     title: day.title,
     summary: day.summary,
     physical_level: day.physical_level,
     stops,
-    route_stops: stops.filter((stop) => stop.visit_status !== 'not_visited'),
+    route_stops: routeStops,
     skipped_stops: stops.filter((stop) => stop.visit_status === 'not_visited'),
     n_stops: stops.length,
+    n_route_stops: routeStops.length,
+    route_line: routeStops.map((stop) => stop.place.short_name ?? stop.place.name),
     food: day.food,
     our_take: day.our_take,
     plan_b: day.plan_b,
     seniors_note: day.seniors_note,
+    photo: day.photo,
+    highlight: day.highlight,
+    drive: day.drive,
+    overnight: day.overnight,
   }
 }
 

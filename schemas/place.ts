@@ -19,9 +19,17 @@ export const HoursSchema = z.object({
   verified_at: z.string(),
 }).strict()
 
+// Car park price; 0 means free. Sensitive, so it always carries its check date.
+export const ParkingSchema = z.object({
+  price: z.number().min(0),
+  currency: z.string(),
+  verified_at: z.string(),
+}).strict()
+
 export const PlaceSourceSchema = z.object({
   place_id: z.string(),
   name: z.string(),
+  short_name: z.string().optional(),
   destination: z.string(),
   lat: z.number(),
   lng: z.number(),
@@ -31,6 +39,7 @@ export const PlaceSourceSchema = z.object({
   source_url: z.string().url().optional(),
   entry: EntrySchema.optional(),
   hours: HoursSchema.optional(),
+  parking: ParkingSchema.optional(),
   description: z.string().optional(),
   notes: z.string().optional(),
 }).strict()
