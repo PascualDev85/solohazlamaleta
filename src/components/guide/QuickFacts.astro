@@ -6,12 +6,12 @@ interface Props {
   budgetPerPerson?: number;
   budgetTotal?: number;
   budgetHref?: string;
-  bestSeason?: string;
   pace?: 'intensivo' | 'equilibrado' | 'tranquilo';
+  vehicle?: string;
   baseArea?: string;
 }
 
-const { currency, budgetPerPerson, budgetTotal, budgetHref, bestSeason, pace, baseArea } = Astro.props;
+const { currency, budgetPerPerson, budgetTotal, budgetHref, pace, vehicle, baseArea } = Astro.props;
 
 // Whole euros at a glance; the budget section keeps the cents.
 const euros = new Intl.NumberFormat('es-ES', {
@@ -25,7 +25,7 @@ const paceLabel = { intensivo: 'Intensivo', equilibrado: 'Equilibrado', tranquil
 ---
 
 <div class="quick-facts">
-  <h2 class="quick-facts__title" id="quick-facts-title">Datos de interés</h2>
+  <h2 class="quick-facts__title" id="quick-facts-title">Datos de este viaje</h2>
   {/* Focusable so the row can be scrolled from the keyboard. */}
   <ul class="quick-facts__rail" tabindex="0" aria-labelledby="quick-facts-title">
     {budgetPerPerson != null && (
@@ -42,16 +42,16 @@ const paceLabel = { intensivo: 'Intensivo', equilibrado: 'Equilibrado', tranquil
         )}
       </li>
     )}
-    {bestSeason && (
-      <li class="quick-facts__tile">
-        <p class="quick-facts__label"><SectionIcon name="calendar" />Cuándo ir</p>
-        <p class="quick-facts__value">{bestSeason}</p>
-      </li>
-    )}
     {pace && (
       <li class="quick-facts__tile">
         <p class="quick-facts__label"><SectionIcon name="pace" />Ritmo</p>
         <p class="quick-facts__value">{paceLabel[pace]}</p>
+      </li>
+    )}
+    {vehicle && (
+      <li class="quick-facts__tile">
+        <p class="quick-facts__label"><SectionIcon name="transport" />Vehículo</p>
+        <p class="quick-facts__value">{vehicle}</p>
       </li>
     )}
     {baseArea && (

@@ -66,10 +66,16 @@ export interface CompiledDay {
   route_stops: CompiledStop[]
   skipped_stops: CompiledStop[]
   n_stops: number
+  n_route_stops: number
+  route_line: string[]
   food?: object[]
   our_take?: string
   plan_b?: string
   seniors_note?: string
+  photo?: { src: string; alt: string; caption?: string }
+  highlight?: string
+  drive?: { km: number; minutes: number }
+  overnight?: string
 }
 
 export interface CompiledVariant {

@@ -27,62 +27,13 @@
     }
   }
 
+  // The guide's own line (summary.tagline): one paragraph, no brand claim.
   .guide-hero__intro {
-    --rule-w: 2.5rem;
-    --rule-gap: 0.85rem;
-
-    container-type: inline-size;
     max-width: 36rem;
+    margin: 0;
     font-size: 1.125rem;
     line-height: 1.75;
-    color: var(--color-text-muted);
-
-    strong {
-      font-weight: 700;
-      color: var(--color-text);
-    }
-
-    p:last-child {
-      margin-bottom: 0;
-    }
-
-    p:nth-child(1) {
-      color: var(--color-text);
-    }
-
-    // Context: quieter, set back in italic.
-    p:nth-child(2) {
-      font-style: italic;
-    }
-
-    // Signature: the brand line, introduced by a short rule. Always one line:
-    // the type scales with the column (the line is ~28.6em long in Fraunces).
-    p:nth-child(3) {
-      display: flex;
-      align-items: center;
-      gap: var(--rule-gap);
-      margin-top: 0;
-
-      &::before {
-        content: "";
-        flex: none;
-        width: var(--rule-w);
-        height: 2px;
-        background: var(--color-accent);
-      }
-
-      strong {
-        font-family: var(--font-headline);
-        font-size: min(1rem, calc((100cqi - var(--rule-w) - var(--rule-gap)) / 29.2));
-        line-height: 1.3;
-        white-space: nowrap;
-        color: var(--color-accent);
-
-        span {
-          color: var(--color-text);
-        }
-      }
-    }
+    color: var(--color-text);
   }
 
   // Desktop: bleeds into the top-right corner of the page. The wrapper clips
@@ -244,9 +195,6 @@
     }
 
     .guide-hero__intro {
-      --rule-w: 1.25rem;
-      --rule-gap: 0.5rem;
-
       margin-top: var(--space-md);
     }
   }

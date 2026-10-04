@@ -13,9 +13,9 @@ days: 13
 base_travelers: 2
 
 summary:
-  tagline: "13 días recorriendo Islandia en camper, con el sur como aperitivo y el norte como premio"
+  tagline: "El sur de las cascadas, los fiordos del este, el norte volcánico y la península de Snæfellsnes, en una sola vuelta."
   best_season: "Junio a septiembre"
-  getting_around: "Camper alquilado. Ring Road como eje principal. Sin F-roads."
+  getting_around: "Camper normal, sin 4x4"
   base_area: "Un camping distinto cada noche"
   pace_default: intensivo
 
@@ -116,6 +116,15 @@ variants:
       - day: 2
         title: "Círculo Dorado"
         summary: "Þingvellir, Géiser y Gullfoss. El trío clásico para entrar en calor."
+        photo:
+          src: islandia/islandia-gullfoss.jpg
+          alt: "Cascada de Gullfoss en dos saltos, con nubes oscuras y gente en el mirador de la izquierda"
+          caption: "Gullfoss, septiembre de 2025"
+        highlight: "Acabar en el río termal de Reykjadalur, dándonos un baño y relajándonos en su entorno."
+        drive:
+          km: 275
+          minutes: 225
+        overnight: "Camping Árnes"
         physical_level:
           hills: some
         stops:

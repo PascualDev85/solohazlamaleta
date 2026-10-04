@@ -62,3 +62,9 @@ test('resolveAffiliate builds the /ir/{id} redirect url', () => {
   })
   assert.strictEqual(compiled.redirect_url, '/ir/iati-seguro-europa')
 })
+
+test('parking.verified_at is checked like entry and hours (stale_fields includes parking)', () => {
+  const place = { ...basePlace, verified_at: '2024-05-01', parking: { price: 1000, currency: 'ISK', verified_at: '2022-01-01' } }
+  const compiled = resolvePlace(place, new Date('2024-06-01'))
+  assert.deepStrictEqual(compiled.stale_fields, ['parking'])
+})

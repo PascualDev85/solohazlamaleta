@@ -56,3 +56,18 @@ test('entry and hours can each carry an independent verified_at', () => {
   assert.strictEqual(result.entry?.verified_at, '2024-08-15')
   assert.strictEqual(result.hours?.verified_at, '2024-07-01')
 })
+
+test('short_name is optional and kept when present', () => {
+  const result = PlaceSourceSchema.parse({
+    place_id: 'thingvellir', name: 'Parque Nacional de Þingvellir', short_name: 'Þingvellir',
+    destination: 'islandia', lat: 1, lng: 1, type: 'park', verified_at: '2024-08-15',
+  })
+  assert.strictEqual(result.short_name, 'Þingvellir')
+})
+
+test('parking accepts a free (0) or paid price and rejects a negative one', () => {
+  const base = { place_id: 'x', name: 'X', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2025-09-12' }
+  assert.strictEqual(PlaceSourceSchema.safeParse({ ...base, parking: { price: 0, currency: 'ISK', verified_at: '2025-09-12' } }).success, true)
+  assert.strictEqual(PlaceSourceSchema.safeParse({ ...base, parking: { price: 1000, currency: 'ISK', verified_at: '2025-09-12' } }).success, true)
+  assert.strictEqual(PlaceSourceSchema.safeParse({ ...base, parking: { price: -1, currency: 'ISK', verified_at: '2025-09-12' } }).success, false)
+})

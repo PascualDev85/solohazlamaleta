@@ -47,6 +47,17 @@ const FoodItemSchema = z.object({
   verified_at: z.string().optional(),
 }).strict()
 
+const DayPhotoSchema = z.object({
+  src: z.string(),
+  alt: z.string().trim().min(1),
+  caption: z.string().optional(),
+}).strict()
+
+const DriveSchema = z.object({
+  km: z.number().positive(),
+  minutes: z.number().int().positive(),
+}).strict()
+
 export const DaySourceSchema = z.object({
   day: z.number().int().positive(),
   title: z.string(),
@@ -57,6 +68,10 @@ export const DaySourceSchema = z.object({
   our_take: z.string().optional(),
   plan_b: z.string().optional(),
   seniors_note: z.string().optional(),
+  photo: DayPhotoSchema.optional(),
+  highlight: z.string().optional(),
+  drive: DriveSchema.optional(),
+  overnight: z.string().optional(),
 }).strict()
 
 const BudgetItemSourceSchema = z.object({

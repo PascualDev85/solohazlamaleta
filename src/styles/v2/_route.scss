@@ -1,0 +1,222 @@
+@use "../abstracts" as *;
+
+// "La ruta": all the days as one swipeable row. The section breaks out of the
+// reading column so the row can run edge to edge; its head stays in the column.
+[data-design="v2"] {
+  .guide > .route {
+    max-width: none;
+  }
+
+  .route__head {
+    max-width: var(--measure-text);
+    margin-inline: auto;
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-block: var(--space-xl) var(--space-sm);
+    }
+  }
+
+  .route__count {
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: var(--color-pill-bg);
+    color: var(--color-pill-text);
+    font-family: var(--font-display);
+    font-size: var(--step--1);
+    font-weight: 800;
+    letter-spacing: 0;
+  }
+
+  .route__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .route__nav {
+    flex: 1;
+    min-width: 0;
+  }
+
+  // The day strip: numbered stops on a dotted trail, like a route on a map.
+  .route__days {
+    // Positioned so the visually hidden "Día" labels are clipped by this
+    // scroller instead of escaping it and widening the page.
+    position: relative;
+    display: flex;
+    gap: 0.4rem;
+    margin: 0 calc(-1 * var(--gutter));
+    padding: 0.35rem var(--gutter);
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    background: radial-gradient(circle, var(--color-rule) 1.1px, transparent 1.6px) 0 50% / 7px 7px repeat-x;
+    background-attachment: local;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @include from("md") {
+      margin-inline: 0;
+      padding-inline: 0;
+    }
+
+    a {
+      display: grid;
+      place-items: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border: 1px solid var(--color-border);
+      border-radius: 50%;
+      background: var(--color-bg);
+      color: var(--color-text-muted);
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      text-decoration: none;
+      transition:
+        background 0.25s var(--ease-out),
+        color 0.25s var(--ease-out),
+        border-color 0.25s var(--ease-out),
+        transform 0.25s var(--ease-out);
+
+      &:hover {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+      }
+
+      &[aria-current] {
+        border-color: var(--color-accent);
+        background: var(--color-accent);
+        color: var(--color-bg);
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  // Arrows: desktop only, and only once the script can drive them.
+  .route__arrows:not([hidden]) {
+    display: none;
+
+    @include from("md") {
+      display: flex;
+      gap: var(--space-xs);
+    }
+  }
+
+  .route__arrow {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color 0.2s var(--ease-out);
+
+    .section-icon {
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+
+    &:hover:not(:disabled) {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+  }
+
+  // The row: edge to edge on mobile; on wider screens the first card lines up
+  // with the reading column and the rest run out to the page edge.
+  .route__rail {
+    // How far <main>'s side padding reaches: the row bleeds out by exactly that.
+    --bleed: var(--gutter);
+    --rail-pad: var(--bleed);
+    --card-w: min(calc(100vw - 3.5rem), 22rem);
+    --gap: var(--space-sm);
+
+    position: relative;
+    display: flex;
+    align-items: start;
+    gap: var(--gap);
+    margin: var(--space-sm) calc(-1 * var(--bleed)) 0;
+    padding: var(--space-xs) var(--rail-pad) var(--space-lg);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--rail-pad);
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @include from("md") {
+      --bleed: var(--edge);
+      --rail-pad: max(var(--bleed), calc(var(--bleed) + (100% - var(--measure-text)) / 2));
+    }
+
+    > .day-card {
+      flex: 0 0 var(--card-w);
+      scroll-snap-align: start;
+    }
+
+    // Room after the last card so it too can reach the row's start: every day,
+    // the last one included, can be "the current day".
+    &::after {
+      content: "";
+      flex: none;
+      width: calc(100% - var(--card-w) - var(--gap));
+    }
+  }
+
+  // Cards ease up to full size as they reach the start of the row and shrink
+  // a little as they leave or wait at the edge: the row reads as a deck.
+  // Scale only, never opacity, so no text ever loses contrast.
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      // Two animations, one per range. The exit one has no backwards fill, so
+      // it stays out of the way until the card starts to leave.
+      .route__rail > .day-card {
+        transform-origin: 50% 0;
+        animation:
+          route-card-in linear both,
+          route-card-out linear forwards;
+        animation-timeline: view(inline), view(inline);
+        animation-range: entry, exit;
+      }
+
+      @keyframes route-card-in {
+        from {
+          transform: scale(0.92);
+        }
+
+        to {
+          transform: none;
+        }
+      }
+
+      @keyframes route-card-out {
+        from {
+          transform: none;
+        }
+
+        to {
+          transform: scale(0.92);
+        }
+      }
+    }
+  }
+}
