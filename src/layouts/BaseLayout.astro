@@ -13,7 +13,15 @@ interface Props {
 
 const { title, description, noindex = false, image, design } = Astro.props;
 
-const preloadFont = design === 'v2' ? '/fonts/nunito-latin-var.woff2' : '/fonts/instrument-serif-latin.woff2';
+const preloadFonts =
+  design === 'v2'
+    ? [
+        '/fonts/literata-latin-wght.woff2',
+        '/fonts/literata-latin-400-italic.woff2',
+        '/fonts/fraunces-latin-700-soft.woff2',
+        '/fonts/nunito-latin-var.woff2',
+      ]
+    : ['/fonts/instrument-serif-latin.woff2'];
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = image ? new URL(image, Astro.site).href : undefined;
@@ -38,13 +46,9 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
     <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link
-      rel="preload"
-      href={preloadFont}
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    {preloadFonts.map((href) => (
+      <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+    ))}
     <slot name="head" />
   </head>
 

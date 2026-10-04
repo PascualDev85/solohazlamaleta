@@ -1,5 +1,8 @@
+// All faces are self-hosted and subset (hb-subset) to Basic Latin, Latin-1 and
+// the punctuation the guides use: Spanish and Icelandic letters included.
+
 // Nunito (SIL OFL, licence in public/fonts/OFL-Nunito.txt), self-hosted.
-// One variable file covers every weight from 400 to 900: 39KB, latin subset,
+// One variable file covers every weight from 400 to 900: 33KB, latin subset,
 // which already includes the Icelandic letters (þ ð æ á ö).
 @font-face {
   font-family: "Nunito";
@@ -7,6 +10,44 @@
   font-weight: 400 900;
   font-display: swap;
   src: url("/fonts/nunito-latin-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+// Fraunces (SIL OFL): the headline face, 700 with the SOFT axis at 100 so its
+// serifs round off like Nunito. Static instance, 31KB.
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/fraunces-latin-700-soft.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+// Literata (SIL OFL): the reading face, built for long text on screens.
+// Weight axis 400-700 only (35KB); the optical-size axis doubled the file.
+@font-face {
+  font-family: "Literata";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/literata-latin-wght.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+// Italic is only ever set at 400, so a static instance: 19KB, half the variable.
+@font-face {
+  font-family: "Literata";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/literata-latin-400-italic.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
     U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
     U+2212, U+2215, U+FEFF, U+FFFD;

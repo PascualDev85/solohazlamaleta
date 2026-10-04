@@ -1,0 +1,11 @@
+---
+// Line icons for guide sections. The drawings live in _section-icons.scss as
+// CSS masks, so they cost the HTML nothing and take the text colour.
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<span class="section-icon" data-icon={name} aria-hidden="true"></span>

@@ -1,0 +1,192 @@
+@use "../abstracts" as *;
+
+// The guide at a glance: who made it and when it was checked, the numbers that
+// decide a trip, and the way into the sections.
+[data-design="v2"] .guide-overview {
+  --card-pad: 1rem;
+
+  margin-block: 1rem;
+  padding: var(--space-md) var(--card-pad);
+  border: 1px solid var(--color-border);
+  // Leaf: two generous corners, two tight ones.
+  border-radius: 2rem 0.625rem 2rem 0.625rem;
+  background: var(--color-bg);
+  box-shadow: var(--shadow-soft);
+
+  .guide-index__open {
+    margin-top: var(--space-md);
+  }
+
+  @include from("sm") {
+    --card-pad: var(--space-lg);
+
+    padding-block: var(--space-lg);
+  }
+}
+
+[data-design="v2"] .quick-facts {
+  margin-top: 1rem;
+
+  &__title {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--step-0);
+    font-weight: 700;
+    letter-spacing: 0;
+    color: var(--color-text-muted);
+  }
+
+  // A swipeable row bleeding to the card's edges, so the next tile peeks in.
+  &__rail {
+    display: flex;
+    gap: var(--space-sm);
+    margin: 0 calc(-1 * var(--card-pad));
+    padding: 0 var(--card-pad) var(--space-2xs);
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--card-pad);
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: -2px;
+      border-radius: var(--radius);
+    }
+  }
+
+  &__tile {
+    flex: none;
+    width: max-content;
+    min-width: 9.5rem;
+    max-width: 14rem;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--color-blush-edge);
+    border-radius: 1.25rem 0.5rem 1.25rem 0.5rem;
+    background: linear-gradient(145deg, var(--color-blush-from), var(--color-blush-to));
+    scroll-snap-align: start;
+    transition:
+      transform 0.3s var(--ease-out),
+      box-shadow 0.3s var(--ease-out);
+
+    @media (hover: hover) {
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 24px rgb(178 71 42 / 0.12);
+      }
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__tile--wide {
+    max-width: none;
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--step--1);
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--color-text-muted);
+
+    .section-icon {
+      flex: none;
+      width: 1.15rem;
+      height: 1.15rem;
+      color: var(--color-label);
+    }
+  }
+
+  &__value {
+    margin-top: var(--space-2xs) !important;
+    font-size: var(--step-0);
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--color-text);
+  }
+
+  &__value:has(.quick-facts__big) {
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--color-text-muted);
+  }
+
+  &__big {
+    font-size: var(--step-2);
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+  }
+
+  &__note {
+    margin-top: var(--space-2xs) !important;
+    font-size: var(--step--1);
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--color-text-muted);
+
+    a {
+      font-weight: 800;
+    }
+  }
+}
+
+// Entrance: the card rises into place the first time it comes into view and
+// its tiles follow one after another. `.reveal` is only added by the inline
+// script after the card, so without JavaScript nothing is ever hidden.
+// Transform and opacity only: it runs on the compositor and moves no layout.
+[data-design="v2"] .guide-overview.reveal {
+  opacity: 0;
+  transform: translateY(3rem) scale(0.95);
+  transition:
+    opacity 0.6s var(--ease-out),
+    transform 0.9s var(--ease-out);
+
+  .trip-facts,
+  .quick-facts__title,
+  .quick-facts__tile,
+  .guide-index__open {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition:
+      opacity 0.5s var(--ease-out),
+      transform 0.7s var(--ease-out);
+  }
+
+  .trip-facts {
+    transition-delay: 0.15s;
+  }
+
+  .quick-facts__title {
+    transition-delay: 0.25s;
+  }
+
+  @for $i from 1 through 4 {
+    .quick-facts__tile:nth-child(#{$i}) {
+      transition-delay: #{0.3 + $i * 0.08}s;
+    }
+  }
+
+  .guide-index__open {
+    transition-delay: 0.7s;
+  }
+
+  &.is-in,
+  &.is-in .trip-facts,
+  &.is-in .quick-facts__title,
+  &.is-in .quick-facts__tile,
+  &.is-in .guide-index__open {
+    opacity: 1;
+    transform: none;
+  }
+}

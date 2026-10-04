@@ -1,6 +1,8 @@
 ---
+import SectionIcon from './SectionIcon.astro';
+
 interface Props {
-  sections: { id: string; label: string }[];
+  sections: { id: string; label: string; icon?: string }[];
   routeId?: string;
   days?: { day: number; title: string }[];
 }
@@ -8,29 +10,70 @@ interface Props {
 const { sections, routeId, days = [] } = Astro.props;
 ---
 
-{/* Folded at every width: <details> has no CSS-only way to start open on desktop without its toggle state lying to assistive tech. */}
-<nav class="guide-index" aria-labelledby="guide-index-title">
-  <details>
-    <summary><span id="guide-index-title">En esta guía</span></summary>
-    <ol class="guide-index__sections">
-      {sections.map((section) => (
-        <li>
-          <a href={`#${section.id}`}>{section.label}</a>
-          {section.id === routeId && days.length > 0 && (
-            <ol class="guide-index__days">
-              {days.map((day) => (
-                <li>
-                  <a href={`#dia-${day.day}`}>
-                    <span class="guide-index__daynum">{String(day.day).padStart(2, '0')}</span>
-                    {' · '}
-                    {day.title}
-                  </a>
-                </li>
-              ))}
-            </ol>
-          )}
-        </li>
-      ))}
-    </ol>
-  </details>
-</nav>
+{/*
+  Native popover: opens, closes, Esc and light-dismiss with no JavaScript.
+  The script only closes it once a section is chosen, so it does not cover
+  the destination; without it the panel is still closed by hand.
+*/}
+<button class="guide-index__open" type="button" popovertarget="guide-index">
+  <SectionIcon name="list" />
+  <span class="guide-index__open-label">En esta guía</span>
+  <span class="guide-index__count">{sections.length} secciones</span>
+  <span class="guide-index__open-chevron" aria-hidden="true"></span>
+</button>
+
+<div id="guide-index" class="guide-index" popover role="dialog" aria-labelledby="guide-index-title">
+  <header class="guide-index__head">
+    <h2 id="guide-index-title">En esta guía</h2>
+    <button
+      class="guide-index__close"
+      type="button"
+      popovertarget="guide-index"
+      popovertargetaction="hide"
+      aria-label="Cerrar"
+      autofocus
+    >
+      <SectionIcon name="close" />
+    </button>
+  </header>
+
+  <nav aria-labelledby="guide-index-title">
+    <ul class="guide-index__sections">
+      {sections.map((section) =>
+        section.id === routeId && days.length > 0 ? (
+          <li>
+            <details class="guide-index__group" open>
+              <summary class="guide-index__row">
+                <span class="guide-index__icon">{section.icon && <SectionIcon name={section.icon} />}</span>
+                <span class="guide-index__label">{section.label}</span>
+                <span class="guide-index__chevron" aria-hidden="true" />
+              </summary>
+              <ol class="guide-index__days">
+                <li><a href={`#${section.id}`}>Toda la ruta</a></li>
+                {days.map((day) => (
+                  <li>
+                    <a href={`#dia-${day.day}`}>
+                      <span class="guide-index__daynum">{String(day.day).padStart(2, '0')}</span>
+                      <span>{day.title}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </details>
+          </li>
+        ) : (
+          <li>
+            <a class="guide-index__row" href={`#${section.id}`}>
+              <span class="guide-index__icon">{section.icon && <SectionIcon name={section.icon} />}</span>
+              <span class="guide-index__label">{section.label}</span>
+            </a>
+          </li>
+        ),
+      )}
+    </ul>
+  </nav>
+</div>
+
+<script is:inline>
+  document.getElementById('guide-index').onclick = (e) => e.target.closest('a') && e.currentTarget.hidePopover();
+</script>

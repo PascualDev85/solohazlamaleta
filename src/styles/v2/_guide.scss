@@ -7,29 +7,6 @@
     font-weight: 700;
   }
 
-  &__summary {
-    margin-block: var(--space-lg);
-    padding: var(--space-sm) var(--space-lg);
-    border: 0;
-    border-radius: var(--radius-lg);
-    background: var(--color-surface);
-
-    dt {
-      font-size: var(--step--2);
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--color-label);
-    }
-
-    dd {
-      font-weight: 600;
-    }
-
-    @include up-to("sm") {
-      padding-inline: var(--space-md);
-    }
-  }
-
   // The route line stays, softened to a dotted trail between day markers.
   &__day {
     padding-bottom: var(--space-2xl);

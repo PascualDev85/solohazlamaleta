@@ -17,7 +17,26 @@
   }
 
   h1 {
+    font-family: var(--font-headline);
+    font-weight: 700;
     font-size: var(--step-3);
+    letter-spacing: -0.01em;
+  }
+
+  // Literata is for reading; labels, controls and data keep the rounded sans.
+  .site-header,
+  .site-footer nav,
+  .crumbs,
+  .trip-facts,
+  .guide-index,
+  .quick-facts,
+  .guide__stopname,
+  .guide__stop-meta,
+  .guide__route,
+  .guide__verified,
+  .guide__faq dt,
+  .guide__budget-total {
+    font-family: var(--font-display);
   }
 
   h2 {
@@ -50,11 +69,24 @@
     border-bottom: 0;
     margin-bottom: var(--space-lg);
 
+    @include from("md") {
+      max-width: none;
+      padding-inline: var(--edge);
+    }
+
     .brand {
       font-family: var(--font-display);
       font-weight: 900;
       font-size: var(--step-0);
       letter-spacing: -0.01em;
+    }
+  }
+
+  // Full width on desktop; the reading column inside .guide stays centred.
+  main.wrap {
+    @include from("md") {
+      max-width: none;
+      padding-inline: var(--edge);
     }
   }
 

@@ -1,29 +1,20 @@
 ---
-import { formatDate } from '../../lib/formatDate.ts';
+import { formatDate, formatNumericDate } from '../../lib/formatDate.ts';
 
 interface Props {
   tripDone: string;
-  travelers?: number;
-  days?: number;
-  stops: number;
+  updatedAt: string;
 }
 
-const { tripDone, travelers, days, stops } = Astro.props;
-
-const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
-
-const facts = [
-  formatDate(tripDone),
-  travelers != null && plural(travelers, 'persona', 'personas'),
-  days != null && plural(days, 'día', 'días'),
-  plural(stops, 'parada', 'paradas'),
-].filter(Boolean);
+const { tripDone, updatedAt } = Astro.props;
 ---
 
-<div class="trust">
-  <p class="trust__title">Ruta realizada por nosotros</p>
-  <ul class="trust__facts">
-    {facts.map((fact) => <li>{fact}</li>)}
-  </ul>
-  <p class="trust__about"><a href="/sobre-mi/">Quién está detrás</a></p>
+<div class="trip-facts">
+  <p class="trip-facts__by">Ruta recorrida en {formatDate(tripDone)}</p>
+  <p class="trip-facts__updated">
+    Revisada y actualizada <time datetime={updatedAt}>{formatNumericDate(updatedAt)}</time>
+  </p>
+  <p class="trip-facts__about">
+    <a href="/sobre-mi/">Conoce quién está detrás <span aria-hidden="true">→</span></a>
+  </p>
 </div>

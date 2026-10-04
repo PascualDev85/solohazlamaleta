@@ -1,0 +1,64 @@
+---
+import SectionIcon from './SectionIcon.astro';
+
+interface Props {
+  currency: string;
+  budgetPerPerson?: number;
+  budgetTotal?: number;
+  budgetHref?: string;
+  bestSeason?: string;
+  pace?: 'intensivo' | 'equilibrado' | 'tranquilo';
+  baseArea?: string;
+}
+
+const { currency, budgetPerPerson, budgetTotal, budgetHref, bestSeason, pace, baseArea } = Astro.props;
+
+// Whole euros at a glance; the budget section keeps the cents.
+const euros = new Intl.NumberFormat('es-ES', {
+  style: 'currency',
+  currency,
+  maximumFractionDigits: 0,
+  useGrouping: true,
+});
+
+const paceLabel = { intensivo: 'Intensivo', equilibrado: 'Equilibrado', tranquilo: 'Tranquilo' };
+---
+
+<div class="quick-facts">
+  <h2 class="quick-facts__title" id="quick-facts-title">Datos de interés</h2>
+  {/* Focusable so the row can be scrolled from the keyboard. */}
+  <ul class="quick-facts__rail" tabindex="0" aria-labelledby="quick-facts-title">
+    {budgetPerPerson != null && (
+      <li class="quick-facts__tile quick-facts__tile--wide">
+        <p class="quick-facts__label"><SectionIcon name="wallet" />Presupuesto real</p>
+        <p class="quick-facts__value">
+          <span class="quick-facts__big">{euros.format(budgetPerPerson)}</span> por persona
+        </p>
+        {budgetTotal != null && (
+          <p class="quick-facts__note">
+            {euros.format(budgetTotal)} en total
+            {budgetHref && <> · <a href={budgetHref}>Ver desglose</a></>}
+          </p>
+        )}
+      </li>
+    )}
+    {bestSeason && (
+      <li class="quick-facts__tile">
+        <p class="quick-facts__label"><SectionIcon name="calendar" />Cuándo ir</p>
+        <p class="quick-facts__value">{bestSeason}</p>
+      </li>
+    )}
+    {pace && (
+      <li class="quick-facts__tile">
+        <p class="quick-facts__label"><SectionIcon name="pace" />Ritmo</p>
+        <p class="quick-facts__value">{paceLabel[pace]}</p>
+      </li>
+    )}
+    {baseArea && (
+      <li class="quick-facts__tile">
+        <p class="quick-facts__label"><SectionIcon name="tent" />Dónde dormir</p>
+        <p class="quick-facts__value">{baseArea}</p>
+      </li>
+    )}
+  </ul>
+</div>
