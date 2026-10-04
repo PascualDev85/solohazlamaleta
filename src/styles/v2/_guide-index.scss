@@ -1,4 +1,5 @@
 @use "../abstracts" as *;
+@use "sheet";
 
 [data-design="v2"] {
   // Trigger: a full-width bar at the foot of the overview card.
@@ -50,57 +51,7 @@
 
   // Panel: a centred card on desktop, a sheet rising from the bottom on mobile.
   .guide-index {
-    width: min(34rem, 100% - 2rem);
-    max-height: min(85dvh, 46rem);
-    margin: auto;
-    padding: 0;
-    overflow: auto;
-    overscroll-behavior: contain;
-    border: 0;
-    border-radius: var(--radius-lg);
-    background: var(--color-bg);
-    color: var(--color-text);
-    box-shadow: 0 24px 60px rgb(10 15 20 / 0.28);
-    font-family: var(--font-display);
-    opacity: 0;
-    transform: translateY(12px) scale(0.98);
-    transition:
-      opacity 0.22s var(--ease-out),
-      transform 0.22s var(--ease-out),
-      overlay 0.22s allow-discrete,
-      display 0.22s allow-discrete;
-
-    &:popover-open {
-      opacity: 1;
-      transform: none;
-
-      @starting-style {
-        opacity: 0;
-        transform: translateY(12px) scale(0.98);
-      }
-    }
-
-    &::backdrop {
-      background: rgb(10 15 20 / 0.45);
-      -webkit-backdrop-filter: blur(3px);
-      backdrop-filter: blur(3px);
-    }
-
-    @include up-to("sm") {
-      width: 100%;
-      max-height: 88dvh;
-      margin: auto 0 0;
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-      transform: translateY(100%);
-
-      &:popover-open {
-        transform: none;
-
-        @starting-style {
-          transform: translateY(100%);
-        }
-      }
-    }
+    @include sheet.panel;
 
     :where(ul, ol) {
       list-style: none;
@@ -119,43 +70,11 @@
   }
 
   .guide-index__head {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
-    border-bottom: 1px solid var(--color-border);
-    background: var(--color-bg);
-
-    h2 {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: var(--step-1);
-      font-weight: 800;
-    }
+    @include sheet.head;
   }
 
   .guide-index__close {
-    display: grid;
-    place-items: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border: 0;
-    border-radius: 50%;
-    background: var(--color-surface);
-    color: var(--color-text);
-    cursor: pointer;
-
-    &:hover {
-      background: var(--color-surface-deep);
-    }
-
-    .section-icon {
-      width: 1.25rem;
-      height: 1.25rem;
-    }
+    @include sheet.close;
   }
 
   .guide-index__sections {

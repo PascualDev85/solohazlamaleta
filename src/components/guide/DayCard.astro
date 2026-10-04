@@ -1,0 +1,165 @@
+---
+import type { CompiledDay } from '../../../engine/index.ts';
+import { formatMinutes } from '../../lib/formatDuration.ts';
+import { guideImage } from '../../lib/guide-images.ts';
+import GuidePhoto from './GuidePhoto.astro';
+import SectionIcon from './SectionIcon.astro';
+import DayStop from './DayStop.astro';
+
+interface Props {
+  day: CompiledDay;
+}
+
+const { day } = Astro.props;
+
+// The card shows the first stops; the rest fold behind "Ver N paradas más".
+const VISIBLE_STOPS = 2;
+const firstStops = day.route_stops.slice(0, VISIBLE_STOPS);
+const moreStops = day.route_stops.slice(VISIBLE_STOPS);
+
+const num = String(day.day).padStart(2, '0');
+const headingId = `dia-${day.day}`;
+const sheetId = `dia-${day.day}-completo`;
+
+const km = new Intl.NumberFormat('es-ES', { useGrouping: true });
+const experiences = day.route_stops.filter((stop) => stop.variant_note);
+const hasFullDay = experiences.length > 0 || Boolean(day.our_take) || Boolean(day.plan_b);
+---
+
+<article class="day-card" aria-labelledby={headingId}>
+  {day.photo && (
+    <figure class="day-card__media">
+      <GuidePhoto
+        class="day-card__photo"
+        image={guideImage(day.photo.src)}
+        alt={day.photo.alt}
+        sizes="(min-width: 48rem) 44rem, calc(100vw - 2.5rem)"
+      />
+      {day.photo.caption && <figcaption class="day-card__caption">{day.photo.caption}</figcaption>}
+    </figure>
+  )}
+
+  <div class="day-card__body">
+    <div class="day-card__badge" aria-hidden="true">
+      <span class="day-card__num">{num}</span>
+      <span class="day-card__daylabel">Día {day.day}</span>
+    </div>
+    <h3 class="day-card__title" id={headingId}>
+      <span class="visually-hidden">Día {day.day}. </span>{day.title}
+    </h3>
+    {day.summary && <p class="day-card__summary">{day.summary}</p>}
+
+    {day.highlight && (
+      <details class="day-card__highlight">
+        <summary>
+          <SectionIcon name="sparkles" />
+          Lo mejor del día
+          <span class="day-card__chevron" aria-hidden="true"></span>
+        </summary>
+        <p>{day.highlight}</p>
+      </details>
+    )}
+
+    {day.route_line.length > 0 && (
+      <ol class="day-card__route" aria-label="Ruta del día">
+        {day.route_line.map((name) => <li>{name}</li>)}
+      </ol>
+    )}
+
+    <ul class="day-card__facts">
+      <li><SectionIcon name="pin" />{day.n_route_stops} {day.n_route_stops === 1 ? 'parada' : 'paradas'}</li>
+      {day.drive && (
+        <>
+          <li><SectionIcon name="road" />≈ {km.format(day.drive.km)} km</li>
+          <li><SectionIcon name="wheel" />≈ {formatMinutes(day.drive.minutes)}<span class="visually-hidden"> de coche</span></li>
+        </>
+      )}
+    </ul>
+
+    {day.overnight && (
+      <p class="day-card__night">
+        <SectionIcon name="tent" />
+        <span class="day-card__night-label">Noche</span>
+        <span class="day-card__arrow" aria-hidden="true">→</span>
+        <span class="visually-hidden">: </span>
+        <strong>{day.overnight}</strong>
+      </p>
+    )}
+
+    {firstStops.length > 0 && (
+      <ol class="day-card__stops">
+        {firstStops.map((stop, i) => <DayStop stop={stop} n={i + 1} />)}
+      </ol>
+    )}
+
+    {moreStops.length > 0 && (
+      <details class="day-card__more">
+        <summary>
+          <span class="day-card__more-open">Ver {moreStops.length} {moreStops.length === 1 ? 'parada' : 'paradas'} más</span>
+          <span class="day-card__more-close">Ver menos</span>
+          <span class="day-card__chevron" aria-hidden="true"></span>
+        </summary>
+        <ol class="day-card__stops" start={VISIBLE_STOPS + 1}>
+          {moreStops.map((stop, i) => <DayStop stop={stop} n={VISIBLE_STOPS + i + 1} />)}
+        </ol>
+      </details>
+    )}
+
+    {hasFullDay && (
+      <button class="day-card__full" type="button" popovertarget={sheetId}>
+        Ver día completo <SectionIcon name="arrow" />
+      </button>
+    )}
+  </div>
+
+  {hasFullDay && (
+    <div id={sheetId} class="day-sheet" popover role="dialog" aria-labelledby={`${sheetId}-title`}>
+      <header class="day-sheet__head">
+        <div>
+          <p class="day-sheet__eyebrow">Día {num}</p>
+          <h2 class="day-sheet__title" id={`${sheetId}-title`}>{day.title}</h2>
+        </div>
+        <button
+          class="day-sheet__close"
+          type="button"
+          popovertarget={sheetId}
+          popovertargetaction="hide"
+          aria-label="Cerrar"
+          autofocus
+        >
+          <SectionIcon name="close" />
+        </button>
+      </header>
+
+      <div class="day-sheet__body">
+        {experiences.length > 0 && (
+          <section class="day-sheet__block" aria-labelledby={`${sheetId}-exp`}>
+            <h3 id={`${sheetId}-exp`}>Nuestra experiencia</h3>
+            <ul class="day-sheet__experiences">
+              {experiences.map((stop) => (
+                <li>
+                  <p class="day-sheet__place">{stop.place.name}</p>
+                  <p>{stop.variant_note}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {day.our_take && (
+          <section class="day-sheet__block day-sheet__block--take" aria-labelledby={`${sheetId}-take`}>
+            <h3 id={`${sheetId}-take`}>Lo que haríamos distinto</h3>
+            <p>{day.our_take}</p>
+          </section>
+        )}
+
+        {day.plan_b && (
+          <section class="day-sheet__block day-sheet__block--planb" aria-labelledby={`${sheetId}-planb`}>
+            <h3 id={`${sheetId}-planb`}>Plan B</h3>
+            <p>{day.plan_b}</p>
+          </section>
+        )}
+      </div>
+    </div>
+  )}
+</article>

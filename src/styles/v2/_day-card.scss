@@ -1,0 +1,542 @@
+@use "../abstracts" as *;
+@use "sheet";
+
+// One card per day: the photo opens it, the number sits on the photo's edge,
+// then what the day is, the way through it and the first stops. The rest of
+// the stops fold away and the full story opens in a sheet.
+[data-design="v2"] {
+  .day-card {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg);
+    box-shadow: var(--shadow-soft);
+    // Anchor jumps from the index land with room above the card.
+    scroll-margin-top: var(--space-lg);
+    // The full-day sheet lives inside; keep the card's own layout simple.
+    display: flex;
+    flex-direction: column;
+
+    p {
+      margin: 0;
+    }
+
+    :where(ol, ul) {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  }
+
+  // Photo: full-bleed at the top, its caption a glass pill like the hero's.
+  .day-card__media {
+    position: relative;
+    margin: 0;
+  }
+
+  .day-card__photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: 50% 55%;
+    background: var(--color-surface);
+  }
+
+  .day-card__caption {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    padding: 0.2rem 0.65rem;
+    border: 1px solid rgb(255 255 255 / 0.3);
+    border-radius: 999px;
+    background: rgb(10 20 30 / 0.45);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .day-card__body {
+    display: grid;
+    gap: var(--space-xs);
+    padding: var(--space-md) var(--space-md) var(--space-md);
+
+    @include from("sm") {
+      padding-inline: var(--space-lg);
+    }
+  }
+
+  // The day number: a coin resting on the photo's lower edge, the day in
+  // words at the other end of the row.
+  .day-card__badge {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+  }
+
+  .day-card__media + .day-card__body .day-card__badge {
+    position: relative;
+    margin-top: calc(-1 * (var(--space-md) + 1.5rem));
+  }
+
+  .day-card__num {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border: 3px solid var(--color-bg);
+    border-radius: 50%;
+    background: var(--color-pill-bg);
+    box-shadow: 0 4px 14px rgb(10 15 20 / 0.14);
+    color: var(--color-accent);
+    font-family: var(--font-headline);
+    font-size: 1.1rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .day-card__daylabel {
+    padding-bottom: 0.2rem;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-label);
+  }
+
+  .day-card__title {
+    margin: 0;
+    font-family: var(--font-headline);
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+  }
+
+  .day-card__summary {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  // "Lo mejor del día": a coral chip that opens into the line itself.
+  .day-card__highlight {
+    summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      min-height: 2rem;
+      padding: 0 0.7rem 0 0.6rem;
+      border: 1px solid var(--color-blush-edge);
+      border-radius: 999px;
+      background: linear-gradient(145deg, var(--color-blush-from), var(--color-blush-to));
+      color: var(--color-label);
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      .section-icon {
+        width: 0.95rem;
+        height: 0.95rem;
+      }
+    }
+
+    p {
+      margin-top: var(--space-xs) !important;
+      padding: var(--space-xs) var(--space-sm);
+      font-size: 0.9375rem;
+      border-left: 3px solid var(--color-label);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      background: var(--color-blush-from);
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+  }
+
+  .day-card__chevron {
+    width: 0.45rem;
+    height: 0.45rem;
+    margin: 0 0.15rem 0.2rem 0.1rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.2s var(--ease-out);
+  }
+
+  details[open] > summary .day-card__chevron {
+    margin-bottom: -0.15rem;
+    transform: rotate(-135deg);
+  }
+
+  // The way through the day: one line that scrolls sideways when it is longer
+  // than the card, fading out at the edge so the overflow reads as "more".
+  .day-card__route {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    white-space: nowrap;
+    mask: linear-gradient(to right, #000 calc(100% - 1.5rem), transparent);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 800;
+    color: var(--color-text);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    li {
+      flex: none;
+    }
+
+    li + li::before {
+      content: "→";
+      margin-inline: 0.35em;
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+
+    li:last-child {
+      padding-right: 1.5rem;
+    }
+  }
+
+  // One line each: the numbers of the day, then where it ends.
+  .day-card__facts,
+  .day-card__night {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+
+    .section-icon {
+      flex: none;
+      width: 1rem;
+      height: 1rem;
+      color: var(--color-accent);
+    }
+  }
+
+  .day-card__facts li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .day-card__night {
+    gap: 0.35rem;
+
+    strong {
+      font-weight: 800;
+      color: var(--color-text);
+    }
+  }
+
+  .day-card__stops {
+    border-top: 1px solid var(--color-border);
+  }
+
+  // "Ver N paradas más": a text link, not a button.
+  // Open, "Ver menos" moves below the extra stops, where the reader is. Where
+  // <details> cannot be a flex box it simply stays on top.
+  .day-card__more {
+    display: flex;
+    flex-direction: column;
+    margin-top: calc(-1 * var(--space-sm));
+
+    &[open] > summary {
+      order: 1;
+    }
+
+    > summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: 2.5rem;
+      color: var(--color-accent);
+      font-family: var(--font-display);
+      font-size: var(--step--1);
+      font-weight: 800;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+      }
+    }
+
+    &[open] > .day-card__stops {
+      border-top: 0;
+    }
+  }
+
+  .day-card__more-close,
+  .day-card__more[open] .day-card__more-open {
+    display: none;
+  }
+
+  .day-card__more[open] .day-card__more-close {
+    display: inline;
+  }
+
+  // "Ver día completo": same family as the index bar, centred.
+  .day-card__full {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    width: 100%;
+    min-height: 2.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: 800 0.9375rem / 1 var(--font-display);
+    cursor: pointer;
+    transition:
+      border-color 0.2s var(--ease-out),
+      background 0.2s var(--ease-out);
+
+    .section-icon {
+      width: 1.15rem;
+      height: 1.15rem;
+      color: var(--color-accent);
+      transition: transform 0.2s var(--ease-out);
+    }
+
+    &:hover {
+      border-color: var(--color-accent);
+
+      .section-icon {
+        transform: translateX(3px);
+      }
+    }
+  }
+
+  // A stop: name and time on one line, two lines of what it is, one of practice.
+  .day-stop {
+    display: grid;
+    grid-template-columns: 1.1rem minmax(0, 1fr);
+    gap: var(--space-xs);
+    padding-block: 0.6rem;
+
+    & + & {
+      border-top: 1px solid var(--color-border);
+    }
+  }
+
+  .day-stop__n {
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 800;
+    line-height: 1.5rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-muted);
+  }
+
+  .day-stop__body {
+    display: grid;
+    gap: 0.2rem;
+    min-width: 0;
+    font-family: var(--font-display);
+    line-height: 1.4;
+  }
+
+  .day-stop__head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    min-width: 0;
+  }
+
+  .day-stop__name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: 800;
+    color: var(--color-text);
+  }
+
+  .day-stop__time {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+
+    .section-icon {
+      width: 0.9rem;
+      height: 0.9rem;
+      color: var(--color-accent);
+    }
+  }
+
+  // Two lines; the full description stays in the HTML for search and readers.
+  .day-stop__desc {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--color-text-muted);
+  }
+
+  // Parking, its check date and the map, on one line.
+  .day-stop__practical {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+
+    > * + *::before {
+      content: "·";
+      display: inline-block;
+      margin-inline: 0.4em;
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+  }
+
+  .day-stop__free {
+    padding: 0.05rem 0.5rem;
+    border-radius: 999px;
+    background: var(--color-pill-bg);
+    color: var(--color-pill-text);
+    font-weight: 800;
+  }
+
+  // The "·" before a pill sits outside it.
+  .day-stop__free + .day-stop__date::before {
+    margin-left: 0.4em;
+  }
+
+  .day-stop__date {
+    font-weight: 500;
+  }
+
+  .day-stop__map {
+    font-weight: 800;
+    color: var(--color-accent);
+  }
+
+  // Full day: the sheet shared with the index, holding our own account.
+  .day-sheet {
+    @include sheet.panel;
+  }
+
+  .day-sheet__head {
+    @include sheet.head;
+  }
+
+  .day-sheet__close {
+    @include sheet.close;
+  }
+
+  .day-sheet__eyebrow {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-label);
+  }
+
+  .day-sheet__title {
+    font-family: var(--font-headline) !important;
+    font-weight: 700 !important;
+  }
+
+  .day-sheet__body {
+    display: grid;
+    gap: var(--space-lg);
+    padding: var(--space-md) var(--space-lg) var(--space-xl);
+
+    p {
+      margin: 0;
+      font-family: var(--font-body);
+      line-height: 1.65;
+    }
+
+    h3 {
+      margin: 0 0 var(--space-sm);
+      font-family: var(--font-display);
+      font-size: var(--step-0);
+      font-weight: 800;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  }
+
+  .day-sheet__experiences {
+    display: grid;
+    gap: var(--space-md);
+
+    li {
+      padding-left: var(--space-md);
+      border-left: 3px solid var(--color-accent);
+    }
+  }
+
+  .day-sheet__place {
+    margin-bottom: var(--space-2xs) !important;
+    font-family: var(--font-display) !important;
+    font-weight: 800;
+  }
+
+  .day-sheet__block--take,
+  .day-sheet__block--planb {
+    padding: var(--space-md);
+    border-radius: var(--radius);
+  }
+
+  .day-sheet__block--take {
+    background: linear-gradient(145deg, var(--color-blush-from), var(--color-blush-to));
+  }
+
+  .day-sheet__block--planb {
+    background: var(--color-pill-bg);
+  }
+
+  html:has(.day-sheet:popover-open) {
+    overflow: hidden;
+  }
+}

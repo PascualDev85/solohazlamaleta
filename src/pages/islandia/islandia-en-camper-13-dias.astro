@@ -1,13 +1,15 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCompiledGuide } from '../../lib/engine-guide.ts';
-import { placeMapUrl } from '../../lib/maps.ts';
-import { formatDate } from '../../lib/formatDate.ts';
+import { formatDate, formatLongDate } from '../../lib/formatDate.ts';
 import TrustBlock from '../../components/guide/TrustBlock.astro';
 import GuideIndex from '../../components/guide/GuideIndex.astro';
 import GuidePhoto from '../../components/guide/GuidePhoto.astro';
 import QuickFacts from '../../components/guide/QuickFacts.astro';
 import Breadcrumb from '../../components/guide/Breadcrumb.astro';
+import RouteDays from '../../components/guide/RouteDays.astro';
+import SectionIcon from '../../components/guide/SectionIcon.astro';
+import AffiliateNotice from '../../components/AffiliateNotice.astro';
 import { guideImage } from '../../lib/guide-images.ts';
 import { getImage } from 'astro:assets';
 import '../../styles/guide-v2.scss';
@@ -20,6 +22,17 @@ const guide = await loadCompiledGuide(
 const variant = guide.variants?.[0];
 
 const destinationName = 'Islandia';
+
+// Who travelled this route. No model field for it: the names are only shown on this page.
+const travelers = 'David y Natalia';
+
+// Travel-insurance partner link, `/ir/{partner}-{key}`. Undefined until a partner
+// (IATI, Heymondo…) is chosen and set active in affiliates.json; without it the
+// insurance card renders with no button, never a link that goes nowhere.
+const insuranceHref: string | undefined = undefined;
+// Preview: the dev server shows the button (inert, no href) so the design can be
+// judged before a partner exists. Production builds only show it with a link.
+const showInsuranceButton = Boolean(insuranceHref) || import.meta.env.DEV;
 
 const cover = guideImage(guide.cover_image);
 // Temporary: the model has no alt for cover_image yet; it belongs with the photo amendment of 1.10 §3.7 (C3.4).
@@ -118,19 +131,7 @@ const faqJsonLd =
           <h1>{guide.title}</h1>
         </div>
 
-        {/* Temporary: no model field for an editorial intro yet; pending the author's decision on adding one. */}
-        <div class="guide-hero__intro">
-          <p>
-            Hay lugares que se visitan y otros que se sienten.{' '}
-            <strong>Islandia, la tierra de hielo y fuego, es uno de ellos.</strong>
-          </p>
-          <p>
-            Una isla de glaciares, volcanes, cascadas, aguas termales y paisajes que parecen de otro planeta.
-            Nosotros la recorrimos en camper y hemos preparado esta ruta de 13 días para que descubras lo
-            mejor de Islandia sin tener que dedicar horas a decidir qué ver, cuándo hacerlo o cómo encajarlo.
-          </p>
-          <p><strong>Nosotros hacemos el trabajo difícil.{' '}<span>Tú solo haz la maleta.</span></strong></p>
-        </div>
+        <p class="guide-hero__intro">{guide.summary.tagline}</p>
 
       </div>
 
@@ -147,10 +148,16 @@ const faqJsonLd =
     </header>
 
     <section class="guide-overview" aria-label="Resumen de la guía">
-      {guide.has_experience && guide.trip_done ? (
-        <TrustBlock tripDone={guide.trip_done} updatedAt={guide.updated_at} />
+      {guide.has_experience && guide.trip_done && variant ? (
+        <TrustBlock
+          travelers={travelers}
+          tripDone={guide.trip_done}
+          days={variant.days.length}
+          stops={variant.n_route_stops_total}
+          updatedAt={guide.updated_at}
+        />
       ) : (
-        <p class="guide__dateline">Actualizado {formatDate(guide.updated_at)}</p>
+        <p class="guide__dateline">Actualizado el {formatLongDate(guide.updated_at)}</p>
       )}
 
       <QuickFacts
@@ -158,8 +165,8 @@ const faqJsonLd =
         budgetPerPerson={guide.summary.budget_per_person}
         budgetTotal={guide.budget?.total_reference}
         budgetHref={show.budget ? '#presupuesto' : undefined}
-        bestSeason={guide.summary.best_season}
         pace={guide.summary.pace_default}
+        vehicle={guide.summary.getting_around}
         baseArea={guide.summary.base_area}
       />
 
@@ -171,74 +178,40 @@ const faqJsonLd =
     </section>
     <script is:inline>
       (() => {
-        const card = document.currentScript.previousElementSibling;
+        const overview = document.currentScript.previousElementSibling;
         if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        card.classList.add('reveal');
-        new IntersectionObserver(([e], o) => e.isIntersecting && (card.classList.add('is-in'), o.disconnect()), { threshold: 0.15 }).observe(card);
+        overview.classList.add('reveal');
+        new IntersectionObserver(([e], o) => e.isIntersecting && (overview.classList.add('is-in'), o.disconnect()), { threshold: 0.15 }).observe(overview);
       })();
     </script>
 
-    {show.route && variant && (
-      <section aria-labelledby="itinerario">
-        <h2 id="itinerario">La ruta</h2>
-        {variant.days.map((day) => (
-          <section class="guide__day" aria-labelledby={`dia-${day.day}`}>
-            <span class="guide__daynum" aria-hidden="true">{day.day}</span>
-            <h3 id={`dia-${day.day}`}>
-              <span class="visually-hidden">Día {day.day}. </span>
-              {day.title}
-            </h3>
+    {/*
+      Travel-insurance recommendation. Placed here, before the route, by the
+      author's decision (2026-10-04): an explicit exception to "affiliate only in
+      context" (BRIEF §affiliation, 1.11 §6). No partner chosen yet (IATI,
+      Heymondo…), so no link yet: see `insuranceHref`.
+    */}
+    <aside class="insurance" aria-labelledby="seguro-title">
+      <span class="insurance__badge"><SectionIcon name="shield" /></span>
+      <div class="insurance__head">
+        <p class="insurance__eyebrow">Antes de ir</p>
+        <p class="insurance__title" id="seguro-title">Viaja con seguro</p>
+      </div>
+      <p class="insurance__body">Horas al volante, un glaciar a pie y pueblos muy separados. Tu seguro debe cubrir:</p>
+      <ul class="insurance__covers">
+        <li><SectionIcon name="check" />Médico</li>
+        <li><SectionIcon name="check" />Cancelación</li>
+        <li><SectionIcon name="check" />Actividades</li>
+      </ul>
+      {showInsuranceButton && (
+        <a class="insurance__go" href={insuranceHref} rel="sponsored nofollow">
+          <span class="visually-hidden">Ver el seguro que recomendamos</span>
+          <span class="insurance__arrow" aria-hidden="true"><SectionIcon name="arrow" /></span>
+        </a>
+      )}
+    </aside>
 
-            {day.summary && <p>{day.summary}</p>}
-
-            <ol class="guide__stops">
-              {day.route_stops.map((stop) => (
-                <li>
-                  <span class="guide__stopname">{stop.place.name}</span>
-                  <span class="guide__stop-meta">
-                    {' · '}
-                    {stop.duration_min} min
-                    {stop.start_time && ` · desde las ${stop.start_time}`}
-                  </span>
-
-                  <p>
-                    <a
-                      class="guide__route"
-                      href={placeMapUrl(stop.place.lat, stop.place.lng)}
-                      target="_blank"
-                    >
-                      Ver en Google Maps
-                      <span class="visually-hidden">(se abre en una pestaña nueva)</span>
-                    </a>
-                  </p>
-
-                  {stop.variant_note && <p class="guide__note">{stop.variant_note}</p>}
-
-                  <p class="guide__verified">
-                    Comprobado {formatDate(stop.place.verified_at)}
-                    {stop.place.is_stale && ' · dato antiguo, puede haber cambiado'}
-                  </p>
-                </li>
-              ))}
-            </ol>
-
-            {day.our_take && (
-              <div class="guide__tip">
-                <h4>Lo que haríamos distinto</h4>
-                <p>{day.our_take}</p>
-              </div>
-            )}
-
-            {day.plan_b && (
-              <div class="guide__tip">
-                <h4>Plan B</h4>
-                <p>{day.plan_b}</p>
-              </div>
-            )}
-          </section>
-        ))}
-      </section>
-    )}
+    {show.route && variant && <RouteDays days={variant.days} id="itinerario" />}
 
     {show.sleep && guide.accommodation && (
       <section aria-labelledby="dormir">
@@ -368,6 +341,9 @@ const faqJsonLd =
         </dl>
       </section>
     )}
+
+    {/* Required wherever a commission link appears (BRIEF: visible notice). */}
+    {insuranceHref && <AffiliateNotice />}
 
     {/* After the visible FAQ on purpose: compression reuses the same text, so the schema costs almost nothing. */}
     {faqJsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(faqJsonLd)} />}

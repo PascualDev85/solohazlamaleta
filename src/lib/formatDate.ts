@@ -3,7 +3,12 @@ export function formatDate(isoDate: string): string {
   return new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(isoDate))
 }
 
-/** Numeric day/month/year: "04/10/2026". */
-export function formatNumericDate(isoDate: string): string {
-  return new Intl.DateTimeFormat('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC' }).format(new Date(isoDate))
+/** Full date in words: "4 de octubre de 2026". */
+export function formatLongDate(isoDate: string): string {
+  return new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(isoDate))
+}
+
+/** Short month and year for dates sitting next to a price: "sept 2025". */
+export function formatShortDate(isoDate: string): string {
+  return new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(isoDate))
 }

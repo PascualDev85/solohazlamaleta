@@ -7,100 +7,11 @@
     font-weight: 700;
   }
 
-  // The route line stays, softened to a dotted trail between day markers.
-  &__day {
-    padding-bottom: var(--space-2xl);
-
-    @include up-to("sm") {
-      padding-left: 2.25rem;
-    }
-
-    &::before {
-      width: 0;
-      background: none;
-      border-left: 2px dotted var(--color-rule);
-    }
-  }
-
-  &__daynum {
-    border: 0;
-    background: var(--color-accent);
-    color: var(--color-bg);
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: var(--step-0);
-
-    @include up-to("sm") {
-      font-size: var(--step--1);
-    }
-  }
-
-  &__stops {
-    > li {
-      padding-left: 2.6rem;
-      padding-block: var(--space-md);
-
-      @include up-to("sm") {
-        padding-left: 2.3rem;
-      }
-
-      &::before {
-        top: calc(var(--space-md) + 0.05em);
-        width: 1.8rem;
-        height: 1.8rem;
-        display: grid;
-        place-items: center;
-        border-radius: 50%;
-        background: var(--color-pill-bg);
-        color: var(--color-pill-text);
-        font-family: var(--font-display);
-        font-size: var(--step--1);
-        font-weight: 800;
-      }
-    }
-  }
-
-  &__stopname {
-    font-weight: 800;
-  }
-
-  &__note {
-    margin-top: var(--space-xs);
-  }
-
   &__verified {
     font-size: var(--step--1);
     letter-spacing: 0;
     text-transform: none;
     color: var(--color-text-muted);
-  }
-
-  // Pill button. Its filled shape, not colour alone, marks it as a control.
-  &__route {
-    border: 0;
-    background: var(--color-pill-bg);
-    color: var(--color-pill-text);
-    font-weight: 750;
-    text-decoration: none;
-    margin-block: var(--space-xs) 0;
-
-    &:hover {
-      background: var(--color-accent);
-      color: var(--color-bg);
-    }
-  }
-
-  &__tip {
-    padding: var(--space-md) var(--space-lg);
-    border-radius: var(--radius-lg);
-
-    h4 {
-      margin-top: 0;
-    }
-
-    @include up-to("sm") {
-      padding-inline: var(--space-md);
-    }
   }
 
   &__zone {

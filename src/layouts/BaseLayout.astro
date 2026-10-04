@@ -16,8 +16,9 @@ const { title, description, noindex = false, image, design } = Astro.props;
 const preloadFonts =
   design === 'v2'
     ? [
+        // Italic is not preloaded: it only appears in folded text ("Lo mejor
+        // del día"), so it loads on demand instead of competing with the hero.
         '/fonts/literata-latin-wght.woff2',
-        '/fonts/literata-latin-400-italic.woff2',
         '/fonts/fraunces-latin-700-soft.woff2',
         '/fonts/nunito-latin-var.woff2',
       ]

@@ -1,0 +1,64 @@
+---
+import type { CompiledStop } from '../../../engine/index.ts';
+import { placeMapUrl } from '../../lib/maps.ts';
+import { formatShortDate } from '../../lib/formatDate.ts';
+import { formatMinutes } from '../../lib/formatDuration.ts';
+import SectionIcon from './SectionIcon.astro';
+
+interface Props {
+  stop: CompiledStop;
+  /** Position in the day's route, from 1. */
+  n: number;
+}
+
+const { stop, n } = Astro.props;
+const { place } = stop;
+const { parking } = place;
+
+// The short name keeps the line to one row and matches the day's route line;
+// the full name stays for screen readers.
+const shortName = place.short_name;
+
+const price = parking
+  ? new Intl.NumberFormat('es-ES', {
+      style: 'currency',
+      currency: parking.currency,
+      maximumFractionDigits: 0,
+      useGrouping: true,
+    }).format(parking.price)
+  : undefined;
+---
+
+<li class="day-stop">
+  <span class="day-stop__n" aria-hidden="true">{n}</span>
+  <div class="day-stop__body">
+    <p class="day-stop__head">
+      <span class="day-stop__name">
+        {shortName ?? place.name}{shortName && <span class="visually-hidden"> ({place.name})</span>}
+      </span>
+      <span class="day-stop__time">
+        <SectionIcon name="clock" />{formatMinutes(stop.duration_min)}<span class="visually-hidden"> de visita</span>
+      </span>
+    </p>
+    {place.description && <p class="day-stop__desc">{place.description}</p>}
+    <p class="day-stop__practical">
+      {parking && (
+        <>
+          {parking.price === 0 ? (
+            <span class="day-stop__free">Parking gratuito</span>
+          ) : (
+            <span>Parking · {price}</span>
+          )}
+          {/* A price always carries its check date (CLAUDE.md, sensitive data). */}
+          <span class="day-stop__date">
+            <span class="visually-hidden">comprobado en </span>
+            <time datetime={parking.verified_at}>{formatShortDate(parking.verified_at)}</time>
+          </span>
+        </>
+      )}
+      <a class="day-stop__map" href={placeMapUrl(place.lat, place.lng)} target="_blank">
+        Mapa<span class="visually-hidden"> de {place.name} (se abre en una pestaña nueva)</span>
+      </a>
+    </p>
+  </div>
+</li>

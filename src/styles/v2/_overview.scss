@@ -1,26 +1,21 @@
 @use "../abstracts" as *;
 
 // The guide at a glance: who made it and when it was checked, the numbers that
-// decide a trip, and the way into the sections.
+// decide a trip, and the way into the sections. Open on the page, no card:
+// only each quick fact is a tile.
 [data-design="v2"] .guide-overview {
-  --card-pad: 1rem;
+  // How far the tile rail bleeds past the column: to the screen edge on
+  // mobile, none once the column has room around it.
+  --rail-bleed: var(--gutter);
 
-  margin-block: 1rem;
-  padding: var(--space-md) var(--card-pad);
-  border: 1px solid var(--color-border);
-  // Leaf: two generous corners, two tight ones.
-  border-radius: 2rem 0.625rem 2rem 0.625rem;
-  background: var(--color-bg);
-  box-shadow: var(--shadow-soft);
+  margin-block: var(--space-lg) 1rem;
 
   .guide-index__open {
     margin-top: var(--space-md);
   }
 
-  @include from("sm") {
-    --card-pad: var(--space-lg);
-
-    padding-block: var(--space-lg);
+  @include from("md") {
+    --rail-bleed: 0px;
   }
 }
 
@@ -36,17 +31,17 @@
     color: var(--color-text-muted);
   }
 
-  // A swipeable row bleeding to the card's edges, so the next tile peeks in.
+  // A swipeable row bleeding to the screen edge, so the next tile peeks in.
   &__rail {
     display: flex;
     gap: var(--space-sm);
-    margin: 0 calc(-1 * var(--card-pad));
-    padding: 0 var(--card-pad) var(--space-2xs);
+    margin: 0 calc(-1 * var(--rail-bleed));
+    padding: 0 var(--rail-bleed) var(--space-2xs);
     list-style: none;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--card-pad);
+    scroll-padding-inline: var(--rail-bleed);
     scrollbar-width: none;
 
     &::-webkit-scrollbar {
@@ -88,6 +83,25 @@
 
   &__tile--wide {
     max-width: none;
+  }
+
+  // Desktop: the column has room for every fact, so no swiping. The budget
+  // takes the full row and the rest share the one below.
+  @include from("md") {
+    &__rail {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      overflow: visible;
+    }
+
+    &__tile {
+      width: auto;
+      max-width: none;
+    }
+
+    &__tile--wide {
+      grid-column: 1 / -1;
+    }
   }
 
   &__label {
@@ -141,9 +155,9 @@
   }
 }
 
-// Entrance: the card rises into place the first time it comes into view and
-// its tiles follow one after another. `.reveal` is only added by the inline
-// script after the card, so without JavaScript nothing is ever hidden.
+// Entrance: the overview rises into place the first time it comes into view
+// and its tiles follow one after another. `.reveal` is only added by the inline
+// script after the overview, so without JavaScript nothing is ever hidden.
 // Transform and opacity only: it runs on the compositor and moves no layout.
 [data-design="v2"] .guide-overview.reveal {
   opacity: 0;
