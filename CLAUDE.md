@@ -45,6 +45,12 @@ trabajo difícil. Tú solo haz la maleta."*
 Criterio de cierre: una guía de ejemplo se renderiza desde su fichero de datos ·
 Lighthouse ≥ 95 · el build falla con una guía inválida.
 
+**Checkpoint en curso: Checkpoint 3 — diseño de la guía**, según
+`docs/1.10_checkpoint3_diseno.md` (sub-checkpoints C3.1–C3.5). Misma fase, alcance
+reducido: PDF, Mi viaje, pagos y adaptación siguen fuera. **Excepción al "sin
+mapa":** el mapa solo se permite en el sub-checkpoint C3.5, y únicamente cuando
+el autor haya confirmado las coordenadas. Hasta entonces sigue prohibido.
+
 ## Reglas duras — no hacer
 
 - No esconder las guías tras email ni pago. La guía web completa es gratis y

@@ -3,6 +3,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCompiledGuide } from '../../lib/engine-guide.ts';
 import { placeMapUrl } from '../../lib/maps.ts';
 import { formatDate } from '../../lib/formatDate.ts';
+import TrustBlock from '../../components/guide/TrustBlock.astro';
+import GuideIndex from '../../components/guide/GuideIndex.astro';
+import GuidePhoto from '../../components/guide/GuidePhoto.astro';
+import QuickFacts from '../../components/guide/QuickFacts.astro';
+import Breadcrumb from '../../components/guide/Breadcrumb.astro';
+import { guideImage } from '../../lib/guide-images.ts';
+import { getImage } from 'astro:assets';
+import '../../styles/guide-v2.scss';
 
 const guide = await loadCompiledGuide(
   'content/guides/islandia/islandia-en-camper-13-dias.yaml',
@@ -10,6 +18,41 @@ const guide = await loadCompiledGuide(
 );
 
 const variant = guide.variants?.[0];
+
+const destinationName = 'Islandia';
+
+const cover = guideImage(guide.cover_image);
+// Temporary: the model has no alt for cover_image yet; it belongs with the photo amendment of 1.10 §3.7 (C3.4).
+const coverAlt =
+  'Cascada de Gljúfrafoss dentro de una grieta cubierta de musgo, con una persona agachada y los brazos abiertos frente al agua';
+const ogImage = await getImage({ src: cover, width: 1200, format: 'jpg', quality: 70 });
+const coverSizes = '(min-width: 48rem) 55vw, 100vw';
+
+// One source for "does this section render": the index and the sections below
+// read the same flags, so the index can never link to a section that is absent.
+const show = {
+  route: Boolean(variant),
+  sleep: (guide.accommodation?.zones.length ?? 0) > 0,
+  transport: Boolean(guide.transport),
+  budget: Boolean(guide.budget),
+  booking: (guide.booking_checklist?.length ?? 0) > 0,
+  criteria: (guide.our_criteria?.length ?? 0) > 0,
+  pitfalls: (guide.pitfalls?.length ?? 0) > 0 || (guide.terrain_tips?.length ?? 0) > 0,
+  practical: Boolean(guide.practical),
+  faq: (guide.faq?.length ?? 0) > 0,
+};
+
+const indexSections = [
+  { id: 'itinerario', label: 'La ruta', icon: 'route', visible: show.route },
+  { id: 'dormir', label: 'Dónde dormir', icon: 'sleep', visible: show.sleep },
+  { id: 'llegar', label: 'Cómo llegar y moverse', icon: 'transport', visible: show.transport },
+  { id: 'presupuesto', label: 'Presupuesto real', icon: 'budget', visible: show.budget },
+  { id: 'reservar', label: 'Qué reservar y cuándo', icon: 'booking', visible: show.booking },
+  { id: 'criterio', label: 'Nuestro criterio', icon: 'criteria', visible: show.criteria },
+  { id: 'errores', label: 'Errores y trampas', icon: 'pitfalls', visible: show.pitfalls },
+  { id: 'practico', label: 'Lo práctico', icon: 'practical', visible: show.practical },
+  { id: 'faq', label: 'Preguntas frecuentes', icon: 'faq', visible: show.faq },
+].filter((section) => section.visible);
 
 /**
  * Spanish decimal format (1.234,56 €), not toFixed's "1234.56" — this is a
@@ -35,7 +78,7 @@ const breadcrumbJsonLd = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', Astro.site).href },
-    { '@type': 'ListItem', position: 2, name: 'Islandia', item: new URL('/islandia/', Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: destinationName, item: new URL('/islandia/', Astro.site).href },
     { '@type': 'ListItem', position: 3, name: guide.title, item: pageUrl },
   ],
 };
@@ -62,70 +105,82 @@ const faqJsonLd =
     : null;
 ---
 
-{/*
-  No se pasa `image`: guide.cover_image apunta a /images/islandia/kirkjufell.jpg,
-  que no existe en public/ todavía (no hay fotos propias subidas). Pasar una ruta
-  rota generaría un og:image 404 en redes; mejor sin imagen hasta que exista una
-  foto real (nunca un banco de imágenes genérico, por las reglas del proyecto).
-*/}
-<BaseLayout title={guide.title} description={guide.description} noindex>
+<BaseLayout title={guide.title} description={guide.description} image={ogImage.src} design="v2" noindex>
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} slot="head" />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(articleJsonLd)} slot="head" />
-  {faqJsonLd && (
-    <script type="application/ld+json" is:inline set:html={JSON.stringify(faqJsonLd)} slot="head" />
-  )}
 
   <article class="guide">
-    <h1>{guide.title}</h1>
+    <header class="guide-hero">
+      <div class="guide-hero__text">
+        <div class="guide-hero__title">
+          {/* /islandia/ does not exist yet, so the destination crumb is not a link (1.10 §3.8). */}
+          <Breadcrumb crumbs={[{ label: 'Inicio', href: '/' }, { label: destinationName }]} />
+          <h1>{guide.title}</h1>
+        </div>
 
-    {guide.has_experience && guide.trip_done ? (
-      <p class="guide__dateline">Lo hicimos en {formatDate(guide.trip_done)}.</p>
-    ) : (
-      <p class="guide__dateline">Actualizado {formatDate(guide.updated_at)}</p>
-    )}
+        {/* Temporary: no model field for an editorial intro yet; pending the author's decision on adding one. */}
+        <div class="guide-hero__intro">
+          <p>
+            Hay lugares que se visitan y otros que se sienten.{' '}
+            <strong>Islandia, la tierra de hielo y fuego, es uno de ellos.</strong>
+          </p>
+          <p>
+            Una isla de glaciares, volcanes, cascadas, aguas termales y paisajes que parecen de otro planeta.
+            Nosotros la recorrimos en camper y hemos preparado esta ruta de 13 días para que descubras lo
+            mejor de Islandia sin tener que dedicar horas a decidir qué ver, cuándo hacerlo o cómo encajarlo.
+          </p>
+          <p><strong>Nosotros hacemos el trabajo difícil.{' '}<span>Tú solo haz la maleta.</span></strong></p>
+        </div>
 
-    <section class="guide__summary" aria-labelledby="resumen">
-      <h2 id="resumen">En resumen</h2>
-      <dl>
-        <dt>Resumen</dt>
-        <dd>{guide.summary.tagline}</dd>
-        {guide.summary.best_season && (
-          <>
-            <dt>Mejor época</dt>
-            <dd>{guide.summary.best_season}</dd>
-          </>
-        )}
-        {guide.summary.getting_around && (
-          <>
-            <dt>Cómo moverse</dt>
-            <dd>{guide.summary.getting_around}</dd>
-          </>
-        )}
-        {guide.summary.base_area && (
-          <>
-            <dt>Base</dt>
-            <dd>{guide.summary.base_area}</dd>
-          </>
-        )}
-        {/*
-          guide.summary.budget_per_person = total_reference / base_travelers = 4495.21 / 2 = 2247.605,
-          que el formateador muestra como "2.247,61 €", no "2.247,62 €" (la cifra por persona citada en
-          docs/1.6.4_json_islandia.md). Es una diferencia de 1 céntimo entre dividir el total real entre
-          2 y la cifra que cita ese documento — no hay un redondeo que haga coincidir exactamente el
-          total (4495.21) y el por-persona (2247.62) a la vez. Verificado, no es un bug de esta página.
-        */}
-        {guide.summary.budget_per_person != null && (
-          <>
-            <dt>Presupuesto</dt>
-            <dd>{currencyFormatter.format(guide.summary.budget_per_person)} por persona</dd>
-          </>
-        )}
-      </dl>
+      </div>
+
+      <div class="guide-hero__media">
+        <GuidePhoto
+          class="guide-hero__photo"
+          image={cover}
+          alt={coverAlt}
+          sizes={coverSizes}
+          priority
+          crop={{ media: '(max-width: 47.99rem)', ratio: 1, position: 'bottom' }}
+        />
+      </div>
+    </header>
+
+    <section class="guide-overview" aria-label="Resumen de la guía">
+      {guide.has_experience && guide.trip_done ? (
+        <TrustBlock tripDone={guide.trip_done} updatedAt={guide.updated_at} />
+      ) : (
+        <p class="guide__dateline">Actualizado {formatDate(guide.updated_at)}</p>
+      )}
+
+      <QuickFacts
+        currency={guide.budget?.currency ?? 'EUR'}
+        budgetPerPerson={guide.summary.budget_per_person}
+        budgetTotal={guide.budget?.total_reference}
+        budgetHref={show.budget ? '#presupuesto' : undefined}
+        bestSeason={guide.summary.best_season}
+        pace={guide.summary.pace_default}
+        baseArea={guide.summary.base_area}
+      />
+
+      <GuideIndex
+        sections={indexSections}
+        routeId="itinerario"
+        days={variant?.days.map((day) => ({ day: day.day, title: day.title }))}
+      />
     </section>
+    <script is:inline>
+      (() => {
+        const card = document.currentScript.previousElementSibling;
+        if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        card.classList.add('reveal');
+        new IntersectionObserver(([e], o) => e.isIntersecting && (card.classList.add('is-in'), o.disconnect()), { threshold: 0.15 }).observe(card);
+      })();
+    </script>
 
-    {variant && (
+    {show.route && variant && (
       <section aria-labelledby="itinerario">
-        <h2 id="itinerario">Día a día</h2>
+        <h2 id="itinerario">La ruta</h2>
         {variant.days.map((day) => (
           <section class="guide__day" aria-labelledby={`dia-${day.day}`}>
             <span class="guide__daynum" aria-hidden="true">{day.day}</span>
@@ -139,10 +194,7 @@ const faqJsonLd =
             <ol class="guide__stops">
               {day.route_stops.map((stop) => (
                 <li>
-                  <span class="guide__stopname">
-                    {stop.place.name}
-                    {stop.visit_status === 'visited' && <span class="badge badge--lived">Vivido</span>}
-                  </span>
+                  <span class="guide__stopname">{stop.place.name}</span>
                   <span class="guide__stop-meta">
                     {' · '}
                     {stop.duration_min} min
@@ -153,7 +205,6 @@ const faqJsonLd =
                     <a
                       class="guide__route"
                       href={placeMapUrl(stop.place.lat, stop.place.lng)}
-                      rel="noopener"
                       target="_blank"
                     >
                       Ver en Google Maps
@@ -189,7 +240,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.accommodation && guide.accommodation.zones.length > 0 && (
+    {show.sleep && guide.accommodation && (
       <section aria-labelledby="dormir">
         <h2 id="dormir">Dónde dormir</h2>
         {guide.accommodation.notes && <p>{guide.accommodation.notes}</p>}
@@ -217,7 +268,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.transport && (
+    {show.transport && guide.transport && (
       <section aria-labelledby="llegar">
         <h2 id="llegar">Cómo llegar y moverse</h2>
         {guide.transport.arrival?.map((arrival) => (
@@ -229,7 +280,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.budget && (
+    {show.budget && guide.budget && (
       <section aria-labelledby="presupuesto">
         <h2 id="presupuesto">Presupuesto real</h2>
         <p class="guide__budget-total">
@@ -255,7 +306,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.booking_checklist && guide.booking_checklist.length > 0 && (
+    {show.booking && guide.booking_checklist && (
       <section aria-labelledby="reservar">
         <h2 id="reservar">Qué reservar y cuándo</h2>
         <ul class="guide__checklist">
@@ -266,7 +317,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.our_criteria && guide.our_criteria.length > 0 && (
+    {show.criteria && guide.our_criteria && (
       <section aria-labelledby="criterio">
         <h2 id="criterio">Nuestro criterio</h2>
         <ul>
@@ -275,7 +326,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {((guide.pitfalls && guide.pitfalls.length > 0) || (guide.terrain_tips && guide.terrain_tips.length > 0)) && (
+    {show.pitfalls && (
       <section aria-labelledby="errores">
         <h2 id="errores">Errores y trampas</h2>
         <ul>
@@ -285,7 +336,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.practical && (
+    {show.practical && guide.practical && (
       <section aria-labelledby="practico">
         <h2 id="practico">Lo práctico</h2>
         {guide.practical.documents && guide.practical.documents.length > 0 && (
@@ -304,7 +355,7 @@ const faqJsonLd =
       </section>
     )}
 
-    {guide.faq && guide.faq.length > 0 && (
+    {show.faq && guide.faq && (
       <section aria-labelledby="faq">
         <h2 id="faq">Preguntas frecuentes</h2>
         <dl class="guide__faq">
@@ -317,5 +368,8 @@ const faqJsonLd =
         </dl>
       </section>
     )}
+
+    {/* After the visible FAQ on purpose: compression reuses the same text, so the schema costs almost nothing. */}
+    {faqJsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(faqJsonLd)} />}
   </article>
 </BaseLayout>

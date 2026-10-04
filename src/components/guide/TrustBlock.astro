@@ -1,0 +1,20 @@
+---
+import { formatDate, formatNumericDate } from '../../lib/formatDate.ts';
+
+interface Props {
+  tripDone: string;
+  updatedAt: string;
+}
+
+const { tripDone, updatedAt } = Astro.props;
+---
+
+<div class="trip-facts">
+  <p class="trip-facts__by">Ruta recorrida en {formatDate(tripDone)}</p>
+  <p class="trip-facts__updated">
+    Revisada y actualizada <time datetime={updatedAt}>{formatNumericDate(updatedAt)}</time>
+  </p>
+  <p class="trip-facts__about">
+    <a href="/sobre-mi/">Conoce quién está detrás <span aria-hidden="true">→</span></a>
+  </p>
+</div>

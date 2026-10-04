@@ -1,0 +1,12 @@
+// Redesign, opt-in per page via <html data-design="v2">. Imported only by the
+// pages that use it, so the home and Alsacia neither load nor match any of it.
+// Once approved it replaces main.scss everywhere and the scoping goes away.
+@use "v2/fonts";
+@use "v2/tokens";
+@use "v2/base";
+@use "v2/hero";
+@use "v2/overview";
+@use "v2/trip-facts";
+@use "v2/section-icons";
+@use "v2/guide-index";
+@use "v2/guide";

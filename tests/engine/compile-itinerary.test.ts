@@ -98,3 +98,23 @@ test('compileVariant computes n_stops_total and deduplicated all_places', () => 
   assert.strictEqual(variant.n_stops_total, 2)
   assert.strictEqual(variant.all_places.length, 1)
 })
+
+test('compileVariant computes n_route_stops_total excluding not_visited stops', () => {
+  const variant = compileVariant(
+    {
+      id: 'intensivo', name: 'V', description: 'd',
+      days: [
+        {
+          day: 1, title: 'D1', stops: [
+            { place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
+            { place_id: 'a', order: 2, duration_min: 30, planning_status: 'optional', visit_status: 'not_visited' },
+          ],
+        },
+        { day: 2, title: 'D2', stops: [{ place_id: 'a', order: 1, duration_min: 30, planning_status: 'required' }] },
+      ],
+    },
+    placeRegistry, emptyAffiliates, now,
+  )
+  assert.strictEqual(variant.n_stops_total, 3)
+  assert.strictEqual(variant.n_route_stops_total, 2)
+})

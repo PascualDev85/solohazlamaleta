@@ -7,16 +7,16 @@ status: reviewed
 trip_done: "2025-09"
 title: "Islandia en camper: ruta de 13 días por la Ring Road"
 description: "Ruta por Islandia en camper (13 días, antihoraria) con presupuesto real detallado, campings reales y lo que haríamos distinto."
-updated_at: 2026-09-30
-cover_image: /images/islandia/kirkjufell.jpg
+updated_at: 2026-10-04
+cover_image: islandia/islandia-gljufrafoss.jpg
 days: 13
 base_travelers: 2
 
 summary:
   tagline: "13 días recorriendo Islandia en camper, con el sur como aperitivo y el norte como premio"
-  best_season: "Junio-agosto (días largos); septiembre (auroras, menos gente)"
+  best_season: "Junio a septiembre"
   getting_around: "Camper alquilado. Ring Road como eje principal. Sin F-roads."
-  base_area: "Sin base fija; camping diferente cada noche"
+  base_area: "Un camping distinto cada noche"
   pace_default: intensivo
 
 budget:

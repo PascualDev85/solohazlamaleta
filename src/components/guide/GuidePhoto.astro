@@ -1,0 +1,66 @@
+---
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  sizes: string;
+  /** The above-the-fold photo: loaded eagerly and first, since it is the LCP element. */
+  priority?: boolean;
+  /** Art direction: within `media`, serve files pre-cropped to `ratio` (w/h) instead of the full frame. */
+  crop?: { media: string; ratio: number; position: string };
+  class?: string;
+}
+
+const { image, alt, sizes, priority = false, crop, class: className } = Astro.props;
+
+// Per-format quality: AVIF at 30 still reads clean at display size on textured
+// photos, at a fraction of the bytes; <Picture> would force one quality on
+// every format. 740w covers mid-range phones (412px at 1.75x needs 721px).
+const widths = [400, 640, 740, 800, 1024, 1280, 1600].filter((w) => w <= image.width);
+const [avif, webp, jpg] = await Promise.all([
+  getImage({ src: image, widths, format: 'avif', quality: 30 }),
+  getImage({ src: image, widths, format: 'webp', quality: 65 }),
+  // Last-resort fallback for browsers with neither AVIF nor WebP: one size is enough.
+  getImage({ src: image, width: Math.min(800, image.width), format: 'jpg', quality: 70 }),
+]);
+
+async function croppedSrcset(format: 'avif' | 'webp', quality: number) {
+  if (!crop) return undefined;
+  const cropWidths = [400, 640, 740, 1024].filter((w) => w / crop.ratio <= image.height && w <= image.width);
+  const files = await Promise.all(
+    cropWidths.map((w) =>
+      getImage({
+        src: image,
+        width: w,
+        height: Math.round(w / crop.ratio),
+        fit: 'cover',
+        position: crop.position,
+        format,
+        quality,
+      }),
+    ),
+  );
+  return files.map((file, i) => `${file.src} ${cropWidths[i]}w`).join(', ');
+}
+
+const [cropAvif, cropWebp] = await Promise.all([croppedSrcset('avif', 30), croppedSrcset('webp', 65)]);
+---
+
+<picture>
+  {crop && <source type="image/avif" media={crop.media} srcset={cropAvif} sizes={sizes} />}
+  {crop && <source type="image/webp" media={crop.media} srcset={cropWebp} sizes={sizes} />}
+  <source type="image/avif" srcset={avif.srcSet.attribute} sizes={sizes} />
+  <source type="image/webp" srcset={webp.srcSet.attribute} sizes={sizes} />
+  <img
+    src={jpg.src}
+    width={image.width}
+    height={image.height}
+    alt={alt}
+    class={className}
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : 'auto'}
+    decoding="async"
+  />
+</picture>
