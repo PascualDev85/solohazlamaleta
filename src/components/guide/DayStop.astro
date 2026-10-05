@@ -1,7 +1,6 @@
 ---
 import type { CompiledStop } from '../../../engine/index.ts';
 import { placeMapUrl } from '../../lib/maps.ts';
-import { formatShortDate } from '../../lib/formatDate.ts';
 import { formatMinutes } from '../../lib/formatDuration.ts';
 import SectionIcon from './SectionIcon.astro';
 
@@ -41,23 +40,20 @@ const price = parking
       </span>
     </p>
     {place.description && <p class="day-stop__desc">{place.description}</p>}
+    {/*
+      Its own line, set apart from the description: the road-sign "P" with the
+      price (or "Gratis"), and the map link pushed to the right.
+    */}
     <p class="day-stop__practical">
       {parking && (
-        <>
-          {parking.price === 0 ? (
-            <span class="day-stop__free">Parking gratuito</span>
-          ) : (
-            <span>Parking · {price}</span>
-          )}
-          {/* A price always carries its check date (CLAUDE.md, sensitive data). */}
-          <span class="day-stop__date">
-            <span class="visually-hidden">comprobado en </span>
-            <time datetime={parking.verified_at}>{formatShortDate(parking.verified_at)}</time>
-          </span>
-        </>
+        <span class="day-stop__parking">
+          <span class="day-stop__p" aria-hidden="true">P</span>
+          <span class="visually-hidden">Parking: </span>
+          {parking.price === 0 ? <strong class="day-stop__free">Gratis</strong> : <strong>{price}</strong>}
+        </span>
       )}
-      <a class="day-stop__map" href={placeMapUrl(place.lat, place.lng)} target="_blank">
-        Mapa<span class="visually-hidden"> de {place.name} (se abre en una pestaña nueva)</span>
+      <a class="day-stop__map" href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">
+        <SectionIcon name="pin" />Mapa<span class="visually-hidden"> de {place.name} (se abre en una pestaña nueva)</span>
       </a>
     </p>
   </div>

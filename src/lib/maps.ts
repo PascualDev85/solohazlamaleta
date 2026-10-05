@@ -5,5 +5,7 @@
  * route link is the wrong contract to offer.
  */
 export function placeMapUrl(lat: number, lng: number): string {
-  return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+  // Six decimals (~0.1 m) and an encoded comma, as the Google Maps URLs docs
+  // ask, so the pin lands on the exact point instead of a nearby named place.
+  return `https://www.google.com/maps/search/?api=1&query=${lat.toFixed(6)}%2C${lng.toFixed(6)}`
 }

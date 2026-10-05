@@ -9,7 +9,6 @@ import QuickFacts from '../../components/guide/QuickFacts.astro';
 import Breadcrumb from '../../components/guide/Breadcrumb.astro';
 import RouteDays from '../../components/guide/RouteDays.astro';
 import SectionIcon from '../../components/guide/SectionIcon.astro';
-import AffiliateNotice from '../../components/AffiliateNotice.astro';
 import { guideImage } from '../../lib/guide-images.ts';
 import { getImage } from 'astro:assets';
 import '../../styles/guide-v2.scss';
@@ -25,14 +24,6 @@ const destinationName = 'Islandia';
 
 // Who travelled this route. No model field for it: the names are only shown on this page.
 const travelers = 'David y Natalia';
-
-// Travel-insurance partner link, `/ir/{partner}-{key}`. Undefined until a partner
-// (IATI, Heymondo…) is chosen and set active in affiliates.json; without it the
-// insurance card renders with no button, never a link that goes nowhere.
-const insuranceHref: string | undefined = undefined;
-// Preview: the dev server shows the button (inert, no href) so the design can be
-// judged before a partner exists. Production builds only show it with a link.
-const showInsuranceButton = Boolean(insuranceHref) || import.meta.env.DEV;
 
 const cover = guideImage(guide.cover_image);
 // Temporary: the model has no alt for cover_image yet; it belongs with the photo amendment of 1.10 §3.7 (C3.4).
@@ -186,30 +177,17 @@ const faqJsonLd =
     </script>
 
     {/*
-      Travel-insurance recommendation. Placed here, before the route, by the
-      author's decision (2026-10-04): an explicit exception to "affiliate only in
-      context" (BRIEF §affiliation, 1.11 §6). No partner chosen yet (IATI,
-      Heymondo…), so no link yet: see `insuranceHref`.
+      The index trigger docked to the bottom of the screen. Hidden until the
+      in-flow "En esta guía" bar has fully come into view, then it takes over
+      (pure CSS, scroll-driven: see _guide-index.scss). It sits outside the
+      overview on purpose: the overview's entrance transform would otherwise
+      anchor this fixed element to it.
     */}
-    <aside class="insurance" aria-labelledby="seguro-title">
-      <span class="insurance__badge"><SectionIcon name="shield" /></span>
-      <div class="insurance__head">
-        <p class="insurance__eyebrow">Antes de ir</p>
-        <p class="insurance__title" id="seguro-title">Viaja con seguro</p>
-      </div>
-      <p class="insurance__body">Horas al volante, un glaciar a pie y pueblos muy separados. Tu seguro debe cubrir:</p>
-      <ul class="insurance__covers">
-        <li><SectionIcon name="check" />Médico</li>
-        <li><SectionIcon name="check" />Cancelación</li>
-        <li><SectionIcon name="check" />Actividades</li>
-      </ul>
-      {showInsuranceButton && (
-        <a class="insurance__go" href={insuranceHref} rel="sponsored nofollow">
-          <span class="visually-hidden">Ver el seguro que recomendamos</span>
-          <span class="insurance__arrow" aria-hidden="true"><SectionIcon name="arrow" /></span>
-        </a>
-      )}
-    </aside>
+    <button class="guide-index__dock" type="button" popovertarget="guide-index">
+      <SectionIcon name="list" />
+      En esta guía
+    </button>
+
 
     {show.route && variant && <RouteDays days={variant.days} id="itinerario" />}
 
@@ -341,9 +319,6 @@ const faqJsonLd =
         </dl>
       </section>
     )}
-
-    {/* Required wherever a commission link appears (BRIEF: visible notice). */}
-    {insuranceHref && <AffiliateNotice />}
 
     {/* After the visible FAQ on purpose: compression reuses the same text, so the schema costs almost nothing. */}
     {faqJsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(faqJsonLd)} />}

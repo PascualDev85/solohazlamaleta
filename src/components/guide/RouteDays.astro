@@ -16,7 +16,8 @@ const { days, id } = Astro.props;
   The whole route as one swipeable row: every day is a card, the strip of day
   numbers above says how many there are and where you are. Without JavaScript
   it is a plain scroll-snap row and the numbers are anchor links; the script
-  only adds smooth jumps, the current day and the desktop arrows.
+  only adds smooth jumps, the current day and the desktop arrows. Each
+  slide carries its own title and summary, so they change with the swipe.
 */}
 <section class="route" aria-labelledby={id}>
   <div class="route__head">
@@ -26,8 +27,9 @@ const { days, id } = Astro.props;
         <ol class="route__days">
           {days.map((day) => (
             <li>
-              <a href={`#dia-${day.day}`} title={day.title}>
-                <span class="visually-hidden">Día </span>{String(day.day).padStart(2, '0')}
+              {/* The name includes the visible "02" (WCAG 2.5.3, label in name). */}
+              <a href={`#dia-${day.day}`} aria-label={`Día ${String(day.day).padStart(2, '0')}: ${day.title}`}>
+                {String(day.day).padStart(2, '0')}
               </a>
             </li>
           ))}
