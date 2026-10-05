@@ -71,3 +71,10 @@ test('parking accepts a free (0) or paid price and rejects a negative one', () =
   assert.strictEqual(PlaceSourceSchema.safeParse({ ...base, parking: { price: 1000, currency: 'ISK', verified_at: '2025-09-12' } }).success, true)
   assert.strictEqual(PlaceSourceSchema.safeParse({ ...base, parking: { price: -1, currency: 'ISK', verified_at: '2025-09-12' } }).success, false)
 })
+
+test('maps_url accepts a Google Maps link and rejects any other host', () => {
+  const base = { place_id: 'x', name: 'X', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2025-09-12' }
+  assert.strictEqual(PlaceSourceSchema.safeParse({ ...base, maps_url: 'https://maps.google.com/?cid=802240876601686224' }).success, true)
+  assert.strictEqual(PlaceSourceSchema.safeParse({ ...base, maps_url: 'https://www.google.com/maps/place/X' }).success, true)
+  assert.strictEqual(PlaceSourceSchema.safeParse({ ...base, maps_url: 'https://example.com/maps' }).success, false)
+})

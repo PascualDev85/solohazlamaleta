@@ -55,6 +55,7 @@ export interface CompiledStop {
     affiliate: CompiledAffiliate
     advance_notice?: string
   }
+  price_checked_at?: string
 }
 
 export interface CompiledDay {

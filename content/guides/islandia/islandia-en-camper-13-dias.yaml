@@ -15,8 +15,8 @@ base_travelers: 2
 summary:
   tagline: "El sur de las cascadas, los fiordos del este, el norte volcánico y la península de Snæfellsnes, en una sola vuelta."
   best_season: "Junio a septiembre"
-  getting_around: "Camper normal, sin 4x4"
-  base_area: "Un camping distinto cada noche"
+  getting_around: "Camper sin 4x4 con **calefacción**"
+  base_area: "Un camping cada noche"
   pace_default: intensivo
 
 budget:
@@ -115,7 +115,7 @@ variants:
 
       - day: 2
         title: "Círculo Dorado"
-        summary: "Þingvellir, Géiser y Gullfoss. El trío clásico para entrar en calor."
+        summary: "El trío clásico para entrar en calor y un río termal para cerrar el día."
         photo:
           src: islandia/islandia-gullfoss.jpg
           alt: "Cascada de Gullfoss en dos saltos, con nubes oscuras y gente en el mirador de la izquierda"

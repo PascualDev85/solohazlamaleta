@@ -2,8 +2,11 @@
   name: Parque Nacional de Þingvellir
   short_name: Þingvellir
   destination: islandia
-  lat: 64.2559
-  lng: -21.1300
+  # Parking P1, confirmed by the author on Google Maps: 64.25563936768594, -21.136392162917.
+  lat: 64.255639
+  lng: -21.136392
+  # "Þingvellir Parking P1" place card (CID from the author's Google Maps link).
+  maps_url: https://maps.google.com/?cid=802240876601686224
   type: park
   verified_at: 2025-09-12
   source_url: https://www.thingvellir.is

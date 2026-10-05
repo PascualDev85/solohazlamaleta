@@ -152,3 +152,34 @@ test('compileDay keeps photo, highlight, drive and overnight unchanged', () => {
     extras,
   )
 })
+
+const parkedPlace: PlaceSource = {
+  place_id: 'p', name: 'P', destination: 'islandia', lat: 1, lng: 1, type: 'other',
+  verified_at: '2025-09-12', review_interval: 12,
+  parking: { price: 1000, currency: 'ISK', verified_at: '2025-09-12' },
+}
+const parkedRegistry: PlaceRegistry = { get: (id) => (id === 'p' ? parkedPlace : places[id]) }
+const parkedStop = { place_id: 'p', order: 1, duration_min: 30, planning_status: 'required' as const, visit_status: 'visited' as const }
+
+test('price_checked_at is set when the price was checked before the guide update', () => {
+  const stop = compileStop(parkedStop, parkedRegistry, emptyAffiliates, now, '2026-10-04')
+  assert.strictEqual(stop.price_checked_at, '2025-09-12')
+})
+
+test('price_checked_at is absent when the price was checked on or after the guide update', () => {
+  assert.strictEqual(compileStop(parkedStop, parkedRegistry, emptyAffiliates, now, '2025-09-12').price_checked_at, undefined)
+  assert.strictEqual(compileStop(parkedStop, parkedRegistry, emptyAffiliates, now, '2025-01-01').price_checked_at, undefined)
+})
+
+test('price_checked_at is absent when the place has no parking price', () => {
+  const stop = compileStop({ ...parkedStop, place_id: 'a' }, parkedRegistry, emptyAffiliates, now, '2026-10-04')
+  assert.strictEqual(stop.price_checked_at, undefined)
+})
+
+test('compileVariant passes the guide update date down to every stop', () => {
+  const variant = compileVariant(
+    { id: 'intensivo', name: 'V', description: 'd', days: [{ day: 1, title: 'D1', stops: [parkedStop] }] },
+    parkedRegistry, emptyAffiliates, now, '2026-10-04',
+  )
+  assert.strictEqual(variant.days[0].route_stops[0].price_checked_at, '2025-09-12')
+})

@@ -26,6 +26,13 @@ export const ParkingSchema = z.object({
   verified_at: z.string(),
 }).strict()
 
+// The exact Google Maps place card for a stop (e.g. a named car park), when a
+// bare coordinate pin is not good enough. Google hosts only.
+const GoogleMapsUrl = z.string().url().refine(
+  (url) => /^https:\/\/(maps\.google\.com|www\.google\.com\/maps)\b/.test(url),
+  { message: 'maps_url debe ser un enlace de Google Maps' },
+)
+
 export const PlaceSourceSchema = z.object({
   place_id: z.string(),
   name: z.string(),
@@ -33,6 +40,7 @@ export const PlaceSourceSchema = z.object({
   destination: z.string(),
   lat: z.number(),
   lng: z.number(),
+  maps_url: GoogleMapsUrl.optional(),
   type: PlaceType,
   verified_at: z.string(),
   review_interval: z.number().optional().default(12),
