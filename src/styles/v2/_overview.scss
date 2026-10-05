@@ -31,21 +31,27 @@
     color: var(--color-text-muted);
   }
 
-  // A swipeable row bleeding to the screen edge, so the next tile peeks in.
+  // Mobile: a swipeable row bleeding to the screen edge. Tiles sized so
+  // about two and three quarters show at 390 px; the fade on the right edge marks the rest
+  // and goes away once the row reaches its end.
   &__rail {
-    display: flex;
-    gap: var(--space-sm);
+    --tile-gap: 0.5rem;
+    --tile-w: 8.25rem;
+
     margin: 0 calc(-1 * var(--rail-bleed));
-    padding: 0 var(--rail-bleed) var(--space-2xs);
-    list-style: none;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scroll-padding-inline: var(--rail-bleed);
     scrollbar-width: none;
+    mask-image: linear-gradient(to right, #000 calc(100% - 3.5rem), transparent);
 
     &::-webkit-scrollbar {
       display: none;
+    }
+
+    &[data-at-end] {
+      mask-image: none;
     }
 
     &:focus-visible {
@@ -55,12 +61,19 @@
     }
   }
 
+  &__list {
+    display: flex;
+    gap: var(--tile-gap);
+    width: max-content;
+    margin: 0;
+    padding: 0 var(--rail-bleed) var(--space-2xs);
+    list-style: none;
+  }
+
   &__tile {
     flex: none;
-    width: max-content;
-    min-width: 9.5rem;
-    max-width: 14rem;
-    padding: 0.875rem 1rem;
+    width: var(--tile-w);
+    padding: 0.65rem 0.65rem 0.7rem;
     border: 1px solid var(--color-blush-edge);
     border-radius: 1.25rem 0.5rem 1.25rem 0.5rem;
     background: linear-gradient(145deg, var(--color-blush-from), var(--color-blush-to));
@@ -81,22 +94,24 @@
     }
   }
 
-  &__tile--wide {
-    max-width: none;
-  }
-
   // Desktop: the column has room for every fact, so no swiping. The budget
   // takes the full row and the rest share the one below.
   @include from("md") {
     &__rail {
+      margin: 0;
+      overflow: visible;
+      mask-image: none;
+    }
+
+    &__list {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      overflow: visible;
+      width: auto;
+      padding: 0;
     }
 
     &__tile {
       width: auto;
-      max-width: none;
     }
 
     &__tile--wide {
@@ -107,50 +122,73 @@
   &__label {
     display: flex;
     align-items: center;
-    gap: var(--space-xs);
-    font-size: var(--step--1);
+    gap: 0.35rem;
+    font-size: 0.8125rem;
     font-weight: 700;
-    white-space: nowrap;
+    line-height: 1.25;
     color: var(--color-text-muted);
 
     .section-icon {
       flex: none;
-      width: 1.15rem;
-      height: 1.15rem;
+      width: 1rem;
+      height: 1rem;
       color: var(--color-label);
     }
   }
 
   &__value {
     margin-top: var(--space-2xs) !important;
-    font-size: var(--step-0);
+    font-size: 0.875rem;
     font-weight: 800;
     line-height: 1.3;
     color: var(--color-text);
   }
 
+  // "2.248 €/pers." always on one line.
   &__value:has(.quick-facts__big) {
     font-weight: 600;
     white-space: nowrap;
     color: var(--color-text-muted);
   }
 
+  // Plain weight so the one stressed word (**…** in the data) stands out.
+  &__value--plain {
+    font-weight: 600;
+
+    strong {
+      font-weight: 900;
+    }
+  }
+
   &__big {
-    font-size: var(--step-2);
+    font-size: 1.1rem;
     font-weight: 900;
     letter-spacing: -0.01em;
+    line-height: 1.1;
     color: var(--color-text);
+  }
+
+  &__unit {
+    margin-left: 0.1em;
+    font-size: 0.75rem;
+    font-weight: 700;
   }
 
   &__note {
     margin-top: var(--space-2xs) !important;
-    font-size: var(--step--1);
+    font-size: 0.75rem;
     font-weight: 600;
-    white-space: nowrap;
+    line-height: 1.35;
     color: var(--color-text-muted);
 
     a {
+      display: block;
       font-weight: 800;
+
+      @include from("md") {
+        display: inline;
+        margin-left: 0.4em;
+      }
     }
   }
 }

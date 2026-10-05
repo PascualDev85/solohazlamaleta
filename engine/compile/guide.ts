@@ -10,7 +10,7 @@ export function compileGuide(
   affiliates: AffiliateRegistry,
   now: Date = new Date(),
 ): CompiledGuide {
-  const variants = source.variants?.map((variant) => compileVariant(variant, places, affiliates, now))
+  const variants = source.variants?.map((variant) => compileVariant(variant, places, affiliates, now, source.updated_at))
   const budget = source.budget ? compileBudget(source.budget, source.base_travelers ?? 1) : undefined
   const allPlaces = uniquePlaces((variants ?? []).flatMap((variant) => variant.all_places))
 

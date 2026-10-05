@@ -183,4 +183,86 @@
     font-variant-numeric: tabular-nums;
     text-align: center;
   }
+
+  // Docked trigger. Once the in-flow bar has fully come into view it hands
+  // over to a pill fixed at the bottom of the screen; scrolling back up hands
+  // it back. Scroll-driven, no JavaScript: the bar names a view timeline and
+  // both buttons read it. Each one is visibility: hidden while the other is
+  // on duty, so it can be neither clicked, focused nor read. Without support
+  // for scroll-driven animations the dock never shows and the bar stays put.
+  .guide-index__dock {
+    display: none;
+  }
+
+  @supports (animation-timeline: view()) {
+    .guide {
+      timeline-scope: --guide-index;
+    }
+
+    .guide-index__open {
+      view-timeline: --guide-index block;
+      animation: guide-index-undock linear both;
+      animation-timeline: --guide-index;
+      animation-range: contain 0% contain 6%;
+    }
+
+    .guide > .guide-index__dock {
+      position: fixed;
+      inset: auto 0 max(1rem, env(safe-area-inset-bottom));
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      width: max-content;
+      max-width: none;
+      min-height: 3rem;
+      margin-inline: auto;
+      padding: 0 var(--space-md) 0 0.85rem;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      background: var(--color-bg);
+      box-shadow: 0 10px 30px rgb(10 15 20 / 0.18);
+      color: var(--color-text);
+      font: 800 0.9375rem / 1 var(--font-display);
+      cursor: pointer;
+      animation: guide-index-dock linear both;
+      animation-timeline: --guide-index;
+      animation-range: contain 0% contain 6%;
+
+      .section-icon {
+        width: 1.2rem;
+        height: 1.2rem;
+        color: var(--color-accent);
+      }
+
+      &:hover {
+        border-color: var(--color-accent);
+      }
+    }
+
+    // The page foot keeps clear of the dock.
+    body:has(.guide-index__dock) .site-footer {
+      margin-bottom: 5rem;
+    }
+  }
+
+  @keyframes guide-index-undock {
+    to {
+      visibility: hidden;
+    }
+  }
+
+  @keyframes guide-index-dock {
+    from {
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+
+    to {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+    }
+  }
 }

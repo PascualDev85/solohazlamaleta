@@ -1,12 +1,26 @@
-import type { StopSource, DaySource, VariantSource } from '../../schemas/index.ts'
+import type { StopSource, DaySource, VariantSource, PlaceSource } from '../../schemas/index.ts'
 import type { CompiledStop, CompiledDay, CompiledVariant, PlaceRegistry, AffiliateRegistry } from '../types.ts'
 import { resolvePlace, resolveAffiliate, uniquePlaces } from './place.ts'
+
+/**
+ * The check date a stop shows next to its price (today the parking price,
+ * the only price a stop displays). Only when that check is older than the
+ * guide's own update: a guide updated after the check vouches for it.
+ * Without a guide date the check date is always shown.
+ */
+function priceCheckedAt(place: PlaceSource, guideUpdatedAt?: string): string | undefined {
+  const checked = place.parking?.verified_at
+  if (!checked) return undefined
+  if (guideUpdatedAt && new Date(checked) >= new Date(guideUpdatedAt)) return undefined
+  return checked
+}
 
 export function compileStop(
   stop: StopSource,
   places: PlaceRegistry,
   affiliates: AffiliateRegistry,
   now: Date = new Date(),
+  guideUpdatedAt?: string,
 ): CompiledStop {
   const place = places.get(stop.place_id)
   if (!place) {
@@ -25,6 +39,7 @@ export function compileStop(
     variant_note: stop.variant_note,
     skip_reason: stop.skip_reason,
     experience: stop.experience,
+    price_checked_at: priceCheckedAt(place, guideUpdatedAt),
   }
 
   if (stop.booking) {
@@ -46,8 +61,9 @@ export function compileDay(
   places: PlaceRegistry,
   affiliates: AffiliateRegistry,
   now: Date = new Date(),
+  guideUpdatedAt?: string,
 ): CompiledDay {
-  const stops = day.stops.map((stop) => compileStop(stop, places, affiliates, now))
+  const stops = day.stops.map((stop) => compileStop(stop, places, affiliates, now, guideUpdatedAt))
   const routeStops = stops.filter((stop) => stop.visit_status !== 'not_visited')
   return {
     day: day.day,
@@ -76,8 +92,9 @@ export function compileVariant(
   places: PlaceRegistry,
   affiliates: AffiliateRegistry,
   now: Date = new Date(),
+  guideUpdatedAt?: string,
 ): CompiledVariant {
-  const days = variant.days.map((day) => compileDay(day, places, affiliates, now))
+  const days = variant.days.map((day) => compileDay(day, places, affiliates, now, guideUpdatedAt))
   const allStopPlaces = days.flatMap((day) => day.stops.map((stop) => stop.place))
 
   return {

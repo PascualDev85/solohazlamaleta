@@ -144,7 +144,7 @@
     // How far <main>'s side padding reaches: the row bleeds out by exactly that.
     --bleed: var(--gutter);
     --rail-pad: var(--bleed);
-    --card-w: min(calc(100vw - 3.5rem), 22rem);
+    --card-w: min(calc(100vw - 3rem), 23rem);
     --gap: var(--space-sm);
 
     position: relative;
@@ -168,7 +168,7 @@
       --rail-pad: max(var(--bleed), calc(var(--bleed) + (100% - var(--measure-text)) / 2));
     }
 
-    > .day-card {
+    > .day {
       flex: 0 0 var(--card-w);
       scroll-snap-align: start;
     }
@@ -182,15 +182,18 @@
     }
   }
 
-  // Cards ease up to full size as they reach the start of the row and shrink
-  // a little as they leave or wait at the edge: the row reads as a deck.
-  // Scale only, never opacity, so no text ever loses contrast.
+  // Swipe effect, scroll-driven (no JavaScript):
+  // - Coverflow: a card turns slightly in 3D and shrinks as it waits at the
+  //   edge or leaves, and stands straight once it lands at the row's start.
+  // - Parallax: the photo pans inside its frame more slowly than the card and
+  //   regains its full colour as the card arrives.
+  // Transforms and the photo's filter only, never opacity, so no text ever
+  // loses contrast. Off when the reader asks for reduced motion.
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: view()) {
       // Two animations, one per range. The exit one has no backwards fill, so
       // it stays out of the way until the card starts to leave.
-      .route__rail > .day-card {
-        transform-origin: 50% 0;
+      .route__rail > .day {
         animation:
           route-card-in linear both,
           route-card-out linear forwards;
@@ -200,21 +203,48 @@
 
       @keyframes route-card-in {
         from {
-          transform: scale(0.92);
+          transform-origin: 0 50%;
+          transform: perspective(900px) rotateY(18deg) scale(0.88);
         }
 
         to {
+          transform-origin: 0 50%;
           transform: none;
         }
       }
 
       @keyframes route-card-out {
         from {
+          transform-origin: 100% 50%;
           transform: none;
         }
 
         to {
-          transform: scale(0.92);
+          transform-origin: 100% 50%;
+          transform: perspective(900px) rotateY(-18deg) scale(0.88);
+        }
+      }
+
+      .route__rail .day-card__photo {
+        animation: route-photo linear both;
+        animation-timeline: view(inline);
+        animation-range: cover;
+      }
+
+      @keyframes route-photo {
+        from {
+          transform: scale(1.06) translateX(3%);
+          filter: saturate(0.55);
+        }
+
+        35%,
+        65% {
+          filter: none;
+        }
+
+        to {
+          transform: scale(1.06) translateX(-3%);
+          filter: saturate(0.55);
         }
       }
     }
