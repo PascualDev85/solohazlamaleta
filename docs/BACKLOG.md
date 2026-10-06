@@ -58,6 +58,23 @@ Las que llevan **(tuya)** dependen de ti y nadie más puede hacerlas.
       está y sí corresponde a contenido visible.
 - [ ] Optimización de imágenes con `astro:assets` cuando haya fotos.
 
+## Web — rendimiento (cuando la guía de Islandia esté completa)
+
+Medido el 2026-10-06 en la rama `feature/checkpoint3-diseno-v4`: Lighthouse
+móvil 100/100/100, LCP 1,9 s, CLS 0, 0 ms de bloqueo, 170 KB en 21
+peticiones. Nada es urgente; se revisa con la página terminada, no antes.
+
+- [ ] **Tamaño del DOM**: 2.022 elementos (Lighthouse avisa hacia 1.500).
+      Crece porque cada día lleva en el HTML todas sus paradas y su panel
+      "Ver día completo". Con 13 días va bien; medir de nuevo con todos los
+      días rellenos (fotos, "Lo mejor del día") y aligerar si hace falta.
+- [ ] **Fuentes**: 98 KB, casi el 60 % del peso. Recortarlas a los caracteres
+      usados (subsetting) ahorraría unos 40–50 KB.
+- [x] **CSS que bloquea el primer pintado** (2026-10-06): todo el CSS va
+      incrustado en el HTML (`build.inlineStylesheets: 'always'` en
+      `astro.config.mjs`). La guía pasó de 99 a 100 estable en móvil; LCP de
+      las páginas pequeñas 1,2 → 1,1 s.
+
 ## Infraestructura
 
 - [ ] Conectar Cloudflare Pages al repo y desplegar `develop` a un dominio de

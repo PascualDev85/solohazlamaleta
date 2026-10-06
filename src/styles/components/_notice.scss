@@ -20,8 +20,10 @@
     color: var(--color-text);
     margin-block: var(--space-md);
 
+    // The accent nudged towards the text colour: darker in light mode, lighter
+    // in dark, so it stays AA (5:1+) on the quiet accent ground in both.
     strong {
-      color: var(--color-accent);
+      color: color-mix(in srgb, var(--color-accent) 85%, var(--color-text));
     }
   }
 }

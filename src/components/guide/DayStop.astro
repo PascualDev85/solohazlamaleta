@@ -1,7 +1,7 @@
 ---
 import type { CompiledStop } from '../../../engine/index.ts';
 import { placeMapUrl } from '../../lib/maps.ts';
-import { formatMinutes } from '../../lib/formatDuration.ts';
+import { formatDuration } from '../../lib/formatDuration.ts';
 import SectionIcon from './SectionIcon.astro';
 
 interface Props {
@@ -36,7 +36,7 @@ const price = parking
         {shortName ?? place.name}{shortName && <span class="visually-hidden"> ({place.name})</span>}
       </span>
       <span class="day-stop__time">
-        <SectionIcon name="clock" />{formatMinutes(stop.duration_min)}<span class="visually-hidden"> de visita</span>
+        <SectionIcon name="clock" />{formatDuration(stop.duration_min, stop.duration_max_min)}<span class="visually-hidden"> de visita</span>
       </span>
     </p>
     {place.description && <p class="day-stop__desc">{place.description}</p>}
@@ -47,9 +47,16 @@ const price = parking
     <p class="day-stop__practical">
       {parking && (
         <span class="day-stop__parking">
-          <span class="day-stop__p" aria-hidden="true">P</span>
+          <span class="day-stop__p" aria-hidden="true"></span>
           <span class="visually-hidden">Parking: </span>
-          {parking.price === 0 ? <strong class="day-stop__free">Gratis</strong> : <strong>{price}</strong>}
+          {parking.price === 0 ? (
+            <strong class="day-stop__free">Gratis</strong>
+          ) : (
+            <strong>
+              {price}
+              {parking.period_hours && <span class="day-stop__period"> / {parking.period_hours} h</span>}
+            </strong>
+          )}
         </span>
       )}
       <a class="day-stop__map" href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">

@@ -40,6 +40,7 @@ export interface CompiledStop {
   place: CompiledPlace
   order: number
   duration_min: number
+  duration_max_min?: number
   planning_status: 'required' | 'optional'
   visit_status: 'visited' | 'not_visited' | 'unknown'
   start_time?: string

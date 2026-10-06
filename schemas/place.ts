@@ -23,6 +23,8 @@ export const HoursSchema = z.object({
 export const ParkingSchema = z.object({
   price: z.number().min(0),
   currency: z.string(),
+  // The price covers this many hours ("1.000 ISK / 5 h"); absent for a flat fee.
+  period_hours: z.number().positive().optional(),
   verified_at: z.string(),
 }).strict()
 

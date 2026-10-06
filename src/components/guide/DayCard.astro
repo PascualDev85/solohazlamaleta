@@ -62,7 +62,7 @@ const hasFullDay = experiences.length > 0 || Boolean(day.our_take) || Boolean(da
 
       <div class="day-card__overlay">
         {day.route_line.length > 0 && (
-          <ol class="day-card__route" aria-label="Ruta del día">
+          <ol class="day-card__route" aria-label="Ruta del día" tabindex="0">
             {day.route_line.map((name) => <li>{name}</li>)}
           </ol>
         )}

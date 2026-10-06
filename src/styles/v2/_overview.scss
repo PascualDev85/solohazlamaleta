@@ -10,10 +10,6 @@
 
   margin-block: var(--space-lg) 1rem;
 
-  .guide-index__open {
-    margin-top: var(--space-md);
-  }
-
   @include from("md") {
     --rail-bleed: 0px;
   }
@@ -44,14 +40,22 @@
     scroll-snap-type: x mandatory;
     scroll-padding-inline: var(--rail-bleed);
     scrollbar-width: none;
-    mask-image: linear-gradient(to right, #000 calc(100% - 3.5rem), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - var(--rail-fade)), transparent);
 
     &::-webkit-scrollbar {
       display: none;
     }
 
-    &[data-at-end] {
-      mask-image: none;
+    // The fade clears over the last stretch of the scroll: a scroll-driven
+    // animation of the fade width, no JavaScript. Longhands on purpose (the
+    // minifier would merge "animation" and "animation-timeline" into an
+    // invalid shorthand). Without support the fade simply stays.
+    @supports (animation-timeline: scroll()) {
+      animation-name: quick-facts-fade-out;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(self inline);
+      animation-range: 85% 100%;
     }
 
     &:focus-visible {
@@ -206,8 +210,7 @@
 
   .trip-facts,
   .quick-facts__title,
-  .quick-facts__tile,
-  .guide-index__open {
+  .quick-facts__tile {
     opacity: 0;
     transform: translateY(1.25rem);
     transition:
@@ -229,16 +232,25 @@
     }
   }
 
-  .guide-index__open {
-    transition-delay: 0.7s;
-  }
-
   &.is-in,
   &.is-in .trip-facts,
   &.is-in .quick-facts__title,
-  &.is-in .quick-facts__tile,
-  &.is-in .guide-index__open {
+  &.is-in .quick-facts__tile {
     opacity: 1;
     transform: none;
+  }
+}
+
+// Width of the right-edge fade on the trip-facts row. Registered so it can be
+// animated; initial value in px because @property needs a fixed length.
+@property --rail-fade {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 56px;
+}
+
+@keyframes quick-facts-fade-out {
+  to {
+    --rail-fade: 0px;
   }
 }
