@@ -17,10 +17,16 @@ html:root[data-design="v2"] {
   --color-accent: #20699d; //   5.7 · on pill-bg 5.0
   --color-accent-quiet: #d6e0e7;
   --color-label: #b2472a; //   5.4 · on surface 4.9
+  --color-label-on-blush: #a33f26; //   5.1 on the blush tints (small coral text there)
   --color-positive: #1e7046; //   5.9 ("Gratis")
   --color-lived: var(--color-accent);
 
   --color-pill-bg: #e7edf2;
+
+  // Day card without its own photo: a light, neutral ground behind the day's
+  // number and facts. The one place to swap in the brand's graphic later
+  // (a url() layer can sit on top of this).
+  --day-placeholder: linear-gradient(160deg, var(--color-pill-bg), var(--color-surface));
   --color-pill-text: #1f4a69; //   7.9 on pill-bg
 
   --color-border: #e7e1d8;
@@ -59,9 +65,12 @@ html:root[data-design="v2"][data-theme="dark"] {
   --color-accent: #9dc2dd; //   9.6
   --color-accent-quiet: #263744;
   --color-label: #f0a585; //   9.0
+  --color-label-on-blush: var(--color-label); //   7.3 on the dark blush
   --color-positive: #6fcf97; //   9.5
 
   --color-pill-bg: #24333d;
+
+  --day-placeholder: linear-gradient(160deg, var(--color-pill-bg), var(--color-surface));
   --color-pill-text: #cfe0ec; //   9.6 on pill-bg
 
   --color-border: #2e3433;

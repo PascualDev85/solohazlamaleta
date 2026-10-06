@@ -39,6 +39,14 @@ const excludedPaths = [...draftGuidePaths(), ...MANUALLY_EXCLUDED_PATHS];
 export default defineConfig({
   site: 'https://solohazlamaleta.com',
   trailingSlash: 'always',
+  build: {
+    // Inline every page's CSS (about 10 KB gzipped on the heaviest page)
+    // instead of linking it. A linked stylesheet blocks the first paint, and
+    // on the guide that delay pushed the cover photo (the LCP element) past
+    // Lighthouse's 100 threshold on mobile. The site is a handful of static
+    // pages, so the lost cross-page CSS caching costs little.
+    inlineStylesheets: 'always',
+  },
   integrations: [
     vue(),
     sitemap({

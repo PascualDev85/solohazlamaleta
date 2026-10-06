@@ -15,7 +15,7 @@
       display: flex;
       align-items: center;
       gap: var(--space-sm);
-      margin-block: var(--space-xl) var(--space-sm);
+      margin-block: var(--space-lg) var(--space-sm);
     }
   }
 
@@ -182,70 +182,95 @@
     }
   }
 
-  // Swipe effect, scroll-driven (no JavaScript):
-  // - Coverflow: a card turns slightly in 3D and shrinks as it waits at the
-  //   edge or leaves, and stands straight once it lands at the row's start.
-  // - Parallax: the photo pans inside its frame more slowly than the card and
-  //   regains its full colour as the card arrives.
-  // Transforms and the photo's filter only, never opacity, so no text ever
-  // loses contrast. Off when the reader asks for reduced motion.
+  // Swipe effect, scroll-driven (no JavaScript). Each slide tracks two
+  // numbers along the row: --in, from 1 (waiting at the edge) to 0 (landed),
+  // and --out, from 0 (landed) to 1 (gone). Everything below reads them, so
+  // the whole slide moves as one physical object:
+  // - the card turns on its near edge, sinks back and drops a little while
+  //   waiting or leaving, and rises flat as it lands;
+  // - its far edge darkens as it turns away from the light;
+  // - the day's title and summary drift on their own layer, ahead of the card;
+  // - the day coin spins and grows into place as the card lands.
+  // A landed card is perfectly flat and clean: nothing touches it at rest.
+  // Off for reduced motion; browsers without scroll timelines keep the plain row.
+  // Registered so they animate smoothly; @property must sit at the top level.
+  @at-root {
+    @property --in {
+      syntax: "<number>";
+      inherits: true;
+      initial-value: 0;
+    }
+
+    @property --out {
+      syntax: "<number>";
+      inherits: true;
+      initial-value: 0;
+    }
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: view()) {
-      // Two animations, one per range. The exit one has no backwards fill, so
-      // it stays out of the way until the card starts to leave.
       .route__rail > .day {
+        --turn: calc(var(--in) + var(--out));
+
+        transform-origin: calc(var(--out) * 100%) 50%;
+        transform: perspective(1100px)
+          translateY(calc(var(--turn) * 16px))
+          translateZ(calc(var(--turn) * -110px))
+          rotateY(calc((var(--in) - var(--out)) * 26deg));
         animation:
-          route-card-in linear both,
-          route-card-out linear forwards;
+          route-in linear both,
+          route-out linear both;
         animation-timeline: view(inline), view(inline);
         animation-range: entry, exit;
       }
 
-      @keyframes route-card-in {
+      @keyframes route-in {
         from {
-          transform-origin: 0 50%;
-          transform: perspective(900px) rotateY(18deg) scale(0.88);
+          --in: 1;
         }
 
         to {
-          transform-origin: 0 50%;
-          transform: none;
+          --in: 0;
         }
       }
 
-      @keyframes route-card-out {
+      @keyframes route-out {
         from {
-          transform-origin: 100% 50%;
-          transform: none;
+          --out: 0;
         }
 
         to {
-          transform-origin: 100% 50%;
-          transform: perspective(900px) rotateY(-18deg) scale(0.88);
+          --out: 1;
         }
       }
 
-      .route__rail .day-card__photo {
-        animation: route-photo linear both;
-        animation-timeline: view(inline);
-        animation-range: cover;
+      // Light falls off on the edge turning away (right when arriving, left
+      // when leaving). Transparent once the card has landed.
+      .route__rail .day-card {
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: 3;
+          border-radius: inherit;
+          background:
+            linear-gradient(to right, transparent 35%, rgb(8 14 20 / calc(var(--in) * 0.45))),
+            linear-gradient(to left, transparent 35%, rgb(8 14 20 / calc(var(--out) * 0.45)));
+          pointer-events: none;
+        }
       }
 
-      @keyframes route-photo {
-        from {
-          transform: scale(1.06) translateX(3%);
-          filter: saturate(0.55);
-        }
+      // The title layer drifts ahead of the card.
+      .route__rail .day__head {
+        transform: translateX(calc((var(--in) - var(--out)) * 36px));
+      }
 
-        35%,
-        65% {
-          filter: none;
-        }
-
-        to {
-          transform: scale(1.06) translateX(-3%);
-          filter: saturate(0.55);
-        }
+      // The day coin spins and grows into place as the card lands.
+      .route__rail .day-card__num {
+        transform: rotate(calc(var(--in) * -120deg)) scale(calc(1 - var(--in) * 0.45));
       }
     }
   }

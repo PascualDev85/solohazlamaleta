@@ -8,7 +8,6 @@ import GuidePhoto from '../../components/guide/GuidePhoto.astro';
 import QuickFacts from '../../components/guide/QuickFacts.astro';
 import Breadcrumb from '../../components/guide/Breadcrumb.astro';
 import RouteDays from '../../components/guide/RouteDays.astro';
-import SectionIcon from '../../components/guide/SectionIcon.astro';
 import { guideImage } from '../../lib/guide-images.ts';
 import { getImage } from 'astro:assets';
 import '../../styles/guide-v2.scss';
@@ -160,12 +159,6 @@ const faqJsonLd =
         vehicle={guide.summary.getting_around}
         baseArea={guide.summary.base_area}
       />
-
-      <GuideIndex
-        sections={indexSections}
-        routeId="itinerario"
-        days={variant?.days.map((day) => ({ day: day.day, title: day.title }))}
-      />
     </section>
     <script is:inline>
       (() => {
@@ -176,18 +169,12 @@ const faqJsonLd =
       })();
     </script>
 
-    {/*
-      The index trigger docked to the bottom of the screen. Hidden until the
-      in-flow "En esta guía" bar has fully come into view, then it takes over
-      (pure CSS, scroll-driven: see _guide-index.scss). It sits outside the
-      overview on purpose: the overview's entrance transform would otherwise
-      anchor this fixed element to it.
-    */}
-    <button class="guide-index__dock" type="button" popovertarget="guide-index">
-      <SectionIcon name="list" />
-      En esta guía
-    </button>
-
+    {/* Outside the overview on purpose: its entrance transform would anchor the fixed pill. */}
+    <GuideIndex
+      sections={indexSections}
+      routeId="itinerario"
+      days={variant?.days.map((day) => ({ day: day.day, title: day.title }))}
+    />
 
     {show.route && variant && <RouteDays days={variant.days} id="itinerario" />}
 

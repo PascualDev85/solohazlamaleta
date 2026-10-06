@@ -14,12 +14,17 @@ const { sections, routeId, days = [] } = Astro.props;
   Native popover: opens, closes, Esc and light-dismiss with no JavaScript.
   The script only closes it once a section is chosen, so it does not cover
   the destination; without it the panel is still closed by hand.
+
+  The only trigger is a pill floating at the bottom of the screen. It starts
+  away (data-away) and shows while the reader scrolls up, until the very top
+  (rule: nextDock in src/lib/scroll-direction.ts). The script below only flips
+  that attribute; the slide is CSS. Render this component as a direct child of
+  .guide, outside any transformed block, or the fixed pill would be anchored
+  to that block.
 */}
-<button class="guide-index__open" type="button" popovertarget="guide-index">
+<button class="guide-index__dock" type="button" popovertarget="guide-index" data-away>
   <SectionIcon name="list" />
-  <span class="guide-index__open-label">En esta guía</span>
-  <span class="guide-index__count">{sections.length} secciones</span>
-  <span class="guide-index__open-chevron" aria-hidden="true"></span>
+  En esta guía
 </button>
 
 <div id="guide-index" class="guide-index" popover role="dialog" aria-labelledby="guide-index-title">
@@ -74,6 +79,31 @@ const { sections, routeId, days = [] } = Astro.props;
   </nav>
 </div>
 
-<script is:inline>
-  document.getElementById('guide-index').onclick = (e) => e.target.closest('a') && e.currentTarget.hidePopover();
+<script>
+  import { nextDock } from '../../lib/scroll-direction.ts';
+
+  // Close the index once a section is chosen, so it does not cover it.
+  const index = document.getElementById('guide-index');
+  index?.addEventListener('click', (event) => {
+    if ((event.target as Element).closest('a')) index.hidePopover();
+  });
+
+  // Show the pill while scrolling up, hide it while scrolling down or at the top.
+  const dock = document.querySelector<HTMLElement>('.guide-index__dock');
+  if (dock) {
+    let state = { anchor: scrollY, visible: false };
+    let frame = 0;
+    addEventListener(
+      'scroll',
+      () => {
+        if (frame) return; // at most one update per frame
+        frame = requestAnimationFrame(() => {
+          frame = 0;
+          state = nextDock(state, scrollY);
+          dock.toggleAttribute('data-away', !state.visible);
+        });
+      },
+      { passive: true },
+    );
+  }
 </script>

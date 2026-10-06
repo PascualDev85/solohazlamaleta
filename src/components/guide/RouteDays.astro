@@ -16,7 +16,8 @@ const { days, id } = Astro.props;
   The whole route as one swipeable row: every day is a card, the strip of day
   numbers above says how many there are and where you are. Without JavaScript
   it is a plain scroll-snap row and the numbers are anchor links; the script
-  only adds smooth jumps, the current day and the desktop arrows. Each
+  (below, logic in src/lib/carousel.ts) only adds smooth jumps, the current
+  day and the desktop arrows. Each
   slide carries its own title and summary, so they change with the swipe.
 */}
 <section class="route" aria-labelledby={id}>
@@ -50,59 +51,56 @@ const { days, id } = Astro.props;
     {days.map((day) => <DayCard day={day} />)}
   </div>
 
-  <script is:inline>
-    (() => {
-      const root = document.currentScript.closest('.route');
-      const rail = root.querySelector('.route__rail');
-      const strip = root.querySelector('.route__days');
-      const links = [...strip.querySelectorAll('a')];
-      const cards = [...rail.children];
-      const arrows = root.querySelector('.route__arrows');
-      const [prev, next] = arrows.querySelectorAll('button');
-      const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-      let current = 0;
-
-      // Offsets are measured from the first card, which sits at the row's start
-      // when it is not scrolled: no need to resolve the padding expression.
-      const start = (card) => card.offsetLeft - cards[0].offsetLeft;
-      const go = (i) => {
-        const card = cards[Math.max(0, Math.min(cards.length - 1, i))];
-        rail.scrollTo({ left: start(card), behavior });
-      };
-
-      const mark = (i) => {
-        if (links[current]) links[current].removeAttribute('aria-current');
-        current = i;
-        links[i].setAttribute('aria-current', 'step');
-        const li = links[i].parentElement;
-        strip.scrollTo({ left: li.offsetLeft - (strip.clientWidth - li.offsetWidth) / 2, behavior });
-        prev.disabled = i === 0;
-        next.disabled = i === cards.length - 1;
-      };
-
-      links.forEach((link, i) => link.addEventListener('click', (e) => { e.preventDefault(); go(i); }));
-      arrows.addEventListener('click', (e) => {
-        const button = e.target.closest('button');
-        if (button) go(current + Number(button.dataset.step));
-      });
-
-      // The current day is the card closest to the row's start. Earlier cards
-      // can still show beside the column on wide screens, so visibility alone
-      // would not tell.
-      let frame = 0;
-      rail.addEventListener('scroll', () => {
-        cancelAnimationFrame(frame);
-        frame = requestAnimationFrame(() => {
-          let best = 0;
-          cards.forEach((card, i) => {
-            if (Math.abs(start(card) - rail.scrollLeft) < Math.abs(start(cards[best]) - rail.scrollLeft)) best = i;
-          });
-          if (best !== current) mark(best);
-        });
-      }, { passive: true });
-
-      mark(0);
-      arrows.hidden = false;
-    })();
-  </script>
 </section>
+
+<script>
+  import { closestIndex, clampIndex } from '../../lib/carousel.ts';
+
+  // Each route carousel on the page: smooth jumps from the day strip and the
+  // arrows, and the current day marked as the row scrolls. Without JavaScript
+  // the row still swipes and the strip still works as plain anchor links.
+  for (const root of document.querySelectorAll<HTMLElement>('.route')) {
+    const rail = root.querySelector<HTMLElement>('.route__rail')!;
+    const strip = root.querySelector<HTMLElement>('.route__days')!;
+    const links = [...strip.querySelectorAll<HTMLAnchorElement>('a')];
+    const slides = [...rail.children] as HTMLElement[];
+    const arrows = root.querySelector<HTMLElement>('.route__arrows')!;
+    const [prev, next] = arrows.querySelectorAll('button');
+    const behavior: ScrollBehavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+
+    // Where each slide starts, measured from the first one (the row's start).
+    const starts = () => slides.map((slide) => slide.offsetLeft - slides[0].offsetLeft);
+    let current = -1;
+
+    const go = (i: number) => rail.scrollTo({ left: starts()[clampIndex(i, slides.length)], behavior });
+
+    const mark = (i: number) => {
+      if (i === current) return;
+      links[current]?.removeAttribute('aria-current');
+      current = i;
+      links[i].setAttribute('aria-current', 'step');
+      const chip = links[i].parentElement!;
+      strip.scrollTo({ left: chip.offsetLeft - (strip.clientWidth - chip.offsetWidth) / 2, behavior });
+      prev.disabled = i === 0;
+      next.disabled = i === slides.length - 1;
+    };
+
+    links.forEach((link, i) => link.addEventListener('click', (event) => { event.preventDefault(); go(i); }));
+    arrows.addEventListener('click', (event) => {
+      const button = (event.target as Element).closest<HTMLButtonElement>('button');
+      if (button) go(current + Number(button.dataset.step));
+    });
+
+    let frame = 0;
+    rail.addEventListener('scroll', () => {
+      if (frame) return; // at most one update per frame
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        mark(closestIndex(starts(), rail.scrollLeft));
+      });
+    }, { passive: true });
+
+    mark(0);
+    arrows.hidden = false;
+  }
+</script>

@@ -68,11 +68,37 @@
   }
 
   // No photo: the same block on a glacier band, in normal flow.
+  // No photo: the same block on a light, neutral ground (--day-placeholder,
+  // set in _tokens.scss for light and dark), in normal flow and in the page's
+  // own text colours, so it reads as a designed panel, not a missing image.
   .day-card__media--empty {
     display: grid;
     gap: var(--space-sm);
     padding: var(--space-md);
-    background: linear-gradient(160deg, #1f4a69, #11161a);
+    background: var(--day-placeholder);
+    color: var(--color-text);
+
+    .day-card__route {
+      color: var(--color-text);
+      text-shadow: none;
+
+      li + li::before {
+        color: var(--color-text-muted);
+      }
+    }
+
+    .day-card__facts,
+    .day-card__night {
+      color: var(--color-text-muted);
+
+      .section-icon {
+        color: var(--color-accent);
+      }
+
+      strong {
+        color: var(--color-text);
+      }
+    }
   }
 
   .day-card__figure {
@@ -101,7 +127,8 @@
     padding: 0 0.7rem;
     border: 1px solid rgb(255 255 255 / 0.3);
     border-radius: 999px;
-    background: rgb(10 20 30 / 0.45);
+    // 0.68: white type stays AA (6.5:1) even over a white patch of sky.
+    background: rgb(10 20 30 / 0.68);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     color: #fff;
@@ -159,7 +186,8 @@
     height: 3.25rem;
     border: 1px solid rgb(255 255 255 / 0.35);
     border-radius: 50%;
-    background: rgb(10 20 30 / 0.45);
+    // 0.68: white type stays AA (6.5:1) even over a white patch of sky.
+    background: rgb(10 20 30 / 0.68);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     color: #fff;
@@ -177,11 +205,22 @@
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #f6c7b3;
+    color: #ffdccd; // 5:1 on the glass, worst case
   }
 
+  // Here the coin is solid, not glass: there is no photo to show through.
   .day-card__media--empty .day-card__num {
     position: static;
+    border: 3px solid var(--color-bg);
+    background: var(--color-bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: var(--shadow-soft);
+    color: var(--color-accent);
+
+    .day-card__num-label {
+      color: var(--color-label);
+    }
   }
 
   // "Lo mejor del día": a slim coral strip after the visible stops. Folded it is one line with a "+"; open, the line slides out inside
@@ -277,7 +316,7 @@
     font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--color-label);
+    color: var(--color-label-on-blush);
   }
 
   // A "+" drawn with two bars; open, it turns a quarter and a half into "×".
@@ -341,6 +380,13 @@
 
     &::-webkit-scrollbar {
       display: none;
+    }
+
+    // Focusable (tabindex) so keyboard users can scroll it too (WCAG 2.1.1).
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+      border-radius: 0.25rem;
     }
 
     li {
@@ -583,8 +629,10 @@
     }
   }
 
-  // The road sign: white P on blue.
+  // The road sign: a white P on blue. The P is drawn (a mask), not typed, so
+  // it sits dead centre in every browser whatever the font metrics.
   .day-stop__p {
+    flex: none;
     display: grid;
     place-items: center;
     width: 1.15rem;
@@ -592,10 +640,20 @@
     border-radius: 0.25rem;
     background: #1f5fa8;
     color: #fff;
-    font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 900;
-    line-height: 1;
+
+    &::before {
+      content: "";
+      width: 0.75rem;
+      height: 0.75rem;
+      background: currentColor;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 20V4h5a4.5 4.5 0 0 1 0 9H8'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+  }
+
+  // "/ 5 h" after a time-based price: lighter, so the figure leads.
+  .day-stop__period {
+    font-weight: 600;
+    color: var(--color-text-muted);
   }
 
   // "Gratis" in green: the only free thing worth shouting about.
