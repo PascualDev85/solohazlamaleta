@@ -10,7 +10,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "content:validate": "node scripts/validate-content.ts"
+    "content:validate": "node scripts/validate-content.ts",
+    "test": "node --test \"tests/**/*.test.ts\"",
+    "lighthouse": "node scripts/lighthouse-check.ts http://localhost:4321 / /alsacia/ruta-pueblos-y-vinos/ /islandia/islandia-en-camper-13-dias/"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
