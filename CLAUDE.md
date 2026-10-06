@@ -134,4 +134,6 @@ abrir ficheros de finanzas desde este proyecto.
 npm run dev        # servidor de desarrollo
 npm run build      # build de producción (falla si una guía es inválida)
 npm run preview    # previsualizar el build
+npm test           # tests unitarios (node --test)
+npm run lighthouse # con el preview en marcha: exige 100 en móvil y escritorio
 ```
