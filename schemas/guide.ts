@@ -23,6 +23,8 @@ export const StopSourceSchema = z.object({
   place_id: z.string(),
   order: z.number().int().positive(),
   duration_min: z.number().int().positive(),
+  // Upper end of a visit-time range ("2–3 h"); duration_min is the lower end.
+  duration_max_min: z.number().int().positive().optional(),
   planning_status: PlanningStatus,
   visit_status: VisitStatus.optional().default('unknown'),
   start_time: z.string().optional(),
@@ -32,7 +34,10 @@ export const StopSourceSchema = z.object({
   skip_reason: z.string().optional(),
   experience: ExperienceSchema.optional(),
   booking: BookingSchema.optional(),
-}).strict()
+}).strict().refine(
+  (stop) => stop.duration_max_min == null || stop.duration_max_min > stop.duration_min,
+  { message: 'duration_max_min debe ser mayor que duration_min', path: ['duration_max_min'] },
+)
 
 const PhysicalLevelSchema = z.object({
   walking_km: z.number().optional(),

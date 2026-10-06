@@ -13,12 +13,12 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Gratuito. Aparcamiento de pago, 1.000 ISK en 2025. Hay baños."
+    notes: "Gratuito. Aparcamiento de pago, 1.000 ISK. Hay baños."
     verified_at: 2025-09-12
   parking:
     price: 1000
     currency: ISK
-    verified_at: 2025-09-12
+    verified_at: 2026-10-04
   description: "Parque Nacional declarado Patrimonio de la Humanidad por la UNESCO. Se puede caminar por la falla que marca el límite entre las placas euroasiática y norteamericana, y fue sede del primer parlamento vikingo (Alþingi), fundado en el año 930."
   notes: "Aparcamiento P1, con acceso a la grieta tectónica y el lago Þingvallavatn. Hay más aparcamientos en el parque, como el P3, algo más alejado. La grieta separa las placas euroasiática y norteamericana."
 
@@ -33,12 +33,12 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking de pago, 1.000 ISK en 2025. Hay baños."
+    notes: "Parking de pago, 1.000 ISK. Hay baños."
     verified_at: 2025-09-12
   parking:
     price: 1000
     currency: ISK
-    verified_at: 2025-09-12
+    verified_at: 2026-10-04
   description: "Área geotérmica del valle de Haukadalur que da nombre a la palabra \"géiser\" en todos los idiomas. El géiser activo hoy es el Strokkur, que erupciona cada pocos minutos."
   notes: "El Strokkur erupciona cada 5-10 minutos. No hace falta esperar más de 20 min para verlo."
 
@@ -58,7 +58,7 @@
   parking:
     price: 0
     currency: ISK
-    verified_at: 2025-09-12
+    verified_at: 2026-10-04
   description: "Cascada de dos saltos escalonados en el río Hvítá, parada central del Círculo Dorado y una de las cascadas más visitadas de Islandia."
   notes: "Mejor desde el mirador inferior. Con lluvia, el spray moja completamente."
 
@@ -72,8 +72,12 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking de pago, 1.000 ISK en 2025. Hay baños."
+    notes: "Parking de pago, 1.000 ISK. Hay baños."
     verified_at: 2025-09-13
+  parking:
+    price: 1000
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cascada de unos 60 metros en el sur de Islandia, conocida por el sendero que permite rodearla y pasar por detrás de la cortina de agua."
   notes: "Se puede rodear por detrás: espectacular pero te empapas. A 500 metros está Gljúfrafoss, escondida en una grieta de roca."
 
@@ -87,8 +91,12 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking de pago, 1.000 ISK en 2025. Hay baños."
+    notes: "Parking de pago, 1.000 ISK. Hay baños."
     verified_at: 2025-09-13
+  parking:
+    price: 1000
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cascada de unos 60 metros de caída en el río Skógá, en el sur de Islandia."
   notes: "Subir por las escaleras de la derecha para el mirador superior."
 
@@ -102,8 +110,12 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Laguna y Diamond Beach: gratuito. Hay 3 aparcamientos en la zona; pagando uno (1.200 ISK en 2025) se puede usar cualquiera de los tres. Baños gratuitos y cafeterías cerca. Excursiones en barca/zódiac hasta el borde del glaciar: precio aparte."
+    notes: "Laguna y Diamond Beach: gratuito. Hay 3 aparcamientos en la zona; pagando uno (1.200 ISK) se puede usar cualquiera de los tres. Baños gratuitos y cafeterías cerca. Excursiones en barca/zódiac hasta el borde del glaciar: precio aparte."
     verified_at: 2025-09-16
+  parking:
+    price: 1200
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Laguna glaciar formada por el deshielo del glaciar Breiðamerkurjökull, con icebergs a la deriva hacia el mar. Al otro lado de la Ring Road, los fragmentos de hielo varan en la playa negra de Diamond Beach."
   notes: "Diamond Beach (playa negra con icebergs) está al otro lado de la Ring Road. Cruzar con cuidado."
 
@@ -138,6 +150,10 @@
     currency: ISK
     notes: "Parking gratuito en el lado este. Entrada a los baños de pago, 200-300 ISK según precios actuales."
     verified_at: 2025-09-20
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cascada en forma de herradura en el río Skjálfandafljót, en el norte de Islandia. Su nombre significa \"cascada de los dioses\"."
   notes: "Cascada en herradura junto a la Ring Road, cerca de Mývatn. El lado este tiene cafetería, tienda, baños y gasolinera justo al lado, y las mejores vistas: un paseo lleva hasta la orilla junto a la cascada y arriba hay un mirador. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
@@ -208,6 +224,10 @@
     currency: ISK
     notes: "Parking gratuito. Hay baños."
     verified_at: 2025-09-21
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Granja tradicional de turba convertida en museo etnográfico, en la región de Skagafjörður."
   notes: "Museo etnográfico en una granja tradicional de turba en Skagafjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
@@ -223,6 +243,10 @@
     currency: ISK
     notes: "Parking gratuito. Hay baños. Solo se puede ver por fuera."
     verified_at: 2025-09-21
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Iglesia de turba construida en 1834, una de las mejor conservadas de Islandia."
   notes: "Iglesia de turba de 1834, una de las mejor conservadas de Islandia. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
@@ -238,6 +262,10 @@
     currency: ISK
     notes: "Parking gratuito a ambos lados del puente. No hay baños."
     verified_at: 2025-09-21
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cañón excavado por el río Víðidalsá, con varias cascadas a lo largo de su recorrido, en el norte de Islandia."
   notes: "Cañón excavado por el río Víðidalsá, con varias cascadas. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -261,8 +289,12 @@
   entry:
     price: 1400
     currency: ISK
-    notes: "Parking de pago junto a la cascada (Kirkjufell Waterfall Viewpoint), 1.400 ISK en 2025. Hay un mirador alternativo gratuito (Kirkjufell Viewpoint) a unos 500 m, con un paseo de unos 15 minutos a pie para evitar el pago."
+    notes: "Parking de pago junto a la cascada (Kirkjufell Waterfall Viewpoint), 1.400 ISK. Hay un mirador alternativo gratuito (Kirkjufell Viewpoint) a unos 500 m, con un paseo de unos 15 minutos a pie para evitar el pago."
     verified_at: 2025-09-22
+  parking:
+    price: 1400
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Montaña de forma cónica junto a la costa norte de Snæfellsnes, una de las más fotografiadas de Islandia, especialmente junto a la cascada cercana de Kirkjufellsfoss."
   notes: "La montaña más fotografiada de Islandia, junto a la cascada Kirkjufellsfoss, cerca de Grundarfjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
@@ -288,6 +320,10 @@
     currency: ISK
     notes: "Parking gratuito."
     verified_at: 2025-09-22
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio pesquero y piedras tradicionales usadas antiguamente para medir la fuerza de los pescadores. Junto a la playa de Dritvik."
   notes: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio y piedras de fuerza tradicionales. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
@@ -313,6 +349,10 @@
     currency: ISK
     notes: "Parking gratuito."
     verified_at: 2025-09-22
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Pequeño asentamiento costero con acantilados y colonias de aves marinas, unido a Arnarstapi por un sendero costero."
   notes: "Pequeño pueblo con acantilados y colonias de aves marinas, a unos 2,5 km a pie de Arnarstapi por el sendero costero, en la costa sur de Snæfellsnes. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
@@ -328,6 +368,10 @@
     currency: ISK
     notes: "Parking gratuito."
     verified_at: 2025-09-22
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Pueblo costero en la base del glaciar Snæfellsjökull, conocido por su ruta de acantilados y formaciones de basalto junto al mar. En la zona están la estatua de Bárður Snæfellsás, el mirador de los acantilados, el arco de roca Gatklettur y un puente natural de piedra."
   notes: "Pueblo costero con la ruta de acantilados hacia Hellnar. Todo se recorre andando en una misma zona. Coordenadas confirmadas por el autor."
 
@@ -343,6 +387,10 @@
     currency: ISK
     notes: "Parking gratuito. No hay baños."
     verified_at: 2025-09-22
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Grieta estrecha en la montaña con un arroyo en el fondo, cerca de Arnarstapi."
   notes: "Grieta estrecha en la montaña que se puede recorrer a pie, cerca de Arnarstapi. Lleva agua en el fondo, calzado adecuado necesario. La entrada hacia el interior de la montaña es muy fotogénica, con una pequeña cascada dentro que no se puede ascender. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
@@ -358,6 +406,10 @@
     currency: ISK
     notes: "Parking gratuito."
     verified_at: 2025-09-22
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Iglesia negra de madera construida en 1848, junto al pueblo de Búðir, en la costa sur de la península de Snæfellsnes. Junto a ella hay un cementerio paseable y un sendero que lleva hasta la playa."
   notes: "Iglesia negra de madera de 1848 junto al pueblo de Búðir. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
@@ -411,8 +463,12 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking de pago, 1.000 ISK en 2025. Hay baños y se puede rellenar agua."
+    notes: "Parking de pago, 1.000 ISK. Hay baños y se puede rellenar agua."
     verified_at: 2025-09-16
+  parking:
+    price: 1000
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cañón junto al glaciar Öræfajökull, con vistas al valle y a la lengua glaciar."
   notes: "Cañón poco transitado cerca de Fjallsárlón, con vistas al glaciar. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -428,6 +484,10 @@
     currency: ISK
     notes: "Parking gratuito. Baños de pago, 200 ISK en 2025."
     verified_at: 2025-09-16
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Laguna glaciar alimentada por Fjallsjökull, una salida del Vatnajökull. Más pequeña y menos concurrida que Jökulsárlón, a pocos kilómetros de distancia."
   notes: "Laguna glaciar más pequeña y tranquila que Jökulsárlón, a pocos minutos en coche. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -510,6 +570,10 @@
     currency: ISK
     notes: "Parking gratuito. No hay baños."
     verified_at: 2025-09-17
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cascada cercana a Egilsstaðir con una cueva detrás de la caída de agua."
   notes: "Cascada con una cueva detrás, accesible con una caminata corta cerca de Egilsstaðir. Unos 30 minutos de caminata desde el parking hasta la cascada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -525,6 +589,10 @@
     currency: ISK
     notes: "Parking gratuito. No hay baños."
     verified_at: 2025-09-17
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cascada escalonada junto a la carretera entre Egilsstaðir y Seyðisfjörður."
   notes: "Cascada escalonada junto a la carretera entre Egilsstaðir y Seyðisfjörður, a unos 5 minutos a pie del parking. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -569,6 +637,10 @@
     currency: ISK
     notes: "Parking gratuito. No hay baños."
     verified_at: 2025-09-18
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cascada escalonada visible desde la Ring Road en el valle de Jökuldalur, en el este de Islandia."
   notes: "Cascada escalonada bien visible desde la Ring Road en Jökuldalur. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -582,8 +654,12 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking de pago, 1.000 ISK en 2025. Hay baños."
+    notes: "Parking de pago, 1.000 ISK. Hay baños."
     verified_at: 2025-09-18
+  parking:
+    price: 1000
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cañón de columnas de basalto formado por el río Jökla. Quedó al descubierto y se hizo conocido después de que un embalse aguas arriba redujera el caudal del río."
   notes: "Cañón de columnas de basalto, acceso desde el lado este sin cruzar el río — es el único de los dos lados desde el que se puede bajar al cañón (con cuidado); el otro lado solo permite verlo desde arriba. Ruta de unos 5 km, unos 45 minutos de ida y otros 45 de vuelta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -599,6 +675,10 @@
     currency: ISK
     notes: "Parking grande y gratuito. Baños limpios."
     verified_at: 2025-09-18
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Dos cascadas del río Jökulsá á Fjöllum, en el Parque Nacional de Vatnajökull: Dettifoss, una de las cascadas más potentes de Europa, y Selfoss, río arriba, de menor tamaño. Accesibles juntas desde el lado oeste del cañón."
   notes: "Dettifoss tiene dos lados de acceso, oeste y este, con aparcamientos distintos y sin conexión directa entre ellos — no comparten parking. Desde el lado oeste (este place_id) se llega también a Selfoss, a poca distancia a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -614,6 +694,10 @@
     currency: ISK
     notes: "Parking gratuito. No hay baños."
     verified_at: 2025-09-18
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cueva de lava con una poza de agua termal en su interior, cerca del lago Mývatn. El baño está prohibido desde que las erupciones de Krafla elevaron la temperatura del agua."
   notes: "Cueva de lava con agua termal, cerca de Mývatn. El baño está prohibido por la temperatura del agua. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -638,6 +722,10 @@
     currency: ISK
     notes: "Parking de pago; subió de 800 ISK (lo que pagó el autor en 2025) a 1.200 ISK. No hay baños."
     verified_at: 2025-09-19
+  parking:
+    price: 1200
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cráter volcánico con un lago de color turquesa, dentro del área geotérmica de Krafla, en el norte de Islandia."
   notes: "Cráter volcánico con lago turquesa en el área geotérmica de Krafla. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -651,8 +739,12 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking de pago, 1.400 ISK en 2025. Baños de pago, 300 ISK."
+    notes: "Parking de pago, 1.400 ISK. Baños de pago, 300 ISK."
     verified_at: 2025-09-19
+  parking:
+    price: 1400
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Área geotérmica de fumarolas y pozas de barro hirviendo, junto a la montaña Námafjall, cerca del lago Mývatn."
   notes: "Área geotérmica con fumarolas y pozas de barro hirviendo, junto a la montaña Námafjall. Lugar agrupado (un solo place_id para una visita única, igual que jokulsarlon): al confirmar coordenadas, deben ser las del parking/punto de acceso común a Hverir y Námafjall, no las de uno solo de los dos, para que el marcador del mapa no quede desplazado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -666,8 +758,12 @@
   entry:
     price: 1200
     currency: ISK
-    notes: "Parking de pago, 1.200 ISK en 2025. Baños incluidos, amplios y limpios."
+    notes: "Parking de pago, 1.200 ISK. Baños incluidos, amplios y limpios."
     verified_at: 2025-09-19
+  parking:
+    price: 1200
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cráter de un volcán de tipo anillo de toba, de casi un kilómetro de diámetro (unos 3 km de recorrido por el borde), junto al lago Mývatn."
   notes: "Cráter volcánico de casi 1 km de diámetro, se puede subir y rodear por el borde. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -683,6 +779,10 @@
     currency: ISK
     notes: "Parking gratuito. Hay baños."
     verified_at: 2025-09-19
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Campo de lava con formaciones rocosas irregulares, resultado del colapso de burbujas de gas en una antigua colada de lava, cerca del lago Mývatn."
   notes: "Campo de formaciones de lava con forma de castillos, varias rutas de senderismo señalizadas. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -698,6 +798,10 @@
     currency: ISK
     notes: "Parking gratuito. No hay baños."
     verified_at: 2025-09-19
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Punto panorámico sobre el lago Mývatn y sus pseudocráteres, en el norte de Islandia."
   notes: "Punto panorámico sobre el lago Mývatn y sus pseudocráteres. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -737,6 +841,11 @@
   lng: -21.1875
   type: activity
   verified_at: 2025-09-12
+  parking:
+    price: 1000
+    currency: ISK
+    period_hours: 5
+    verified_at: 2026-10-06
   description: "Río termal de origen geotérmico en un valle junto a Hveragerði, en el suroeste de Islandia, con tramos habilitados para el baño al aire libre."
   notes: "Se sube caminando desde el aparcamiento de Reykjadalur, en Hveragerði. Entrada gratuita. Zona de cambio con paneles de madera parcial cerca de la parte alta del río. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -752,6 +861,10 @@
     currency: ISK
     notes: "Parking gratuito. No hay baños."
     verified_at: 2025-09-13
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Una de las cascadas más altas de Islandia, en el valle de Þjórsárdalur, junto a su cascada gemela, Granni."
   notes: "El mirador se llega en vehículo por una pista sin asfaltar. La ruta de descenso hasta la base es una caminata larga aparte. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -767,6 +880,10 @@
     currency: ISK
     notes: "Parking gratuito. No hay baños."
     verified_at: 2025-09-13
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Barranco estrecho con una cascada escondida en su interior, en la zona de Fljótshlíð, en el sur de Islandia."
   notes: "Se accede caminando por el interior del cañón; puede haber que vadear agua en algunos tramos. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -780,8 +897,12 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Gratuito. Aparcamiento de pago, unos 1.000 ISK (6-7 €) en 2025. Hay baños."
+    notes: "Gratuito. Aparcamiento de pago, unos 1.000 ISK (6-7 €). Hay baños."
     verified_at: 2025-09-13
+  parking:
+    price: 1000
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Restos de un avión DC-3 cerca de la granja de Eyvindarholt, en el sur de Islandia."
   notes: "No es el pecio de Sólheimasandur (el más conocido, cerca de Vík); es otro avión distinto, menos masificado."
 
@@ -807,6 +928,10 @@
     currency: ISK
     notes: "Parking gratuito. Baño de pago, 250 ISK en 2025."
     verified_at: 2025-09-13
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cascada formada por la confluencia de dos brazos del río Fossá, sobre un lecho de columnas de basalto, en el valle de Þjórsárdalur."
   notes: "Se llega con un paseo corto desde el aparcamiento. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -862,6 +987,10 @@
     currency: ISK
     notes: "Parking gratuito."
     verified_at: 2025-09-22
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Faro en el extremo occidental de la península de Snæfellsnes, sobre un mirador de acantilados con colonias de aves marinas."
   notes: "El camino de acceso tiene baches. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -875,8 +1004,12 @@
   entry:
     price: 1100
     currency: ISK
-    notes: "Parking de pago, 1.100 ISK en 2025. Baño pequeño y sucio."
+    notes: "Parking de pago, 1.100 ISK. Baño pequeño y sucio."
     verified_at: 2025-09-22
+  parking:
+    price: 1100
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Playa en la costa sur de Snæfellsnes, uno de los puntos habituales para ver focas de cerca sin molestarlas."
   notes: "Tiene mesas de picnic. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -892,6 +1025,10 @@
     currency: ISK
     notes: "Parking gratuito."
     verified_at: 2025-09-22
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Poza termal natural pequeña, junto a la carretera en el sur de la península de Snæfellsnes."
   notes: "Poza pequeña; puede estar llena de gente y con poca profundidad de agua según el momento. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -917,5 +1054,9 @@
     currency: ISK
     notes: "Parking gratuito."
     verified_at: 2025-09-11
+  parking:
+    price: 0
+    currency: ISK
+    verified_at: 2026-10-04
   description: "Cascada en el río Laxá í Kjós, de camino hacia el Círculo Dorado desde Reikiavik."
   notes: "Tiene mesas para comer en el entorno. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."

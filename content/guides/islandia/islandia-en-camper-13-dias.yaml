@@ -130,19 +130,20 @@ variants:
         stops:
           - place_id: thingvellir
             order: 1
-            duration_min: 70
+            duration_min: 120
+            duration_max_min: 180
             planning_status: required
             visit_status: visited
             start_time: "09:00"
             travel_to_next_min: 50
             travel_to_next_mode: "coche"
-            variant_note: "Parking P3, paseo por la grieta y el lago, sin perder tiempo."
+            variant_note: "Parking P1, paseo por la grieta y el lago, sin perder tiempo."
           - place_id: geysir
             order: 2
-            duration_min: 50
+            duration_min: 60
             planning_status: required
             visit_status: visited
-            start_time: "10:40"
+            start_time: "11:50"
             travel_to_next_min: 10
             travel_to_next_mode: "coche"
           - place_id: gullfoss
@@ -150,10 +151,11 @@ variants:
             duration_min: 60
             planning_status: required
             visit_status: visited
-            start_time: "11:40"
+            start_time: "13:00"
           - place_id: reykjadalur
             order: 4
             duration_min: 180
+            duration_max_min: 240
             planning_status: optional
             visit_status: visited
             variant_note: "Dicen que la subida son hasta 1h30, pero a nosotros nos costó unos 45 minutos. Nos bañamos entre 1 y 1h30 en un tramo que sentimos casi como una piscina para nosotros solos — la sensación fue increíble. Lo único malo: al salir del agua pasamos mucho frío mientras nos vestíamos."

@@ -78,3 +78,10 @@ test('maps_url accepts a Google Maps link and rejects any other host', () => {
   assert.strictEqual(PlaceSourceSchema.safeParse({ ...base, maps_url: 'https://www.google.com/maps/place/X' }).success, true)
   assert.strictEqual(PlaceSourceSchema.safeParse({ ...base, maps_url: 'https://example.com/maps' }).success, false)
 })
+
+test('parking period_hours is optional and must be positive', () => {
+  const base = { place_id: 'x', name: 'X', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2025-09-12' }
+  const parking = { price: 1000, currency: 'ISK', verified_at: '2026-10-06' }
+  assert.strictEqual(PlaceSourceSchema.safeParse({ ...base, parking: { ...parking, period_hours: 5 } }).success, true)
+  assert.strictEqual(PlaceSourceSchema.safeParse({ ...base, parking: { ...parking, period_hours: 0 } }).success, false)
+})

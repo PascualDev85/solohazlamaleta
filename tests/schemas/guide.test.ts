@@ -116,3 +116,10 @@ test('day drive with non-positive values is rejected', () => {
     assert.strictEqual(result.success, false, JSON.stringify(drive))
   }
 })
+
+test('stop duration_max_min must be greater than duration_min', () => {
+  const base = { place_id: 'x', order: 1, planning_status: 'required', visit_status: 'visited' }
+  assert.strictEqual(StopSourceSchema.safeParse({ ...base, duration_min: 120, duration_max_min: 180 }).success, true)
+  assert.strictEqual(StopSourceSchema.safeParse({ ...base, duration_min: 120, duration_max_min: 120 }).success, false)
+  assert.strictEqual(StopSourceSchema.safeParse({ ...base, duration_min: 120, duration_max_min: 60 }).success, false)
+})

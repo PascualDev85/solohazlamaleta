@@ -31,6 +31,7 @@ export function compileStop(
     place: resolvePlace(place, now),
     order: stop.order,
     duration_min: stop.duration_min,
+    duration_max_min: stop.duration_max_min,
     planning_status: stop.planning_status,
     visit_status: stop.visit_status ?? 'unknown',
     start_time: stop.start_time,
