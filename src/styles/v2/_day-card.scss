@@ -646,18 +646,19 @@
   // Measured on the real content (days 1 to 3) at 350, 360, 375, 390 and 414px:
   // each formula passes through the largest size that fits at every width.
   @media (max-width: 414px) {
+    // Each formula sits 6% under the largest size that fits on a Mac's headless
+    // Chromium at every width: Linux Chromium (the CI) and real phones render
+    // this face about 5% wider, and the CI check holds the lines to that.
     .day-card__route {
-      font-size: clamp(13.5px, 0.575px + 3.75vw, 15.2px);
+      font-size: clamp(12.5px, 0.65px + 3.5vw, 14.3px);
     }
 
-    // Both with a 4% margin under the largest size that fits, for devices
-    // whose font rendering comes out a touch wider than headless Chromium's.
     .day-card__facts {
-      font-size: clamp(11px, -6.25px + 5vw, 13px);
+      font-size: clamp(11px, -5.05px + 4.6vw, 12.2px);
     }
 
     .day-card__night {
-      font-size: clamp(10px, -3.67px + 3.906vw, 12.5px);
+      font-size: clamp(9.5px, -3.33px + 3.75vw, 12.2px);
     }
 
     // The whole body follows the stop name's size: 16px at 414px, 12.3px at 350px.
