@@ -1,0 +1,65 @@
+@use "../abstracts" as *;
+
+// "Nuestro criterio": three parts under one heading. Decisions are pairs: the
+// decision in bold, the reason under it, all shown the same way.
+[data-design="v2"] .criteria {
+  &__part + &__part {
+    margin-top: var(--space-xl);
+  }
+
+  &__part h3 {
+    margin-bottom: var(--space-sm);
+  }
+
+  &__list {
+    display: grid;
+    gap: var(--space-xs);
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  &__decisions {
+    display: grid;
+    gap: var(--space-md);
+    margin: var(--space-md) 0 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding-left: var(--space-md);
+      border-left: 3px solid var(--color-accent);
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  // Stops we skipped, after the route decisions: a muted rule tells them apart.
+  &__decisions--stops li {
+    border-left-color: var(--color-border);
+  }
+
+  &__decision {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2xs) var(--space-xs);
+    margin-bottom: var(--space-2xs) !important;
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+
+  &__day {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-label);
+  }
+
+  &__desc {
+    margin-bottom: var(--space-2xs) !important;
+    color: var(--color-text-muted);
+  }
+}

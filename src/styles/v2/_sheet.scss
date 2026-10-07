@@ -61,7 +61,8 @@
 @mixin head {
   position: sticky;
   top: 0;
-  z-index: 1;
+  // Above anything positioned in the body (the glance's day coins are z-index 1).
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;

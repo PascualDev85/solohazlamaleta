@@ -1,0 +1,215 @@
+@use "../abstracts" as *;
+@use "sheet";
+
+// The whole route at a glance: the panel shared with the index and the day
+// sheet, holding one row per day on a vertical rail. Native popover: it opens
+// from the route heading, a tap anywhere else closes it, scrolling does not.
+[data-design="v2"] {
+  .route-glance {
+    @include sheet.panel;
+
+    :where(ol) {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  }
+
+  html:has(.route-glance:popover-open) {
+    overflow: hidden;
+  }
+
+  .route-glance__head {
+    @include sheet.head;
+  }
+
+  .route-glance__close {
+    @include sheet.close;
+  }
+
+  .route-glance__eyebrow {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-label);
+  }
+
+  .route-glance__title {
+    margin: 0;
+    font-family: var(--font-headline) !important;
+    font-size: var(--step-1);
+    font-weight: 700 !important;
+  }
+
+  // The rail: a line down the left that the day coins sit on.
+  .route-glance__days {
+    position: relative;
+    padding: var(--space-xs) var(--space-lg) var(--space-xl);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: var(--space-md);
+      bottom: var(--space-xl);
+      left: calc(var(--space-lg) + 0.95rem);
+      width: 2px;
+      background: var(--color-border);
+    }
+  }
+
+  .route-glance__day a {
+    display: grid;
+    grid-template-columns: 1.9rem minmax(0, 1fr);
+    gap: var(--space-sm);
+    padding: var(--space-xs) 0;
+    color: inherit;
+    text-decoration: none;
+
+    &:hover .route-glance__name,
+    &:focus-visible .route-glance__name {
+      color: var(--color-accent);
+    }
+  }
+
+  .route-glance__n {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border: 3px solid var(--color-bg);
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .route-glance__body {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+    padding-top: 0.2rem;
+  }
+
+  .route-glance__name {
+    font-size: var(--step-0);
+    font-weight: 800;
+    line-height: 1.25;
+    transition: color 0.15s var(--ease-out);
+  }
+
+  // The stops in order, wrapping as they need: the same arrows as the card.
+  .route-glance__stops {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--color-text-muted);
+
+    span + span::before {
+      content: "→";
+      margin-inline: 0.3em;
+      color: var(--color-label);
+    }
+  }
+
+  // The foot of the panel: a fade and a translucent pill saying the list goes
+  // on. Sticky to the bottom of the scrollport, placed after the list so it
+  // settles into the flow at the very end; a scroll-driven animation fades it
+  // out over the last stretch. Where that is unsupported it simply stays.
+  .route-glance__more {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 4.5rem;
+    margin-top: -4.5rem;
+    padding-bottom: var(--space-sm);
+    background: linear-gradient(to bottom, transparent, var(--color-bg) 70%);
+    text-decoration: none;
+    pointer-events: none;
+    animation: route-glance-more-out linear both;
+    animation-timeline: scroll(nearest);
+    animation-range: calc(100% - 10rem) calc(100% - 2rem);
+  }
+
+  .route-glance__more-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgb(255 255 255 / 0.25);
+    border-radius: 999px;
+    background: rgb(10 20 30 / 0.55);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    box-shadow: 0 8px 20px rgb(10 15 20 / 0.18);
+    pointer-events: auto;
+    animation: route-glance-more-bob 1.6s var(--ease-out) infinite alternate;
+  }
+
+  .route-glance__more-chevron {
+    width: 0.45rem;
+    height: 0.45rem;
+    margin-top: -0.2rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+  }
+
+  @keyframes route-glance-more-out {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  @keyframes route-glance-more-bob {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(-0.2rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .route-glance__more-pill {
+      animation: none;
+    }
+  }
+
+  .route-glance__night {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+
+    .section-icon {
+      width: 0.9rem;
+      height: 0.9rem;
+      color: var(--color-accent);
+    }
+  }
+}

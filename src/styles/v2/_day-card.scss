@@ -2,8 +2,8 @@
 @use "sheet";
 
 // One slide per day: the day's title and summary above, then the card. The
-// photo opens the card, the number sits on its edge, then the way through the
-// day and its first stop. The rest of the stops unfold in place and the full
+// photo opens the card, clean, with the day's numbers at its foot, then the
+// way through the day and its first stop. The rest of the stops unfold in place and the full
 // story opens in a sheet.
 [data-design="v2"] {
   .day {
@@ -58,8 +58,8 @@
   }
 
   // The top of the card: the photo, full-bleed and tall (4:5), with the day's
-  // numbers on a dark band at its foot. Day coin top left, caption top right,
-  // both glass pills like the hero's.
+  // numbers on a dark band at its foot and nothing else on it: the day's
+  // number is in the title above, the caption's place is the alt text.
   .day-card__media {
     position: relative;
     // Clips the photo when it pans inside its frame (see _route.scss).
@@ -101,8 +101,14 @@
     }
   }
 
+  // Off screen, the photo is neither laid out nor fetched (content-visibility),
+  // so the first cards' photos do not share bandwidth with the cover while it
+  // is the LCP. The figure carries the photo's ratio itself, so its height is
+  // known while skipped and nothing moves when it renders.
   .day-card__figure {
     margin: 0;
+    aspect-ratio: 4 / 5;
+    content-visibility: auto;
   }
 
   .day-card__photo {
@@ -113,28 +119,6 @@
     object-fit: cover;
     object-position: 50% 50%;
     background: var(--color-surface);
-  }
-
-  // Same line as the day coin: centred on it (coin 3.25rem, pill 1.75rem).
-  .day-card__caption {
-    position: absolute;
-    top: calc(var(--space-sm) + (3.25rem - 1.75rem) / 2);
-    right: var(--space-sm);
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    height: 1.75rem;
-    padding: 0 0.7rem;
-    border: 1px solid rgb(255 255 255 / 0.3);
-    border-radius: 999px;
-    // 0.68: white type stays AA (6.5:1) even over a white patch of sky.
-    background: rgb(10 20 30 / 0.68);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-    color: #fff;
-    font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 700;
   }
 
   // Route, facts and night at the photo's foot. The dark shade lives on this
@@ -162,64 +146,16 @@
     background: none;
   }
 
+  // Everything in the body is sized in em from this one value, so on small
+  // phones (media query below) the whole body scales with the stop's name.
   .day-card__body {
     display: grid;
     gap: var(--space-xs);
     padding: 0.5rem var(--space-md) var(--space-md);
+    font-size: 1rem;
 
     @include from("sm") {
       padding-inline: var(--space-lg);
-    }
-  }
-
-  // The day number: a glass coin in the photo's top-left corner, "DÍA" small
-  // above the figure.
-  .day-card__num {
-    position: absolute;
-    top: var(--space-sm);
-    left: var(--space-sm);
-    z-index: 2;
-    display: grid;
-    place-content: center;
-    justify-items: center;
-    width: 3.25rem;
-    height: 3.25rem;
-    border: 1px solid rgb(255 255 255 / 0.35);
-    border-radius: 50%;
-    // 0.68: white type stays AA (6.5:1) even over a white patch of sky.
-    background: rgb(10 20 30 / 0.68);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-    color: #fff;
-    font-family: var(--font-headline);
-    font-size: 1.1rem;
-    font-weight: 800;
-    font-variant-numeric: tabular-nums;
-    line-height: 1;
-  }
-
-  .day-card__num-label {
-    margin-bottom: 0.1rem;
-    font-family: var(--font-display);
-    font-size: 0.5625rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #ffdccd; // 5:1 on the glass, worst case
-  }
-
-  // Here the coin is solid, not glass: there is no photo to show through.
-  .day-card__media--empty .day-card__num {
-    position: static;
-    border: 3px solid var(--color-bg);
-    background: var(--color-bg);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    box-shadow: var(--shadow-soft);
-    color: var(--color-accent);
-
-    .day-card__num-label {
-      color: var(--color-label);
     }
   }
 
@@ -239,8 +175,7 @@
       display: flex;
       align-items: center;
       gap: 0.35rem;
-      min-height: 2rem;
-      padding: 0.2rem 0.5rem 0.2rem 0.25rem;
+      padding: 0.2rem;
       cursor: pointer;
       list-style: none;
       user-select: none;
@@ -259,7 +194,7 @@
     p {
       padding: 0.1rem 0.85rem 0.6rem calc(0.25rem + 1.5rem + 0.4rem);
       font-family: var(--font-body);
-      font-size: 0.8125rem;
+      font-size: 0.8125em;
       line-height: 1.5;
       color: var(--color-text);
     }
@@ -292,16 +227,16 @@
     flex: none;
     display: grid;
     place-items: center;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.5em;
+    height: 1.5em;
     border-radius: 50%;
     background: var(--color-bg);
     color: var(--color-label);
     transition: transform 0.4s var(--ease-out);
 
     .section-icon {
-      width: 0.85rem;
-      height: 0.85rem;
+      width: 0.85em;
+      height: 0.85em;
     }
   }
 
@@ -312,7 +247,7 @@
   .day-card__highlight-label {
     flex: 1;
     font-family: var(--font-display);
-    font-size: 0.625rem;
+    font-size: 0.625em;
     font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -363,31 +298,18 @@
     transform: rotate(-135deg);
   }
 
-  // The way through the day: one line that scrolls sideways when it is longer
-  // than the card, fading out at the edge so the overflow reads as "more".
+  // The way through the day: the stops in order, in a line that wraps onto a
+  // second one when it has to, never scrolls.
   .day-card__route {
     display: flex;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-    white-space: nowrap;
-    mask: linear-gradient(to right, #000 calc(100% - 1.5rem), transparent);
+    flex-wrap: wrap;
+    row-gap: 0.15rem;
     font-family: var(--font-display);
-    font-size: 0.9375rem;
+    font-size: 0.95rem;
     font-weight: 800;
+    line-height: 1.3;
     color: #fff;
     text-shadow: 0 1px 8px rgb(0 0 0 / 0.35);
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    // Focusable (tabindex) so keyboard users can scroll it too (WCAG 2.1.1).
-    &:focus-visible {
-      outline: 2px solid currentColor;
-      outline-offset: 2px;
-      border-radius: 0.25rem;
-    }
 
     li {
       flex: none;
@@ -395,23 +317,22 @@
 
     li + li::before {
       content: "→";
-      margin-inline: 0.35em;
+      margin-inline: 0.25em;
       font-weight: 600;
       color: rgb(255 255 255 / 0.7);
     }
-
-    li:last-child {
-      padding-right: 1.5rem;
-    }
   }
 
-  // One line each: the numbers of the day, then where it ends.
+  // One line each: the numbers of the day, then where it ends. On a narrow
+  // phone a line may wrap; nothing is ever cut off.
+  // Gaps and icons in em: when the type shrinks on a small phone (media query
+  // below), the whole line shrinks with it.
   .day-card__facts,
   .day-card__night {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 0.85rem;
-    overflow: hidden;
+    gap: 0.15rem 1em;
     white-space: nowrap;
     font-family: var(--font-display);
     font-size: 0.8125rem;
@@ -420,25 +341,40 @@
 
     .section-icon {
       flex: none;
-      width: 1rem;
-      height: 1rem;
+      width: 1.25em;
+      height: 1.25em;
       color: #a9d0ea;
     }
   }
 
-  .day-card__facts li {
+  .day-card__facts li,
+  .day-card__fact {
     display: inline-flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.35em;
   }
 
-  .day-card__night {
-    gap: 0.35rem;
+  // "Noche → Camping Árnes": label, arrow and name sit closer together.
+  .day-card__fact--night {
+    gap: 0.4em;
+  }
 
-    strong {
-      font-weight: 800;
-      color: #fff;
+  // The night's campsite: a link to its card in "Dónde dormir", white like the
+  // rest of the line, underlined so it reads as a link on the photo.
+  .day-card__night-link {
+    font-weight: 800;
+    color: #fff;
+    text-decoration-color: rgb(255 255 255 / 0.55);
+    text-underline-offset: 0.15em;
+
+    &:hover {
+      text-decoration-color: #fff;
     }
+  }
+
+  .day-card__media--empty .day-card__night-link {
+    color: var(--color-text);
+    text-decoration-color: var(--color-accent);
   }
 
   .day-card__stops {
@@ -470,7 +406,7 @@
       min-height: 2.25rem;
       color: var(--color-accent);
       font-family: var(--font-display);
-      font-size: 0.8125rem;
+      font-size: 0.8125em;
       font-weight: 800;
       cursor: pointer;
       list-style: none;
@@ -509,15 +445,15 @@
     border-radius: 999px;
     background: var(--color-bg);
     color: var(--color-text);
-    font: 800 0.9375rem / 1 var(--font-display);
+    font: 800 0.9375em / 1 var(--font-display);
     cursor: pointer;
     transition:
       border-color 0.2s var(--ease-out),
       background 0.2s var(--ease-out);
 
     .section-icon {
-      width: 1.15rem;
-      height: 1.15rem;
+      width: 1.2em;
+      height: 1.2em;
       color: var(--color-accent);
       transition: transform 0.2s var(--ease-out);
     }
@@ -532,10 +468,13 @@
   }
 
   // A stop: name and time on one line, two lines of what it is, one of practice.
+  // Number, name and time share one baseline: the grid aligns the number to
+  // the body's first baseline (the name), whatever the sizes.
   .day-stop {
     display: grid;
-    grid-template-columns: 1.1rem minmax(0, 1fr);
+    grid-template-columns: 1.1em minmax(0, 1fr);
     gap: var(--space-xs);
+    align-items: baseline;
     padding-block: 0.6rem;
 
     & + & {
@@ -545,9 +484,9 @@
 
   .day-stop__n {
     font-family: var(--font-display);
-    font-size: 0.8125rem;
+    font-size: 0.8125em;
     font-weight: 800;
-    line-height: 1.5rem;
+    line-height: 1.4;
     font-variant-numeric: tabular-nums;
     color: var(--color-text-muted);
   }
@@ -567,29 +506,101 @@
     min-width: 0;
   }
 
+  // The full name, wrapping onto a second line when it has to: a cut name
+  // ("Restos de avión DC-3…") tells the reader less than two lines.
   .day-stop__name {
     flex: 1;
     min-width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     font-weight: 800;
+    line-height: 1.25;
     color: var(--color-text);
   }
 
+  // Baseline-aligned so the head lines the time's text up with the name; the
+  // icon and the info mark have no baseline and centre on that line instead.
   .day-stop__time {
     flex: none;
     display: inline-flex;
-    align-items: center;
+    align-items: baseline;
     gap: 0.25rem;
-    font-size: 0.8125rem;
+    font-size: 0.8125em;
     font-weight: 700;
     color: var(--color-text-muted);
 
     .section-icon {
-      width: 0.9rem;
-      height: 0.9rem;
+      align-self: center;
+      width: 1.1em;
+      height: 1.1em;
       color: var(--color-accent);
+    }
+
+    // The info mark: tap it and a speech bubble says what the upper end of the
+    // time includes (duration_note). Native <details>: no script, keyboard ok.
+    .day-stop__hint {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      align-self: center;
+      line-height: 0;
+    }
+
+    .day-stop__hike {
+      display: inline-flex;
+      align-items: center;
+      // Padding is the tap target; the negative block margin keeps the line
+      // as tall as the text, so the time stays on the name's baseline.
+      margin: -0.2rem 0 -0.2rem 0.05rem;
+      padding: 0.2rem;
+      border-radius: 50%;
+      cursor: pointer;
+      list-style: none;
+      line-height: 0;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 1px;
+      }
+    }
+
+    // The bubble opens above the icon, right-aligned to it, with a small tail
+    // at its foot: what is above has been read, what is below is still to read.
+    .day-stop__bubble {
+      position: absolute;
+      bottom: calc(100% + 0.6rem);
+      right: -0.15rem;
+      z-index: 3;
+      width: max-content;
+      max-width: 15rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.6rem;
+      background: rgb(10 20 30 / 0.92);
+      color: #fff;
+      font-size: 1em;
+      font-weight: 600;
+      line-height: 1.35;
+      white-space: normal;
+      text-align: left;
+      box-shadow: 0 10px 24px rgb(10 15 20 / 0.25);
+
+      strong {
+        font-weight: 800;
+        color: #fff;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        bottom: -0.3rem;
+        right: 0.65rem;
+        width: 0.65rem;
+        height: 0.65rem;
+        background: inherit;
+        transform: rotate(45deg);
+      }
     }
   }
 
@@ -601,7 +612,7 @@
     -webkit-line-clamp: 3;
     line-clamp: 3;
     font-family: var(--font-body);
-    font-size: 0.8125rem;
+    font-size: 0.8125em;
     line-height: 1.45;
     color: var(--color-text-muted);
   }
@@ -614,7 +625,7 @@
     justify-content: space-between;
     gap: var(--space-sm);
     margin-top: 0.2rem !important;
-    font-size: 0.8125rem;
+    font-size: 0.8125em;
     white-space: nowrap;
   }
 
@@ -629,22 +640,52 @@
     }
   }
 
+  // Phones of 414px and under, down to 350px: the type of the lines that must
+  // not grow shrinks with the viewport so each keeps its shape: the route in
+  // two rows at most, the facts, the night and each stop's name in one line.
+  // Measured on the real content (days 1 to 3) at 350, 360, 375, 390 and 414px:
+  // each formula passes through the largest size that fits at every width.
+  @media (max-width: 414px) {
+    .day-card__route {
+      font-size: clamp(13.5px, 0.575px + 3.75vw, 15.2px);
+    }
+
+    // Both with a 4% margin under the largest size that fits, for devices
+    // whose font rendering comes out a touch wider than headless Chromium's.
+    .day-card__facts {
+      font-size: clamp(11px, -6.25px + 5vw, 13px);
+    }
+
+    .day-card__night {
+      font-size: clamp(10px, -3.67px + 3.906vw, 12.5px);
+    }
+
+    // The whole body follows the stop name's size: 16px at 414px, 12.3px at 350px.
+    .day-card__body {
+      font-size: clamp(12px, -10.2px + 6.44vw, 1rem);
+    }
+
+    .day-stop__name {
+      white-space: nowrap;
+    }
+  }
+
   // The road sign: a white P on blue. The P is drawn (a mask), not typed, so
   // it sits dead centre in every browser whatever the font metrics.
   .day-stop__p {
     flex: none;
     display: grid;
     place-items: center;
-    width: 1.15rem;
-    height: 1.15rem;
+    width: 1.4em;
+    height: 1.4em;
     border-radius: 0.25rem;
     background: #1f5fa8;
     color: #fff;
 
     &::before {
       content: "";
-      width: 0.75rem;
-      height: 0.75rem;
+      width: 0.92em;
+      height: 0.92em;
       background: currentColor;
       mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 20V4h5a4.5 4.5 0 0 1 0 9H8'/%3E%3C/svg%3E") center / contain no-repeat;
     }
@@ -670,8 +711,8 @@
     color: var(--color-accent);
 
     .section-icon {
-      width: 0.9rem;
-      height: 0.9rem;
+      width: 1.1em;
+      height: 1.1em;
     }
   }
 
@@ -735,6 +776,11 @@
       padding-left: var(--space-md);
       border-left: 3px solid var(--color-accent);
     }
+  }
+
+  // What we left out: the same list, with a muted rule instead of coral.
+  .day-sheet__experiences--skipped li {
+    border-left-color: var(--color-border);
   }
 
   .day-sheet__place {

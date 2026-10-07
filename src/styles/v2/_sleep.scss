@@ -1,0 +1,149 @@
+@use "../abstracts" as *;
+
+// "Dónde dormir": one compact card per campsite. Folded it says the name, what
+// we paid, what it has and one line of opinion; open, the rest. Native
+// <details>, no script. Each card is the target of "Noche → …" on its day.
+[data-design="v2"] .sleep {
+  &__zone-desc {
+    margin-top: calc(-1 * var(--space-xs));
+    color: var(--color-text-muted);
+  }
+
+  &__list {
+    display: grid;
+    gap: var(--space-sm);
+    margin: 0 0 var(--space-lg);
+    padding: 0;
+    list-style: none;
+  }
+}
+
+[data-design="v2"] .camp {
+  // Anchor jumps from a day card land with the card in view, under the header.
+  scroll-margin-top: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-soft);
+
+  &__summary {
+    position: relative;
+    display: grid;
+    gap: var(--space-2xs);
+    padding: var(--space-md) var(--space-md);
+    padding-right: 2.5rem;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  // Name, then what we paid on its own line: the same shape on every card,
+  // whatever the length of the name.
+  &__head {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  &__name {
+    font-family: var(--font-display);
+    font-size: var(--step-0);
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  &__price {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--color-accent);
+  }
+
+  &__price-unit {
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+
+  // What it has, as small pills: duchas, baños, sala común, electricidad.
+  &__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  &__fact {
+    padding: 0.1rem 0.55rem;
+    border-radius: 999px;
+    background: var(--color-pill-bg);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  &__opinion {
+    margin-top: var(--space-2xs);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  // The chevron sits at the right of the first line and turns when open.
+  &__chevron {
+    position: absolute;
+    top: calc(var(--space-md) + 0.45rem);
+    right: var(--space-md);
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 2px solid var(--color-accent);
+    border-bottom: 2px solid var(--color-accent);
+    transform: rotate(45deg);
+    transition: transform 0.2s var(--ease-out);
+  }
+
+  &__details[open] &__chevron {
+    transform: rotate(-135deg);
+  }
+
+  &__more {
+    display: grid;
+    gap: var(--space-xs);
+    padding: 0 var(--space-md) var(--space-md);
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__links {
+    display: flex;
+    gap: var(--space-md);
+    font-family: var(--font-display);
+    font-weight: 800;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .section-icon {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  @include from("sm") {
+    &__summary,
+    &__more {
+      padding-inline: var(--space-lg);
+    }
+
+    &__chevron {
+      right: var(--space-lg);
+    }
+  }
+}
