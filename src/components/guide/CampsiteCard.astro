@@ -1,0 +1,72 @@
+---
+import type { CompiledAccommodationPick } from '../../../engine/index.ts';
+import { facilityLabels } from '../../lib/facilityLabels.ts';
+import { formatDate } from '../../lib/formatDate.ts';
+import { placeMapUrl } from '../../lib/maps.ts';
+import SectionIcon from './SectionIcon.astro';
+
+interface Props {
+  pick: CompiledAccommodationPick;
+}
+
+const { pick } = Astro.props;
+const { place, price_paid: paid } = pick;
+
+// Folded: name, what we paid, what it has and one line of opinion. Open: the
+// rest (1.12 §9). The id is the target of "Noche → …" on the day card.
+const id = `dormir-${place.place_id}`;
+
+const price = paid
+  ? new Intl.NumberFormat('es-ES', {
+      style: 'currency',
+      currency: paid.currency,
+      maximumFractionDigits: 0,
+      useGrouping: true,
+    }).format(paid.amount)
+  : undefined;
+
+const facilities = place.facilities ? facilityLabels(place.facilities) : [];
+const hasMore = Boolean(place.notes || pick.notes || paid);
+---
+
+<li class="camp" id={id}>
+  <details class="camp__details">
+    <summary class="camp__summary">
+      <span class="camp__head">
+        <span class="camp__name">{place.name}</span>
+        {price && (
+          <span class="camp__price">
+            {price}<span class="camp__price-unit"> / noche</span>
+          </span>
+        )}
+      </span>
+      {facilities.length > 0 && (
+        <span class="camp__facts">
+          {facilities.map((label) => <span class="camp__fact">{label}</span>)}
+        </span>
+      )}
+      {pick.opinion && <span class="camp__opinion">{pick.opinion}</span>}
+      {hasMore && <span class="camp__chevron" aria-hidden="true"></span>}
+    </summary>
+
+    <div class="camp__more">
+      {place.notes && <p>{place.notes}</p>}
+      {pick.notes && <p>{pick.notes}</p>}
+      {paid && (
+        <p class="guide__verified">
+          Lo que pagamos en {formatDate(paid.verified_at)}, 2 personas y camper sin electricidad.
+        </p>
+      )}
+      <p class="camp__links">
+        <a href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">
+          <SectionIcon name="pin" />Mapa<span class="visually-hidden"> de {place.name} (se abre en una pestaña nueva)</span>
+        </a>
+        {place.source_url && (
+          <a href={place.source_url} target="_blank" rel="noopener">
+            Web<span class="visually-hidden"> de {place.name} (se abre en una pestaña nueva)</span>
+          </a>
+        )}
+      </p>
+    </div>
+  </details>
+</li>

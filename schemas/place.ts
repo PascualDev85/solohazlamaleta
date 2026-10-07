@@ -25,6 +25,20 @@ export const ParkingSchema = z.object({
   currency: z.string(),
   // The price covers this many hours ("1.000 ISK / 5 h"); absent for a flat fee.
   period_hours: z.number().positive().optional(),
+  // place_id of the place whose car park (and ticket) this one shares, e.g.
+  // Gljúfrafoss with Seljalandsfoss: the card says "Incluido con …".
+  shared_with: z.string().optional(),
+  verified_at: z.string(),
+}).strict()
+
+// What a campsite offers, as facts: what the place has, never what we thought
+// of it (that is the guide's accommodation pick). Only for type: accommodation.
+export const FacilitiesSchema = z.object({
+  showers: z.enum(['included', 'paid', 'none']),
+  // Absent means "we do not know", never "no".
+  toilets: z.boolean().optional(),
+  common_room: z.boolean().optional(),
+  electricity: z.boolean().optional(),
   verified_at: z.string(),
 }).strict()
 
@@ -52,8 +66,13 @@ export const PlaceSourceSchema = z.object({
   parking: ParkingSchema.optional(),
   description: z.string().optional(),
   notes: z.string().optional(),
-}).strict()
+  facilities: FacilitiesSchema.optional(),
+}).strict().refine(
+  (place) => place.facilities == null || place.type === 'accommodation',
+  { message: 'facilities solo en lugares de tipo accommodation', path: ['facilities'] },
+)
 
 export type PlaceSource = z.infer<typeof PlaceSourceSchema>
 export type Entry = z.infer<typeof EntrySchema>
 export type Hours = z.infer<typeof HoursSchema>
+export type Facilities = z.infer<typeof FacilitiesSchema>

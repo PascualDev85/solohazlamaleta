@@ -25,6 +25,9 @@ export const StopSourceSchema = z.object({
   duration_min: z.number().int().positive(),
   // Upper end of a visit-time range ("2–3 h"); duration_min is the lower end.
   duration_max_min: z.number().int().positive().optional(),
+  // What the upper end of the range includes ("con la ruta hasta la base"):
+  // a small hike mark next to the time, never a sentence on the card.
+  duration_note: z.string().optional(),
   planning_status: PlanningStatus,
   visit_status: VisitStatus.optional().default('unknown'),
   start_time: z.string().optional(),
@@ -76,7 +79,13 @@ export const DaySourceSchema = z.object({
   photo: DayPhotoSchema.optional(),
   highlight: z.string().optional(),
   drive: DriveSchema.optional(),
-  overnight: z.string().optional(),
+  // place_id of the campsite (type: accommodation) where the night was spent.
+  // null: the night was spent outside any campsite. Absent: no night (last
+  // day) or not filled in yet.
+  overnight: z.string().nullable().optional(),
+  // What the author says about that night. Shown in the day panel whenever it
+  // has text, with or without a campsite. Never on the card.
+  overnight_note: z.string().optional(),
 }).strict()
 
 const BudgetItemSourceSchema = z.object({
@@ -111,11 +120,23 @@ export const BudgetSourceSchema = z.object({
   notes: z.string().optional(),
 }).strict()
 
-const AccommodationPickSchema = z.object({
-  name: z.string(),
-  price_level: z.string().optional(),
+// What we paid for the night, with the date: it is our experience, not the
+// place's price (that is entry.price on the place; I16 applies).
+const PricePaidSchema = z.object({
+  amount: z.number().min(0),
+  currency: z.string(),
+  verified_at: z.string(),
   notes: z.string().optional(),
-  verified_at: z.string().optional(),
+}).strict()
+
+// A campsite we slept at: the place holds the facts (coordinates, facilities,
+// current price), the pick holds only what is ours.
+const AccommodationPickSchema = z.object({
+  place_id: z.string(),
+  price_paid: PricePaidSchema.optional(),
+  // One line of opinion, first person.
+  opinion: z.string().optional(),
+  notes: z.string().optional(),
   affiliate_id: z.string().optional(),
 }).strict()
 
@@ -192,6 +213,12 @@ export const AdaptationNoteSourceSchema = z.object({
   priority: z.number().optional(),
 }).strict()
 
+// A route decision and its reason, shown as a pair: never a loose sentence.
+const RouteDecisionSchema = z.object({
+  decision: z.string(),
+  reason: z.string(),
+}).strict()
+
 const SummarySourceSchema = z.object({
   tagline: z.string(),
   best_season: z.string().optional(),
@@ -221,7 +248,9 @@ export const GuideSourceSchema = z.object({
   accommodation: AccommodationSourceSchema.optional(),
   transport: TransportSourceSchema.optional(),
   booking_checklist: z.array(ChecklistItemSourceSchema).optional(),
-  our_criteria: z.array(z.string()).optional(),
+  // "Nuestro criterio" (1.12 §13): how we choose, and what we left out and why.
+  how_we_choose: z.array(z.string()).optional(),
+  route_decisions: z.array(RouteDecisionSchema).optional(),
   pitfalls: z.array(z.string()).optional(),
   terrain_tips: z.array(z.string()).optional(),
   practical: PracticalSourceSchema.optional(),
@@ -238,3 +267,6 @@ export type BudgetSource = z.infer<typeof BudgetSourceSchema>
 export type BudgetItemSource = z.infer<typeof BudgetItemSourceSchema>
 export type AdaptationNoteSource = z.infer<typeof AdaptationNoteSourceSchema>
 export type FaqItem = z.infer<typeof FaqItemSchema>
+export type RouteDecision = z.infer<typeof RouteDecisionSchema>
+export type AccommodationPickSource = z.infer<typeof AccommodationPickSchema>
+export type AccommodationSource = z.infer<typeof AccommodationSourceSchema>

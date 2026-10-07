@@ -78,3 +78,11 @@ jobs:
           npx --yes astro preview --port 4321 &
           npx --yes wait-on http://localhost:4321/ --timeout 60000
           npm run lighthouse
+
+      # Browser checks of the guide (scripts/ui-check.ts): overlay panels keep
+      # their header on top while scrolling, and the day cards keep their lines
+      # on phones from 350 to 414px wide.
+      - name: UI checks in Chromium
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:ui

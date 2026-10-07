@@ -19,6 +19,45 @@
     }
   }
 
+  // The heading is a button: it looks like the heading, with a small chevron
+  // that says it opens the route at a glance.
+  .route__title {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover .route__peek,
+    &:focus-visible .route__peek {
+      transform: translateY(-0.1rem) rotate(-135deg);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 4px;
+      border-radius: 0.25rem;
+    }
+  }
+
+  .route__peek {
+    display: inline-block;
+    width: 0.6rem;
+    height: 0.6rem;
+    margin-left: 0.1rem;
+    border-right: 2.5px solid var(--color-accent);
+    border-bottom: 2.5px solid var(--color-accent);
+    transform: translateY(-0.25rem) rotate(-135deg);
+    transition: transform 0.2s var(--ease-out);
+  }
+
   .route__count {
     padding: 0.2rem 0.7rem;
     border-radius: 999px;
@@ -266,11 +305,6 @@
       // The title layer drifts ahead of the card.
       .route__rail .day__head {
         transform: translateX(calc((var(--in) - var(--out)) * 36px));
-      }
-
-      // The day coin spins and grows into place as the card lands.
-      .route__rail .day-card__num {
-        transform: rotate(calc(var(--in) * -120deg)) scale(calc(1 - var(--in) * 0.45));
       }
     }
   }

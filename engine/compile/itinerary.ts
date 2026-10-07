@@ -32,6 +32,7 @@ export function compileStop(
     order: stop.order,
     duration_min: stop.duration_min,
     duration_max_min: stop.duration_max_min,
+    duration_note: stop.duration_note,
     planning_status: stop.planning_status,
     visit_status: stop.visit_status ?? 'unknown',
     start_time: stop.start_time,
@@ -41,6 +42,15 @@ export function compileStop(
     skip_reason: stop.skip_reason,
     experience: stop.experience,
     price_checked_at: priceCheckedAt(place, guideUpdatedAt),
+  }
+
+  const sharedWith = place.parking?.shared_with
+  if (sharedWith) {
+    const host = places.get(sharedWith)
+    if (!host) {
+      throw new Error(`parking.shared_with inexistente: ${sharedWith} (lugar ${stop.place_id})`)
+    }
+    compiled.parking_shared_with = resolvePlace(host, now)
   }
 
   if (stop.booking) {
@@ -66,6 +76,10 @@ export function compileDay(
 ): CompiledDay {
   const stops = day.stops.map((stop) => compileStop(stop, places, affiliates, now, guideUpdatedAt))
   const routeStops = stops.filter((stop) => stop.visit_status !== 'not_visited')
+  const overnightPlace = day.overnight ? places.get(day.overnight) : undefined
+  if (day.overnight && !overnightPlace) {
+    throw new Error(`overnight inexistente: ${day.overnight}`)
+  }
   return {
     day: day.day,
     title: day.title,
@@ -84,7 +98,8 @@ export function compileDay(
     photo: day.photo,
     highlight: day.highlight,
     drive: day.drive,
-    overnight: day.overnight,
+    overnight: day.overnight === null ? null : overnightPlace ? resolvePlace(overnightPlace, now) : undefined,
+    overnight_note: day.overnight_note,
   }
 }
 

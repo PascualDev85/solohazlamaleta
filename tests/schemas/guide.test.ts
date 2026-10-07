@@ -95,7 +95,7 @@ test('day with photo, highlight, drive and overnight parses', () => {
     photo: { src: 'islandia/x.jpg', alt: 'A waterfall', caption: 'X, 2025' },
     highlight: 'The best bit.',
     drive: { km: 275, minutes: 225 },
-    overnight: 'Camping X',
+    overnight: 'camp_x',
   }))
   assert.strictEqual(result.success, true)
 })

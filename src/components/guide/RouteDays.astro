@@ -10,6 +10,10 @@ interface Props {
 }
 
 const { days, id } = Astro.props;
+
+// "De un vistazo": the whole route in one panel, a day per row with its stops.
+const glanceId = `${id}-vistazo`;
+const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
 ---
 
 {/*
@@ -22,7 +26,14 @@ const { days, id } = Astro.props;
 */}
 <section class="route" aria-labelledby={id}>
   <div class="route__head">
-    <h2 id={id}>La ruta <span class="route__count">{days.length} días</span></h2>
+    {/* The heading opens the whole route at a glance: a native popover, so a tap anywhere else closes it and scrolling does not. */}
+    <h2 id={id}>
+      <button class="route__title" type="button" popovertarget={glanceId}>
+        La ruta <span class="route__count">{days.length} días</span>
+        <span class="route__peek" aria-hidden="true"></span>
+        <span class="visually-hidden">: ver toda la ruta de un vistazo</span>
+      </button>
+    </h2>
     <div class="route__bar">
       <nav class="route__nav" aria-label="Días de la ruta">
         <ol class="route__days">
@@ -51,10 +62,85 @@ const { days, id } = Astro.props;
     {days.map((day) => <DayCard day={day} />)}
   </div>
 
+  <div id={glanceId} class="route-glance" popover role="dialog" aria-labelledby={`${glanceId}-title`}>
+    <header class="route-glance__head">
+      <div>
+        <p class="route-glance__eyebrow">De un vistazo</p>
+        <h2 class="route-glance__title" id={`${glanceId}-title`}>Los {days.length} días de la ruta</h2>
+      </div>
+      <button
+        class="route-glance__close"
+        type="button"
+        popovertarget={glanceId}
+        popovertargetaction="hide"
+        aria-label="Cerrar"
+        autofocus
+      >
+        <SectionIcon name="close" />
+      </button>
+    </header>
+
+    {/* One row per day: the number on a rail, the title, then the stops in order and the night. Each row jumps to its card. */}
+    <ol class="route-glance__days">
+      {days.map((day) => (
+        <li class="route-glance__day" id={`${glanceId}-dia-${day.day}`}>
+          <a href={`#dia-${day.day}`}>
+            <span class="route-glance__n" aria-hidden="true">{num(day)}</span>
+            <span class="route-glance__body">
+              <span class="route-glance__name"><span class="visually-hidden">Día {day.day}: </span>{day.title}</span>
+              {day.route_line.length > 0 && (
+                <span class="route-glance__stops">
+                  {day.route_line.map((name) => <span>{name}</span>)}
+                </span>
+              )}
+              {day.overnight && (
+                <span class="route-glance__night">
+                  <SectionIcon name="tent" />{day.overnight.short_name ?? day.overnight.name}
+                </span>
+              )}
+              {day.overnight === null && (
+                <span class="route-glance__night"><SectionIcon name="tent" />Fuera de camping</span>
+              )}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    {/*
+      "There is more below": a fade over the foot of the panel with a translucent
+      pill that fades out as the list reaches its end (scroll-driven animation,
+      no script). It is a link to the last day, so a tap scrolls there; the
+      closer script above ignores it (data-stay).
+    */}
+    <a class="route-glance__more" href={`#${glanceId}-dia-${days[days.length - 1].day}`} data-stay>
+      <span class="route-glance__more-pill">
+        Hasta el día {days[days.length - 1].day}
+        <span class="route-glance__more-chevron" aria-hidden="true"></span>
+      </span>
+    </a>
+  </div>
 </section>
 
 <script>
   import { closestIndex, clampIndex } from '../../lib/carousel.ts';
+
+  // The time's info bubble (a <details> on each stop) closes when the reader
+  // taps anywhere else or scrolls, which a <details> cannot do on its own.
+  const openHints = () => document.querySelectorAll<HTMLDetailsElement>('.day-stop__hint[open]');
+  document.addEventListener('click', (event) => {
+    for (const hint of openHints()) if (!hint.contains(event.target as Node)) hint.open = false;
+  });
+  document.addEventListener('scroll', () => { for (const hint of openHints()) hint.open = false; }, { capture: true, passive: true });
+
+  // The glance panel closes itself once a day is chosen, so it never covers
+  // the card it just jumped to. Without this it still closes by hand.
+  for (const glance of document.querySelectorAll<HTMLElement>('.route-glance')) {
+    glance.addEventListener('click', (event) => {
+      const link = (event.target as Element).closest('a');
+      if (link && !link.hasAttribute('data-stay')) glance.hidePopover();
+    });
+  }
 
   // Each route carousel on the page: smooth jumps from the day strip and the
   // arrows, and the current day marked as the row scrolls. Without JavaScript

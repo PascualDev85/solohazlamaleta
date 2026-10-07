@@ -1,6 +1,7 @@
 ---
 import type { CompiledDay } from '../../../engine/index.ts';
 import { formatMinutes } from '../../lib/formatDuration.ts';
+import { minutesOnRoute, roundToHalfHour } from '../../lib/dayTime.ts';
 import { guideImage } from '../../lib/guide-images.ts';
 import GuidePhoto from './GuidePhoto.astro';
 import SectionIcon from './SectionIcon.astro';
@@ -21,8 +22,21 @@ const headingId = `dia-${day.day}`;
 const sheetId = `dia-${day.day}-completo`;
 
 const km = new Intl.NumberFormat('es-ES', { useGrouping: true });
+// Door to door, to the nearest half hour: a planning figure, never a promise.
+const onRoute = minutesOnRoute(day);
+const onRouteLabel = onRoute == null ? undefined : formatMinutes(roundToHalfHour(onRoute));
 const experiences = day.route_stops.filter((stop) => stop.variant_note);
-const hasFullDay = experiences.length > 0 || Boolean(day.our_take) || Boolean(day.plan_b);
+// What we left out that day, with the reason: a skip without one is not shown (1.10 §3.6).
+const skipped = day.skipped_stops.filter((stop) => stop.skip_reason);
+// The author's note on the night: panel only, and only when it has text.
+const nightNote = day.overnight_note?.trim() || undefined;
+const hasFullDay =
+  experiences.length > 0 || skipped.length > 0 || Boolean(nightNote) || Boolean(day.our_take) || Boolean(day.plan_b);
+// The night links to its campsite card in "Dónde dormir"; null is a night outside any campsite.
+const overnight = day.overnight;
+const outsideCampsite = overnight === null;
+const nightLabel = overnight ? (overnight.short_name ?? overnight.name) : outsideCampsite ? 'Fuera de camping' : undefined;
+const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
 ---
 
 {/*
@@ -40,8 +54,9 @@ const hasFullDay = experiences.length > 0 || Boolean(day.our_take) || Boolean(da
   <div class="day-card">
     {/*
       The photo carries the day's numbers: route, facts and the night sit on a
-      dark scrim at its foot, so the photo can take the whole top of the card.
-      Without a photo the same block sits on a glacier-coloured band.
+      dark scrim at its foot, so the photo can take the whole top of the card,
+      and nothing else sits on it. Without a photo the same block sits on a
+      neutral band.
     */}
     <div class:list={['day-card__media', { 'day-card__media--empty': !day.photo }]}>
       {day.photo && (
@@ -52,17 +67,12 @@ const hasFullDay = experiences.length > 0 || Boolean(day.our_take) || Boolean(da
             alt={day.photo.alt}
             sizes="(min-width: 48rem) 23rem, calc(100vw - 3rem)"
           />
-          {day.photo.caption && <figcaption class="day-card__caption">{day.photo.caption}</figcaption>}
         </figure>
       )}
 
-      <span class="day-card__num" aria-hidden="true">
-        <span class="day-card__num-label">Día</span>{num}
-      </span>
-
       <div class="day-card__overlay">
         {day.route_line.length > 0 && (
-          <ol class="day-card__route" aria-label="Ruta del día" tabindex="0">
+          <ol class="day-card__route" aria-label="Ruta del día">
             {day.route_line.map((name) => <li>{name}</li>)}
           </ol>
         )}
@@ -77,13 +87,27 @@ const hasFullDay = experiences.length > 0 || Boolean(day.our_take) || Boolean(da
           )}
         </ul>
 
-        {day.overnight && (
+        {/* Second line: the whole day door to door, then where it ends. */}
+        {(onRouteLabel || nightLabel) && (
           <p class="day-card__night">
-            <SectionIcon name="tent" />
-            <span class="day-card__night-label">Noche</span>
-            <span class="day-card__arrow" aria-hidden="true">→</span>
-            <span class="visually-hidden">: </span>
-            <strong>{day.overnight}</strong>
+            {onRouteLabel && (
+              <span class="day-card__fact">
+                <SectionIcon name="clock" />≈ {onRouteLabel} en ruta
+              </span>
+            )}
+            {nightLabel && (
+              <span class="day-card__fact day-card__fact--night">
+                <SectionIcon name="tent" />
+                <span class="day-card__night-label">Noche</span>
+                <span class="day-card__arrow" aria-hidden="true">→</span>
+                <span class="visually-hidden">: </span>
+                {overnightHref ? (
+                  <a class="day-card__night-link" href={overnightHref}>{nightLabel}</a>
+                ) : (
+                  <strong>{nightLabel}</strong>
+                )}
+              </span>
+            )}
           </p>
         )}
       </div>
@@ -92,7 +116,7 @@ const hasFullDay = experiences.length > 0 || Boolean(day.our_take) || Boolean(da
     <div class="day-card__body">
       {day.route_stops.length > 0 && (
         <ol class="day-card__stops">
-          {day.route_stops.map((stop, i) => <DayStop stop={stop} n={i + 1} />)}
+          {day.route_stops.map((stop, i) => <DayStop stop={stop} n={i + 1} day={day.day} />)}
         </ol>
       )}
 
@@ -155,8 +179,30 @@ const hasFullDay = experiences.length > 0 || Boolean(day.our_take) || Boolean(da
               <ul class="day-sheet__experiences">
                 {experiences.map((stop) => (
                   <li>
-                    <p class="day-sheet__place">{stop.place.name}</p>
+                    <p class="day-sheet__place">{stop.place.short_name ?? stop.place.name}</p>
                     <p>{stop.variant_note}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {nightNote && (
+            <section class="day-sheet__block" aria-labelledby={`${sheetId}-night`}>
+              <h3 id={`${sheetId}-night`}>La noche</h3>
+              {nightLabel && <p class="day-sheet__place">{nightLabel}</p>}
+              <p>{nightNote}</p>
+            </section>
+          )}
+
+          {skipped.length > 0 && (
+            <section class="day-sheet__block" aria-labelledby={`${sheetId}-skipped`}>
+              <h3 id={`${sheetId}-skipped`}>Lo que no hicimos ese día</h3>
+              <ul class="day-sheet__experiences day-sheet__experiences--skipped">
+                {skipped.map((stop) => (
+                  <li>
+                    <p class="day-sheet__place">{stop.place.short_name ?? stop.place.name}</p>
+                    <p>{stop.skip_reason}</p>
                   </li>
                 ))}
               </ul>

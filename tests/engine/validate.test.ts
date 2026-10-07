@@ -4,7 +4,11 @@ import { validateGuide } from '../../engine/validate/index.ts'
 import { compileGuide } from '../../engine/compile/index.ts'
 import type { PlaceRegistry, AffiliateRegistry } from '../../engine/types.ts'
 
-const places: PlaceRegistry = { get: (id) => (id === 'a' ? { place_id: 'a', name: 'A', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2024-01-01' } : undefined) }
+const places: PlaceRegistry = {
+  get: (id) => (id === 'a' ? { place_id: 'a', name: 'A', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2024-01-01' }
+    : id === 'camp' ? { place_id: 'camp', name: 'Camping', destination: 'islandia', lat: 1, lng: 1, type: 'accommodation', verified_at: '2024-01-01' }
+    : undefined),
+}
 const affiliates: AffiliateRegistry = {
   get: (id) => (id === 'active-one' ? { id: 'active-one', partner: 'X', category: 'tour', description: 'd', active: true, verified_at: '2024-01-01' }
     : id === 'inactive-one' ? { id: 'inactive-one', partner: 'X', category: 'tour', description: 'd', active: false, verified_at: '2024-01-01' }
@@ -180,7 +184,7 @@ test('I3: a missing affiliate_id in accommodation.zones[].picks[] produces an er
   const result = validateGuide(
     guideWithStop(
       { place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
-      { accommodation: { zones: [{ name: 'Zona', picks: [{ name: 'Camping X', affiliate_id: 'missing-affiliate' }] }] } },
+      { accommodation: { zones: [{ name: 'Zona', picks: [{ place_id: 'camp', affiliate_id: 'missing-affiliate' }] }] } },
     ),
     places, affiliates,
   )
@@ -203,7 +207,7 @@ test('I3: a valid, active affiliate_id in accommodation and practical produces n
     guideWithStop(
       { place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' },
       {
-        accommodation: { zones: [{ name: 'Zona', picks: [{ name: 'Camping X', affiliate_id: 'active-one' }] }] },
+        accommodation: { zones: [{ name: 'Zona', picks: [{ place_id: 'camp', affiliate_id: 'active-one' }] }] },
         practical: { insurance_affiliate_id: 'active-one' },
       },
     ),
@@ -256,4 +260,58 @@ test('a per_room budget item with travelers_per_room set produces no such warnin
     places, affiliates,
   )
   assert.ok(!result.warnings.some((w) => w.includes('travelers_per_room')))
+})
+
+const okStop = { place_id: 'a', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' }
+
+function guideWithDay(day: Record<string, unknown>, overrides: Record<string, unknown> = {}) {
+  return guideWithStop(okStop, {
+    variants: [{ id: 'intensivo', name: 'V', description: 'd', days: [{ day: 1, title: 'D1', stops: [okStop], ...day }] }],
+    ...overrides,
+  })
+}
+
+test('overnight pointing at a missing place_id is an error', () => {
+  const result = validateGuide(guideWithDay({ overnight: 'nope' }), places, affiliates)
+  assert.ok(result.errors.some((e) => e.includes('place_id inexistente en overnight')))
+})
+
+test('overnight pointing at a place that is not an accommodation is an error', () => {
+  const result = validateGuide(guideWithDay({ overnight: 'a' }), places, affiliates)
+  assert.ok(result.errors.some((e) => e.includes('no es un alojamiento')))
+})
+
+test('overnight pointing at a registered campsite is valid', () => {
+  const result = validateGuide(guideWithDay({ overnight: 'camp' }), places, affiliates)
+  assert.deepStrictEqual(result.errors, [])
+})
+
+test('an accommodation pick whose place_id is missing or not an accommodation is an error', () => {
+  const missing = validateGuide(guideWithDay({}, { accommodation: { zones: [{ name: 'Z', picks: [{ place_id: 'nope' }] }] } }), places, affiliates)
+  assert.ok(missing.errors.some((e) => e.includes('place_id inexistente en accommodation')))
+  const wrongType = validateGuide(guideWithDay({}, { accommodation: { zones: [{ name: 'Z', picks: [{ place_id: 'a' }] }] } }), places, affiliates)
+  assert.ok(wrongType.errors.some((e) => e.includes('no es un alojamiento')))
+})
+
+test('facilities on a place that is not an accommodation fail the place schema', async () => {
+  const { PlaceSourceSchema } = await import('../../schemas/place.ts')
+  const bad = PlaceSourceSchema.safeParse({
+    place_id: 'x', name: 'X', destination: 'islandia', lat: 1, lng: 1, type: 'viewpoint', verified_at: '2024-01-01',
+    facilities: { showers: 'none', toilets: true, common_room: false, electricity: false, verified_at: '2024-01-01' },
+  })
+  assert.strictEqual(bad.success, false)
+})
+
+test('route_decisions must be decision/reason pairs; our_criteria no longer exists', () => {
+  const pairs = validateGuide(guideWithDay({}, { route_decisions: [{ decision: 'Sin X', reason: 'Porque sí' }], how_we_choose: ['a'] }), places, affiliates)
+  assert.deepStrictEqual(pairs.errors, [])
+  const loose = validateGuide(guideWithDay({}, { route_decisions: ['Sin X'] }), places, affiliates)
+  assert.ok(loose.errors.length > 0)
+  const legacy = validateGuide(guideWithDay({}, { our_criteria: ['x'] }), places, affiliates)
+  assert.ok(legacy.errors.length > 0)
+})
+
+test('overnight: null (night outside any campsite) and an empty overnight_note are valid', () => {
+  const result = validateGuide(guideWithDay({ overnight: null, overnight_note: '' }), places, affiliates)
+  assert.deepStrictEqual(result.errors, [])
 })

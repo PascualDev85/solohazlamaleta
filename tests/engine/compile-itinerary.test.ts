@@ -139,16 +139,16 @@ test('compileDay derives route_line from short_name, falling back to name, and o
   assert.strictEqual(day.n_route_stops, 2)
 })
 
-test('compileDay keeps photo, highlight, drive and overnight unchanged', () => {
+test('compileDay keeps photo, highlight and drive unchanged', () => {
   const extras = {
     photo: { src: 'islandia/x.jpg', alt: 'A waterfall', caption: 'X, 2025' },
     highlight: 'The best bit.',
     drive: { km: 275, minutes: 225 },
-    overnight: 'Camping X',
+
   }
   const day = compileDay({ day: 1, title: 'D1', stops: [], ...extras }, placeRegistry, emptyAffiliates, now)
   assert.deepStrictEqual(
-    { photo: day.photo, highlight: day.highlight, drive: day.drive, overnight: day.overnight },
+    { photo: day.photo, highlight: day.highlight, drive: day.drive },
     extras,
   )
 })

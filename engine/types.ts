@@ -1,4 +1,6 @@
-import type { PlaceSource, GuideSource, AdaptationNoteSource, FaqItem, BudgetItemSource } from '../schemas/index.ts'
+import type {
+  PlaceSource, GuideSource, AdaptationNoteSource, FaqItem, BudgetItemSource, RouteDecision, AccommodationPickSource,
+} from '../schemas/index.ts'
 
 export type { GuideSource, PlaceSource }
 
@@ -41,6 +43,7 @@ export interface CompiledStop {
   order: number
   duration_min: number
   duration_max_min?: number
+  duration_note?: string
   planning_status: 'required' | 'optional'
   visit_status: 'visited' | 'not_visited' | 'unknown'
   start_time?: string
@@ -57,6 +60,8 @@ export interface CompiledStop {
     advance_notice?: string
   }
   price_checked_at?: string
+  // D: place.parking.shared_with resolved to the place whose car park this stop uses.
+  parking_shared_with?: CompiledPlace
 }
 
 export interface CompiledDay {
@@ -77,7 +82,10 @@ export interface CompiledDay {
   photo?: { src: string; alt: string; caption?: string }
   highlight?: string
   drive?: { km: number; minutes: number }
-  overnight?: string
+  // The campsite of the night, resolved from its place_id; null when the night
+  // was spent outside any campsite; absent when there is no night.
+  overnight?: CompiledPlace | null
+  overnight_note?: string
 }
 
 export interface CompiledVariant {
@@ -116,8 +124,27 @@ export interface CompiledSummary {
   budget_per_person?: number
 }
 
-// TODO: expand in sprint de alojamiento — resolve affiliate_id when data/affiliates.yaml exists
-export type CompiledAccommodation = GuideSource['accommodation']
+export interface CompiledAccommodationPick {
+  place: CompiledPlace
+  price_paid?: AccommodationPickSource['price_paid']
+  opinion?: string
+  notes?: string
+  affiliate?: CompiledAffiliate
+}
+
+export interface CompiledAccommodationZone {
+  name: string
+  description?: string
+  pros?: string[]
+  cons?: string[]
+  best_for?: string[]
+  picks: CompiledAccommodationPick[]
+}
+
+export interface CompiledAccommodation {
+  notes?: string
+  zones: CompiledAccommodationZone[]
+}
 
 // TODO: expand in sprint de transporte
 export type CompiledTransport = GuideSource['transport']
@@ -143,7 +170,8 @@ export interface CompiledGuide {
   gallery?: string[]
   days?: number
   base_travelers?: number
-  our_criteria?: string[]
+  how_we_choose?: string[]
+  route_decisions?: RouteDecision[]
   pitfalls?: string[]
   terrain_tips?: string[]
   practical?: CompiledPractical

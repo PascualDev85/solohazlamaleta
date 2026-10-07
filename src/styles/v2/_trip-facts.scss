@@ -15,17 +15,6 @@
     color: var(--color-text);
   }
 
-  &__about {
-    margin-top: var(--space-2xs) !important;
-    font-size: var(--step--1);
-    font-weight: 600;
-    color: var(--color-text-muted);
-
-    a {
-      font-weight: 800;
-    }
-  }
-
   &__updated {
     margin-top: var(--space-xs) !important;
     font-size: var(--step--1);

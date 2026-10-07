@@ -1,23 +1,29 @@
 ---
 import type { CompiledStop } from '../../../engine/index.ts';
 import { placeMapUrl } from '../../lib/maps.ts';
-import { formatDuration } from '../../lib/formatDuration.ts';
+import { formatDuration, formatMinutes } from '../../lib/formatDuration.ts';
 import SectionIcon from './SectionIcon.astro';
 
 interface Props {
   stop: CompiledStop;
   /** Position in the day's route, from 1. */
   n: number;
+  /** The day this stop belongs to: makes the note's id unique across the route. */
+  day: number;
 }
 
-const { stop, n } = Astro.props;
+const { stop, n, day } = Astro.props;
+// The hike mark opens a speech bubble (native <details>, no script) saying
+// what the upper end of the visit time includes: "2 h 30 min con la ruta…".
+const hintId = `dia-${day}-parada-${n}-nota`;
+const hintTime = stop.duration_max_min != null ? formatMinutes(stop.duration_max_min) : formatMinutes(stop.duration_min);
 const { place } = stop;
 const { parking } = place;
 
-// The short name keeps the line to one row and matches the day's route line;
-// the full name stays for screen readers.
-const shortName = place.short_name;
+// The stop shows the place's full name; the short one is for the route line.
 
+// A car park shared with another place: the card says so instead of a price.
+const sharedWith = stop.parking_shared_with;
 const price = parking
   ? new Intl.NumberFormat('es-ES', {
       style: 'currency',
@@ -31,14 +37,24 @@ const price = parking
 <li class="day-stop">
   <span class="day-stop__n" aria-hidden="true">{n}</span>
   <div class="day-stop__body">
-    <p class="day-stop__head">
-      <span class="day-stop__name">
-        {shortName ?? place.name}{shortName && <span class="visually-hidden"> ({place.name})</span>}
-      </span>
+    {/* A div, not a p: the hint is a <details>, which cannot live inside a paragraph. */}
+    <div class="day-stop__head">
+      <span class="day-stop__name">{place.name}</span>
       <span class="day-stop__time">
-        <SectionIcon name="clock" />{formatDuration(stop.duration_min, stop.duration_max_min)}<span class="visually-hidden"> de visita</span>
+        <SectionIcon name="clock" />
+        <span class="day-stop__time-text">{formatDuration(stop.duration_min, stop.duration_max_min)}<span class="visually-hidden"> de visita</span></span>
+        {stop.duration_note && (
+          <details class="day-stop__hint">
+            <summary class="day-stop__hike" aria-label="Qué incluye el tiempo de visita">
+              <SectionIcon name="info" />
+            </summary>
+            <span class="day-stop__bubble" id={hintId} role="note">
+              <strong>{hintTime}</strong> {stop.duration_note}
+            </span>
+          </details>
+        )}
       </span>
-    </p>
+    </div>
     {place.description && <p class="day-stop__desc">{place.description}</p>}
     {/*
       Its own line, set apart from the description: the road-sign "P" with the
@@ -49,7 +65,9 @@ const price = parking
         <span class="day-stop__parking">
           <span class="day-stop__p" aria-hidden="true"></span>
           <span class="visually-hidden">Parking: </span>
-          {parking.price === 0 ? (
+          {sharedWith ? (
+            <strong>Incluido con {sharedWith.short_name ?? sharedWith.name}</strong>
+          ) : parking.price === 0 ? (
             <strong class="day-stop__free">Gratis</strong>
           ) : (
             <strong>

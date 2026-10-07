@@ -28,12 +28,27 @@
   }
 
   // The guide's own line (summary.tagline): one paragraph, no brand claim.
+  // Two lines (1.12 §4): the first, short and bold, larger than the second.
   .guide-hero__intro {
+    display: grid;
+    gap: var(--space-2xs);
     max-width: 36rem;
     margin: 0;
     font-size: 1.125rem;
     line-height: 1.75;
     color: var(--color-text);
+  }
+
+  .guide-hero__lead {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  .guide-hero__more {
+    line-height: 1.6;
   }
 
   // Desktop: bleeds into the top-right corner of the page. The wrapper clips
