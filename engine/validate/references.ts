@@ -8,8 +8,22 @@ export function validateReferences(
 ): string[] {
   const errors: string[] = []
 
+  // A night must point at a registered campsite, like a stop at a place (I5):
+  // names change spelling, ids do not.
+  function checkCampsite(placeId: string, where: string): void {
+    const place = places.get(placeId)
+    if (!place) {
+      errors.push(`[ERROR] place_id inexistente en ${where}: "${placeId}"`)
+    } else if (place.type !== 'accommodation') {
+      errors.push(`[ERROR] place_id en ${where} no es un alojamiento (type: ${place.type}): "${placeId}"`)
+    }
+  }
+
   for (const variant of guide.variants ?? []) {
     for (const day of variant.days) {
+      if (day.overnight) {
+        checkCampsite(day.overnight, `overnight (variante ${variant.id}, día ${day.day})`)
+      }
       for (const stop of day.stops) {
         if (!places.get(stop.place_id)) {
           errors.push(`[ERROR] place_id inexistente: "${stop.place_id}" (variante ${variant.id}, día ${day.day})`)
@@ -39,6 +53,7 @@ export function validateReferences(
 
   for (const zone of guide.accommodation?.zones ?? []) {
     for (const pick of zone.picks ?? []) {
+      checkCampsite(pick.place_id, `accommodation (zona ${zone.name})`)
       if (pick.affiliate_id) {
         const affiliate = affiliates.get(pick.affiliate_id)
         if (!affiliate) {

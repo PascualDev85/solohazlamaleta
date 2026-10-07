@@ -3,6 +3,7 @@ import type { CompiledGuide, PlaceRegistry, AffiliateRegistry } from '../types.t
 import { compileVariant } from './itinerary.ts'
 import { compileBudget } from './budget.ts'
 import { uniquePlaces } from './place.ts'
+import { compileAccommodation } from './accommodation.ts'
 
 export function compileGuide(
   source: GuideSource,
@@ -29,7 +30,8 @@ export function compileGuide(
     gallery: source.gallery,
     days: source.days,
     base_travelers: source.base_travelers,
-    our_criteria: source.our_criteria,
+    how_we_choose: source.how_we_choose,
+    route_decisions: source.route_decisions,
     pitfalls: source.pitfalls,
     terrain_tips: source.terrain_tips,
     practical: source.practical,
@@ -44,7 +46,9 @@ export function compileGuide(
     },
     variants,
     budget,
-    accommodation: source.accommodation,
+    accommodation: source.accommodation
+      ? compileAccommodation(source.accommodation, places, affiliates, now)
+      : undefined,
     transport: source.transport,
     booking_checklist: source.booking_checklist,
 
