@@ -150,10 +150,18 @@ async function checkDevice(browser: Browser, device: Device, engineLabel: string
         if (!bubble.inside) fail(`el bocadillo del tiempo de Háifoss se sale de la tarjeta (${bubble.b})`)
         // Outside the bubble, on screen: the stop's own name, just beside it.
         const other = await tab.locator('article[aria-labelledby="dia-3"] .day-stop', { hasText: 'Háifoss' }).locator('.day-stop__name').first().boundingBox()
+        // Note whether the tap reaches the document as a click: iOS only
+        // synthesises one on elements it considers clickable.
+        await tab.evaluate(() => {
+          const w = window as unknown as { __clicked: string | null }
+          w.__clicked = null
+          document.addEventListener('click', (e) => (w.__clicked = (e.target as Element).className || (e.target as Element).tagName), { once: true, capture: true })
+        })
         if (other) await tab.touchscreen.tap(other.x + 4, other.y + other.height / 2)
         await settle(tab)
         const still = await hike.evaluate((s) => (s.parentElement as HTMLDetailsElement).open)
-        if (still) fail('el bocadillo del tiempo de Háifoss no se cierra al tocar fuera')
+        const clicked = await tab.evaluate(() => (window as unknown as { __clicked: string | null }).__clicked)
+        if (still) fail(`el bocadillo del tiempo de Háifoss no se cierra al tocar fuera (${clicked ? `el toque llegó como click a ${clicked}` : 'el toque no generó ningún click en el documento'})`)
       }
     }
 
@@ -219,7 +227,14 @@ async function checkDevice(browser: Browser, device: Device, engineLabel: string
       if (p.panel === '.guide-index') await tab.evaluate(() => document.querySelector('.guide-index__dock')?.removeAttribute('data-away'))
       await settle(tab, 400)
       await trigger.tap()
-      await settle(tab, 500)
+      await settle(tab, 300)
+      // The sheet rises with a transition: measure once it has ended (2 s at
+      // most, so one that never ends still shows up as cut).
+      await tab.evaluate(async (panel) => {
+        const el = document.querySelector<HTMLElement>(panel)!
+        const done = Promise.all(el.getAnimations().map((a) => a.finished.catch(() => null)))
+        await Promise.race([done, new Promise((r) => setTimeout(r, 2000))])
+      }, p.panel)
       const fit = await tab.evaluate(({ panel, head, close }) => {
         const el = document.querySelector<HTMLElement>(panel)!
         if (!el.matches(':popover-open')) return null
