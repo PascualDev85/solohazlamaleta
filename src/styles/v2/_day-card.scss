@@ -670,8 +670,13 @@
     font-size: clamp(12px, -10.2px + 6.44vw, 1rem);
   }
 
-  .day-stop__name {
-    white-space: nowrap;
+  // Only on phones of 414px and under: there each name holds one line (the
+  // body type scales so the reviewed days' names fit). Wider, a long name
+  // wraps onto a second line, as everywhere else in the card.
+  @media (max-width: 414px) {
+    .day-stop__name {
+      white-space: nowrap;
+    }
   }
 
   // The road sign: a white P on blue. The P is drawn (a mask), not typed, so
