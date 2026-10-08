@@ -299,7 +299,7 @@
   }
 
   // The way through the day: the stops in order, in a line that wraps onto a
-  // second one when it has to, never scrolls.
+  // second one when it has to (a third on a long day), never scrolls.
   .day-card__route {
     display: flex;
     flex-wrap: wrap;
@@ -642,7 +642,8 @@
 
   // Phones of 414px and under, down to 350px: the type of the lines that must
   // not grow shrinks with the viewport so each keeps its shape: the route in
-  // two rows at most, the facts, the night and each stop's name in one line.
+  // two rows at most (three on a long day, seven route stops or more), the
+  // facts, the night and each stop's name in one line.
   // Measured on the real content (days 1 to 3) at 350, 360, 375, 390 and 414px:
   // each formula passes through the largest size that fits at every width.
   @media (max-width: 414px) {

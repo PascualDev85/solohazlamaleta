@@ -40,8 +40,9 @@ export function headerOverlap({ panel, head }: { panel: string; head: string }) 
 
 /**
  * The lines of every day card with route data (a drive line, so three facts):
- * the route in two rows at most; facts, night, each stop's name and its
- * practical line in one. Opens "Ver N paradas más" first, so every stop counts.
+ * the route in two rows at most, three on a long day (seven route stops or
+ * more, decided by the author 2026-10-08); facts, night, each stop's name and
+ * its practical line in one. Opens "Ver N paradas más" first, so every stop counts.
  */
 export function dayCardLineIssues() {
   document.querySelectorAll<HTMLDetailsElement>('.day-card__more').forEach((d) => (d.open = true))
@@ -52,7 +53,8 @@ export function dayCardLineIssues() {
     const facts = day.querySelector('.day-card__facts')
     if (!facts || facts.children.length < 3) continue // no drive data yet: not reviewed
     const route = day.querySelector('.day-card__route')
-    if (route && rows(route) > 2) out.push(`${id}: route in ${rows(route)} rows`)
+    const maxRouteRows = route && route.children.length >= 7 ? 3 : 2
+    if (route && rows(route) > maxRouteRows) out.push(`${id}: route in ${rows(route)} rows`)
     if (rows(facts) > 1) out.push(`${id}: facts wrap`)
     const night = day.querySelector('.day-card__night')
     if (night && rows(night) > 1) out.push(`${id}: night wraps`)
