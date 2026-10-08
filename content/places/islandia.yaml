@@ -1346,3 +1346,126 @@
     verified_at: 2025-09-13
   description: "Piscina de 1923 encajada en un valle al pie del Eyjafjallajökull, alimentada por una fuente termal. Agua templada, no caliente, y entrada gratuita."
   notes: "Se llega por la carretera 242 hasta un aparcamiento de grava y después a pie, unos 15 o 20 minutos por un sendero pedregoso junto a un arroyo. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+# --- Day 4, south coast from Skógar to Skaftafell (the author's notes, reviewed 2026-10-08).
+# Coordinates from public sources, approximate; parking and maps_url to review with the author.
+- place_id: kvernufoss
+  name: Kvernufoss
+  short_name: Kvernufoss
+  destination: islandia
+  lat: 63.5289
+  lng: -19.4814
+  type: monument
+  verified_at: 2025-09-15
+  description: "Cascada de unos 30 metros escondida en un pequeño cañón junto a Skógar, a poca distancia al este de Skógafoss. El sendero permite pasar por detrás de la cortina de agua."
+  notes: "Se aparca en el Museo de Skógar (el autor lo anotó como gratuito) y se sigue un sendero de unos 1,4 km ida y vuelta por detrás del museo, con un tramo junto al arroyo. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: dyrholaey
+  name: Dyrhólaey
+  short_name: Dyrhólaey
+  destination: islandia
+  lat: 63.4022
+  lng: -19.1288
+  type: viewpoint
+  verified_at: 2025-09-15
+  description: "Promontorio de unos 120 metros sobre el mar al oeste de Vík, con un gran arco de roca natural y un faro en lo alto. Desde arriba se ven la playa de Reynisfjara y los farallones de Reynisdrangar."
+  notes: "Se llega por la carretera 218 desde la Ring Road. Hay dos zonas: la parte baja, junto al mar, y la alta, con el faro, a la que se sube por una pista empinada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: reynisfjara
+  name: Playa de Reynisfjara
+  short_name: Reynisfjara
+  destination: islandia
+  lat: 63.4045
+  lng: -19.0446
+  type: area
+  verified_at: 2025-09-15
+  description: "Playa de arena negra al pie del monte Reynisfjall, con paredes de columnas de basalto, la cueva Hálsanefshellir y, frente a la orilla, los farallones de Reynisdrangar."
+  notes: "Se llega por la carretera 215 desde la Ring Road. Las olas son traicioneras (sneaker waves): no hay que acercarse a la orilla ni dar la espalda al mar, y hay paneles de aviso en la entrada. El mirador de lo alto del Reynisfjall se sube por una pista aparte desde Vík. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: iglesia_vik
+  name: Iglesia de Vík (Víkurkirkja)
+  short_name: Vík
+  destination: islandia
+  lat: 63.4195
+  lng: -19.0115
+  type: monument
+  verified_at: 2025-09-15
+  description: "Iglesia de tejado rojo en una colina sobre el pueblo de Vík í Mýrdal, con vistas al mar y a los farallones de Reynisdrangar."
+  notes: "Se sube en coche desde el pueblo; el autor anotó el aparcamiento como gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: gigjagja
+  name: Gígjagjá (la "cueva de Yoda")
+  short_name: Gígjagjá
+  destination: islandia
+  lat: 63.416961
+  lng: -18.764506
+  type: monument
+  verified_at: 2025-09-15
+  description: "Cueva en la base del cabo Hjörleifshöfði, al este de Vík, cuya abertura recuerda la silueta de Yoda, el personaje de La guerra de las galaxias; de ahí su apodo."
+  notes: "Se llega por una pista de grava que sale de la Ring Road y rodea Hjörleifshöfði. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: laufskalavarda
+  name: Laufskálavarða
+  short_name: Laufskálavarða
+  destination: islandia
+  lat: 63.5600
+  lng: -18.3150
+  type: monument
+  verified_at: 2025-09-15
+  description: "Cresta de lava junto a la Ring Road, en el arenal de Mýrdalssandur, cubierta de pequeños montones de piedras que levantan los viajeros siguiendo una antigua costumbre."
+  notes: "Junto a la carretera, con aparcamiento (el autor lo anotó como gratuito). Parada corta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: eldhraun
+  name: Campo de lava de Eldhraun
+  short_name: Eldhraun
+  destination: islandia
+  lat: 63.7180
+  lng: -18.1880
+  type: area
+  verified_at: 2025-09-15
+  description: "Campo de lava cubierto de musgo formado por la erupción de los cráteres de Laki en 1783 y 1784, uno de los mayores flujos de lava de época histórica."
+  notes: "Aparcamiento junto a la Ring Road (el autor lo anotó como gratuito). El musgo es frágil y tarda décadas en recuperarse: se mira desde los senderos y las zonas marcadas, sin pisarlo. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: fjadrargljufur
+  name: Fjaðrárgljúfur
+  short_name: Fjaðrárgljúfur
+  destination: islandia
+  lat: 63.7713
+  lng: -18.1718
+  type: park
+  verified_at: 2025-09-15
+  description: "Cañón de unos 100 metros de profundidad y unos 2 kilómetros de largo excavado por el río Fjaðrá, cerca de Kirkjubæjarklaustur."
+  notes: "Se llega por la carretera 206 desde la Ring Road. Un sendero recorre el borde del cañón con varios miradores. El terreno junto al borde es frágil: se camina solo por los senderos marcados. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: systrafoss
+  name: Systrafoss
+  short_name: Systrafoss
+  destination: islandia
+  lat: 63.7882
+  lng: -18.0626
+  type: monument
+  verified_at: 2025-09-15
+  description: "Cascada que cae por el acantilado sobre el pueblo de Kirkjubæjarklaustur desde el lago Systravatn."
+  notes: "En el mismo pueblo, a pocos minutos a pie desde el aparcamiento. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: foss_a_sidu
+  name: Foss á Síðu
+  short_name: Foss á Síðu
+  destination: islandia
+  lat: 63.8539
+  lng: -17.8711
+  type: monument
+  verified_at: 2025-09-15
+  description: "Cascada estrecha que cae desde lo alto de un acantilado junto a la Ring Road, al este de Kirkjubæjarklaustur. El agua llega del lago Þórutjörn."
+  notes: "Se ve desde la carretera; hay un apartadero para aparcar (el autor lo anotó como gratuito). Cerca están las columnas de basalto de Dverghamrar. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+
+- place_id: lomagnupur
+  name: Lómagnúpur
+  short_name: Lómagnúpur
+  destination: islandia
+  lat: 63.9700
+  lng: -17.5100
+  type: viewpoint
+  verified_at: 2025-09-15
+  description: "Montaña de paredes casi verticales al borde del arenal de Skeiðarársandur, junto a la Ring Road, entre Kirkjubæjarklaustur y Skaftafell."
+  notes: "Se ve desde la Ring Road, con apartaderos para parar (el autor anotó el aparcamiento como gratuito). Cuando hay agua en las lagunas junto a la carretera, la montaña se refleja en ellas. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."

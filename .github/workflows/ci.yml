@@ -86,3 +86,36 @@ jobs:
         run: |
           npx playwright install --with-deps chromium
           npm run test:ui
+
+  # The guide on current iPhones (WebKit, Safari's engine) and Android phones
+  # (Chromium), with Playwright's device descriptors (scripts/ui-devices.ts).
+  # The screenshots are uploaded even when a check fails, for review by eye.
+  devices:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps webkit chromium
+
+      - name: Device checks, iPhone and Android
+        run: |
+          npx --yes astro preview --port 4321 &
+          npx --yes wait-on http://localhost:4321/ --timeout 60000
+          npm run test:devices
+
+      - name: Upload device screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-devices
+          path: ui-devices/
+          if-no-files-found: warn

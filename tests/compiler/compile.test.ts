@@ -55,13 +55,13 @@ test('skogafoss is visited on day 4 only: the arrival on day 3 is the night, not
   assert.strictEqual(day4Stop.visit_status, 'visited')
 })
 
-test('places is the deduplicated union of every place actually used by a stop (74 of 84 registered: the 10 campsites are nights, not stops)', async () => {
+test('places is the deduplicated union of every place actually used by a stop (85 of 95 registered: the 10 campsites are nights, not stops)', async () => {
   const places = await loadPlaceRegistry()
   const rawGuide = await loadGuide(GUIDE_PATH)
   const result = validateGuide(rawGuide, places, emptyAffiliates)
   const compiled = compileGuide(result.guide!, places, emptyAffiliates)
 
-  assert.strictEqual(compiled.places.length, 74)
+  assert.strictEqual(compiled.places.length, 85)
   assert.strictEqual(compiled.places.filter((p) => p.place_id === 'skogafoss').length, 1)
 })
 

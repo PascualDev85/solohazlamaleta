@@ -257,11 +257,22 @@ variants:
         plan_b: "La lluvia mejora estas cascadas (más caudal). No es mal plan si llueve."
 
       - day: 4
-        title: "Mañana tranquila en Skógafoss"
-        summary: "Vuelta a Skógafoss por la mañana, sin las multitudes del mediodía, para subir al mirador con calma."
+        title: "Sur de Islandia"
+        summary: "De Skógafoss a Skaftafell, entre playas negras, cañones y lava, hasta el Camping Svínafell."
         overnight: camp_svinafell
         physical_level:
           hills: some
+        # Camping Skógafoss → Skógafoss (≈ 0 km) → Kvernufoss, parking del Museo de Skógar (2, 5 min) →
+        # Dyrhólaey (30, 24 min) → Reynisfjara (15, 20 min) → Iglesia de Vík (10, 12 min) →
+        # Eldhraun, pasando por Gígjagjá y Laufskálavarða (62, 20 + 15 + 17 min) → Fjaðrárgljúfur (6, 8 min) →
+        # Foss á Síðu, pasando por Kirkjubæjarklaustur y Systrafoss (21, ≈ 10 + 20 min) →
+        # Camping Svínafell, pasando por Lómagnúpur (62, 27 + ≈ 25 min). Total ≈ 208 km → 210; 203 min → 205.
+        # Minutes from the author's notes; Fjaðrárgljúfur → Systrafoss and the last leg are estimates.
+        # Estimación pendiente de confirmar por el autor.
+        drive:
+          km: 210
+          minutes: 205
+        # duraciones estimadas, pendiente de confirmar
         stops:
           - place_id: skogafoss
             order: 1
@@ -269,7 +280,99 @@ variants:
             planning_status: required
             visit_status: visited
             start_time: "08:30"
+            travel_to_next_min: 5
+            travel_to_next_mode: "coche"
             variant_note: "Subir las escaleras de la derecha para el mirador superior. Con la luz de la mañana y sin las multitudes del mediodía."
+          - place_id: kvernufoss
+            order: 2
+            duration_min: 45
+            duration_max_min: 60
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 24
+            travel_to_next_mode: "coche"
+          - place_id: dyrholaey
+            order: 3
+            duration_min: 45
+            duration_max_min: 60
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
+          - place_id: reynisfjara
+            order: 4
+            duration_min: 60
+            duration_max_min: 90
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 12
+            travel_to_next_mode: "coche"
+          - place_id: iglesia_vik
+            order: 5
+            duration_min: 15
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
+          - place_id: gigjagja
+            order: 6
+            duration_min: 20
+            planning_status: optional
+            visit_status: not_visited
+            travel_to_next_min: 15
+            travel_to_next_mode: "coche"
+            skip_reason: "Estaba en el plan, pero en un día con tantas paradas quedó fuera por tiempo."
+          - place_id: laufskalavarda
+            order: 7
+            duration_min: 10
+            planning_status: optional
+            visit_status: not_visited
+            travel_to_next_min: 17
+            travel_to_next_mode: "coche"
+            skip_reason: "Queda junto a la Ring Road, pero entre tantas paradas no nos dio tiempo a parar."
+          - place_id: eldhraun
+            order: 8
+            duration_min: 15
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 8
+            travel_to_next_mode: "coche"
+          - place_id: fjadrargljufur
+            order: 9
+            duration_min: 90
+            duration_max_min: 120
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 10
+            travel_to_next_mode: "coche"
+          - place_id: systrafoss
+            order: 10
+            duration_min: 30
+            planning_status: optional
+            visit_status: not_visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
+            skip_reason: "Estaba en el plan, pero quedó fuera por tiempo, en un día con muchas paradas."
+          - place_id: foss_a_sidu
+            order: 11
+            duration_min: 10
+            duration_max_min: 15
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 27
+            travel_to_next_mode: "coche"
+          - place_id: lomagnupur
+            order: 12
+            duration_min: 10
+            planning_status: optional
+            visit_status: not_visited
+            travel_to_next_min: 25
+            travel_to_next_mode: "coche"
+            skip_reason: "Estaba en el plan como parada de paso antes del camping, pero quedó fuera por tiempo."
+        food:
+          - name: "Skool Beans Cafe / The Soup Company"
+            area: "Vík í Mýrdal"
+            notes: "Café y sopas en Vík, de camino por la costa sur."
         our_take: "Dormir justo al lado y volver a primera hora es la diferencia entre ver la cascada en foto de postal o entre autobuses de turistas."
 
       - day: 5

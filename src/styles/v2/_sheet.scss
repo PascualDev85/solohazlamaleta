@@ -55,6 +55,14 @@
         transform: translateY(100%);
       }
     }
+
+    // A sheet rests on the bottom edge: its end scrolls clear of the home
+    // indicator (0 where there is none).
+    &::after {
+      content: "";
+      display: block;
+      height: env(safe-area-inset-bottom);
+    }
   }
 }
 
