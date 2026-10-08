@@ -147,7 +147,7 @@
   }
 
   // Everything in the body is sized in em from this one value, so on small
-  // phones (media query below) the whole body scales with the stop's name.
+  // phones (the type scale below) the whole body scales with the stop's name.
   .day-card__body {
     display: grid;
     gap: var(--space-xs);
@@ -325,7 +325,7 @@
 
   // One line each: the numbers of the day, then where it ends. On a narrow
   // phone a line may wrap; nothing is ever cut off.
-  // Gaps and icons in em: when the type shrinks on a small phone (media query
+  // Gaps and icons in em: when the type shrinks on a small phone (type scale
   // below), the whole line shrinks with it.
   .day-card__facts,
   .day-card__night {
@@ -640,36 +640,38 @@
     }
   }
 
-  // Phones of 414px and under, down to 350px: the type of the lines that must
-  // not grow shrinks with the viewport so each keeps its shape: the route in
-  // two rows at most (three on a long day, seven route stops or more), the
-  // facts, the night and each stop's name in one line.
-  // Measured on the real content (days 1 to 3) at 350, 360, 375, 390 and 414px:
-  // each formula passes through the largest size that fits at every width.
-  @media (max-width: 414px) {
-    // Each formula sits 6% under the largest size that fits on a Mac's headless
-    // Chromium at every width: Linux Chromium (the CI) and real phones render
-    // this face about 5% wider, and the CI check holds the lines to that.
-    .day-card__route {
-      font-size: clamp(12.5px, 0.65px + 3.5vw, 14.3px);
-    }
+  // The day card is never wider than 23rem (--card-w in _route.scss), so the
+  // type of the lines that must not grow follows the viewport up to 414px and
+  // then holds: on wider phones and on desktop the card is as wide as at 414px
+  // and keeps the 414px sizes (it used to jump back to the larger base sizes,
+  // and the night line wrapped at 448-480px). Down to 350px it shrinks so each
+  // line keeps its shape: the route in two rows at most (three on a long day,
+  // seven route stops or more), the facts, the night and each stop's name in
+  // one line. Measured on the real content (days 1 to 3) at 350, 360, 375, 390
+  // and 414px: each formula passes through the largest size that fits at every
+  // width.
+  // Each formula sits 6% under the largest size that fits on a Mac's headless
+  // Chromium at every width: Linux Chromium (the CI) and real phones render
+  // this face about 5% wider, and the CI check holds the lines to that.
+  .day-card__route {
+    font-size: clamp(12.5px, 0.65px + 3.5vw, 14.3px);
+  }
 
-    .day-card__facts {
-      font-size: clamp(11px, -5.05px + 4.6vw, 12.2px);
-    }
+  .day-card__facts {
+    font-size: clamp(11px, -5.05px + 4.6vw, 12.2px);
+  }
 
-    .day-card__night {
-      font-size: clamp(9.5px, -3.33px + 3.75vw, 12.2px);
-    }
+  .day-card__night {
+    font-size: clamp(9.5px, -3.33px + 3.75vw, 12.2px);
+  }
 
-    // The whole body follows the stop name's size: 16px at 414px, 12.3px at 350px.
-    .day-card__body {
-      font-size: clamp(12px, -10.2px + 6.44vw, 1rem);
-    }
+  // The whole body follows the stop name's size: 16px at 414px, 12.3px at 350px.
+  .day-card__body {
+    font-size: clamp(12px, -10.2px + 6.44vw, 1rem);
+  }
 
-    .day-stop__name {
-      white-space: nowrap;
-    }
+  .day-stop__name {
+    white-space: nowrap;
   }
 
   // The road sign: a white P on blue. The P is drawn (a mask), not typed, so
