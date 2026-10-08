@@ -61,10 +61,10 @@ test('no day summary leaks the internal "estimated duration" editorial note to r
   }
 })
 
-test('days without author-verified durations (all but 1 to 4) flag it as a YAML comment, not reader-visible text', async () => {
+test('days without author-verified durations (all but 1 to 3) flag it as a YAML comment, not reader-visible text', async () => {
   const rawYaml = await readFile(GUIDE_PATH, 'utf-8')
   const dayBlocks = rawYaml.split(/\n(?=      - day: \d+\n)/)
-  const estimatedDays = [5, 6, 7, 8, 9, 10, 11, 12, 13]
+  const estimatedDays = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
   for (const day of estimatedDays) {
     const block = dayBlocks.find((b) => b.startsWith(`      - day: ${day}\n`))

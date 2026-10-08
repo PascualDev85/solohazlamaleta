@@ -7,7 +7,7 @@ const PLACES_PATH = new URL('../../content/places/islandia.yaml', import.meta.ur
 
 test('islandia.yaml loads and every entry matches PlaceSourceSchema', async () => {
   const raw = await loadPlaces(PLACES_PATH) as unknown[]
-  assert.strictEqual(raw.length, 84)
+  assert.strictEqual(raw.length, 95)
 
   for (const entry of raw) {
     const result = PlaceSourceSchema.safeParse(entry)
@@ -42,7 +42,7 @@ test('every place added for days 4-12 (not author-verified or author-confirmed-c
     p.type !== 'accommodation'
     && !AUTHOR_VERIFIED_PLACE_IDS.has(p.place_id) && !AUTHOR_CONFIRMED_COORDS_PLACE_IDS.has(p.place_id))
 
-  assert.strictEqual(implementerWritten.length, 58)
+  assert.strictEqual(implementerWritten.length, 69)
   for (const place of implementerWritten) {
     assert.ok(
       place.notes?.toLowerCase().includes('pendiente') && place.notes?.toLowerCase().includes('confirmar'),
