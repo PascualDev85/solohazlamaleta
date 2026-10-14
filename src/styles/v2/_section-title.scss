@@ -1,0 +1,23 @@
+// A section heading with the section's icon in a small round tile, the same
+// drawing the index uses, so the reader lands where the index pointed.
+[data-design="v2"] .section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+
+  &__icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.9rem 0.4rem 0.9rem 0.4rem;
+    background: var(--color-pill-bg);
+    color: var(--color-accent);
+
+    .section-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+}

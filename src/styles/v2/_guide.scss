@@ -1,6 +1,80 @@
 @use "../abstracts" as *;
 
+// Small shared pieces of the guide's sections.
+[data-design="v2"] {
+  // A short label in small caps above a block: "Zona 1 · 5 noches",
+  // "Llegada · desde MAD", "3-6 meses antes".
+  .kicker {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-label);
+  }
+
+  // Secondary text: a note, a reason, an introduction.
+  .quiet {
+    color: var(--color-text-muted);
+  }
+
+  // A small rounded label on the glacier tint: "Día 3", "Prioridad alta",
+  // "10 noches en camping".
+  .pill {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background: var(--color-pill-bg);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1.4;
+    color: var(--color-pill-text);
+  }
+
+  // The chevron of a folding card's summary; it turns when the card opens.
+  .fold-chevron {
+    flex: none;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 2px solid var(--color-accent);
+    border-bottom: 2px solid var(--color-accent);
+    transform: rotate(45deg);
+    transition: transform 0.2s var(--ease-out);
+  }
+
+  // Turned, the chevron's corner points up; it moves down a touch so its
+  // visual centre stays where the closed one was.
+  details[open] > summary .fold-chevron {
+    transform: translateY(0.3rem) rotate(-135deg);
+  }
+}
+
 [data-design="v2"] .guide {
+  // The sections after the route are well below the fold: their layout and
+  // paint wait until they come near the screen (content-visibility), so the
+  // first render, and with it the LCP, does not pay for them. The intrinsic
+  // size keeps the scrollbar honest while they are skipped. Anchor jumps
+  // (the index, "Noche → …") still land: the browser renders the target.
+  // Containment stops the heading's top margin from collapsing through the
+  // section, so the section carries the gap and the heading none.
+  > .sleep,
+  > .transport,
+  > .budget,
+  > .booking,
+  > .criteria,
+  > .practical,
+  > .faq {
+    margin-top: var(--space-2xl);
+    content-visibility: auto;
+    contain-intrinsic-size: auto 40rem;
+
+    > .section-title {
+      margin-top: 0;
+    }
+  }
+
   &__dateline {
     font-family: var(--font-display);
     font-style: normal;
@@ -12,29 +86,5 @@
     letter-spacing: 0;
     text-transform: none;
     color: var(--color-text-muted);
-  }
-
-  &__zone {
-    margin-block: var(--space-sm);
-    padding: var(--space-md) var(--space-lg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-
-    h3 {
-      margin-top: 0;
-    }
-
-    @include up-to("sm") {
-      padding-inline: var(--space-md);
-    }
-  }
-
-  &__budget-total {
-    font-size: var(--step-1);
-    font-weight: 800;
-  }
-
-  &__faq dt {
-    font-weight: 800;
   }
 }

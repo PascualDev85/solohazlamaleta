@@ -7,9 +7,11 @@ import SectionIcon from './SectionIcon.astro';
 
 interface Props {
   pick: CompiledAccommodationPick;
+  /** The days whose night was spent here (from the route), oldest first. */
+  nights?: number[];
 }
 
-const { pick } = Astro.props;
+const { pick, nights = [] } = Astro.props;
 const { place, price_paid: paid } = pick;
 
 // Folded: name, what we paid, what it has and one line of opinion. Open: the
@@ -30,6 +32,16 @@ const hasMore = Boolean(place.notes || pick.notes || paid);
 ---
 
 <li class="camp" id={id}>
+  {/* Outside the summary, so tapping a night goes to its day without toggling the card. */}
+  {nights.length > 0 && (
+    <p class="camp__nights">
+      {nights.map((day) => (
+        <a class="camp__night" href={`#dia-${day}`}>
+          <SectionIcon name="sleep" />Noche {day}
+        </a>
+      ))}
+    </p>
+  )}
   <details class="camp__details">
     <summary class="camp__summary">
       <span class="camp__head">
@@ -46,7 +58,7 @@ const hasMore = Boolean(place.notes || pick.notes || paid);
         </span>
       )}
       {pick.opinion && <span class="camp__opinion">{pick.opinion}</span>}
-      {hasMore && <span class="camp__chevron" aria-hidden="true"></span>}
+      {hasMore && <span class="fold-chevron camp__chevron" aria-hidden="true"></span>}
     </summary>
 
     <div class="camp__more">
@@ -57,13 +69,14 @@ const hasMore = Boolean(place.notes || pick.notes || paid);
           Lo que pagamos en {formatDate(paid.verified_at)}, 2 personas y camper sin electricidad.
         </p>
       )}
+      {/* "Mapa" and "Web" read in the context of the card (its list item names the campsite), as WCAG 2.4.4 allows. */}
       <p class="camp__links">
         <a href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">
-          <SectionIcon name="pin" />Mapa<span class="visually-hidden"> de {place.name} (se abre en una pestaña nueva)</span>
+          <SectionIcon name="pin" />Mapa<span class="visually-hidden"> (se abre en una pestaña nueva)</span>
         </a>
         {place.source_url && (
           <a href={place.source_url} target="_blank" rel="noopener">
-            Web<span class="visually-hidden"> de {place.name} (se abre en una pestaña nueva)</span>
+            Web<span class="visually-hidden"> (se abre en una pestaña nueva)</span>
           </a>
         )}
       </p>
