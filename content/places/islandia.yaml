@@ -701,7 +701,7 @@
   notes: "Cañón de columnas de basalto, acceso desde el lado este sin cruzar el río — es el único de los dos lados desde el que se puede bajar al cañón (con cuidado); el otro lado solo permite verlo desde arriba. Ruta de unos 5 km, unos 45 minutos de ida y otros 45 de vuelta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: dettifoss_selfoss
-  name: "Dettifoss y Selfoss (oeste)"
+  name: "Dettifoss y Selfoss"
   short_name: "Dettifoss"
   destination: islandia
   lat: 65.8142
@@ -1039,8 +1039,7 @@
   notes: "La época habitual de avistamiento de frailecillos es de abril a agosto aproximadamente; fuera de esas fechas no hay garantía de verlos. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: jardgangalaug
-  name: "Jarðgangalaug (poza termal)"
-  short_name: "Jarðgangalaug"
+  name: "Jarðgangalaug"
   destination: islandia
   lat: 65.6939
   lng: -18.0594
@@ -1090,8 +1089,7 @@
   notes: "Tiene mesas de picnic. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: landbrotalaug
-  name: "Landbrotalaug (poza termal)"
-  short_name: "Landbrotalaug"
+  name: "Landbrotalaug"
   destination: islandia
   lat: 64.7867
   lng: -22.8333
