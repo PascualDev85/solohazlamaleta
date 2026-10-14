@@ -442,13 +442,14 @@
 
 - place_id: trekking_glaciar_svinafellsjokull
   name: "Trekking en el glaciar Svínafellsjökull"
+  short_name: "Trekking en el glaciar"
   destination: islandia
   lat: 64.0114
   lng: -16.8800
   type: activity
   verified_at: 2025-09-15
-  description: "Excursión guiada con crampones sobre la lengua glaciar de Svínafellsjökull, una de las salidas del casquete Vatnajökull, el más extenso de Europa."
-  notes: "Excursión guiada de 5 horas sobre la lengua glaciar de Svínafellsjökull, en el Parque Nacional de Vatnajökull. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Excursión guiada con crampones sobre la lengua glaciar de Svínafellsjökull, una de las salidas del casquete Vatnajökull, en el Parque Nacional de Vatnajökull."
+  notes: "Se contrata con un operador; el punto de encuentro y la duración dependen de la excursión elegida (la del autor fue de unas 6 horas, con base cerca de Skaftafell). Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: svartifoss
   name: Svartifoss
@@ -459,7 +460,7 @@
   type: monument
   verified_at: 2025-09-15
   description: "Cascada del Parque Nacional de Vatnajökull, en la zona de Skaftafell, enmarcada por columnas de basalto negro de formación hexagonal."
-  notes: "Cascada rodeada de columnas de basalto negro, en el área de Skaftafell. Se llega con una excursión corta a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se llega a pie desde el aparcamiento de Skaftafell por el sendero señalizado S2, en subida, pasando por Hundafoss. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: svinafellsjokull
   name: Svínafellsjökull
@@ -469,7 +470,7 @@
   type: viewpoint
   verified_at: 2025-09-15
   description: "Lengua del glaciar Vatnajökull, con un mirador en la zona de Skaftafell."
-  notes: "Visible desde el aparcamiento sin necesidad de excursión guiada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se ve desde el aparcamiento, sin necesidad de excursión guiada; el mirador queda a unos 5 minutos a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: mulagljufur
   name: "Cañón de Múlagljúfur"
@@ -1191,7 +1192,7 @@
   notes: "Tjaldsvæðið í Svínafelli. Camping muy amplio en Svínafell, a 12 minutos de Skaftafell. 4 duchas interiores y 2 exteriores de agua caliente sin límite de tiempo, 4 baños, sala común amplia con muchas mesas, 4 fuegos para cocinar, utensilios, 3 fregaderos y nevera. Lavandería aparte (lavadora y secadora), 1.800 ISK. Abierto de mayo a septiembre."
 
 - place_id: camp_skaftafell
-  name: "Skaftafell Campground"
+  name: "Camping Skaftafell"
   short_name: "Camping Skaftafell"
   destination: islandia
   lat: 64.016287
