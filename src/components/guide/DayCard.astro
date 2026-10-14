@@ -155,10 +155,10 @@ const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
     </div>
 
     {hasFullDay && (
-      <div id={sheetId} class="day-sheet" popover role="dialog" aria-labelledby={`${sheetId}-title`}>
+      <div id={sheetId} class="day-sheet" popover role="dialog" aria-labelledby={`${sheetId}-eyebrow ${sheetId}-title`}>
         <header class="day-sheet__head">
           <div>
-            <p class="day-sheet__eyebrow">Día {num}</p>
+            <p class="day-sheet__eyebrow" id={`${sheetId}-eyebrow`}>Día {num}</p>
             <h2 class="day-sheet__title" id={`${sheetId}-title`}>{day.title}</h2>
           </div>
           <button
