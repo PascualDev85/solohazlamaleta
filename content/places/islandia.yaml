@@ -180,6 +180,7 @@
 
 - place_id: hauganes
   name: Avistamiento de ballenas en Hauganes
+  short_name: "Hauganes"
   destination: islandia
   lat: 65.8973
   lng: -18.4166
@@ -196,8 +197,8 @@
   lng: -18.6667
   type: monument
   verified_at: 2025-09-20
-  description: "Cascada en la zona de Héðinsfjörður, en la ruta por los túneles de montaña hacia Siglufjörður."
-  notes: "Se ve bien desde un terraplén junto a la carretera, sin necesidad de bajar; si apetece, se puede bajar para verla más de cerca. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Cascada que cae por un acantilado hacia el mar en la costa oeste del fiordo de Eyjafjörður, entre Dalvík y Ólafsfjörður, en la península de Tröllaskagi."
+  notes: "Junto a la carretera 82 (Ólafsfjarðarvegur), de camino a los túneles hacia Ólafsfjörður y Siglufjörður. Se ve bien desde un terraplén junto a la carretera, sin necesidad de bajar; si apetece, se puede bajar para verla más de cerca. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: siglufjordur
   name: Siglufjörður
@@ -206,8 +207,8 @@
   lng: -18.9100
   type: area
   verified_at: 2025-09-20
-  description: "Antiguo pueblo arenquero en el extremo norte de la península de Tröllaskagi, accesible por túneles excavados en la montaña."
-  notes: "Antiguo pueblo arenquero en el extremo norte de la península de Tröllaskagi, accesible por túneles. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  description: "Pueblo pesquero en el extremo norte de la península de Tröllaskagi, antiguo centro de la industria del arenque en Islandia."
+  notes: "Se llega por los túneles de montaña desde Ólafsfjörður o por la carretera 76 desde Skagafjörður. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: grafarkirkja
   name: Grafarkirkja

@@ -737,6 +737,14 @@ variants:
         title: "Goðafoss, Akureyri y la costa de Tröllaskagi"
         summary: "De la zona de Mývatn a la costa norte, con parada para avistamiento de ballenas y cruce por túneles hacia Siglufjörður."
         overnight: camp_lambeyri
+        # Camping Systragil → Goðafoss (≈ 20 km, ≈ 17 min) → Akureyri (≈ 31, ≈ 26 min) → Hauganes (35, 30 min) →
+        # Mígandifoss (24, 22 min) → Siglufjörður (21, 26 min) → Camping Lambeyri, pasando por Hofsós (105, 55 +
+        # ≈ 51 min). Total ≈ 235 km; 227 min → 225. Minutes from the author's notes except those marked
+        # ≈ (estimates: the notes start at Laugar and end at Hólar/Hofsós). Estimación pendiente de confirmar por
+        # el autor.
+        drive:
+          km: 235
+          minutes: 225
         # duraciones estimadas, pendiente de confirmar
         stops:
           - place_id: godafoss
@@ -744,23 +752,31 @@ variants:
             duration_min: 40
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 26
+            travel_to_next_mode: "coche"
           - place_id: akureyri
             order: 2
             duration_min: 60
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 30
+            travel_to_next_mode: "coche"
             variant_note: "Visitamos las zonas principales, la iglesia y el jardín botánico — una ciudad con mucho encanto. Aprovechamos para arreglar la calefacción del habitáculo delantero en un taller de la ciudad: un 10."
           - place_id: hauganes
             order: 3
             duration_min: 180
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 22
+            travel_to_next_mode: "coche"
             variant_note: "Espectacular: la primera vez que vimos ballenas y nos encantó. Fue respetuoso, vimos un montón, el capitán genial explicando todo el rato. Fuimos de los primeros ese día y repartieron café o chocolate con galletas de canela. Una experiencia preciosa."
           - place_id: migandifoss
             order: 4
             duration_min: 30
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 26
+            travel_to_next_mode: "coche"
           - place_id: siglufjordur
             order: 5
             duration_min: 15
