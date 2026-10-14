@@ -749,6 +749,14 @@
     }
   }
 
+  // In forced colours the sign's blue and its masked P were painted over:
+  // keep the sign as it is, white on blue.
+  @media (forced-colors: active) {
+    .day-stop__p {
+      forced-color-adjust: none;
+    }
+  }
+
   // "/ 5 h" after a time-based price: lighter, so the figure leads.
   .day-stop__period {
     font-weight: 600;
