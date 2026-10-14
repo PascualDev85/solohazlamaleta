@@ -675,6 +675,7 @@
 
 - place_id: studlagil
   name: "Cañón de Stuðlagil (lado este)"
+  short_name: "Stuðlagil"
   destination: islandia
   lat: 65.3064
   lng: -15.5597
@@ -694,6 +695,7 @@
 
 - place_id: dettifoss_selfoss
   name: "Dettifoss (lado oeste) y Selfoss"
+  short_name: "Dettifoss"
   destination: islandia
   lat: 65.8142
   lng: -16.3833
@@ -708,7 +710,7 @@
     price: 0
     currency: ISK
     verified_at: 2026-10-04
-  description: "Dos cascadas del río Jökulsá á Fjöllum, en el Parque Nacional de Vatnajökull: Dettifoss, una de las cascadas más potentes de Europa, y Selfoss, río arriba, de menor tamaño. Accesibles juntas desde el lado oeste del cañón."
+  description: "Dos cascadas del río Jökulsá á Fjöllum, en el Parque Nacional de Vatnajökull: Dettifoss, de unos 100 m de ancho y 44 m de caída, y Selfoss, río arriba, más baja y ancha."
   notes: "Dettifoss tiene dos lados de acceso, oeste y este, con aparcamientos distintos y sin conexión directa entre ellos — no comparten parking. Desde el lado oeste (este place_id) se llega también a Selfoss, a poca distancia a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: grjotagja
@@ -727,7 +729,7 @@
     price: 0
     currency: ISK
     verified_at: 2026-10-04
-  description: "Cueva de lava con una poza de agua termal en su interior, cerca del lago Mývatn. El baño está prohibido desde que las erupciones de Krafla elevaron la temperatura del agua."
+  description: "Cueva de lava con una poza de agua termal en su interior, cerca del lago Mývatn. Fue un lugar de baño hasta que las erupciones de Krafla (1975-1984) elevaron la temperatura del agua."
   notes: "Cueva de lava con agua termal, cerca de Mývatn. El baño está prohibido por la temperatura del agua. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hengifoss
@@ -737,7 +739,8 @@
   lng: -14.6167
   type: monument
   verified_at: 2025-09-18
-  notes: "Una de las cascadas más altas de Islandia, rodeada de capas de basalto y arcilla roja. Caminata de ida y vuelta de unas 2-3 horas. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Cascada de 128 m de caída en el río Hengifossá, sobre el lago Lagarfljót. Su pared muestra capas de basalto separadas por franjas de arcilla roja."
+  notes: "Caminata de ida y vuelta de unas 2-3 horas desde el aparcamiento, con subida continua; a mitad de camino se pasa junto a Litlanesfoss, con columnas de basalto. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: krafla_viti
   name: "Krafla (cráter Víti)"
@@ -1224,7 +1227,7 @@
   notes: "Camping del Parque Nacional de Vatnajökull, junto al centro de visitantes y con salida directa a las rutas al glaciar y a Svartifoss. 8 duchas interiores de agua caliente sin límite de tiempo, 2 baños (4 WC en el de mujeres, 3 en el de hombres), sin sala común, 4 fregaderos de agua caliente exteriores cubiertos. Lavandería incluida en el precio; detergente a la venta en el centro de visitantes (350 ISK)."
 
 - place_id: camp_laugar
-  name: "Laugar Camping"
+  name: "Camping Laugar"
   short_name: "Camping Laugar"
   destination: islandia
   lat: 65.72179

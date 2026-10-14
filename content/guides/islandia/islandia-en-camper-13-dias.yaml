@@ -601,37 +601,51 @@ variants:
         title: "Cañones y cascadas del este"
         summary: "De Egilsstaðir hacia Mývatn, con los grandes cañones y cascadas del norte-este como protagonistas."
         overnight: camp_laugar
+        # Rjúkandifoss (sin tramo inicial: la noche del día 7 fue fuera de camping) → Stuðlagil, lado este (41 km,
+        # 26 min) → Dettifoss y Selfoss, lado oeste (95, 110 min) → Grjótagjá (43, ≈ 37 min) → Camping Laugar (30,
+        # ≈ 26 min). Total ≈ 209 km → 210; 199 min → 200. Tiempos de las notas del autor salvo los marcados ≈.
+        # Estimación pendiente de confirmar por el autor.
+        drive:
+          km: 210
+          minutes: 200
         # duraciones estimadas, pendiente de confirmar
         stops:
-          - place_id: rjukandifoss
+          - place_id: hengifoss
             order: 1
+            duration_min: 150
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Estaba en el plan como opción dudosa, con una caminata de unas dos horas y media, y al final quedó fuera."
+          - place_id: rjukandifoss
+            order: 2
             duration_min: 20
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 26
+            travel_to_next_mode: "coche"
             variant_note: "Cascada a pie de carretera, muy fácil de ver. Después de tantas cascadas de la ruta, nos sorprendió gratamente."
           - place_id: studlagil
-            order: 2
+            order: 3
             duration_min: 100
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 110
+            travel_to_next_mode: "coche"
             variant_note: "Nos gustó mucho. El agua no estaba verde el día que fuimos — verla así es más suerte que otra cosa — pero las formaciones rocosas por la erosión del agua merecen la pena igual. Es un spot de 10 en Islandia."
           - place_id: dettifoss_selfoss
-            order: 3
+            order: 4
             duration_min: 90
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 37
+            travel_to_next_mode: "coche"
             variant_note: "Nos pilló una nevada fuerte justo al llegar: los copos caían con tanta fuerza que llegaban a hacer daño, no fue agradable, y no pudimos ver bien la cascada por lo nublado. Mala suerte de tiempo, no del lugar — volveremos a intentarlo. Creemos que el lado oeste es mejor, pero si tienes tiempo, merece la pena ver los dos lados."
           - place_id: grjotagja
-            order: 4
+            order: 5
             duration_min: 20
             planning_status: optional
             visit_status: visited
             variant_note: "Estaba lleno de gente y, para nosotros, no mereció mucho la pena — quizás interesa más a quien sea fan de Juego de Tronos (aquí se rodó una escena de la serie), poco más."
-          - place_id: hengifoss
-            order: 5
-            duration_min: 150
-            planning_status: optional
-            visit_status: not_visited
         food:
           - name: "Fish and Chips Lake Mývatn"
             area: Mývatn
