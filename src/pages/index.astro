@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { GROUP_LABELS } from '../lib/guide';
+import '../styles/v1-components.scss';
 
 const guides = await getCollection('guides');
 
