@@ -519,6 +519,14 @@ variants:
         # Night outside any campsite. The note is the author's to write.
         overnight: null
         overnight_note: ""
+        # Breiðdalsvík (night before outside any campsite, no first leg) → Stöðvarfjörður (10 km, 15 min) →
+        # Reyðarfjörður (40, 40 min) → Fardagafoss (34, 55 min) → Gufufoss (23, 18 min) → Seyðisfjörður (2, 4 min)
+        # → Vök Baths (26, 30 min). Total ≈ 135 km; 162 min → 160. Minutes from the author's notes; km from
+        # coordinates (× 1.4 on the two fjord legs, × 1.25 elsewhere), probably short on the fjord roads. Night
+        # outside any campsite: the day ends at Vök Baths. Estimación pendiente de confirmar por el autor.
+        drive:
+          km: 135
+          minutes: 160
         # duraciones estimadas, pendiente de confirmar
         stops:
           - place_id: breiddalsvik
@@ -526,48 +534,61 @@ variants:
             duration_min: 45
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 15
+            travel_to_next_mode: "coche"
           - place_id: stodvarfjordur
             order: 2
             duration_min: 15
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 40
+            travel_to_next_mode: "coche"
           - place_id: reydarfjordur
             order: 3
             duration_min: 40
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 55
+            travel_to_next_mode: "coche"
           - place_id: fardagafoss
             order: 4
             duration_min: 70
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 18
+            travel_to_next_mode: "coche"
           - place_id: gufufoss
             order: 5
             duration_min: 15
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 4
+            travel_to_next_mode: "coche"
           - place_id: seydisfjordur
             order: 6
             duration_min: 60
             planning_status: required
             visit_status: visited
-          - place_id: borgarfjardarhofn
+            travel_to_next_min: 30
+            travel_to_next_mode: "coche"
+          - place_id: vestdalsfossar
             order: 7
+            duration_min: 60
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Estaba en el plan como opción dudosa, justo después de Seyðisfjörður, y quedó fuera. Según nuestras notas, la cascada y la vista al fiordo están a unos 5 minutos a pie del parking, por si quieres añadirla."
+          - place_id: borgarfjardarhofn
+            order: 8
             duration_min: 30
             planning_status: optional
             visit_status: not_visited
             skip_reason: "Buscábamos ver frailecillos y no era la época: no había ninguno cuando pasamos. Si vas en temporada de avistamiento, sí merece la pena acercarse."
           - place_id: vok_baths
-            order: 8
+            order: 9
             duration_min: 90
             planning_status: optional
             visit_status: visited
             variant_note: "Nos encantaron estos baños: el entorno donde están es precioso. No fuimos a otros para comparar, pero esto solo ya mereció la pena. Nos tomamos una cerveza dentro del agua y un té al salir."
-          - place_id: vestdalsfossar
-            order: 9
-            duration_min: 60
-            planning_status: optional
-            visit_status: not_visited
         food:
           - name: "Askur Pizzeria (Egilsstaðir)"
             area: Egilsstaðir

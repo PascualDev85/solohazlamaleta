@@ -563,7 +563,7 @@
   type: area
   verified_at: 2025-09-17
   description: "Pueblo pesquero en el fondo del fiordo de Breiðdalsvík, en el este de Islandia."
-  notes: "Pequeño pueblo pesquero del este de Islandia, al fondo del fiordo Breiðdalsvík. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Pequeño pueblo pesquero del este de Islandia, al fondo del fiordo Breiðdalsvík. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: stodvarfjordur
   name: Stöðvarfjörður
@@ -573,7 +573,7 @@
   type: area
   verified_at: 2025-09-17
   description: "Pueblo de pescadores del este de Islandia, conocido por Steinasafn Petru, un museo privado de minerales y piedras semipreciosas."
-  notes: "Pueblo de pescadores del este, conocido por el museo de minerales Petra. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Pueblo de pescadores del este, conocido por el museo de minerales Petra. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: reydarfjordur
   name: Reyðarfjörður
@@ -583,7 +583,7 @@
   type: area
   verified_at: 2025-09-17
   description: "Pueblo industrial en el fondo del fiordo de Reyðarfjörður, en el este de Islandia."
-  notes: "Pueblo industrial en el fondo del fiordo más largo del este de Islandia. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Pueblo industrial en el fondo del fiordo más largo del este de Islandia. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: fardagafoss
   name: Fardagafoss
@@ -630,11 +630,12 @@
   lng: -13.9558
   type: area
   verified_at: 2025-09-17
-  description: "Pueblo del este de Islandia construido alrededor de un fiordo estrecho, con arquitectura de principios del siglo XX y puerto de ferry hacia las Islas Feroe y Dinamarca. Su iglesia azul, Seyðisfjarðarkirkja, da nombre a la calle arcoíris pintada en el suelo que lleva hasta ella."
-  notes: "Pueblo del este con casas de colores y la calle arcoíris, puerto del ferry a Europa continental. Hay aparcamiento gratuito dentro del pueblo. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  description: "Pueblo del este de Islandia construido alrededor de un fiordo estrecho, con arquitectura de principios del siglo XX y puerto del ferry hacia las Islas Feroe y Dinamarca. Su iglesia azul, Seyðisfjarðarkirkja, está al final de la calle arcoíris pintada en el suelo."
+  notes: "Hay aparcamiento gratuito dentro del pueblo. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: vok_baths
   name: Vök Baths
+  short_name: "Vök"
   destination: islandia
   lat: 65.2667
   lng: -14.4000
@@ -650,7 +651,8 @@
   lng: -13.9833
   type: monument
   verified_at: 2025-09-17
-  notes: "Conjunto de cascadas en un valle cerca de Seyðisfjörður, se llega con una caminata. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Conjunto de cascadas en el valle de Vestdalur, a la entrada de Seyðisfjörður, con vistas al fiordo."
+  notes: "Se llega con una caminata corta, de unos 5 minutos desde el parking. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: rjukandifoss
   name: Rjúkandifoss
