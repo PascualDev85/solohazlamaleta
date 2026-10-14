@@ -658,13 +658,28 @@ variants:
         title: "Mývatn y Krafla"
         summary: "Día dedicado a la zona volcánica y geotérmica de Mývatn y Krafla."
         overnight: camp_systragil
+        # Camping Laugar → Krafla, cráter Víti (≈ 38 km, ≈ 33 min) → Hverir / Námafjall (11, 12 min) → Hverfjall
+        # (6, 20 min) → Dimmuborgir (4, 10 min) → Mirador del lago Mývatn (6, 8 min) → Jarðgangalaug, pasando por
+        # Goðafoss (63, ≈ 29 + 30 min) → Camping Systragil (≈ 11, ≈ 9 min). Total ≈ 138 km → 140; 151 min → 150.
+        # Tiempos de las notas del autor salvo los marcados ≈. Estimación pendiente de confirmar por el autor.
+        drive:
+          km: 140
+          minutes: 150
         # duraciones estimadas, pendiente de confirmar
         stops:
-          - place_id: krafla_viti
+          - place_id: leirhnjukur
             order: 1
+            duration_min: 45
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Estaba en el plan como primera parada, justo antes del cráter Víti, pero quedó fuera."
+          - place_id: krafla_viti
+            order: 2
             duration_min: 60
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 12
+            travel_to_next_mode: "coche"
             variant_note: "Hizo tanto viento y frío que la verdad no mereció mucho la pena: estuvimos solo unos minutos fuera porque era imposible aguantar más. El entorno nevado fue épico, pero si volviéramos no iríamos de nuevo, y menos por lo que costaba el parking en 2025."
             experience:
               visited_at: "2025-09"
@@ -673,39 +688,43 @@ variants:
                 currency: ISK
                 notes: "El parking subió a 1.200 ISK después de nuestro viaje."
           - place_id: hverir_namafjall
-            order: 2
+            order: 3
             duration_min: 45
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
             variant_note: "Toda la zona es un recorrido bastante largo con fumarolas, parece de otro planeta, como estar en Marte — es increíble. Lo que nos parece es que el precio del parking y el baño es abusivo."
           - place_id: hverfjall
-            order: 3
+            order: 4
             duration_min: 30
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 10
+            travel_to_next_mode: "coche"
             variant_note: "Solo hicimos la subida para verlo: 1,5 km entre ida y vuelta, unos 15 minutos, bastante empinada, pero el cráter es muy guapo y las vistas espectaculares."
           - place_id: dimmuborgir
-            order: 4
+            order: 5
             duration_min: 60
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 8
+            travel_to_next_mode: "coche"
             variant_note: "Hay varios senderos; hicimos el más largo, recorriendo casi toda la zona. Las formaciones de lava son curiosas, el paseo es muy agradable y lo recomendamos mucho — con niños les encantará."
           - place_id: myvatn_viewpoint
-            order: 5
+            order: 6
             duration_min: 20
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 59
+            travel_to_next_mode: "coche"
             variant_note: "Un spot bonito para disfrutar del lago con tranquilidad y hacer buenas fotos."
-          - place_id: leirhnjukur
-            order: 6
-            duration_min: 45
-            planning_status: optional
-            visit_status: not_visited
           - place_id: skutustadagigar
             order: 7
             duration_min: 30
             planning_status: optional
             visit_status: not_visited
+            skip_reason: "Estaba en el plan como opción dudosa, al final del recorrido por el lago, y quedó fuera."
           - place_id: jardgangalaug
             order: 8
             duration_min: 40

@@ -744,6 +744,7 @@
 
 - place_id: krafla_viti
   name: "Krafla (cráter Víti)"
+  short_name: "Krafla"
   destination: islandia
   lat: 65.7167
   lng: -16.7667
@@ -763,6 +764,7 @@
 
 - place_id: hverir_namafjall
   name: "Hverir / Námafjall"
+  short_name: "Hverir"
   destination: islandia
   lat: 65.6386
   lng: -16.8056
@@ -778,7 +780,10 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Área geotérmica de fumarolas y pozas de barro hirviendo, junto a la montaña Námafjall, cerca del lago Mývatn."
-  notes: "Área geotérmica con fumarolas y pozas de barro hirviendo, junto a la montaña Námafjall. Lugar agrupado (un solo place_id para una visita única, igual que jokulsarlon): al confirmar coordenadas, deben ser las del parking/punto de acceso común a Hverir y Námafjall, no las de uno solo de los dos, para que el marcador del mapa no quede desplazado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  # Grouped place (one place_id for a single visit, like jokulsarlon): once the author confirms the
+  # coordinates, use the car park / access point shared by Hverir and Námafjall, not one of the two, so
+  # the map marker is not off.
+  notes: "Área geotérmica con fumarolas y pozas de barro hirviendo, junto a la montaña Námafjall. Desde el aparcamiento de Hverir sale una ruta circular de unos 3 km que sube a Námafjall, con vistas a las fumarolas y a la caldera de Krafla. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hverfjall
   name: Hverfjall
@@ -820,6 +825,7 @@
 
 - place_id: myvatn_viewpoint
   name: "Mirador panorámico del lago Mývatn"
+  short_name: "Mývatn"
   destination: islandia
   lat: 65.6000
   lng: -17.0000
@@ -844,15 +850,18 @@
   lng: -16.7981
   type: viewpoint
   verified_at: 2025-09-19
-  notes: "Campo de lava activo con fumarolas, junto al área de Krafla. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Campo de lava y zona geotérmica al pie del volcán Krafla, con fumarolas, pozas de barro hirviendo y coladas de las erupciones de 1975-1984, los llamados fuegos de Krafla."
+  notes: "Recorrido circular completo de unos 45 minutos desde el aparcamiento, a un par de minutos en coche del cráter Víti. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: skutustadagigar
   name: "Pseudocráteres de Skútustaðagígar"
+  short_name: "Skútustaðagígar"
   destination: islandia
   lat: 65.5700
   lng: -17.0100
   type: viewpoint
   verified_at: 2025-09-19
+  description: "Grupo de pseudocráteres en la orilla sur del lago Mývatn, formados por explosiones de vapor cuando una colada de lava cubrió terreno encharcado. No son volcanes: no tienen conducto propio de magma."
   notes: "Grupo de pseudocráteres volcánicos junto al lago Mývatn, con sendero circular corto. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: glymur
@@ -1024,13 +1033,14 @@
 
 - place_id: jardgangalaug
   name: "Jarðgangalaug (poza termal)"
+  short_name: "Jarðgangalaug"
   destination: islandia
   lat: 65.6939
   lng: -18.0594
   type: activity
   verified_at: 2025-09-19
-  description: "Poza termal natural en el curso de un río que cae en una cascada de unos 15 metros hacia el mar, en el norte de Islandia. El agua es más caliente río arriba, cerca del nacimiento del manantial."
-  notes: "Aparcamiento muy limitado, en un apartadero de la carretera para pocos coches."
+  description: "Poza termal junto al fiordo Eyjafjörður, frente a Akureyri, en el curso de un arroyo de agua caliente que cae en una cascada de unos 15 metros hacia el mar."
+  notes: "Aparcamiento muy limitado, en un apartadero de la carretera para pocos coches. El agua está más caliente río arriba, cerca de donde brota, y más templada junto a la cascada."
 
 - place_id: svortuloft
   name: "Faro de Svörtuloft"
@@ -1247,7 +1257,7 @@
   notes: "Camping en Laugar (Reykjadalur, Þingeyjarsveit), junto al polideportivo. 4 duchas interiores de agua caliente sin límite de tiempo en un vestuario compartido (uno de hombres, otro de mujeres), 4 baños más 1 en el vestuario, sala común amplia con muchas mesas y sofá, vitrocerámica, utensilios, fregadero, tostadora, hervidores y nevera. Se paga por la noche, cuando pasa el encargado."
 
 - place_id: camp_systragil
-  name: "Systragil Camping Ground"
+  name: "Camping Systragil"
   short_name: "Camping Systragil"
   destination: islandia
   lat: 65.70654
