@@ -60,7 +60,8 @@ const price = parking
       Its own line, set apart from the description: the road-sign "P" with the
       price (or "Gratis"), and the map link pushed to the right.
     */}
-    <p class="day-stop__practical">
+    {/* A div, not a p: the free-parking hint is a <details>, which would close a paragraph. */}
+    <div class="day-stop__practical">
       {parking && (
         <span class="day-stop__parking">
           <span class="day-stop__p" aria-hidden="true"></span>
@@ -75,11 +76,24 @@ const price = parking
               {parking.period_hours && <span class="day-stop__period"> / {parking.period_hours} h</span>}
             </strong>
           )}
+          {parking.free_nearby && (
+            <details class="day-stop__hint day-stop__hint--start">
+              <summary class="day-stop__free-nearby" aria-label={`Parking gratis en ${parking.free_nearby.label}`}>
+                <span class="day-stop__free">Gratis</span><SectionIcon name="info" />
+              </summary>
+              <span class="day-stop__bubble" id={`${hintId}-parking`}>
+                En {parking.free_nearby.label}
+                <a href={parking.free_nearby.maps_url ?? place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">
+                  Mapa<span class="visually-hidden"> de ese parking (se abre en una pestaña nueva)</span>
+                </a>
+              </span>
+            </details>
+          )}
         </span>
       )}
       <a class="day-stop__map" href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">
         <SectionIcon name="pin" />Mapa<span class="visually-hidden"> de {place.name} (se abre en una pestaña nueva)</span>
       </a>
-    </p>
+    </div>
   </div>
 </li>

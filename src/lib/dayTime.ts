@@ -13,10 +13,10 @@ export function minutesOnRoute(day: CompiledDay): number | undefined {
 }
 
 /**
- * A door-to-door figure to the nearest half hour: "10 h 45 min" says more
- * than a day of stops and roads can promise, "11 h" is what a traveller
- * plans with.
+ * A door-to-door figure to the nearest hour: "10 h 45 min" says more than a
+ * day of stops and roads can promise, "11 h" is what a traveller plans with,
+ * and it keeps the night line of the card to one row.
  */
-export function roundToHalfHour(minutes: number): number {
-  return Math.round(minutes / 30) * 30
+export function roundToHour(minutes: number): number {
+  return Math.round(minutes / 60) * 60
 }

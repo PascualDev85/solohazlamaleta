@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
-import { minutesOnRoute, roundToHalfHour } from '../../src/lib/dayTime.ts'
+import { minutesOnRoute, roundToHour } from '../../src/lib/dayTime.ts'
 import type { CompiledDay, CompiledStop } from '../../engine/index.ts'
 
 function stop(duration_min: number, duration_max_min?: number): CompiledStop {
@@ -32,9 +32,10 @@ test('minutesOnRoute only counts route stops, never the skipped ones', () => {
   assert.strictEqual(minutesOnRoute(d), 45)
 })
 
-test('roundToHalfHour rounds a planning figure to the nearest half hour', () => {
-  assert.strictEqual(roundToHalfHour(645), 660)
-  assert.strictEqual(roundToHalfHour(620), 630)
-  assert.strictEqual(roundToHalfHour(600), 600)
-  assert.strictEqual(roundToHalfHour(44), 30)
+test('roundToHour rounds a planning figure to the nearest hour', () => {
+  assert.strictEqual(roundToHour(645), 660)
+  assert.strictEqual(roundToHour(505), 480)
+  assert.strictEqual(roundToHour(510), 540)
+  assert.strictEqual(roundToHour(600), 600)
+  assert.strictEqual(roundToHour(44), 60)
 })

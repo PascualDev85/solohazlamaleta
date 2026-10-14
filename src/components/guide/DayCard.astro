@@ -1,7 +1,7 @@
 ---
 import type { CompiledDay } from '../../../engine/index.ts';
 import { formatMinutes } from '../../lib/formatDuration.ts';
-import { minutesOnRoute, roundToHalfHour } from '../../lib/dayTime.ts';
+import { minutesOnRoute, roundToHour } from '../../lib/dayTime.ts';
 import { guideImage } from '../../lib/guide-images.ts';
 import GuidePhoto from './GuidePhoto.astro';
 import SectionIcon from './SectionIcon.astro';
@@ -22,9 +22,9 @@ const headingId = `dia-${day.day}`;
 const sheetId = `dia-${day.day}-completo`;
 
 const km = new Intl.NumberFormat('es-ES', { useGrouping: true });
-// Door to door, to the nearest half hour: a planning figure, never a promise.
+// Door to door, to the nearest hour: a planning figure, never a promise.
 const onRoute = minutesOnRoute(day);
-const onRouteLabel = onRoute == null ? undefined : formatMinutes(roundToHalfHour(onRoute));
+const onRouteLabel = onRoute == null ? undefined : formatMinutes(roundToHour(onRoute));
 const experiences = day.route_stops.filter((stop) => stop.variant_note);
 // What we left out that day, with the reason: a skip without one is not shown (1.10 §3.6).
 const skipped = day.skipped_stops.filter((stop) => stop.skip_reason);
