@@ -149,7 +149,8 @@ const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
 
       {hasFullDay && (
         <button class="day-card__full" type="button" popovertarget={sheetId}>
-          Ver día completo <SectionIcon name="arrow" />
+          {/* The hidden day tells the 13 identical buttons apart in a screen reader's list of controls. */}
+          Ver día completo<span class="visually-hidden"> del día {day.day}</span><SectionIcon name="arrow" />
         </button>
       )}
     </div>
