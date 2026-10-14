@@ -943,6 +943,12 @@ variants:
       - day: 13
         title: "Regreso a Reikiavik"
         summary: "Última etapa de la Ring Road, cierre del círculo en la capital."
+        # Camping Mosskógar → Reikiavik (≈ 20 km, ≈ 17 min) → Aeropuerto de Keflavík, entrega de la camper (≈ 46
+        # km, ≈ 40 min). Todo estimado: las notas del autor no dan tiempos para este día. Estimación pendiente de
+        # confirmar por el autor.
+        drive:
+          km: 65
+          minutes: 55
         # duración estimada, pendiente de confirmar
         stops:
           - place_id: glymur
