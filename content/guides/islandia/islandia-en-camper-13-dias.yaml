@@ -788,6 +788,13 @@ variants:
         title: "Camino al oeste: iglesias de turba y Kolugljúfur"
         summary: "Cruce de Skagafjörður hacia la península de Snæfellsnes, con paradas en iglesias de turba históricas y el cañón de Kolugljúfur."
         overnight: camp_hellissandur
+        # Camping Lambeyri → Grafarkirkja (≈ 41 km, ≈ 35 min) → Glaumbær (29, 36 min) → Víðimýrarkirkja (17, ≈ 15
+        # min) → Kolugljúfur (73, 70 min) → Kolgrafarfjörður, pasando por Erpsstaðir (183, 80 + 85 min) → Camping
+        # Hellissandur (37, ≈ 32 min). Total ≈ 380 km; 353 min → 355. Tiempos de las notas del autor salvo los
+        # marcados ≈. Estimación pendiente de confirmar por el autor.
+        drive:
+          km: 380
+          minutes: 355
         # duraciones estimadas, pendiente de confirmar
         stops:
           - place_id: grafarkirkja
@@ -795,22 +802,30 @@ variants:
             duration_min: 20
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 36
+            travel_to_next_mode: "coche"
           - place_id: glaumbaer
             order: 2
             duration_min: 45
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 15
+            travel_to_next_mode: "coche"
             variant_note: "Muy chula, aunque cuando llegamos no habían abierto. La vimos toda por fuera, que ya merece la pena, y aprovechamos para hacer fotos."
           - place_id: vidimyrarkirkja
             order: 3
             duration_min: 20
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 70
+            travel_to_next_mode: "coche"
           - place_id: kolugljufur
             order: 4
             duration_min: 60
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 165
+            travel_to_next_mode: "coche"
             variant_note: "¡Pequeño pero impresionante! Nos alegramos mucho de haber parado aquí durante el viaje. Pasamos alrededor de una hora dando un breve paseo río arriba y río abajo, con vistas espectaculares."
           - place_id: kolgrafarfjordur
             order: 5

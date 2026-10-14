@@ -222,11 +222,12 @@
     currency: ISK
     notes: "Gratuito, pero actualmente cerrada por dentro."
     verified_at: 2025-09-21
-  description: "Una de las iglesias de turba más antiguas de Islandia, en la península de Höfðaströnd, en el norte del país."
-  notes: "Pequeña iglesia de turba, una de las más antiguas de Islandia, en la península de Höfðaströnd. Muy paisajística, con techo de césped. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Pequeña iglesia de turba del siglo XVII en Höfðaströnd, en la orilla oriental de Skagafjörður, considerada la iglesia más antigua que se conserva en Islandia."
+  notes: "Junto a la carretera 76, unos kilómetros al sur de Hofsós; se llega a pie desde un pequeño aparcamiento por un camino corto. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: glaumbaer
-  name: Glaumbær Farm
+  name: "Granja de Glaumbær"
+  short_name: "Glaumbær"
   destination: islandia
   lat: 65.5375
   lng: -19.5000
@@ -242,10 +243,11 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Granja tradicional de turba convertida en museo etnográfico, en la región de Skagafjörður."
-  notes: "Museo etnográfico en una granja tradicional de turba en Skagafjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Junto a la carretera 75, entre Varmahlíð y Sauðárkrókur. Las casas de turba solo se visitan por dentro en horario de museo; fuera de ese horario se puede recorrer el exterior. Parking gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: vidimyrarkirkja
   name: Víðimýrarkirkja
+  short_name: "Víðimýri"
   destination: islandia
   lat: 65.4200
   lng: -19.4200
@@ -260,11 +262,12 @@
     price: 0
     currency: ISK
     verified_at: 2026-10-04
-  description: "Iglesia de turba construida en 1834, una de las mejor conservadas de Islandia."
-  notes: "Iglesia de turba de 1834, una de las mejor conservadas de Islandia. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  description: "Iglesia de turba construida en 1834 y custodiada por el Museo Nacional de Islandia, junto a Varmahlíð, en Skagafjörður."
+  notes: "A pie de la Ring Road, a la altura de Varmahlíð, con parking gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: kolugljufur
   name: Cañón de Kolugljúfur
+  short_name: "Kolugljúfur"
   destination: islandia
   lat: 65.3800
   lng: -20.6700
@@ -280,7 +283,7 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Cañón excavado por el río Víðidalsá, con varias cascadas a lo largo de su recorrido, en el norte de Islandia."
-  notes: "Cañón excavado por el río Víðidalsá, con varias cascadas. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Desvío de unos 6 km desde la Ring Road por la carretera 715, hasta el puente sobre el cañón; se recorre a pie por las orillas. Parking gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: kolgrafarfjordur
   name: Kolgrafarfjörður
@@ -290,7 +293,7 @@
   type: area
   verified_at: 2025-09-21
   description: "Fiordo en la costa norte de la península de Snæfellsnes."
-  notes: "Fiordo en la costa norte de la península de Snæfellsnes, de camino a Grundarfjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "La carretera 54 cruza el fiordo por un puente-dique, de camino a Grundarfjörður; la parada es el aparcamiento junto al puente. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: kirkjufell
   name: Mirador de Kirkjufell
@@ -1298,7 +1301,7 @@
   notes: "Camping en Laugarhvammur, cerca de Varmahlíð, junto a un río. 4 duchas de agua caliente sin límite de tiempo en la zona de la piscina, 4 baños, 2 salas comunes completas con vitrocerámica, utensilios, fregadero, horno y tostadora. Piscina pequeña de agua caliente y lavandería."
 
 - place_id: camp_hellissandur
-  name: "Hellissandur Camping"
+  name: "Camping Hellissandur"
   short_name: "Camping Hellissandur"
   destination: islandia
   lat: 64.9125
