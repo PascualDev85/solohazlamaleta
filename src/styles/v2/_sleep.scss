@@ -35,6 +35,12 @@
     margin: 0;
     padding: 0;
     list-style: none;
+
+    // Desktop: two cards a row per zone. Cards in a row share its height,
+    // so folded ones line up; an open card makes its row taller.
+    @include from("md") {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 }
 
