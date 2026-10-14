@@ -21,10 +21,6 @@
     margin: 0 0 var(--space-lg);
   }
 
-  &__zone + &__zone {
-    margin-top: var(--space-lg);
-  }
-
   &__zone-name {
     margin: var(--space-2xs) 0 var(--space-2xs);
   }
@@ -78,10 +74,6 @@
       width: 0.85rem;
       height: 0.85rem;
     }
-  }
-
-  &__nights + &__details &__summary {
-    padding-top: var(--space-sm);
   }
 
   &__summary {

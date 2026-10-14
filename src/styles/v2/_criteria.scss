@@ -5,10 +5,6 @@
 // we skipped fold, so the section stays short; warnings and tricks each carry
 // their icon.
 [data-design="v2"] .criteria {
-  &__part + &__part {
-    margin-top: var(--space-xl);
-  }
-
   &__part h3 {
     margin-bottom: var(--space-sm);
   }
