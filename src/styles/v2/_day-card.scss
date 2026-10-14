@@ -755,6 +755,13 @@
     .day-stop__p {
       forced-color-adjust: none;
     }
+
+    // The bubble's 92% dark ground became 92% Canvas with no edge: the text
+    // under it showed through. Opaque, with an outline, like a system popup.
+    .day-stop__bubble {
+      border: 1px solid CanvasText;
+      background: Canvas;
+    }
   }
 
   // "/ 5 h" after a time-based price: lighter, so the figure leads.
