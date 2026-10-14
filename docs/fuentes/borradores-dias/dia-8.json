@@ -1,0 +1,68 @@
+{
+  "day": 8,
+  "start": {
+    "place_id": null,
+    "note": "La noche del día 7 fue fuera de camping (overnight null): el día empieza en la primera parada de ruta, Rjúkandifoss, sin tramo inicial."
+  },
+  "end": {
+    "place_id": "camp_laugar",
+    "note": "Camping Laugar, overnight del día 8 en el YAML. Las notas del autor decían 'Dormir en Camping Myvatn a 11m' para este día y reservaban Laugar para el siguiente: confirmar."
+  },
+  "legs": [
+    {"from": "rjukandifoss", "to": "studlagil", "km": 41, "minutes": 26, "source": "notas"},
+    {"from": "studlagil", "to": "dettifoss_selfoss", "km": 95, "minutes": 110, "source": "notas"},
+    {"from": "dettifoss_selfoss", "to": "grjotagja", "km": 43, "minutes": 37, "source": "estimado"},
+    {"from": "grjotagja", "to": "camp_laugar", "km": 30, "minutes": 26, "source": "estimado"}
+  ],
+  "drive": {"km": 210, "minutes": 200},
+  "drive_comment": "Rjúkandifoss (sin tramo inicial: la noche del día 7 fue fuera de camping) → Stuðlagil, lado este (41 km, 26 min) → Dettifoss y Selfoss, lado oeste (95, 110 min) → Grjótagjá (43, ≈ 37 min) → Camping Laugar (30, ≈ 26 min). Total ≈ 209 km → 210; 199 min → 200. Tiempos de las notas del autor salvo los marcados ≈. Estimación pendiente de confirmar por el autor.",
+  "travel": [
+    {"place_id": "rjukandifoss", "travel_to_next_min": 26, "travel_to_next_mode": "coche"},
+    {"place_id": "studlagil", "travel_to_next_min": 110, "travel_to_next_mode": "coche"},
+    {"place_id": "dettifoss_selfoss", "travel_to_next_min": 37, "travel_to_next_mode": "coche"}
+  ],
+  "short_names": {
+    "studlagil": "Stuðlagil",
+    "dettifoss_selfoss": "Dettifoss"
+  },
+  "skip_reasons": {
+    "hengifoss": "Estaba en el plan como opción dudosa, con una caminata de unas dos horas y media, y al final quedó fuera."
+  },
+  "place_text_fixes": [
+    {
+      "place_id": "dettifoss_selfoss",
+      "field": "description",
+      "text": "Dos cascadas del río Jökulsá á Fjöllum, en el Parque Nacional de Vatnajökull: Dettifoss, de unos 100 m de ancho y 44 m de caída, y Selfoss, río arriba, más baja y ancha.",
+      "why": "'Una de las cascadas más potentes de Europa' es un superlativo sin fuente; se sustituye por las medidas. 'Accesibles juntas desde el lado oeste' es acceso y ya está en notes."
+    },
+    {
+      "place_id": "grjotagja",
+      "field": "description",
+      "text": "Cueva de lava con una poza de agua termal en su interior, cerca del lago Mývatn. Fue un lugar de baño hasta que las erupciones de Krafla (1975-1984) elevaron la temperatura del agua.",
+      "why": "La prohibición de bañarse es una norma y ya está en notes; en description se deja solo la historia del lugar. Cambio menor."
+    },
+    {
+      "place_id": "hengifoss",
+      "field": "description",
+      "text": "Cascada de 128 m de caída en el río Hengifossá, sobre el lago Lagarfljót. Su pared muestra capas de basalto separadas por franjas de arcilla roja.",
+      "why": "El lugar no tiene description; lo que la describe está hoy en notes mezclado con un superlativo sin fuente ('una de las cascadas más altas de Islandia')."
+    },
+    {
+      "place_id": "hengifoss",
+      "field": "notes",
+      "text": "Caminata de ida y vuelta de unas 2-3 horas desde el aparcamiento, con subida continua; a mitad de camino se pasa junto a Litlanesfoss, con columnas de basalto. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Se deja en notes solo el acceso y la logística; la parte descriptiva pasa a description."
+    }
+  ],
+  "warnings": [
+    "Orden de paradas: en las notas Hengifoss es la primera parada del día (desde Egilsstaðir), pero en el YAML va en order 5, después de Grjótagjá, en el otro extremo geográfico del día. Como not_visited no afecta a los tramos, pero para seguir el criterio del día 4 (las no visitadas se quedan en su posición de ruta) debería ir en order 1.",
+    "Tramo Dettifoss → Grjótagjá: las notas ponen '(10m)', que no cuadra con el tramo real (vuelta por la 862 hasta la Ring Road y después hacia Mývatn, unos 45-55 km). Se ha usado una estimación de 37 min en lugar del dato de las notas.",
+    "Overnight: las notas dicen 'Dormir en Camping Myvatn a 11m' para este día y 'Laugar Camping o CJA camping' para el siguiente; el YAML pone camp_laugar en el día 8 y camp_systragil en el 9. Parece que el viaje real adelantó una noche: confirmar. Además, camp_laugar tiene verified_at 2025-09-15, anterior a la fecha de este día (la comida del día lleva verified_at 2025-09-18).",
+    "Coordenadas de studlagil (65.3064, -15.5597) sospechosas: el cañón de Stuðlagil está en el río Jökla al sur de la Ring Road, aproximadamente 65.17 N, -15.31 O (aparcamiento del lado este, Klaustursel). Con esas coordenadas el tramo a Dettifoss saldría de unos 120 km en vez de 95 y el día de unos 235 km. Las notes ya las marcan como pendientes de confirmar.",
+    "Coordenadas de hengifoss (65.1028, -14.6167) también parecen desplazadas: el aparcamiento de Hengifoss está sobre 65.07 N, -14.88 O. Solo afecta a una parada not_visited, sin tramos.",
+    "Las notas dan para este día 'Ruta 320km 4h 40min', pero incluyen Hengifoss y la salida desde el camping de Egilsstaðir, que no están en la ruta real; por eso nuestros 210 km / 200 min son bastante menores.",
+    "travel_to_next_min: el brief lo pide para cada parada de ruta menos la última, así que Grjótagjá no lo lleva; el día 4 sí lo pone en la última parada (hacia el camping). Si se quiere seguir el modelo del día 4, Grjótagjá llevaría travel_to_next_min 26.",
+    "Nombres: ningún lugar del día está en inglés. 'Laugar Camping' ya tiene short_name 'Camping Laugar'. En las notas Grjótagjá figura como 'Cueva del Señor de los Anillos'; la variant_note del autor ya lo corrige a Juego de Tronos.",
+    "Paradas de las notas que no están en el YAML: ninguna (Hengifoss, Rjúkandifoss, Stuðlagil, Dettifoss y Selfoss y Grjótagjá están todas)."
+  ]
+}

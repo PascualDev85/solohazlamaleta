@@ -1,0 +1,89 @@
+{
+  "day": 11,
+  "start": {
+    "place_id": "camp_lambeyri",
+    "note": "Overnight del día 10: Camping Lambeyri (Laugarhvammur, cerca de Varmahlíð). Las notas del autor arrancan este día desde Hofsós/Hólar, así que el primer tramo (subir a Grafarkirkja y volver) se estima; el '(5m)' de las notas para Grafarkirkja no sirve."
+  },
+  "end": {
+    "place_id": "camp_hellissandur",
+    "note": "Overnight del día 11 en el YAML: Camping Hellissandur. Las notas dicen 'Dormir en Campground Grundarfjörður', unos 35 km antes. Ver avisos."
+  },
+  "legs": [
+    {"from": "camp_lambeyri", "to": "grafarkirkja", "km": 41, "minutes": 35, "source": "estimado"},
+    {"from": "grafarkirkja", "to": "glaumbaer", "km": 29, "minutes": 36, "source": "notas"},
+    {"from": "glaumbaer", "to": "vidimyrarkirkja", "km": 17, "minutes": 15, "source": "estimado"},
+    {"from": "vidimyrarkirkja", "to": "kolugljufur", "km": 73, "minutes": 70, "source": "notas"},
+    {"from": "kolugljufur", "to": "kolgrafarfjordur", "km": 183, "minutes": 165, "source": "notas"},
+    {"from": "kolgrafarfjordur", "to": "camp_hellissandur", "km": 37, "minutes": 32, "source": "estimado"}
+  ],
+  "drive": {"km": 380, "minutes": 355},
+  "drive_comment": "Camping Lambeyri → Grafarkirkja (≈ 41 km, ≈ 35 min) → Glaumbær (29, 36 min) → Víðimýrarkirkja (17, ≈ 15 min) → Kolugljúfur (73, 70 min) → Kolgrafarfjörður, pasando por Erpsstaðir (183, 80 + 85 min) → Camping Hellissandur (37, ≈ 32 min). Total ≈ 380 km; 353 min → 355. Tiempos de las notas del autor salvo los marcados ≈. Estimación pendiente de confirmar por el autor.",
+  "travel": [
+    {"place_id": "grafarkirkja", "travel_to_next_min": 36, "travel_to_next_mode": "coche"},
+    {"place_id": "glaumbaer", "travel_to_next_min": 15, "travel_to_next_mode": "coche"},
+    {"place_id": "vidimyrarkirkja", "travel_to_next_min": 70, "travel_to_next_mode": "coche"},
+    {"place_id": "kolugljufur", "travel_to_next_min": 165, "travel_to_next_mode": "coche"}
+  ],
+  "short_names": {
+    "glaumbaer": "Glaumbær",
+    "vidimyrarkirkja": "Víðimýri",
+    "kolugljufur": "Kolugljúfur"
+  },
+  "skip_reasons": {},
+  "place_text_fixes": [
+    {
+      "place_id": "grafarkirkja",
+      "field": "description",
+      "text": "Pequeña iglesia de turba del siglo XVII en Höfðaströnd, en la orilla oriental de Skagafjörður, considerada la iglesia más antigua que se conserva en Islandia.",
+      "why": "Höfðaströnd no es una península, es la franja de costa al este del fiordo; y el superlativo queda atribuido ('considerada', es el dato que da el Museo Nacional de Islandia, que la custodia) en vez de afirmado sin fuente."
+    },
+    {
+      "place_id": "grafarkirkja",
+      "field": "notes",
+      "text": "Junto a la carretera 76, unos kilómetros al sur de Hofsós; se llega a pie desde un pequeño aparcamiento, por un camino corto entre prados. Solo se ve por fuera. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description y añadían una opinión ('Muy paisajística'); se sustituyen por el acceso. El detalle del camino a pie es de referencia general y el autor debe confirmarlo."
+    },
+    {
+      "place_id": "glaumbaer",
+      "field": "notes",
+      "text": "Junto a la carretera 75, entre Varmahlíð y Sauðárkrókur. Las casas de turba solo se visitan por dentro en horario de museo; fuera de ese horario se puede recorrer el exterior. Parking gratuito y baños. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description sin ningún dato de acceso; el autor llegó antes de la apertura, así que conviene decir que el interior depende del horario. Cierre con la frase estándar."
+    },
+    {
+      "place_id": "vidimyrarkirkja",
+      "field": "description",
+      "text": "Iglesia de turba construida en 1834 y custodiada por el Museo Nacional de Islandia, junto a Varmahlíð, en Skagafjörður.",
+      "why": "'Una de las mejor conservadas de Islandia' es un superlativo sin fuente; se sustituye por un dato objetivo (quién la custodia) y la ubicación."
+    },
+    {
+      "place_id": "vidimyrarkirkja",
+      "field": "notes",
+      "text": "A pie de la Ring Road, a la altura de Varmahlíð, con parking gratuito y baños. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description sin dato de acceso. Cierre con la frase estándar."
+    },
+    {
+      "place_id": "kolugljufur",
+      "field": "notes",
+      "text": "Desvío de unos 6 km desde la Ring Road por la carretera 715, hasta el puente que cruza el cañón; se recorre a pie por ambas orillas, con miradores sin apenas barandilla. Parking gratuito a ambos lados del puente, sin baños. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description sin ningún dato de acceso. Carretera y distancia del desvío son de referencia general, a confirmar por el autor."
+    },
+    {
+      "place_id": "kolgrafarfjordur",
+      "field": "notes",
+      "text": "La carretera 54 cruza el fiordo por un puente-dique, de camino a Grundarfjörður; la parada es el aparcamiento junto al puente. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description; se indica qué es la parada en la práctica (el puente de la 54). Cierre con la frase estándar. El autor debe confirmar que la parada es el puente."
+    }
+  ],
+  "warnings": [
+    "overnight: el YAML dice camp_hellissandur, pero las notas (DÍA 10) dicen 'Dormir en Campground Grundarfjörður'. Hellissandur está unos 35 km más al oeste, pasado Kirkjufell y Ólafsvík; el día 12 de las notas arranca en Kirkjufell '(15m)', que cuadra con Grundarfjörður. Si de verdad se durmió en Hellissandur, el día 12 empieza volviendo ~25 km hacia el este. Confirmar.",
+    "Punto de partida: el día 10 termina en camp_lambeyri (cerca de Varmahlíð), pero las notas planeaban dormir en Hólar/Hofsós. Desde Lambeyri, Grafarkirkja obliga a subir ~40 km al norte y volver, pasando por delante de Glaumbær y Víðimýri. El orden del YAML coincide con las notas, pero el autor debería confirmar que hizo ese ida y vuelta (y no, p. ej., Víðimýri primero).",
+    "Paradas de las notas que no están en el YAML (no se añaden): Fosslaug (cascada y hot spring, entre Glaumbær y Víðimýrarkirkja, 15 + 11 min), Erpsstaðir ?? (helado, de paso hacia Snæfellsnes, 1h20 desde Kolugljúfur) y Selvallafoss ??.",
+    "Tramo Glaumbær → Víðimýrarkirkja: las notas solo tienen tiempos pasando por Fosslaug (15 + 11 min); se estima el directo (≈ 15 min).",
+    "Tramo Kolugljúfur → Kolgrafarfjörður: los 165 min son la suma de las notas pasando por Erpsstaðir (1h20 + 1h25); se aplica factor 1,4 a la distancia por el rodeo por Hrútafjörður y Dalir. Si no se paró en Erpsstaðir, el tiempo real pudo ser algo menor.",
+    "Coordenadas de grafarkirkja (65.6270, -19.9500) parecen claramente erróneas: ese punto cae en el interior, al oeste de Sauðárkrókur, y la iglesia está en Höfðaströnd, al sur de Hofsós, en la orilla este del fiordo (aprox. 65.86, -19.40). Con esa corrección, el primer tramo sube a ≈ 55 km / 45 min y el día a ≈ 395 km. Las de glaumbaer, vidimyrarkirkja, kolugljufur y kolgrafarfjordur también son aproximadas (todas marcadas como pendientes), así que los km cambiarán al confirmarlas.",
+    "Nombre en inglés: 'Glaumbær Farm' → 'Granja de Glaumbær' (short_name 'Glaumbær').",
+    "Línea de ruta: con los nombres cortos propuestos queda 'Grafarkirkja → Glaumbær → Víðimýri → Kolugljúfur → Kolgrafarfjörður' (67 caracteres), 3 filas en 350 px en vez de las 2 que tocan a 5 paradas. Las dos puntas son nombres propios de una sola palabra que no conviene cortar; solo bajaría a 2 filas con 'Gröf' por Grafarkirkja (59) y aun así justo. Decidir el autor si acepta 3 filas.",
+    "glaumbaer: el autor llegó antes de la apertura; el lugar no tiene campo `hours`. Conviene añadirlo cuando el autor lo confirme (campo del autor, no se propone aquí).",
+    "Las notes de glaumbaer, vidimyrarkirkja y kolgrafarfjordur terminaban con 'Coordenadas y datos de referencia general, pendientes de confirmar…' en vez de la frase estándar; en los textos propuestos se usa la estándar."
+  ]
+}

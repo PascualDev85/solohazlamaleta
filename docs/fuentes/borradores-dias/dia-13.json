@@ -1,0 +1,53 @@
+{
+  "day": 13,
+  "start": {
+    "place_id": "camp_mosskogar",
+    "note": "Overnight del día 12. Camping Mosskógar, en Mosfellsdalur (64.179586, -21.617583)."
+  },
+  "end": {
+    "place_id": null,
+    "note": "Último día, sin overnight. Termina en el aeropuerto de Keflavík (63.985, -22.605), donde se entrega la camper. No existe como lugar en content/places: no se añade."
+  },
+  "legs": [
+    {
+      "from": "Camping Mosskógar",
+      "to": "Reikiavik (parking de Perlan)",
+      "km": 20,
+      "minutes": 17,
+      "source": "estimado"
+    },
+    {
+      "from": "Reikiavik (parking de Perlan)",
+      "to": "Aeropuerto de Keflavík (entrega de la camper)",
+      "km": 46,
+      "minutes": 40,
+      "source": "estimado"
+    }
+  ],
+  "drive": {
+    "km": 65,
+    "minutes": 55
+  },
+  "drive_comment": "Camping Mosskógar → Reikiavik (≈ 20 km, ≈ 17 min) → Aeropuerto de Keflavík, entrega de la camper (≈ 46 km, ≈ 40 min). Todo estimado: las notas del autor no dan tiempos para este día.",
+  "travel": [],
+  "short_names": {},
+  "skip_reasons": {},
+  "place_text_fixes": [
+    {
+      "place_id": "glymur",
+      "field": "description",
+      "text": "Cascada del río Botnsá, con unos 198 metros de caída, en el fondo del fiordo de Hvalfjörður.",
+      "why": "«Una de las cascadas más altas de Islandia» es un superlativo sin fuente; la cifra de altura es objetiva y dice lo mismo. El acceso ya está en notes."
+    }
+  ],
+  "warnings": [
+    "Correspondencia con las notas: el día 13 de la guía reúne el DÍA 12 de las notas (Glymur, Þórufoss, Reikiavik, dormir en Mosskógar) y el DÍA 13 (Sky Lagoon, entregar camper e ir al vuelo). Cuadra: Þórufoss se hizo ya el día 1 y Mosskógar es el overnight del día 12. El día 13 no lleva overnight, correcto para el último día.",
+    "Paradas de las notas que no están en el YAML (solo se listan): Sky Lagoon (DÍA 13 de las notas) y «Fosslaug geothermic pool» (en la línea del DÍA 13, pero es un sitio del norte que ya figura en el DÍA 10 de las notas; parece un apunte suelto). Los puntos de Reikiavik (Laugavegur, Höfði, Viajero del Sol, Þúfa, Tjörnin) son rincones de la ciudad, no lugares aparte.",
+    "our_take del día 13 dice «nos levantamos más tarde para descansar y fuimos directos a entregar la camper»; sin embargo la parada reykjavik figura como visited con 90 min. Confirmar si ese día hubo de verdad parada en Reikiavik (y cuánto) o si se fue del camping al aeropuerto. Si no la hubo, el día se quedaría sin paradas de ruta y la línea de ruta de la tarjeta saldría vacía. El arranque «Después de este día no hicimos nada más» también se lee raro en el último día: quizá quería decir «después del día 12».",
+    "Tiempo Mosskógar → Reikiavik: la fórmula da 17 min, pero las notes del propio camping dicen «a media hora de Reikiavik» y el trazado real (carretera 36 y Ring Road) ronda los 25 km. Los 20 km / 17 min son el mínimo; el autor puede subirlo a ≈ 25 km / 25-30 min si lo recuerda así.",
+    "Reikiavik → aeropuerto: 46 km / 40 min por fórmula; por la carretera 41 son unos 50 km y 45 min. Falta además el tiempo de limpiar y entregar la camper, que no es conducción y no entra en drive.",
+    "El comentario «# duración estimada, pendiente de confirmar» sigue en el día: la duración de 90 min en Reikiavik no está confirmada por el autor.",
+    "glymur.notes dice «ruta de montaña de 2-3 horas ida y vuelta hasta la base»: el sendero habitual de Glymur sube por el cañón hasta los miradores sobre la cascada, no hasta su base. Confirmar antes de publicar (sin cambiar el texto hasta entonces).",
+    "Nombre en inglés: camp_mosskogar.name es «Mosskógar Camping» (como «Laugar Camping», «Hellissandur Camping», «Skaftafell Campground», «Systragil Camping Ground»), mientras que otros campings usan «Camping X». El short_name ya está en español («Camping Mosskógar»), así que la tarjeta no se ve afectada; unificar es opcional."
+  ]
+}

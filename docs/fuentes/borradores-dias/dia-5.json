@@ -1,0 +1,58 @@
+{
+  "day": 5,
+  "start": {"place_id": "camp_svinafell", "note": "Camping Svínafell, overnight del día 4 (63.979023, -16.853199)."},
+  "end": {"place_id": "camp_skaftafell", "note": "Camping Skaftafell, overnight del día 5 según el YAML (64.016287, -16.967528). Las notas del autor decían repetir noche en Svínafell; ver avisos."},
+  "legs": [
+    {"from": "Camping Svínafell", "to": "Trekking en el glaciar (base del operador)", "km": 5, "minutes": 5, "source": "estimado"},
+    {"from": "Trekking en el glaciar (base del operador)", "to": "Camping Skaftafell (aparcamiento del sendero S2)", "km": 5, "minutes": 5, "source": "estimado"},
+    {"from": "Camping Skaftafell", "to": "Hundafoss (a pie, sendero S2)", "km": 0, "minutes": 20, "source": "estimado"},
+    {"from": "Hundafoss", "to": "Svartifoss (a pie, sendero S2)", "km": 0, "minutes": 10, "source": "estimado"},
+    {"from": "Svartifoss", "to": "Camping Skaftafell (a pie, vuelta por el S2)", "km": 0, "minutes": 30, "source": "estimado"}
+  ],
+  "drive": {"km": 10, "minutes": 15},
+  "drive_comment": "Camping Svínafell → base del trekking (≈ 5 km, ≈ 5 min) → Camping Skaftafell (≈ 5 km, ≈ 5 min); Hundafoss y Svartifoss se hacen a pie desde el camping por el sendero S2 (no suman km). Total ≈ 10 km; ≈ 10 min por tramos, 15 min según las notas del autor (Skaftafell ↔ Svínafell, 15 m) → 15. Estimación pendiente de confirmar por el autor.",
+  "travel": [
+    {"place_id": "trekking_glaciar_svinafellsjokull", "travel_to_next_min": 25, "travel_to_next_mode": "coche"},
+    {"place_id": "hundafoss", "travel_to_next_min": 10, "travel_to_next_mode": "a pie"}
+  ],
+  "short_names": {
+    "trekking_glaciar_svinafellsjokull": "Trekking en el glaciar"
+  },
+  "skip_reasons": {},
+  "place_text_fixes": [
+    {
+      "place_id": "trekking_glaciar_svinafellsjokull",
+      "field": "description",
+      "text": "Excursión guiada con crampones sobre la lengua glaciar de Svínafellsjökull, una de las salidas del casquete Vatnajökull, en el Parque Nacional de Vatnajökull.",
+      "why": "\"el más extenso de Europa\" es un superlativo sin fuente (según el criterio, por volumen o por superficie, el puesto cambia). Se sustituye por el dato objetivo del parque."
+    },
+    {
+      "place_id": "trekking_glaciar_svinafellsjokull",
+      "field": "notes",
+      "text": "Se contrata con un operador; el punto de encuentro y la duración dependen de la excursión elegida (la del autor fue de unas 6 horas, con base cerca de Skaftafell). Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description y fijaban \"5 horas\" cuando el variant_note del autor dice 6 h y duration_min es 360. La logística (operador, punto de encuentro) va en notes. El autor debe confirmar la duración."
+    },
+    {
+      "place_id": "svartifoss",
+      "field": "notes",
+      "text": "Se llega a pie desde el aparcamiento de Skaftafell por el sendero señalizado S2, en subida, pasando por Hundafoss. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "La primera frase repetía la description; el acceso (punto de partida y sendero S2, que citan las notas del autor) es lo que corresponde a notes."
+    },
+    {
+      "place_id": "svinafellsjokull",
+      "field": "notes",
+      "text": "Mirador a unos 5 minutos a pie del aparcamiento, sin necesidad de excursión guiada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Añade el dato de acceso que dan las notas del autor (\"5 m andando estacionamiento\"). Opcional."
+    }
+  ],
+  "warnings": [
+    "overnight: las notas dicen \"Dormir en Camping Svínafelli a 15m\" (repetir noche), pero el YAML pone camp_skaftafell. La lista de alojamientos de la guía registra camp_svinafell pagado el 2025-09-16 y camp_skaftafell el 2025-09-17, así que el YAML cuadra con lo que pasó de verdad; se mantiene camp_skaftafell. Que el autor lo confirme.",
+    "Orden de paradas: las notas van trekking → Svínafellsjökull → Svartifoss; el YAML va trekking → Hundafoss → Svartifoss → Svínafellsjökull (not_visited). Como el mirador no se visitó, la ruta real no cambia; solo difiere la posición de la parada descartada.",
+    "Hundafoss está en el YAML pero no en las notas (está en el mismo sendero S2 hacia Svartifoss; se mantiene). No hay paradas de las notas que falten en el YAML.",
+    "Duración del trekking: las notas del plan dicen 5 h, las notes del lugar 5 horas y el variant_note del autor 6 horas (duration_min 360). Conviene que el autor confirme la cifra y se unifique.",
+    "Los km y minutos de conducción dependen de las coordenadas aproximadas de la base del trekking (64.0114, -16.8800, junto al aparcamiento de Svínafellsjökull). Si el operador recogía en el centro de visitantes de Skaftafell o en Svínafell, los tramos cambian (en cualquier caso, menos de 15 km en total).",
+    "travel_to_next_min del trekking (25) suma ≈ 5 min de coche hasta el aparcamiento de Skaftafell y ≈ 20 min de sendero S2 hasta Hundafoss; el modo solo admite un valor y se deja \"coche\". Si el autor prefiere, puede dejar 5 min de coche y contar la subida dentro de la visita.",
+    "Nombre en inglés: camp_skaftafell se llama \"Skaftafell Campground\"; convendría \"Camping Skaftafell\" (ya es su short_name). Fuera de este día, pero afecta a la tarjeta de \"Dónde dormir\".",
+    "No hay que proponer skip_reason: la única parada not_visited (svinafellsjokull) ya lo tiene, escrito por el autor."
+  ]
+}
