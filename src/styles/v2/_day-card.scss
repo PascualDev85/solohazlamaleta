@@ -315,8 +315,12 @@
       flex: none;
     }
 
+    // The arrow is drawn, not read: its alternative text is empty, so a
+    // screen reader says "Kvernufoss", not "flecha Kvernufoss". Browsers
+    // without the "/ alt" syntax keep the first declaration.
     li + li::before {
       content: "→";
+      content: "→" / "";
       margin-inline: 0.25em;
       font-weight: 600;
       color: rgb(255 255 255 / 0.7);
