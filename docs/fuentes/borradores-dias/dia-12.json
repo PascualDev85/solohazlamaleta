@@ -1,42 +1,172 @@
 {
   "day": 12,
-  "start": {"place_id": "camp_hellissandur", "note": "Camping Hellissandur, overnight del día 11 (64.9125, -23.88916). Ojo: las notas del autor dormían en Grundarfjörður, así que su '(15m)' hasta Kirkjufell no sirve desde aquí; ese tramo va estimado."},
-  "end": {"place_id": "camp_mosskogar", "note": "Camping Mosskógar, overnight del día 12 (64.179586, -21.617583), en Mosfellsdalur, a media hora de Reikiavik. Las notas dormían en Snorrastaðir y dejaban Mosskógar para el día siguiente; el YAML manda."},
+  "start": {
+    "place_id": "camp_hellissandur",
+    "note": "Camping Hellissandur, overnight del día 11 (64.9125, -23.88916). Las notas dormían la noche anterior en Grundarfjörður, así que su '(15m)' hasta Kirkjufell no sirve: desde Hellissandur el día empieza yendo ≈ 34 km hacia el este para luego volver al oeste."
+  },
+  "end": {
+    "place_id": "camp_mosskogar",
+    "note": "Camping Mosskógar (Mosfellsdalur), overnight del día 12. Las notas (DIA 11) dormían en Snorrastaðir y dejaban Raudhals y el camino a Mosskógar para el DIA 12; la guía junta las dos cosas en este día."
+  },
   "legs": [
-    {"from": "camp_hellissandur", "to": "kirkjufell", "km": 34, "minutes": 29, "source": "estimado"},
-    {"from": "kirkjufell", "to": "olafsvik", "km": 25, "minutes": 20, "source": "notas"},
-    {"from": "olafsvik", "to": "svortuloft", "km": 21, "minutes": 25, "source": "estimado"},
-    {"from": "svortuloft", "to": "djupalonssandur", "km": 19, "minutes": 23, "source": "estimado"},
-    {"from": "djupalonssandur", "to": "londrangar", "km": 3, "minutes": 8, "source": "notas"},
-    {"from": "londrangar", "to": "hellnar", "km": 15, "minutes": 6, "source": "notas"},
-    {"from": "hellnar", "to": "arnarstapi", "km": 3, "minutes": 17, "source": "notas"},
-    {"from": "arnarstapi", "to": "raudfeldsgja", "km": 3, "minutes": 25, "source": "notas"},
-    {"from": "raudfeldsgja", "to": "budakirkja", "km": 14, "minutes": 15, "source": "notas"},
-    {"from": "budakirkja", "to": "ytri_tunga", "km": 6, "minutes": 20, "source": "notas"},
-    {"from": "ytri_tunga", "to": "landbrotalaug", "km": 28, "minutes": 24, "source": "estimado"},
-    {"from": "landbrotalaug", "to": "raudhals", "km": 40, "minutes": 35, "source": "notas"},
-    {"from": "raudhals", "to": "camp_mosskogar", "km": 111, "minutes": 95, "source": "estimado"}
+    {
+      "from": "Camping Hellissandur",
+      "to": "Mirador de Kirkjufell",
+      "km": 34,
+      "minutes": 29,
+      "source": "estimado"
+    },
+    {
+      "from": "Mirador de Kirkjufell",
+      "to": "Ólafsvík",
+      "km": 25,
+      "minutes": 20,
+      "source": "notas"
+    },
+    {
+      "from": "Ólafsvík",
+      "to": "Faro de Svörtuloft (pista de grava)",
+      "km": 21,
+      "minutes": 25,
+      "source": "estimado"
+    },
+    {
+      "from": "Faro de Svörtuloft (pista de grava)",
+      "to": "Playa de Djúpalónssandur",
+      "km": 19,
+      "minutes": 23,
+      "source": "estimado"
+    },
+    {
+      "from": "Playa de Djúpalónssandur",
+      "to": "Londrangar",
+      "km": 3,
+      "minutes": 8,
+      "source": "notas"
+    },
+    {
+      "from": "Londrangar",
+      "to": "Mirador de Hellnar",
+      "km": 15,
+      "minutes": 13,
+      "source": "estimado"
+    },
+    {
+      "from": "Mirador de Hellnar",
+      "to": "Arnarstapi",
+      "km": 3,
+      "minutes": 3,
+      "source": "estimado"
+    },
+    {
+      "from": "Arnarstapi",
+      "to": "Garganta de Rauðfeldsgjá",
+      "km": 3,
+      "minutes": 3,
+      "source": "estimado"
+    },
+    {
+      "from": "Garganta de Rauðfeldsgjá",
+      "to": "Búðakirkja",
+      "km": 14,
+      "minutes": 15,
+      "source": "notas"
+    },
+    {
+      "from": "Búðakirkja",
+      "to": "Playa de Ytri Tunga",
+      "km": 6,
+      "minutes": 5,
+      "source": "estimado"
+    },
+    {
+      "from": "Playa de Ytri Tunga",
+      "to": "Landbrotalaug",
+      "km": 28,
+      "minutes": 24,
+      "source": "estimado"
+    },
+    {
+      "from": "Landbrotalaug",
+      "to": "Volcán Raudhals",
+      "km": 36,
+      "minutes": 31,
+      "source": "estimado"
+    },
+    {
+      "from": "Volcán Raudhals",
+      "to": "Camping Mosskógar",
+      "km": 99,
+      "minutes": 85,
+      "source": "estimado"
+    }
   ],
-  "drive": {"km": 320, "minutes": 340},
-  "drive_comment": "Camping Hellissandur → Kirkjufell (≈ 34 km, ≈ 29 min) → Ólafsvík (25, 20 min) → Svörtuloft, por la pista del faro (≈ 21, ≈ 25 min) → Djúpalónssandur (≈ 19, ≈ 23 min) → Lóndrangar (3, 8 min) → Hellnar (15, 6 min) → Arnarstapi (3, 17 min) → Rauðfeldsgjá (3, 25 min) → Búðakirkja (14, 15 min) → Ytri Tunga (6, 20 min) → Landbrotalaug (≈ 28, ≈ 24 min) → Raudhals (40, 35 min) → Camping Mosskógar, por Borgarnes (≈ 111, ≈ 95 min). Total ≈ 321 km → 320; 342 min → 340. Minutes from the author's notes except those marked ≈; Landbrotalaug → Raudhals reuses the notes' time for the opposite direction. Estimación pendiente de confirmar por el autor.",
+  "drive": {
+    "km": 305,
+    "minutes": 285
+  },
+  "drive_comment": "Camping Hellissandur → Kirkjufell (≈ 34 km, ≈ 29 min) → Ólafsvík (25, 20 min) → Faro de Svörtuloft, por pista (≈ 21, ≈ 25 min) → Djúpalónssandur (≈ 19, ≈ 23 min) → Lóndrangar (3, 8 min) → Hellnar (15, ≈ 13 min) → Arnarstapi (3, ≈ 3 min) → Rauðfeldsgjá (3, ≈ 3 min) → Búðakirkja (14, 15 min) → Ytri Tunga (6, ≈ 5 min) → Landbrotalaug (28, ≈ 24 min) → Raudhals (36, ≈ 31 min) → Camping Mosskógar (99, ≈ 85 min). Total ≈ 305 km; 284 min → 285. Tiempos de las notas del autor salvo los marcados ≈. Estimación pendiente de confirmar por el autor.",
   "travel": [
-    {"place_id": "kirkjufell", "travel_to_next_min": 20, "travel_to_next_mode": "coche"},
-    {"place_id": "olafsvik", "travel_to_next_min": 25, "travel_to_next_mode": "coche"},
-    {"place_id": "svortuloft", "travel_to_next_min": 23, "travel_to_next_mode": "coche"},
-    {"place_id": "djupalonssandur", "travel_to_next_min": 8, "travel_to_next_mode": "coche"},
-    {"place_id": "londrangar", "travel_to_next_min": 6, "travel_to_next_mode": "coche"},
-    {"place_id": "hellnar", "travel_to_next_min": 17, "travel_to_next_mode": "coche"},
-    {"place_id": "arnarstapi", "travel_to_next_min": 25, "travel_to_next_mode": "coche"},
-    {"place_id": "raudfeldsgja", "travel_to_next_min": 15, "travel_to_next_mode": "coche"},
-    {"place_id": "budakirkja", "travel_to_next_min": 20, "travel_to_next_mode": "coche"},
-    {"place_id": "ytri_tunga", "travel_to_next_min": 24, "travel_to_next_mode": "coche"},
-    {"place_id": "landbrotalaug", "travel_to_next_min": 35, "travel_to_next_mode": "coche"}
+    {
+      "place_id": "kirkjufell",
+      "travel_to_next_min": 20,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "olafsvik",
+      "travel_to_next_min": 25,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "svortuloft",
+      "travel_to_next_min": 23,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "djupalonssandur",
+      "travel_to_next_min": 8,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "londrangar",
+      "travel_to_next_min": 13,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "hellnar",
+      "travel_to_next_min": 3,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "arnarstapi",
+      "travel_to_next_min": 3,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "raudfeldsgja",
+      "travel_to_next_min": 15,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "budakirkja",
+      "travel_to_next_min": 5,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "ytri_tunga",
+      "travel_to_next_min": 24,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "landbrotalaug",
+      "travel_to_next_min": 31,
+      "travel_to_next_mode": "coche"
+    }
   ],
   "short_names": {
     "kirkjufell": "Kirkjufell",
     "svortuloft": "Svörtuloft",
     "djupalonssandur": "Djúpalónssandur",
-    "londrangar": "Lóndrangar",
     "hellnar": "Hellnar",
     "raudfeldsgja": "Rauðfeldsgjá",
     "ytri_tunga": "Ytri Tunga",
@@ -45,25 +175,71 @@
   },
   "skip_reasons": {},
   "place_text_fixes": [
-    {"place_id": "kirkjufell", "field": "description", "text": "Montaña de forma cónica junto a la costa norte de la península de Snæfellsnes, cerca de Grundarfjörður, con la cascada de Kirkjufellsfoss al lado.", "why": "'una de las más fotografiadas de Islandia' es un superlativo sin fuente."},
-    {"place_id": "kirkjufell", "field": "notes", "text": "Se ve desde el mirador de pago junto a la cascada Kirkjufellsfoss o desde el mirador gratuito a unos 500 m, un paseo de unos 15 minutos a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.", "why": "Repetía el superlativo ('la montaña más fotografiada de Islandia') y la descripción; las notes son para acceso y logística."},
-    {"place_id": "olafsvik", "field": "notes", "text": "Parking gratuito en el pueblo. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.", "why": "Las notes calcaban la description; el 'P Gratis' de las notas del autor es la única logística disponible."},
-    {"place_id": "raudfeldsgja", "field": "notes", "text": "Grieta estrecha que se recorre a pie desde el parking. Lleva agua en el fondo: hace falta calzado adecuado. Al fondo hay una pequeña cascada; en la visita del autor no se pudo pasar más allá. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.", "why": "'muy fotogénica' es una opinión (ya está en el variant_note del día); las notes se quedan con el acceso."},
-    {"place_id": "raudhals", "field": "description", "text": "Cráteres volcánicos de tonos rojizos en el oeste de Islandia, en la base de la península de Snæfellsnes, con un paisaje de lava y escoria alrededor.", "why": "Decía 'en el sur de Islandia' (las coordenadas del autor, 64.84, -22.24, están en el oeste) y 'poco conocido' y 'de aspecto lunar' son opiniones."},
-    {"place_id": "raudhals", "field": "notes", "text": "Fuera de la carretera principal; acceso y parking pendientes de describir por el autor. Coordenadas confirmadas por el autor en sus notas del viaje.", "why": "'Parada poco frecuentada' no es logística; las coordenadas sí vienen del autor (notas), así que no llevan el 'pendientes de confirmar'."}
+    {
+      "place_id": "kirkjufell",
+      "field": "description",
+      "text": "Montaña de forma cónica junto a la costa norte de Snæfellsnes, cerca de Grundarfjörður, con la cascada Kirkjufellsfoss a sus pies.",
+      "why": "'Una de las más fotografiadas de Islandia' es un superlativo sin fuente."
+    },
+    {
+      "place_id": "kirkjufell",
+      "field": "notes",
+      "text": "Junto a la carretera 54, a la salida de Grundarfjörður hacia Ólafsvík. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "'La montaña más fotografiada de Islandia' es un superlativo sin fuente y el resto repetía la description; se deja el acceso y la frase de pendiente canónica."
+    },
+    {
+      "place_id": "olafsvik",
+      "field": "notes",
+      "text": "Aparcamiento gratuito en el pueblo, que se recorre a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description palabra por palabra. Parking gratis según las notas del autor; frase de pendiente canónica."
+    },
+    {
+      "place_id": "djupalonssandur",
+      "field": "notes",
+      "text": "Desde el aparcamiento gratuito se baja a pie a la playa; un sendero corto por el acantilado lleva a la vecina playa de Dritvík. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description; se sustituyen por el acceso (el autor paseó por Dritvík y Djúpalónssandur). Frase de pendiente canónica."
+    },
+    {
+      "place_id": "londrangar",
+      "field": "notes",
+      "text": "Se ven desde un mirador a pocos minutos a pie del aparcamiento, que es gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description; se deja el acceso (parking gratis, según las notas del autor) y la frase canónica."
+    },
+    {
+      "place_id": "hellnar",
+      "field": "notes",
+      "text": "A unos 2,5 km a pie de Arnarstapi por el sendero costero; también se llega en coche, con aparcamiento gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "La primera frase repetía la description; se deja solo el acceso. Frase de pendiente canónica."
+    },
+    {
+      "place_id": "raudfeldsgja",
+      "field": "notes",
+      "text": "Se entra a pie desde el aparcamiento por el cauce de un arroyo, así que hace falta calzado adecuado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description y copiaban la experiencia del autor ('muy fotogénica', 'no se puede ascender'), que ya está en su variant_note. Se deja el acceso y la frase canónica."
+    },
+    {
+      "place_id": "budakirkja",
+      "field": "notes",
+      "text": "Aparcamiento gratuito junto a la iglesia. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description; se deja el acceso (parking gratis según las notas) y la frase canónica."
+    },
+    {
+      "place_id": "raudhals",
+      "field": "description",
+      "text": "Paisaje volcánico poco conocido en el oeste de Islandia, al sur de la península de Snæfellsnes, de aspecto lunar.",
+      "why": "Dato erróneo: las coordenadas del autor (64.842896, -22.236739) están en el oeste, junto a Snæfellsnes, no en el sur de Islandia."
+    }
   ],
   "warnings": [
-    "Orden de paradas vs. notas: el día arranca en Camping Hellissandur y va primero a Kirkjufell (34 km al este) para volver luego al oeste (Ólafsvík, Svörtuloft). Las notas partían de Grundarfjörður, donde Kirkjufell sí quedaba a 15 min. Si el autor hizo Kirkjufell primero, el orden vale; si no, el orden natural desde Hellissandur sería Svörtuloft → Ólafsvík → Kirkjufell → … (y Kirkjufell quedaría a contramano). Se ha respetado el orden del YAML.",
-    "Orden Landbrotalaug / Raudhals: las notas iban Ytri Tunga → Raudhals (2h 15) → Landbrotalaug (35m) → Snorrastaðir. El YAML pone Landbrotalaug antes que Raudhals, que es el orden geográfico de oeste a este, y se ha respetado. Los 35 min de las notas se han reutilizado para Landbrotalaug → Raudhals (mismo tramo al revés). El '(2h 15)' de las notas para Raudhals no se explica con la distancia y no se ha usado.",
-    "Paradas de las notas que no están en el YAML (solo se listan): Ingjaldshóll Church (iglesia blanca, entre Ólafsvík y Hellissandur); 'lagði af stað skip SANDGERÐI' / 'Sæljós GK-2 from SANDGERÐI' (apunte sin aclarar, parece un barco o monumento); FRISTA Food Truck en Arnarstapi (comer, fish and chips); Bjarnarfoss View Point (marcado '??'). Svörtuloft está en el YAML (visitada) pero no aparece en las notas del día.",
-    "Overnight: las notas dicen 'Dormir en Snorrastadir Accommodation a 12m' y dejan Mosskógar para el día siguiente; el YAML pone camp_mosskogar en el día 12. Se ha calculado hasta Mosskógar (el último tramo, ≈ 111 km, es el más largo del día). El overnight del día 11 (camp_hellissandur) tampoco cuadra con las notas ('Campground Grundarfjörður'), y de ahí sale el punto de partida.",
-    "Coordenadas de londrangar sospechosas: 64.7444, -23.9130 está a la misma longitud que Djúpalónssandur, 2 km al sur; el mirador de Lóndrangar queda hacia 64.736, -23.78. Por eso los 8 min (Djúpalónssandur → Lóndrangar) y los 6 min (Lóndrangar → Hellnar) de las notas no casan con los 3 y 15 km del cálculo (el total de km apenas cambia). Y el nombre: en islandés es 'Lóndrangar', con acento.",
-    "Minutos de las notas que parecen altos: Hellnar → Arnarstapi (17 min) y Arnarstapi → Rauðfeldsgjá (25 min) para unos 3 km cada uno; se han usado tal cual por regla, pero si el autor los confirma en 5-7 min, el día baja unos 30 min (≈ 310). Búðakirkja → Ytri Tunga (20 min) podría incluir el desvío a Bjarnarfoss del plan.",
-    "Tramos con factor 1,4 y 50 km/h por pista o desvío: Ólafsvík → Svörtuloft y Svörtuloft → Djúpalónssandur (pista del faro, fondo de saco: se entra y se sale por la misma pista), Landbrotalaug → Raudhals (desvío al interior). Raudhals → Mosskógar lleva 1,4 por el rodeo real por Borgarnes y el túnel de Hvalfjörður (la recta cruza el mar), a 70 km/h.",
-    "Línea de ruta: 12 paradas visitadas. Con los nombres cortos propuestos suma 123 caracteres de nombres + 11 flechas (≈ 156 contando ' → '), por encima de los ≈ 112 del brief para 4 filas. Medido con el CSS real (Nunito 800, 12,9 px a 350 px, flecha con 0,25em de margen), cabe justo en 4 filas: 3 + 3 + 3 + 3 paradas. Acortar Djúpalónssandur a 'Djúpalón' no quita ninguna fila (Arnarstapi arranca la fila 3 igualmente), por eso se conserva el nombre propio. Conviene pasar npm run test:ui tras aplicar los nombres.",
-    "Nombre de raudhals: el YAML dice 'Volcán Raudhals'; el topónimo islandés es Rauðhálsar (los cráteres de Rauðhálsar). Sugerencia, no cambio: name 'Cráteres de Rauðhálsar', short_name 'Rauðhálsar' (10 caracteres, cabe igual).",
-    "Resumen del día: 'de Kirkjufell hasta los acantilados del sur' no dice que el día acaba en Mosskógar, a media hora de Reikiavik, tras ≈ 111 km desde Raudhals. Quizá convenga mencionarlo en el summary.",
-    "Nombres en inglés: ninguno en los lugares del día (los campings se llaman 'Hellissandur Camping' / 'Mosskógar Camping', pero su short_name ya es 'Camping …').",
-    "Las notes de 7 lugares del día acaban con 'Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar.' en vez de la frase canónica 'Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.'. Mismo sentido; solo se ha unificado en los textos que se proponen corregir por otro motivo."
+    "Punto de partida: el día 11 duerme en Hellissandur (overnight de la guía), pero las notas dormían en Grundarfjörður, a 15 min de Kirkjufell. Desde Hellissandur el día empieza ≈ 34 km hacia el este hasta Kirkjufell y vuelve al oeste por Ólafsvík. Si de verdad se durmió en Hellissandur, puede que el orden real fuera otro (Kirkjufell al final del día 11, por ejemplo). Confirmar.",
+    "Los '(Xm)' de las notas de este día no cuadran bien con las distancias: Lóndrangar → Hellnar (6m) son ≈ 15 km, y Hellnar → Arnarstapi (17m) y Arnarstapi → Rauðfeldsgjá (25m) son ≈ 3 km cada uno. Parece que en ese tramo algunas cifras son tiempos de visita o están desplazadas una línea; en esos tres tramos se ha usado la estimación por distancia. Se han usado las notas solo donde casan (Kirkjufell → Ólafsvík 20m, Djúpalónssandur → Lóndrangar 8m, Rauðfeldsgjá → Búðakirkja 15m).",
+    "Svörtuloft no está en las notas (entre Ólafsvík y Djúpalónssandur las notas ponían Ingjalshóll). Su acceso es una pista con baches (notes del lugar): los dos tramos que tocan el faro van con × 1,4 y 50 km/h.",
+    "Paradas de las notas que no están en el YAML (solo se listan): Ingjalshóll Church (iglesia blanca), el barco Sæljós GK-2 de Sandgerði, el food truck FRISTA de Arnarstapi y Bjarnarfoss ??.",
+    "Orden: las notas ponen Raudhals antes de Landbrotalaug; el YAML va Landbrotalaug → Raudhals, que es el orden geográfico camino de Mosskógar. Se respeta el YAML.",
+    "Raudhals → Camping Mosskógar: ≈ 99 km / 85 min por la regla; por carretera (Borgarnes y túnel de Hvalfjörður, o rodeando el fiordo) serán más. El túnel de Hvalfjörður es de peaje.",
+    "Duraciones: Raudhals tiene duration_min 20, pero las notas ponen '(2h 15)' junto a él (¿subida al cráter?). Las demás duraciones del día son las del comentario '# duraciones estimadas'.",
+    "Nombres: 'Londrangar' se escribe 'Lóndrangar' y 'Raudhals' es la forma sin tildes de 'Rauðháls'; se deja como está y se señala al autor. camp_hellissandur ('Hellissandur Camping') y camp_mosskogar ('Mosskógar Camping') pasan a 'Camping Hellissandur' y 'Camping Mosskógar'.",
+    "Línea de ruta: 12 paradas de ruta. Con los nombres más cortos posibles ('Kirkjufell → Ólafsvík → Svörtuloft → Djúpalónssandur → Londrangar → Hellnar → Arnarstapi → Rauðfeldsgjá → Búðakirkja → Ytri Tunga → Landbrotalaug → Raudhals') son 156 caracteres: no cabe en 4 filas a 350 px (≈ 112). No hay forma corta de esos nombres sin inventarla.",
+    "Las notes de olafsvik, kirkjufell, djupalonssandur, londrangar, hellnar, raudfeldsgja y budakirkja acababan en 'Coordenadas y datos de referencia general, pendientes de confirmar…'; en los textos propuestos se usa la frase canónica."
   ]
 }

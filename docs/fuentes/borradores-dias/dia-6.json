@@ -1,23 +1,88 @@
 {
   "day": 6,
-  "start": {"place_id": "camp_skaftafell", "note": "Overnight del día 5 en la guía. Las notas del autor dormían ese día en Svínafell, así que el '(35m)' hasta Múlagljúfur sale de Svínafell; desde Skaftafell se le suman unos 10 min."},
-  "end": {"place_id": null, "note": "Noche fuera de camping: el día termina en la última parada, el mirador de Rauðafell (variant_note de la parada). Las notas preveían dormir en Djúpivogur Camping Ground o Fossardalur Campsite. overnight_note está vacío y lo escribe el autor."},
+  "start": {
+    "place_id": "camp_skaftafell",
+    "note": "Camping Skaftafell, overnight del día 5 (64.016287, -16.967528). Las notas del autor dormían esa noche en Svínafell, así que su \"(35m)\" hasta Múlagljúfur está medido desde Svínafell."
+  },
+  "end": {
+    "place_id": null,
+    "note": "Noche fuera de camping (overnight: null): el día termina en la última parada de ruta, el mirador de Rauðafell, donde el variant_note cuenta que se quedaron a dormir por las auroras. Las notas preveían dormir en Djúpivogur Camping Ground o Fossardalur Campsite. Sin tramo final."
+  },
   "legs": [
-    {"from": "camp_skaftafell", "to": "mulagljufur", "km": 41, "minutes": 45, "source": "estimado"},
-    {"from": "mulagljufur", "to": "fjallsarlon", "km": 8, "minutes": 12, "source": "notas"},
-    {"from": "fjallsarlon", "to": "jokulsarlon", "km": 13, "minutes": 12, "source": "notas"},
-    {"from": "jokulsarlon", "to": "vestrahorn", "km": 87, "minutes": 72, "source": "notas"},
-    {"from": "vestrahorn", "to": "eystrahorn", "km": 14, "minutes": 28, "source": "notas"},
-    {"from": "eystrahorn", "to": "raudafell", "km": 83, "minutes": 71, "source": "estimado"}
+    {
+      "from": "Camping Skaftafell",
+      "to": "Cañón de Múlagljúfur",
+      "km": 37,
+      "minutes": 40,
+      "source": "estimado"
+    },
+    {
+      "from": "Cañón de Múlagljúfur",
+      "to": "Laguna Glaciar Fjallsárlón",
+      "km": 7,
+      "minutes": 12,
+      "source": "notas"
+    },
+    {
+      "from": "Laguna Glaciar Fjallsárlón",
+      "to": "Jökulsárlón y Diamond Beach",
+      "km": 13,
+      "minutes": 12,
+      "source": "notas"
+    },
+    {
+      "from": "Jökulsárlón y Diamond Beach",
+      "to": "Vestrahorn y Stokksnes",
+      "km": 78,
+      "minutes": 72,
+      "source": "notas"
+    },
+    {
+      "from": "Vestrahorn y Stokksnes",
+      "to": "Eystrahorn (Silla Roja)",
+      "km": 12,
+      "minutes": 10,
+      "source": "estimado"
+    },
+    {
+      "from": "Eystrahorn (Silla Roja)",
+      "to": "Mirador de Rauðafell, pasando por la zona de renos, Lækjavík y Djúpavogskörin (no visitados)",
+      "km": 74,
+      "minutes": 64,
+      "source": "estimado"
+    }
   ],
-  "drive": {"km": 245, "minutes": 240},
-  "drive_comment": "Camping Skaftafell → Múlagljúfur (41 km, ≈ 45 min) → Fjallsárlón (8, 12 min) → Jökulsárlón y Diamond Beach (13, 12 min) → Vestrahorn (87, 72 min) → Eystrahorn (14, 28 min) → mirador de Rauðafell, pasando por la zona de renos, Lækjavík y Djúpavogskörin (83, 20 + 32 + 4 + ≈ 15 min). Total ≈ 245 km; 240 min. Tiempos de las notas del autor salvo los marcados ≈. Noche fuera de camping: el día acaba en la última parada.",
+  "drive": {
+    "km": 220,
+    "minutes": 210
+  },
+  "drive_comment": "Camping Skaftafell → Múlagljúfur (37 km, ≈ 40 min) → Fjallsárlón (7, 12 min) → Jökulsárlón y Diamond Beach (13, 12 min) → Vestrahorn (78, 72 min) → Eystrahorn (12, ≈ 10 min) → mirador de Rauðafell, pasando por la zona de renos, Lækjavík y Djúpavogskörin (74, ≈ 64 min). Total ≈ 221 km → 220; 210 min. Tiempos de las notas del autor salvo los marcados ≈. Noche fuera de camping: el día acaba en la última parada. Estimación pendiente de confirmar por el autor.",
   "travel": [
-    {"place_id": "mulagljufur", "travel_to_next_min": 12, "travel_to_next_mode": "coche"},
-    {"place_id": "fjallsarlon", "travel_to_next_min": 12, "travel_to_next_mode": "coche"},
-    {"place_id": "jokulsarlon", "travel_to_next_min": 72, "travel_to_next_mode": "coche"},
-    {"place_id": "vestrahorn", "travel_to_next_min": 28, "travel_to_next_mode": "coche"},
-    {"place_id": "eystrahorn", "travel_to_next_min": 71, "travel_to_next_mode": "coche"}
+    {
+      "place_id": "mulagljufur",
+      "travel_to_next_min": 12,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "fjallsarlon",
+      "travel_to_next_min": 12,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "jokulsarlon",
+      "travel_to_next_min": 72,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "vestrahorn",
+      "travel_to_next_min": 10,
+      "travel_to_next_mode": "coche"
+    },
+    {
+      "place_id": "eystrahorn",
+      "travel_to_next_min": 64,
+      "travel_to_next_mode": "coche"
+    }
   ],
   "short_names": {
     "mulagljufur": "Múlagljúfur",
@@ -25,36 +90,85 @@
     "jokulsarlon": "Jökulsárlón",
     "vestrahorn": "Vestrahorn",
     "eystrahorn": "Eystrahorn",
-    "thjodvegur_renos": "Zona de renos",
     "raudafell": "Rauðafell"
   },
   "skip_reasons": {
-    "thjodvegur_renos": "No es una parada en sí, sino un tramo de carretera donde a veces se ven renos. Pasamos por él y no vimos ninguno.",
-    "laekjavik": "Estaba en el plan como opción dudosa y, en un día tan largo, quedó fuera.",
-    "djupavogskorin": "Estaba en el plan con la duda de si la poza seguía abierta, y al final quedó fuera."
+    "thjodvegur_renos": "Pasamos por el tramo donde suele haber renos, pero no vimos ninguno. No es una parada en sí: es un tramo de carretera con posibilidad de avistamiento.",
+    "laekjavik": "Estaba en el plan como opción dudosa, solo si íbamos bien de tiempo, y quedó fuera.",
+    "djupavogskorin": "Estaba en el plan con la duda de si la poza estaría abierta, y quedó fuera."
   },
   "place_text_fixes": [
-    {"place_id": "vestrahorn", "field": "description", "text": "Macizo montañoso de picos afilados en la península de Stokksnes, en el sureste de Islandia, con dunas de arena negra y una playa en la que la montaña se refleja en el agua. Hacia el sur hay una playa con el esqueleto de una ballena donde a veces se ven focas.", "why": "Quita \"un clásico de la fotografía de paisaje\", una valoración sin fuente; el resto se mantiene."},
-    {"place_id": "vestrahorn", "field": "notes", "text": "Se entra por el recinto del Viking Café, que da acceso a la playa y al poblado vikingo, un decorado de película. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.", "why": "Quita \"uno de los paisajes más fotografiados de Islandia\" (superlativo sin fuente), mueve el acceso a notes y añade la frase de coordenadas si el autor no las ha confirmado (no hay maps_url ni comentario de confirmación)."},
-    {"place_id": "jokulsarlon", "field": "notes", "text": "Diamond Beach (playa negra con icebergs) está al otro lado de la Ring Road. Cruzar con cuidado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.", "why": "No hay maps_url ni comentario de confirmación de coordenadas; si el autor no las ha confirmado, falta la frase final. Si ya están confirmadas, descartar."},
-    {"place_id": "eystrahorn", "field": "description", "text": "Montaña de picos afilados en el extremo sureste de Islandia, junto a la Ring Road. La parada es un mirador de la carretera con una silla gigante de color rojo, de ahí el nombre de \"silla roja\" con el que se la conoce.", "why": "El texto actual atribuye la silla a la montaña; la silla está en el mirador desde el que se ve la montaña. Se quita el \"Red Chair\" en inglés."},
-    {"place_id": "eystrahorn", "field": "notes", "text": "Parada rápida en un aparcamiento a pie de carretera, con la montaña enfrente y una playa de guijarros negros. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.", "why": "Repetía \"junto a la carretera\" dos veces; mismo contenido, ordenado como acceso."},
-    {"place_id": "djupavogskorin", "field": "notes", "text": "Pequeña poza de agua caliente junto al mar, a las afueras de Djúpivogur. Según las notas del autor, hay que comprobar si sigue abierta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.", "why": "El texto actual habla de \"formaciones rocosas\"; las notas del autor (\"mirar la poza\", \"agua termal cerrada comprobar si está abierto\") describen una poza termal. Confirmar con el autor antes de aplicar."},
-    {"place_id": "raudafell", "field": "description", "text": "Mirador a pie de carretera junto a la montaña Rauðafell, en el este de Islandia.", "why": "\"Vistas abiertas al cielo nocturno\" es el contexto de la parada (las auroras), no lo que es el lugar; eso ya está en el variant_note."}
+    {
+      "place_id": "mulagljufur",
+      "field": "notes",
+      "text": "Se recorre a pie desde el aparcamiento: hasta los miradores sobre el cañón son unos 45 minutos de ida y otros tantos de vuelta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description (cañón, vistas al glaciar) y opinaban ('poco transitado'); se sustituyen por el acceso, que da el variant_note del autor."
+    },
+    {
+      "place_id": "fjallsarlon",
+      "field": "notes",
+      "text": "A unos 12 minutos en coche de Jökulsárlón por la Ring Road. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description ('más pequeña y tranquila que Jökulsárlón'); se deja el dato de acceso de las notas del autor (12 min)."
+    },
+    {
+      "place_id": "vestrahorn",
+      "field": "notes",
+      "text": "El asentamiento vikingo es de atrezo de película. Se entra por el recinto del Viking Café, donde se paga la entrada.",
+      "why": "'Uno de los paisajes más fotografiados de Islandia' es un superlativo sin fuente (y repite la description). Se sustituye por el acceso, tomado de entry.notes. Lugar verificado por el autor: sin frase de pendiente."
+    },
+    {
+      "place_id": "eystrahorn",
+      "field": "notes",
+      "text": "Parada rápida junto a la Ring Road, con aparcamiento gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes repetían la description y decían dos veces 'junto a la carretera'. El parking gratis sale de las notas del autor."
+    },
+    {
+      "place_id": "thjodvegur_renos",
+      "field": "description",
+      "text": "Tramo de la Ring Road en el sureste de Islandia por el que se mueven manadas de renos salvajes, presentes en Islandia solo en el este del país.",
+      "why": "El lugar no tiene description; lo que la describía estaba en notes."
+    },
+    {
+      "place_id": "thjodvegur_renos",
+      "field": "notes",
+      "text": "No es una parada en sí: el avistamiento no está garantizado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Separar description (qué es) de notes (lo práctico)."
+    },
+    {
+      "place_id": "laekjavik",
+      "field": "description",
+      "text": "Cala de playa negra con una roca en el mar, cerca de Djúpivogur.",
+      "why": "El lugar no tiene description. Texto a partir de las notas del autor ('Mirador playa negra Roca')."
+    },
+    {
+      "place_id": "laekjavik",
+      "field": "notes",
+      "text": "Mirador con aparcamiento gratuito junto a la carretera. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Las notes eran la description ('cala de guijarros poco conocida'); ahora llevan el acceso de las notas del autor."
+    },
+    {
+      "place_id": "djupavogskorin",
+      "field": "description",
+      "text": "Poza de agua termal junto al mar, cerca de Djúpivogur.",
+      "why": "El lugar no tiene description y sus notes dicen 'formaciones rocosas', pero las notas del autor hablan de una poza de agua termal ('mirar la poza habitable existe', 'agua termal cerrada, comprobar si está abierto'). Confirmar."
+    },
+    {
+      "place_id": "djupavogskorin",
+      "field": "notes",
+      "text": "Puede estar cerrada: conviene comprobarlo antes de desviarse. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar.",
+      "why": "Recoge la duda de las notas del autor; quita 'formaciones rocosas', que no cuadra con ellas."
+    }
   ],
   "warnings": [
-    "Punto de partida: la guía duerme el día 5 en camp_skaftafell, pero las notas del autor (DIA 4) dormían en Camping Svínafelli. El \"(35m)\" de Múlagljúfur está medido desde Svínafell; desde Skaftafell he estimado 45 min (35 + ≈ 10).",
-    "Orden de paradas: en las notas, \"Þjóðvegur Renos\" va antes que \"Silla Roja\"; en la guía Eystrahorn (Silla Roja) va antes que la zona de renos. El orden de la guía es el geográfico (las coordenadas de las notas sitúan la Silla Roja entre Vestrahorn y la zona de renos). Los \"(Xm)\" de las notas parecen seguir el orden geográfico, no el de la lista: Vestrahorn → Silla Roja 28, Silla Roja → renos 20, renos → Lækjavík 32, Lækjavík → Djúpavogskörin 4. Así los he usado; conviene que el autor lo confirme.",
-    "Coordenadas: eystrahorn en el YAML (64.3028, -14.8350) está a unos 6 km del pin del autor en las notas (64.3417, -14.9282, repetido en la página 9 como 64°20'30.2\"N 14°55'42.7\"W). thjodvegur_renos en el YAML (64.4500, -14.6500) está a unos 7 km del pin de las notas (64.4445, -14.5087). Los cálculos usan el YAML; con los pines del autor el tramo Vestrahorn → Eystrahorn serían ≈ 16 km en vez de 14.",
-    "Overnight: las notas dicen \"Dormir en Djúpivogur Camping Ground o Fossardalur Campsite\"; la guía tiene overnight: null porque la noche fue en el mirador de Rauðafell (lo cuenta el variant_note). Cuadra con lo vivido, no con el plan. overnight_note está vacío: lo escribe el autor. Ninguno de los dos campings de las notas existe en el YAML (no se añade nada).",
-    "Rauðafell no aparece en el plan de las notas (DIA 5 termina en Djúpavogskörin); es una parada del viaje real. Sus coordenadas son aproximadas, así que el último tramo (83 km, ≈ 71 min) es el menos fiable del día.",
-    "Paradas de las notas que no están en el YAML: ninguna. Las ocho paradas del DIA 5 de las notas tienen su place_id.",
-    "Línea de ruta: con las seis paradas de ruta (Múlagljúfur → Fjallsárlón → Jökulsárlón → Vestrahorn → Eystrahorn → Rauðafell) la línea tiene unos 77 caracteres, por encima de los ≈ 56 de dos filas; en un móvil de 350 px ocupará tres filas. Son nombres propios irreducibles: no veo cómo acortarlos sin perderlos.",
-    "Nombres en inglés que convendría traducir: \"Rauðafell mountain view point\" → \"Mirador de Rauðafell\"; \"Eystrahorn (Silla Roja / Red Chair)\" → \"Eystrahorn (Silla Roja)\"; \"Skaftafell Campground\" → \"Camping Skaftafell\" (ya tiene short_name en español).",
-    "djupavogskorin: las notes del YAML describen \"formaciones rocosas\"; las notas del autor hablan de una poza termal (\"mirar la poza habitable existe\", \"agua termal cerrada comprobar si está abierto\"). Confirmar qué es antes de publicar.",
-    "Sin description: thjodvegur_renos, laekjavik y djupavogskorin. Es opcional, pero las tres paradas aparecen en la guía como no visitadas y solo tienen notes.",
-    "Si se quiere seguir el patrón del día 4 (travel_to_next_min también en las paradas not_visited del tramo), los valores serían: eystrahorn → thjodvegur_renos 20, thjodvegur_renos → laekjavik 32, laekjavik → djupavogskorin 4 (notas, según la interpretación del orden) y djupavogskorin → raudafell ≈ 15 (estimado). En este borrador solo se dan los de las paradas de ruta, como pide el brief.",
-    "Los tramos Vestrahorn → Eystrahorn y Eystrahorn → Rauðafell están probablemente cortos en km: la carretera rodea Höfn por el túnel de Almannaskarð y, al final, el fiordo de Berufjörður; el haversine no lo recoge del todo ni con el factor 1,4. Los minutos (de las notas) sí lo tienen en cuenta.",
-    "El comentario \"# duraciones estimadas, pendiente de confirmar\" del día 6 sigue vigente: las duration_min no se tocan en este borrador."
+    "Punto de partida: las notas dormían la noche 5 en Svínafell, pero la guía duerme en Skaftafell (≈ 7 km más al oeste). El primer tramo usa los 35 min de las notas + ≈ 5 min.",
+    "Orden: en las notas, Vestrahorn → zona de renos (20m) → Silla Roja (28m) → Lækjavík (4m) → Djúpavogskörin (32m). En el YAML, Eystrahorn (Silla Roja) va justo después de Vestrahorn, antes de los renos. Con las coordenadas del YAML el orden del YAML es el geográfico; con las de las notas también (la Silla Roja de las notas queda a 11 km de Vestrahorn). Los tiempos de las notas para la Silla Roja y los renos no encajan con ningún orden, así que esos tramos van estimados.",
+    "Coordenadas: la Silla Roja de las notas (64.3417, -14.9282) queda a ≈ 10 km de las del lugar eystrahorn (64.3028, -14.835); y la zona de renos de las notas (64.4445, -14.5087) a ≈ 7 km de thjodvegur_renos (64.45, -14.65). Además el lugar mezcla dos cosas: la montaña Eystrahorn y la 'Red Chair'. Confirmar cuál es la parada y sus coordenadas.",
+    "Kilómetros probablemente cortos en el último tramo: de Eystrahorn a Rauðafell la Ring Road rodea los fiordos Álftafjörður y Hamarsfjörður y la regla haversine × 1,25 se queda corta (por carretera serán bastantes más de 74 km). Las coordenadas de Rauðafell (64.75, -14.15) son aproximadas.",
+    "Djúpavogskörin: el registro lo describe como 'formaciones rocosas junto al mar', pero las notas del autor hablan de una poza termal y de comprobar si está abierta. Se propone corregir description y notes; confirmar.",
+    "Duración de Múlagljúfur: duration_min 110; el variant_note da 45 + 45 min de caminata y las notas del plan '(2h 30m)'. Confirmar.",
+    "Paradas de las notas que no están en el YAML: ninguna de la lista del DIA 5. (Stokksnes va dentro de Vestrahorn.)",
+    "overnight: null (noche en el mirador de Rauðafell, según el variant_note). Las notas decían Djúpivogur Camping Ground o Fossardalur Campsite. overnight_note está vacío y es del autor.",
+    "Nombre en inglés: raudafell se llama 'Rauðafell mountain view point'; se propone 'Mirador de Rauðafell' (short_name 'Rauðafell').",
+    "Línea de ruta: 'Múlagljúfur → Fjallsárlón → Jökulsárlón → Vestrahorn → Eystrahorn → Rauðafell' son 77 caracteres con los nombres más cortos posibles: 3 filas en 350 px, una más de las 2 que tocan a 6 paradas. No hay forma más corta de esos nombres islandeses."
   ]
 }
