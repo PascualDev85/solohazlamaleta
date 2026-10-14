@@ -289,12 +289,19 @@ async function checkDevice(browser: Browser, device: Device, engineLabel: string
         const r = el.getBoundingClientRect()
         if (!r.width || !r.height) continue
         if (getComputedStyle(el).display === 'inline' && el.closest('p, li, dd, td') && el.closest('p, li, dd, td')!.textContent!.trim() !== el.textContent!.trim()) continue
-        if (r.width >= min && r.height >= min) continue
+        // An invisible ::after layer with negative insets widens the tap area
+        // without changing the drawing (_day-card.scss): measure that area.
+        const after = getComputedStyle(el, '::after')
+        const outset = (v: string) => Math.min(0, parseFloat(v) || 0)
+        const layer = after.content !== 'none' && after.position === 'absolute'
+        const w = layer ? r.width - outset(after.left) - outset(after.right) : r.width
+        const h = layer ? r.height - outset(after.top) - outset(after.bottom) : r.height
+        if (w >= min && h >= min) continue
         // Its own classes, or the nearest classed ancestor's first one.
         const tag = el.tagName.toLowerCase()
         const owner = el.parentElement?.closest('[class]')
         const sel = el.classList.length ? `${tag}.${[...el.classList].join('.')}` : `${owner ? '.' + owner.classList[0] + ' ' : ''}${tag}`
-        out.push({ sel, w: Math.round(r.width), h: Math.round(r.height) })
+        out.push({ sel, w: Math.round(w), h: Math.round(h) })
       }
       return out
     }, TOUCH_MIN)
