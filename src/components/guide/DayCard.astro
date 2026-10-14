@@ -98,9 +98,10 @@ const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
             {nightLabel && (
               <span class="day-card__fact day-card__fact--night">
                 <SectionIcon name="tent" />
+                {/* Read "Noche en Camping Árnes" (or "Noche: Fuera de camping"); the arrow is only drawn. */}
                 <span class="day-card__night-label">Noche</span>
                 <span class="day-card__arrow" aria-hidden="true">→</span>
-                <span class="visually-hidden">: </span>
+                <span class="visually-hidden">{overnightHref ? ' en ' : ': '}</span>
                 {overnightHref ? (
                   <a class="day-card__night-link" href={overnightHref}>{nightLabel}</a>
                 ) : (
