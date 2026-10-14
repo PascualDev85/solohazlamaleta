@@ -297,6 +297,7 @@
 
 - place_id: kirkjufell
   name: Mirador de Kirkjufell
+  short_name: "Kirkjufell"
   destination: islandia
   lat: 64.9377
   lng: -23.3084
@@ -311,8 +312,8 @@
     price: 1400
     currency: ISK
     verified_at: 2026-10-04
-  description: "Montaña de forma cónica junto a la costa norte de Snæfellsnes, una de las más fotografiadas de Islandia, especialmente junto a la cascada cercana de Kirkjufellsfoss."
-  notes: "La montaña más fotografiada de Islandia, junto a la cascada Kirkjufellsfoss, cerca de Grundarfjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  description: "Montaña de forma cónica junto a la costa norte de Snæfellsnes, cerca de Grundarfjörður, con la cascada Kirkjufellsfoss a sus pies."
+  notes: "Junto a la carretera 54, a la salida de Grundarfjörður hacia Ólafsvík. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: olafsvik
   name: Ólafsvík
@@ -322,10 +323,11 @@
   type: area
   verified_at: 2025-09-22
   description: "Pueblo pesquero en la costa norte de la península de Snæfellsnes."
-  notes: "Pueblo pesquero en la costa norte de la península de Snæfellsnes. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Aparcamiento gratuito en el pueblo, que se recorre a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: djupalonssandur
   name: Playa de Djúpalónssandur
+  short_name: "Djúpalónssandur"
   destination: islandia
   lat: 64.7642
   lng: -23.9066
@@ -341,7 +343,7 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio pesquero y piedras tradicionales usadas antiguamente para medir la fuerza de los pescadores. Junto a la playa de Dritvik."
-  notes: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio y piedras de fuerza tradicionales. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Desde el aparcamiento gratuito se baja a pie a la playa; un sendero corto por el acantilado lleva a la vecina playa de Dritvík. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: londrangar
   name: Londrangar
@@ -351,10 +353,11 @@
   type: viewpoint
   verified_at: 2025-09-22
   description: "Dos formaciones rocosas volcánicas junto al mar, restos erosionados de un antiguo cráter, en la costa sur de la península de Snæfellsnes."
-  notes: "Aparcamiento y mirador de dos formaciones rocosas volcánicas junto al mar. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se ven desde un mirador a pocos minutos a pie del aparcamiento, que es gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hellnar
   name: Mirador de Hellnar
+  short_name: "Hellnar"
   destination: islandia
   lat: 64.7527
   lng: -23.6674
@@ -370,7 +373,7 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Pequeño asentamiento costero con acantilados y colonias de aves marinas, unido a Arnarstapi por un sendero costero."
-  notes: "Pequeño pueblo con acantilados y colonias de aves marinas, a unos 2,5 km a pie de Arnarstapi por el sendero costero, en la costa sur de Snæfellsnes. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "A unos 2,5 km a pie de Arnarstapi por el sendero costero; también se llega en coche, con aparcamiento gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: arnarstapi
   name: Arnarstapi
@@ -393,6 +396,7 @@
 
 - place_id: raudfeldsgja
   name: Garganta de Rauðfeldsgjá
+  short_name: "Rauðfeldsgjá"
   destination: islandia
   lat: 64.7690
   lng: -23.5850
@@ -408,7 +412,7 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Grieta estrecha en la montaña con un arroyo en el fondo, cerca de Arnarstapi."
-  notes: "Grieta estrecha en la montaña que se puede recorrer a pie, cerca de Arnarstapi. Lleva agua en el fondo, calzado adecuado necesario. La entrada hacia el interior de la montaña es muy fotogénica, con una pequeña cascada dentro que no se puede ascender. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se entra a pie desde el aparcamiento por el cauce de un arroyo, así que hace falta calzado adecuado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: budakirkja
   name: Búðakirkja
@@ -427,7 +431,7 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Iglesia negra de madera construida en 1848, junto al pueblo de Búðir, en la costa sur de la península de Snæfellsnes. Junto a ella hay un cementerio paseable y un sendero que lleva hasta la playa."
-  notes: "Iglesia negra de madera de 1848 junto al pueblo de Búðir. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Aparcamiento gratuito junto a la iglesia. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: reykjavik
   name: Reikiavik
@@ -1048,6 +1052,7 @@
 
 - place_id: svortuloft
   name: "Faro de Svörtuloft"
+  short_name: "Svörtuloft"
   destination: islandia
   lat: 64.8744
   lng: -24.0217
@@ -1067,6 +1072,7 @@
 
 - place_id: ytri_tunga
   name: "Playa de Ytri Tunga"
+  short_name: "Ytri Tunga"
   destination: islandia
   lat: 64.8056
   lng: -23.3017
@@ -1086,6 +1092,7 @@
 
 - place_id: landbrotalaug
   name: "Landbrotalaug (poza termal)"
+  short_name: "Landbrotalaug"
   destination: islandia
   lat: 64.7867
   lng: -22.8333
@@ -1105,12 +1112,13 @@
 
 - place_id: raudhals
   name: "Volcán Raudhals"
+  short_name: "Raudhals"
   destination: islandia
   lat: 64.842896
   lng: -22.236739
   type: viewpoint
   verified_at: 2025-09-22
-  description: "Paisaje volcánico poco conocido en el sur de Islandia, de aspecto lunar."
+  description: "Paisaje volcánico poco conocido en el oeste de Islandia, al sur de la península de Snæfellsnes, de aspecto lunar."
   notes: "Parada poco frecuentada."
 
 - place_id: thorufoss
@@ -1321,7 +1329,7 @@
   notes: "Camping en un campo de lava a la entrada de Hellissandur (Útnesvegur 360). 2 duchas interiores de agua caliente sin límite de tiempo (2 de hombres, 2 de mujeres), 2 baños (2 de hombres, 2 de mujeres), sala común pequeña pero completa, 2 fregaderos cubiertos con agua caliente. Se paga por la noche, cuando pasa el guarda."
 
 - place_id: camp_mosskogar
-  name: "Mosskógar Camping"
+  name: "Camping Mosskógar"
   short_name: "Camping Mosskógar"
   destination: islandia
   lat: 64.179586

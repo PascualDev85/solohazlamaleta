@@ -837,6 +837,15 @@ variants:
         title: "Snæfellsnes: Kirkjufell, Djúpalónssandur y Arnarstapi"
         summary: "Día completo recorriendo la península de Snæfellsnes, de Kirkjufell hasta los acantilados del sur."
         overnight: camp_mosskogar
+        # Camping Hellissandur → Kirkjufell (≈ 34 km, ≈ 29 min) → Ólafsvík (25, 20 min) → Faro de Svörtuloft, por
+        # pista (≈ 21, ≈ 25 min) → Djúpalónssandur (≈ 19, ≈ 23 min) → Lóndrangar (3, 8 min) → Hellnar (15, ≈ 13
+        # min) → Arnarstapi (3, ≈ 3 min) → Rauðfeldsgjá (3, ≈ 3 min) → Búðakirkja (14, 15 min) → Ytri Tunga (6,
+        # ≈ 5 min) → Landbrotalaug (28, ≈ 24 min) → Raudhals (36, ≈ 31 min) → Camping Mosskógar (99, ≈ 85 min).
+        # Total ≈ 305 km; 284 min → 285. Tiempos de las notas del autor salvo los marcados ≈. Estimación pendiente
+        # de confirmar por el autor.
+        drive:
+          km: 305
+          minutes: 285
         # duraciones estimadas, pendiente de confirmar
         stops:
           - place_id: kirkjufell
@@ -844,63 +853,85 @@ variants:
             duration_min: 45
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
           - place_id: olafsvik
             order: 2
             duration_min: 30
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 25
+            travel_to_next_mode: "coche"
             variant_note: "Dimos un paseo tranquilo por el pueblo."
           - place_id: svortuloft
             order: 3
             duration_min: 30
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 23
+            travel_to_next_mode: "coche"
             variant_note: "Nos encantó el faro: mirador espectacular con acantilados y muchas aves."
           - place_id: djupalonssandur
             order: 4
             duration_min: 45
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 8
+            travel_to_next_mode: "coche"
             variant_note: "Paseamos por la playa de Dritvik y Djúpalónssandur."
           - place_id: londrangar
             order: 5
             duration_min: 30
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 13
+            travel_to_next_mode: "coche"
           - place_id: hellnar
             order: 6
             duration_min: 30
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 3
+            travel_to_next_mode: "coche"
             variant_note: "Espectacular. Aquí vimos nuestras primeras focas, pequeñitas — nos encantó."
           - place_id: arnarstapi
             order: 7
             duration_min: 45
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 3
+            travel_to_next_mode: "coche"
             variant_note: "Una zona muy chula: todo se recorre andando. Los acantilados están genial y el puente de piedra (Gatklettur) es una pasada. Muy recomendable."
           - place_id: raudfeldsgja
             order: 8
             duration_min: 30
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 15
+            travel_to_next_mode: "coche"
             variant_note: "Nos gustó mucho. La entrada hacia el interior de la montaña es muy fotogénica, con una pequeña cascada dentro, pero no pudimos ascender a través de ella."
           - place_id: budakirkja
             order: 9
             duration_min: 20
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 5
+            travel_to_next_mode: "coche"
           - place_id: ytri_tunga
             order: 10
             duration_min: 45
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 24
+            travel_to_next_mode: "coche"
             variant_note: "Lo bonito de aquí es la playa: uno de los sitios para ver focas de cerca, respetuosamente y sin molestarlas. Vimos muchas, fue mágico. Comimos en las mesas de picnic de la playa."
           - place_id: landbrotalaug
             order: 11
             duration_min: 15
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 31
+            travel_to_next_mode: "coche"
             variant_note: "Fuimos, pero estaba lleno de gente y el agua cubría poco. No nos metimos — no mereció la pena la parada."
           - place_id: raudhals
             order: 12
