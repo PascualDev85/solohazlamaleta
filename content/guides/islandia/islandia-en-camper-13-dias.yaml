@@ -438,6 +438,14 @@ variants:
         # Night outside any campsite. The note is the author's to write.
         overnight: null
         overnight_note: ""
+        # Camping Skaftafell → Múlagljúfur (37 km, ≈ 40 min) → Fjallsárlón (7, 12 min) → Jökulsárlón y Diamond
+        # Beach (13, 12 min) → Vestrahorn (78, 72 min) → Eystrahorn (12, ≈ 10 min) → mirador de Rauðafell, pasando
+        # por la zona de renos, Lækjavík y Djúpavogskörin (74, ≈ 64 min). Total ≈ 221 km → 220; 210 min. Tiempos
+        # de las notas del autor salvo los marcados ≈. Noche fuera de camping: el día acaba en la última parada.
+        # Estimación pendiente de confirmar por el autor.
+        drive:
+          km: 220
+          minutes: 210
         # duraciones estimadas, pendiente de confirmar
         stops:
           - place_id: mulagljufur
@@ -445,45 +453,58 @@ variants:
             duration_min: 110
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 12
+            travel_to_next_mode: "coche"
             variant_note: "Una de las joyas de Islandia: pudimos disfrutar de todo el recorrido y de los miradores, en plena naturaleza. Nos encantó. Desde el parking al mirador son unos 45 minutos de ida y otros 45 de vuelta."
           - place_id: fjallsarlon
             order: 2
             duration_min: 45
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 12
+            travel_to_next_mode: "coche"
           - place_id: jokulsarlon
             order: 3
             duration_min: 90
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 72
+            travel_to_next_mode: "coche"
             variant_note: "Diamond Beach es espectacular: llena de trozos de icebergs grandes y pequeños que parecen diamantes. Desde Jökulsárlón salen excursiones en barca para ver de cerca cómo caen los icebergs al mar — no las hicimos, pero es un espectáculo a la vez precioso y un poco triste de ver desde la orilla."
           - place_id: vestrahorn
             order: 4
             duration_min: 60
             planning_status: required
             visit_status: visited
+            travel_to_next_min: 10
+            travel_to_next_mode: "coche"
             variant_note: "Para nosotros sí mereció la pena pagar por verlo: el recorrido es bastante amplio y el entorno, con las montañas y el poblado vikingo, es espectacular. Comimos en las mesas cerca del parking y pudimos usar también la zona de baño del camping."
           - place_id: eystrahorn
             order: 5
             duration_min: 30
             planning_status: optional
             visit_status: visited
+            travel_to_next_min: 64
+            travel_to_next_mode: "coche"
           - place_id: thjodvegur_renos
             order: 6
             duration_min: 15
             planning_status: optional
             visit_status: not_visited
             variant_note: "Tramo donde suele haber renos, sin garantía de avistamiento."
+            skip_reason: "Pasamos por el tramo donde suele haber renos, pero no vimos ninguno. No es una parada en sí: es un tramo de carretera con posibilidad de avistamiento."
           - place_id: laekjavik
             order: 7
             duration_min: 20
             planning_status: optional
             visit_status: not_visited
+            skip_reason: "Estaba en el plan como opción dudosa, solo si íbamos bien de tiempo, y quedó fuera."
           - place_id: djupavogskorin
             order: 8
             duration_min: 15
             planning_status: optional
             visit_status: not_visited
+            skip_reason: "Estaba en el plan con la duda de si la poza estaría abierta, y quedó fuera."
           - place_id: raudafell
             order: 9
             duration_min: 90

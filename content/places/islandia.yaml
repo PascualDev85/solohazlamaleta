@@ -110,6 +110,7 @@
 
 - place_id: jokulsarlon
   name: Laguna Glaciar Jökulsárlón y Diamond Beach
+  short_name: "Jökulsárlón"
   destination: islandia
   lat: 64.0481
   lng: -16.1796
@@ -129,6 +130,7 @@
 
 - place_id: vestrahorn
   name: Vestrahorn y Stokksnes
+  short_name: "Vestrahorn"
   destination: islandia
   lat: 64.2448
   lng: -14.9836
@@ -144,7 +146,7 @@
     close: "22:00"
     verified_at: 2025-09-16
   description: "Macizo montañoso de picos afilados junto a la península de Stokksnes, en el sureste de Islandia. Un clásico de la fotografía de paisaje en Islandia, con dunas de arena negra, el reflejo de la montaña en el agua y, hacia el sur, una playa con el esqueleto de una ballena donde a veces se avistan focas."
-  notes: "El asentamiento vikingo es de atrezo de película. Uno de los paisajes más fotografiados de Islandia."
+  notes: "El asentamiento vikingo es de atrezo de película. Se entra por el recinto del Viking Café, donde se paga la entrada."
 
 - place_id: godafoss
   name: Goðafoss
@@ -474,6 +476,7 @@
 
 - place_id: mulagljufur
   name: "Cañón de Múlagljúfur"
+  short_name: "Múlagljúfur"
   destination: islandia
   lat: 63.9719
   lng: -16.3755
@@ -489,10 +492,11 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Cañón junto al glaciar Öræfajökull, con vistas al valle y a la lengua glaciar."
-  notes: "Cañón poco transitado cerca de Fjallsárlón, con vistas al glaciar. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se recorre a pie desde el aparcamiento: hasta los miradores sobre el cañón son unos 45 minutos de ida y otros tantos de vuelta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: fjallsarlon
   name: Laguna Glaciar Fjallsárlón
+  short_name: "Fjallsárlón"
   destination: islandia
   lat: 64.0206
   lng: -16.3799
@@ -508,17 +512,18 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Laguna glaciar alimentada por Fjallsjökull, una salida del Vatnajökull. Más pequeña y menos concurrida que Jökulsárlón, a pocos kilómetros de distancia."
-  notes: "Laguna glaciar más pequeña y tranquila que Jökulsárlón, a pocos minutos en coche. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "A unos 12 minutos en coche de Jökulsárlón por la Ring Road. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: eystrahorn
   name: "Eystrahorn (Silla Roja / Red Chair)"
+  short_name: "Eystrahorn"
   destination: islandia
   lat: 64.3028
   lng: -14.8350
   type: monument
   verified_at: 2025-09-16
   description: "Montaña en el extremo sureste de Islandia, junto a la Ring Road, con una silla gigante de color rojo que le da el apodo de \"silla roja\" (Red Chair) y desde la que se contempla el paisaje."
-  notes: "Montaña y playa de guijarros negros junto a la carretera. Parada rápida, muy cerca de la carretera. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Parada rápida junto a la Ring Road, con aparcamiento gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: thjodvegur_renos
   name: "Þjóðvegur (zona de renos)"
@@ -527,7 +532,8 @@
   lng: -14.6500
   type: viewpoint
   verified_at: 2025-09-16
-  notes: "Tramo de la Ring Road en el sureste donde es habitual avistar manadas de renos salvajes, la única población de renos de Islandia. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Tramo de la Ring Road en el sureste de Islandia por el que se mueven manadas de renos salvajes, presentes en Islandia solo en el este del país."
+  notes: "No es una parada en sí: el avistamiento no está garantizado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: laekjavik
   name: Lækjavík
@@ -536,7 +542,8 @@
   lng: -14.3500
   type: area
   verified_at: 2025-09-16
-  notes: "Cala de guijarros poco conocida cerca de Djúpivogur. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Cala de playa negra con una roca en el mar, cerca de Djúpivogur."
+  notes: "Mirador con aparcamiento gratuito junto a la carretera. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: djupavogskorin
   name: Djúpavogskörin
@@ -545,7 +552,8 @@
   lng: -14.2800
   type: viewpoint
   verified_at: 2025-09-16
-  notes: "Formaciones rocosas junto al mar cerca de Djúpivogur. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Poza de agua termal junto al mar, cerca de Djúpivogur."
+  notes: "Puede estar cerrada: conviene comprobarlo antes de desviarse. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: breiddalsvik
   name: Breiðdalsvík
@@ -989,7 +997,8 @@
   notes: "Parada corta de camino a Svartifoss, en la misma ruta señalizada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: raudafell
-  name: "Rauðafell mountain view point"
+  name: "Mirador de Rauðafell"
+  short_name: "Rauðafell"
   destination: islandia
   lat: 64.7500
   lng: -14.1500
