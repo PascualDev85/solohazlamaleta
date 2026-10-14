@@ -75,9 +75,11 @@
     line-height: 1.3;
   }
 
+  // Start-aligned, so an open card does not stretch its neighbour.
   &__skipped {
     display: grid;
     gap: var(--space-xs);
+    align-items: start;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -112,6 +114,17 @@
 
   &__tricks .section-icon {
     color: var(--color-accent);
+  }
+
+  // Desktop: route decisions and skipped stops, both short cards, go two by
+  // two. Principles and pitfalls stay in one column: at the reading width,
+  // two columns of running text fall to ~33 characters a line and save no
+  // height.
+  @include from("md") {
+    &__decisions,
+    &__skipped {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 }
 
