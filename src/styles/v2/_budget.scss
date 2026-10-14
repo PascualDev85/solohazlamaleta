@@ -131,14 +131,27 @@
     margin: var(--space-lg) 0 0;
   }
 
+  // The label on its own line on phones. On desktop it hangs to the left of
+  // its chips, so both groups' chips start on one edge, wrapped ones too:
+  // 6rem fits "No incluye" in the kicker type.
   &__scope-group {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.4rem;
 
+    @include from("md") {
+      padding-left: 6rem;
+    }
+
     dt {
       width: 100%;
+
+      // The flex gap follows the label, so it is 0.4rem narrower.
+      @include from("md") {
+        width: 5.6rem;
+        margin-left: -6rem;
+      }
     }
 
     dd {
