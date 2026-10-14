@@ -109,8 +109,7 @@
   notes: "Subir por las escaleras de la derecha para el mirador superior."
 
 - place_id: jokulsarlon
-  name: Laguna Glaciar Jökulsárlón y Diamond Beach
-  short_name: "Jökulsárlón"
+  name: "Jökulsárlón"
   destination: islandia
   lat: 64.0481
   lng: -16.1796
@@ -179,7 +178,7 @@
   notes: "Capital del norte de Islandia, al fondo del fiordo Eyjafjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hauganes
-  name: Avistamiento de ballenas en Hauganes
+  name: "Ballenas en Hauganes"
   short_name: "Hauganes"
   destination: islandia
   lat: 65.8973
@@ -451,7 +450,7 @@
   notes: "Aparcamiento gratuito en Perlan, al sur de la ciudad; el centro queda a unos 2 km a pie. En el centro hay calles donde se puede aparcar y parkings de pago."
 
 - place_id: trekking_glaciar_svinafellsjokull
-  name: "Trekking en el glaciar Svínafellsjökull"
+  name: "Trekking en Svínafellsjökull"
   short_name: "Trekking en el glaciar"
   destination: islandia
   lat: 64.0114
@@ -523,7 +522,7 @@
   notes: "A unos 12 minutos en coche de Jökulsárlón por la Ring Road. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: eystrahorn
-  name: "Eystrahorn (Silla Roja / Red Chair)"
+  name: "Eystrahorn (Silla Roja)"
   short_name: "Eystrahorn"
   destination: islandia
   lat: 64.3028
@@ -682,7 +681,7 @@
   notes: "Cascada escalonada bien visible desde la Ring Road en Jökuldalur. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: studlagil
-  name: "Cañón de Stuðlagil (lado este)"
+  name: "Stuðlagil (lado este)"
   short_name: "Stuðlagil"
   destination: islandia
   lat: 65.3064
@@ -702,7 +701,7 @@
   notes: "Cañón de columnas de basalto, acceso desde el lado este sin cruzar el río — es el único de los dos lados desde el que se puede bajar al cañón (con cuidado); el otro lado solo permite verlo desde arriba. Ruta de unos 5 km, unos 45 minutos de ida y otros 45 de vuelta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: dettifoss_selfoss
-  name: "Dettifoss (lado oeste) y Selfoss"
+  name: "Dettifoss y Selfoss (oeste)"
   short_name: "Dettifoss"
   destination: islandia
   lat: 65.8142
@@ -832,7 +831,7 @@
   notes: "Campo de formaciones de lava con forma de castillos, varias rutas de senderismo señalizadas. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: myvatn_viewpoint
-  name: "Mirador panorámico del lago Mývatn"
+  name: "Mirador del lago Mývatn"
   short_name: "Mývatn"
   destination: islandia
   lat: 65.6000
