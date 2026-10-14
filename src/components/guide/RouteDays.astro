@@ -134,6 +134,15 @@ const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
     for (const hint of openHints()) if (!hint.contains(event.target as Node)) hint.open = false;
   }, { passive: true });
   document.addEventListener('scroll', () => { for (const hint of openHints()) hint.open = false; }, { capture: true, passive: true });
+  // Esc closes it too, and puts focus back on its mark if it was inside.
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    for (const hint of openHints()) {
+      const inside = hint.contains(document.activeElement);
+      hint.open = false;
+      if (inside) hint.querySelector('summary')?.focus();
+    }
+  });
 
   // The glance panel closes itself once a day is chosen, so it never covers
   // the card it just jumped to. Without this it still closes by hand.
