@@ -134,7 +134,17 @@ const faqJsonLd =
     : null;
 ---
 
-<BaseLayout title={guide.title} description={guide.description} image={ogImage.src} design="v2" noindex>
+<BaseLayout
+  title={guide.title}
+  description={guide.description}
+  image={ogImage.src}
+  imageWidth={ogImage.attributes.width}
+  imageHeight={ogImage.attributes.height}
+  imageAlt={coverAlt}
+  ogType="article"
+  design="v2"
+  noindex
+>
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} slot="head" />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(articleJsonLd)} slot="head" />
 
