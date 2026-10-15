@@ -1146,7 +1146,7 @@
 # --- PENDIENTES DE CONFIRMAR por el autor. Sus notes se muestran al lector.
 - place_id: camp_thingvellir
   name: "Camping Þingvellir"
-  short_name: "Camping Þingvellir"
+  short_name: "Þingvellir"
   destination: islandia
   lat: 64.27953
   lng: -21.08649
@@ -1166,7 +1166,7 @@
 
 - place_id: camp_arnes
   name: "Camping Árnes"
-  short_name: "Camping Árnes"
+  short_name: "Árnes"
   destination: islandia
   lat: 64.042409
   lng: -20.251387
@@ -1187,7 +1187,7 @@
 
 - place_id: camp_skogafoss
   name: "Camping Skógafoss"
-  short_name: "Camping Skógafoss"
+  short_name: "Skógafoss"
   destination: islandia
   lat: 63.527951
   lng: -19.512692
@@ -1206,7 +1206,7 @@
 
 - place_id: camp_svinafell
   name: "Camping Svínafell (Skaftafell)"
-  short_name: "Camping Svínafell"
+  short_name: "Svínafell"
   destination: islandia
   lat: 63.979023
   lng: -16.853199
@@ -1226,7 +1226,7 @@
 
 - place_id: camp_skaftafell
   name: "Camping Skaftafell"
-  short_name: "Camping Skaftafell"
+  short_name: "Skaftafell"
   destination: islandia
   lat: 64.016287
   lng: -16.967528
@@ -1247,7 +1247,7 @@
 
 - place_id: camp_laugar
   name: "Camping Laugar"
-  short_name: "Camping Laugar"
+  short_name: "Laugar"
   destination: islandia
   lat: 65.72179
   lng: -17.3625
@@ -1267,7 +1267,7 @@
 
 - place_id: camp_systragil
   name: "Camping Systragil"
-  short_name: "Camping Systragil"
+  short_name: "Systragil"
   destination: islandia
   lat: 65.70654
   lng: -17.89615
@@ -1287,7 +1287,7 @@
 
 - place_id: camp_lambeyri
   name: "Camping Lambeyri"
-  short_name: "Camping Lambeyri"
+  short_name: "Lambeyri"
   destination: islandia
   lat: 65.464764
   lng: -19.350176
@@ -1307,7 +1307,7 @@
 
 - place_id: camp_hellissandur
   name: "Camping Hellissandur"
-  short_name: "Camping Hellissandur"
+  short_name: "Hellissandur"
   destination: islandia
   lat: 64.9125
   lng: -23.88916
@@ -1327,7 +1327,7 @@
 
 - place_id: camp_mosskogar
   name: "Camping Mosskógar"
-  short_name: "Camping Mosskógar"
+  short_name: "Mosskógar"
   destination: islandia
   lat: 64.179586
   lng: -21.617583
