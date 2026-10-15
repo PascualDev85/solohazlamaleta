@@ -62,3 +62,14 @@ test('a guide with only days 1 and 2 (no days 3-13) is a valid, partial Compiled
   const compiled = compileGuide(minimalSource(), places, emptyAffiliates, now)
   assert.deepStrictEqual(compiled.variants?.[0].days.map((d) => d.day), [1, 2])
 })
+
+test('when_to_go and practical.currency reach the CompiledGuide as written (Enmienda 1.13)', () => {
+  const compiled = compileGuide(minimalSource({
+    type: 'hub',
+    variants: undefined,
+    when_to_go: ['Nos nevó varias noches.'],
+    practical: { currency: { code: 'ISK', name: 'Corona islandesa' } },
+  }), places, emptyAffiliates, now)
+  assert.deepStrictEqual(compiled.when_to_go, ['Nos nevó varias noches.'])
+  assert.deepStrictEqual(compiled.practical?.currency, { code: 'ISK', name: 'Corona islandesa' })
+})

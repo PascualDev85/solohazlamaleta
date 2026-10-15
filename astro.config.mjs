@@ -32,6 +32,8 @@ function draftGuidePaths() {
  */
 const MANUALLY_EXCLUDED_PATHS = [
   '/islandia/islandia-en-camper-13-dias/',
+  // The Islandia hub: noindex while the 13-day guide is (docs/1.13 §6).
+  '/islandia/',
 ];
 
 const excludedPaths = [...draftGuidePaths(), ...MANUALLY_EXCLUDED_PATHS];

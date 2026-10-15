@@ -7,9 +7,11 @@ interface Props {
   sections: { id: string; label: string; icon?: string }[];
   routeId?: string;
   days?: { day: number; title: string }[];
+  /** The pill and the panel's heading: the hub says "En esta página". */
+  title?: string;
 }
 
-const { sections, routeId, days = [] } = Astro.props;
+const { sections, routeId, days = [], title = 'En esta guía' } = Astro.props;
 ---
 
 {/*
@@ -26,12 +28,12 @@ const { sections, routeId, days = [] } = Astro.props;
 */}
 <button class="guide-index__dock" type="button" popovertarget="guide-index" data-away>
   <SectionIcon name="list" />
-  En esta guía
+  {title}
 </button>
 
 <div id="guide-index" class="guide-index" popover role="dialog" aria-labelledby="guide-index-title">
   <header class="guide-index__head">
-    <h2 id="guide-index-title">En esta guía</h2>
+    <h2 id="guide-index-title">{title}</h2>
     <button
       class="guide-index__close"
       type="button"

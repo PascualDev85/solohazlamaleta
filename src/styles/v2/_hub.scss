@@ -1,0 +1,252 @@
+@use "../abstracts" as *;
+
+// The destination hub's own pieces: the "Empieza aquí" card, the "Qué ver"
+// grid and "Cuándo ir". Everything else is the guide's (see hub-v2.scss).
+[data-design="v2"] .hub {
+  // Below the fold, like the guide's sections: layout and paint wait until
+  // they come near the screen (see _guide.scss).
+  > .hub-section {
+    margin-top: var(--space-2xl);
+
+    > .section-title {
+      margin-top: 0;
+    }
+  }
+
+  > .hub-see,
+  > .hub-when {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 40rem;
+  }
+
+  // The first section follows the overview closely.
+  > .hub-section:first-of-type {
+    margin-top: var(--space-xl);
+  }
+
+  .hub-section__lead {
+    margin: 0 0 var(--space-md);
+  }
+
+  // A currency card across the grid, so the tips keep the last row.
+  .practical__card--wide {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}
+
+// "Empieza aquí": the route as one large card. Photo on top on mobile, beside
+// the text from tablet up. The title's link covers the card.
+[data-design="v2"] .start-here {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.3s var(--ease-out);
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-3px);
+    }
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  @include from("sm") {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+
+  &__photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: 50% 60%;
+    background: var(--color-surface);
+
+    @include up-to("sm") {
+      aspect-ratio: 16 / 9;
+    }
+
+    @include from("sm") {
+      aspect-ratio: auto;
+      min-height: 16rem;
+    }
+  }
+
+  &__body {
+    display: grid;
+    align-content: start;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--step-1);
+
+    a {
+      color: var(--color-text);
+      text-decoration: none;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+      }
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+  }
+
+  &__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: var(--space-2xs) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__lived {
+    background: linear-gradient(145deg, var(--color-blush-from), var(--color-blush-to));
+    color: var(--color-label-on-blush);
+  }
+
+  &__cta {
+    margin-top: var(--space-xs) !important;
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--color-accent);
+  }
+}
+
+// "Qué ver": a card per day, its places as small links. A card with the day's
+// photo shows it on top; the rest are text only.
+[data-design="v2"] .hub-see {
+  &__grid {
+    display: grid;
+    gap: var(--space-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include from("sm") {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__card {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  // Phones: a small square thumbnail beside the day's text.
+  &__card--photo {
+    @include up-to("sm") {
+      display: grid;
+      grid-template-columns: 5.5rem minmax(0, 1fr);
+      align-items: start;
+      gap: var(--space-sm);
+      padding: var(--space-sm) 0 0 var(--space-sm);
+
+      .hub-see__body {
+        padding: 0 var(--space-md) var(--space-md) 0;
+      }
+    }
+  }
+
+  &__photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    background: var(--color-surface-deep);
+
+    @include up-to("sm") {
+      aspect-ratio: 1;
+      border-radius: var(--radius);
+    }
+  }
+
+  &__body {
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+  }
+
+  &__title {
+    margin: var(--space-2xs) 0 var(--space-sm);
+    font-size: var(--step-0);
+  }
+
+  &__places {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2rem;
+      padding: 0.15rem 0.7rem;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      background: var(--color-bg);
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 750;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// "Cuándo ir": what we found in the month we travelled, a line each.
+[data-design="v2"] .hub-when {
+  &__kicker {
+    margin-bottom: var(--space-sm);
+  }
+
+  &__list {
+    display: grid;
+    gap: var(--space-sm);
+    margin: 0 0 var(--space-md);
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: grid;
+      grid-template-columns: 1.25rem minmax(0, 1fr);
+      gap: var(--space-sm);
+      align-items: start;
+    }
+
+    .section-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-top: 0.3rem;
+      color: var(--color-label);
+    }
+  }
+}

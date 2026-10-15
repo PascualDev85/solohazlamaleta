@@ -189,6 +189,13 @@ const PracticalSourceSchema = z.object({
   plugs: z.string().optional(),
   apps: z.array(z.string()).optional(),
   tips: z.array(z.string()).optional(),
+  // Enmienda 1.13 (pending the author's validation): the destination's
+  // currency, for the hub's quick facts and "Lo práctico".
+  currency: z.object({
+    code: z.string().regex(/^[A-Z]{3}$/),
+    name: z.string().trim().min(1),
+    notes: z.string().optional(),
+  }).strict().optional(),
 }).strict()
 
 const FaqItemSchema = z.object({
@@ -254,6 +261,9 @@ export const GuideSourceSchema = z.object({
   pitfalls: z.array(z.string()).optional(),
   terrain_tips: z.array(z.string()).optional(),
   practical: PracticalSourceSchema.optional(),
+  // Enmienda 1.13 (pending the author's validation): "Cuándo ir" on the hub,
+  // what we found in the month we travelled (trip_done). One line each.
+  when_to_go: z.array(z.string().trim().min(1)).optional(),
   adaptation_notes: z.array(AdaptationNoteSourceSchema).optional(),
   faq: z.array(FaqItemSchema).optional(),
   related: z.array(z.string()).optional(),

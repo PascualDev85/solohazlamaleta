@@ -315,3 +315,20 @@ test('overnight: null (night outside any campsite) and an empty overnight_note a
   const result = validateGuide(guideWithDay({ overnight: null, overnight_note: '' }), places, affiliates)
   assert.deepStrictEqual(result.errors, [])
 })
+
+test('a hub with variants produces an error: variants are N/A for type hub (1.6 §2.1)', () => {
+  const result = validateGuide(
+    guideWithStop({ place_id: 'a', order: 1, duration_min: 30, planning_status: 'required' }, { type: 'hub' }),
+    places, affiliates,
+  )
+  assert.ok(result.errors.some((e) => e.includes('type: hub')))
+})
+
+test('a hub without variants validates and compiles with no places', () => {
+  const { variants: _, ...hub } = guideWithStop({}, { type: 'hub' })
+  const result = validateGuide(hub, places, affiliates)
+  assert.deepStrictEqual(result.errors, [])
+  const compiled = compileGuide(result.guide!, places, affiliates)
+  assert.strictEqual(compiled.type, 'hub')
+  assert.deepStrictEqual(compiled.places, [])
+})
