@@ -3,6 +3,7 @@ import type { CompiledDay } from '../../../engine/index.ts';
 import { formatMinutes } from '../../lib/formatDuration.ts';
 import { minutesOnRoute, roundToHour } from '../../lib/dayTime.ts';
 import { campsiteAnchorId, dayAnchorId } from '../../lib/anchors.ts';
+import { twoDigitDay } from '../../lib/dayNumber.ts';
 import { guideImage } from '../../lib/guide-images.ts';
 import { nightLabel } from '../../lib/nightLabel.ts';
 import { shortName } from '../../lib/placeName.ts';
@@ -20,7 +21,7 @@ const { day } = Astro.props;
 // in place (CSS :has(), no script).
 const moreCount = Math.max(0, day.route_stops.length - 1);
 
-const num = String(day.day).padStart(2, '0');
+const num = twoDigitDay(day.day);
 const headingId = dayAnchorId(day.day);
 const sheetId = `${headingId}-completo`;
 

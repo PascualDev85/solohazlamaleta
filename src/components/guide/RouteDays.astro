@@ -1,6 +1,7 @@
 ---
 import type { CompiledDay } from '../../../engine/index.ts';
 import { dayAnchorId } from '../../lib/anchors.ts';
+import { twoDigitDay } from '../../lib/dayNumber.ts';
 import { nightLabel } from '../../lib/nightLabel.ts';
 import DayCard from './DayCard.astro';
 import SectionIcon from './SectionIcon.astro';
@@ -15,7 +16,6 @@ const { days, id } = Astro.props;
 
 // "De un vistazo": the whole route in one panel, a day per row with its stops.
 const glanceId = `${id}-vistazo`;
-const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
 ---
 
 {/*
@@ -42,8 +42,8 @@ const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
           {days.map((day) => (
             <li>
               {/* The name includes the visible "02" (WCAG 2.5.3, label in name). */}
-              <a href={`#${dayAnchorId(day.day)}`} aria-label={`Día ${String(day.day).padStart(2, '0')}: ${day.title}`}>
-                {String(day.day).padStart(2, '0')}
+              <a href={`#${dayAnchorId(day.day)}`} aria-label={`Día ${twoDigitDay(day.day)}: ${day.title}`}>
+                {twoDigitDay(day.day)}
               </a>
             </li>
           ))}
@@ -87,7 +87,7 @@ const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
       {days.map((day) => (
         <li class="route-glance__day" id={`${glanceId}-dia-${day.day}`}>
           <a href={`#${dayAnchorId(day.day)}`}>
-            <span class="route-glance__n" aria-hidden="true">{num(day)}</span>
+            <span class="route-glance__n" aria-hidden="true">{twoDigitDay(day.day)}</span>
             <span class="route-glance__body">
               <span class="route-glance__name"><span class="visually-hidden">Día {day.day}: </span>{day.title}</span>
               {day.route_line.length > 0 && (

@@ -1,5 +1,6 @@
 ---
 import { dayAnchorId } from '../../lib/anchors.ts';
+import { twoDigitDay } from '../../lib/dayNumber.ts';
 import SectionIcon from './SectionIcon.astro';
 
 interface Props {
@@ -59,7 +60,7 @@ const { sections, routeId, days = [] } = Astro.props;
                 {days.map((day) => (
                   <li>
                     <a href={`#${dayAnchorId(day.day)}`}>
-                      <span class="guide-index__daynum">{String(day.day).padStart(2, '0')}</span>
+                      <span class="guide-index__daynum">{twoDigitDay(day.day)}</span>
                       <span>{day.title}</span>
                     </a>
                   </li>
