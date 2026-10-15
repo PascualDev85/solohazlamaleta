@@ -127,10 +127,12 @@ const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
 
   // The time's info bubble (a <details> on each stop) closes when the reader
   // taps anywhere else or scrolls, which a <details> cannot do on its own.
+  // pointerdown, not click: iOS only fires click on elements it deems
+  // clickable, so a tap on plain text would leave the bubble open.
   const openHints = () => document.querySelectorAll<HTMLDetailsElement>('.day-stop__hint[open]');
-  document.addEventListener('click', (event) => {
+  document.addEventListener('pointerdown', (event) => {
     for (const hint of openHints()) if (!hint.contains(event.target as Node)) hint.open = false;
-  });
+  }, { passive: true });
   document.addEventListener('scroll', () => { for (const hint of openHints()) hint.open = false; }, { capture: true, passive: true });
 
   // The glance panel closes itself once a day is chosen, so it never covers

@@ -134,6 +134,7 @@ abrir ficheros de finanzas desde este proyecto.
 npm run dev        # servidor de desarrollo
 npm run build      # build de producción (falla si una guía es inválida)
 npm run preview    # previsualizar el build
+npm run test:devices  # iPhone (WebKit) y Android (Chromium) contra el preview; capturas en ui-devices/
 npm test           # tests unitarios (node --test)
 npm run lighthouse # con el preview en marcha: exige 100 en móvil y escritorio
 npm run test:ui    # con el preview en marcha: capas de los paneles y líneas de las tarjetas en móviles de 350 a 414 px (Chromium)

@@ -257,19 +257,137 @@ variants:
         plan_b: "La lluvia mejora estas cascadas (más caudal). No es mal plan si llueve."
 
       - day: 4
-        title: "Mañana tranquila en Skógafoss"
-        summary: "Vuelta a Skógafoss por la mañana, sin las multitudes del mediodía, para subir al mirador con calma."
+        title: "Sur de Islandia"
+        summary: "De Skógafoss a Skaftafell, entre playas negras, cañones y lava, hasta el Camping Svínafell."
         overnight: camp_svinafell
         physical_level:
           hills: some
+        # Camping Skógafoss → Skógafoss (≈ 0 km) → Kvernufoss, parking del Museo de Skógar (2, 5 min) →
+        # Dyrhólaey (30, 24 min) → Reynisfjara (15, 20 min) → Iglesia de Vík (10, 12 min) →
+        # Eldhraun, pasando por Gígjagjá y Laufskálavarða (62, 20 + 15 + 17 min) → Fjaðrárgljúfur (6, 8 min) →
+        # Foss á Síðu, pasando por Kirkjubæjarklaustur y Systrafoss (21, ≈ 10 + 20 min) →
+        # Camping Svínafell, pasando por Lómagnúpur (62, 27 + ≈ 25 min). Total ≈ 208 km → 210; 203 min → 205.
+        # Minutes from the author's notes; Fjaðrárgljúfur → Systrafoss and the last leg are estimates.
+        # Estimación pendiente de confirmar por el autor. Visit times confirmed by the author (2026-10-08).
+        drive:
+          km: 210
+          minutes: 210
         stops:
           - place_id: skogafoss
             order: 1
-            duration_min: 60
+            duration_min: 30
+            duration_max_min: 150
+            duration_note: "con las escaleras, los miradores y el paseo río arriba hasta los saltos"
             planning_status: required
             visit_status: visited
             start_time: "08:30"
+            travel_to_next_min: 5
+            travel_to_next_mode: "coche"
             variant_note: "Subir las escaleras de la derecha para el mirador superior. Con la luz de la mañana y sin las multitudes del mediodía."
+          - place_id: kvernufoss
+            order: 2
+            duration_min: 45
+            duration_max_min: 60
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 24
+            travel_to_next_mode: "coche"
+          - place_id: dyrholaey
+            order: 3
+            duration_min: 60
+            duration_max_min: 120
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
+          - place_id: reynisfjara
+            order: 4
+            duration_min: 45
+            duration_max_min: 60
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 12
+            travel_to_next_mode: "coche"
+          - place_id: iglesia_vik
+            order: 5
+            duration_min: 15
+            duration_max_min: 20
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 3
+            travel_to_next_mode: "coche"
+          - place_id: skool_beans
+            order: 6
+            duration_min: 30
+            duration_max_min: 45
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
+            variant_note: "Parada para un café y un descanso antes de seguir hacia el este."
+          - place_id: playa_vik
+            order: 7
+            duration_min: 30
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "La playa de Vík, la otra cara de Reynisfjara, quedó fuera por tiempo."
+          - place_id: gigjagja
+            order: 8
+            duration_min: 20
+            planning_status: optional
+            visit_status: not_visited
+            travel_to_next_min: 15
+            travel_to_next_mode: "coche"
+            skip_reason: "Estaba en el plan, pero en un día con tantas paradas quedó fuera por tiempo."
+          - place_id: laufskalavarda
+            order: 9
+            duration_min: 10
+            planning_status: optional
+            visit_status: not_visited
+            travel_to_next_min: 17
+            travel_to_next_mode: "coche"
+            skip_reason: "Queda junto a la Ring Road, pero entre tantas paradas no nos dio tiempo a parar."
+          - place_id: eldhraun
+            order: 10
+            duration_min: 15
+            duration_max_min: 20
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 8
+            travel_to_next_mode: "coche"
+          - place_id: fjadrargljufur
+            order: 11
+            duration_min: 45
+            duration_max_min: 90
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 10
+            travel_to_next_mode: "coche"
+          - place_id: systrafoss
+            order: 12
+            duration_min: 30
+            planning_status: optional
+            visit_status: not_visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
+            skip_reason: "Estaba en el plan, pero quedó fuera por tiempo, en un día con muchas paradas."
+          - place_id: foss_a_sidu
+            order: 13
+            duration_min: 10
+            duration_note: "solo desde la carretera: la base es terreno privado"
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 27
+            travel_to_next_mode: "coche"
+            variant_note: "No paramos: la vimos desde el coche, y se ve bastante bien."
+          - place_id: lomagnupur
+            order: 14
+            duration_min: 10
+            planning_status: optional
+            visit_status: not_visited
+            travel_to_next_min: 25
+            travel_to_next_mode: "coche"
+            skip_reason: "Estaba en el plan como parada de paso antes del camping, pero quedó fuera por tiempo."
         our_take: "Dormir justo al lado y volver a primera hora es la diferencia entre ver la cascada en foto de postal o entre autobuses de turistas."
 
       - day: 5
@@ -806,6 +924,8 @@ pitfalls:
   - "Casi todo en Islandia se paga con tarjeta, pero algún camping aislado puede pedir solo efectivo. Llevar algunas coronas encima por si acaso."
 
 terrain_tips:
+  - "Kvernufoss: el parking de la cascada cuesta 750 ISK, pero el del Museo de Skógar, justo al lado, es gratis, y el sendero sale por detrás del museo."
+  - "Dyrhólaey tiene dos zonas con parking propio, la baja (Lágey, junto a las playas negras) y la alta (Háey, con el faro): el mismo ticket de 1.000 ISK vale para los dos durante el mismo día."
   - "App Vedur (tiempo oficial islandés): el tiempo cambia en minutos."
   - "App Gas Map Iceland para gasolineras más baratas."
   - "Diamond Beach y Jökulsárlón están separadas por la Ring Road: son dos sitios distintos, cruzar con cuidado."

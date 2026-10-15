@@ -19,6 +19,21 @@ export const HoursSchema = z.object({
   verified_at: z.string(),
 }).strict()
 
+// The exact Google Maps place card for a stop (e.g. a named car park), when a
+// bare coordinate pin is not good enough. Google hosts only.
+const GoogleMapsUrl = z.string().url().refine(
+  (url) => /^https:\/\/(maps\.google\.com|www\.google\.com\/maps)\b/.test(url),
+  { message: 'maps_url debe ser un enlace de Google Maps' },
+)
+
+// A free car park next to a paid one (Kvernufoss: the Skógar museum's). The
+// card highlights it beside the price, with its own map card.
+export const FreeNearbySchema = z.object({
+  label: z.string(),
+  maps_url: GoogleMapsUrl.optional(),
+  verified_at: z.string(),
+}).strict()
+
 // Car park price; 0 means free. Sensitive, so it always carries its check date.
 export const ParkingSchema = z.object({
   price: z.number().min(0),
@@ -28,6 +43,7 @@ export const ParkingSchema = z.object({
   // place_id of the place whose car park (and ticket) this one shares, e.g.
   // Gljúfrafoss with Seljalandsfoss: the card says "Incluido con …".
   shared_with: z.string().optional(),
+  free_nearby: FreeNearbySchema.optional(),
   verified_at: z.string(),
 }).strict()
 
@@ -41,13 +57,6 @@ export const FacilitiesSchema = z.object({
   electricity: z.boolean().optional(),
   verified_at: z.string(),
 }).strict()
-
-// The exact Google Maps place card for a stop (e.g. a named car park), when a
-// bare coordinate pin is not good enough. Google hosts only.
-const GoogleMapsUrl = z.string().url().refine(
-  (url) => /^https:\/\/(maps\.google\.com|www\.google\.com\/maps)\b/.test(url),
-  { message: 'maps_url debe ser un enlace de Google Maps' },
-)
 
 export const PlaceSourceSchema = z.object({
   place_id: z.string(),

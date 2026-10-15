@@ -131,9 +131,11 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    height: 4.5rem;
-    margin-top: -4.5rem;
-    padding-bottom: var(--space-sm);
+    // The pill clears the home indicator while the sheet rests on the bottom
+    // edge (env() is 0 where there is none, and on the desktop card).
+    height: calc(4.5rem + env(safe-area-inset-bottom));
+    margin-top: calc(-4.5rem - env(safe-area-inset-bottom));
+    padding-bottom: calc(var(--space-sm) + env(safe-area-inset-bottom));
     background: linear-gradient(to bottom, transparent, var(--color-bg) 70%);
     text-decoration: none;
     pointer-events: none;

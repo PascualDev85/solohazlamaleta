@@ -40,6 +40,8 @@ coverage/
 # Playwright
 test-results/
 playwright-report/
+# Capturas de scripts/ui-devices.ts (artefacto de la CI)
+ui-devices/
 
 # Skills de terceros — reproducibles desde skills-lock.json con:
 #   npx -y skills experimental_install
