@@ -109,7 +109,7 @@
   notes: "Subir por las escaleras de la derecha para el mirador superior."
 
 - place_id: jokulsarlon
-  name: Laguna Glaciar Jökulsárlón y Diamond Beach
+  name: "Jökulsárlón"
   destination: islandia
   lat: 64.0481
   lng: -16.1796
@@ -129,6 +129,7 @@
 
 - place_id: vestrahorn
   name: Vestrahorn y Stokksnes
+  short_name: "Vestrahorn"
   destination: islandia
   lat: 64.2448
   lng: -14.9836
@@ -144,7 +145,7 @@
     close: "22:00"
     verified_at: 2025-09-16
   description: "Macizo montañoso de picos afilados junto a la península de Stokksnes, en el sureste de Islandia. Un clásico de la fotografía de paisaje en Islandia, con dunas de arena negra, el reflejo de la montaña en el agua y, hacia el sur, una playa con el esqueleto de una ballena donde a veces se avistan focas."
-  notes: "El asentamiento vikingo es de atrezo de película. Uno de los paisajes más fotografiados de Islandia."
+  notes: "El asentamiento vikingo es de atrezo de película. Se entra por el recinto del Viking Café, donde se paga la entrada."
 
 - place_id: godafoss
   name: Goðafoss
@@ -177,7 +178,8 @@
   notes: "Capital del norte de Islandia, al fondo del fiordo Eyjafjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hauganes
-  name: Avistamiento de ballenas en Hauganes
+  name: "Ballenas en Hauganes"
+  short_name: "Hauganes"
   destination: islandia
   lat: 65.8973
   lng: -18.4166
@@ -194,8 +196,8 @@
   lng: -18.6667
   type: monument
   verified_at: 2025-09-20
-  description: "Cascada en la zona de Héðinsfjörður, en la ruta por los túneles de montaña hacia Siglufjörður."
-  notes: "Se ve bien desde un terraplén junto a la carretera, sin necesidad de bajar; si apetece, se puede bajar para verla más de cerca. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Cascada que cae por un acantilado hacia el mar en la costa oeste del fiordo de Eyjafjörður, entre Dalvík y Ólafsfjörður, en la península de Tröllaskagi."
+  notes: "Junto a la carretera 82 (Ólafsfjarðarvegur), de camino a los túneles hacia Ólafsfjörður y Siglufjörður. Se ve bien desde un terraplén junto a la carretera, sin necesidad de bajar; si apetece, se puede bajar para verla más de cerca. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: siglufjordur
   name: Siglufjörður
@@ -204,8 +206,8 @@
   lng: -18.9100
   type: area
   verified_at: 2025-09-20
-  description: "Antiguo pueblo arenquero en el extremo norte de la península de Tröllaskagi, accesible por túneles excavados en la montaña."
-  notes: "Antiguo pueblo arenquero en el extremo norte de la península de Tröllaskagi, accesible por túneles. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  description: "Pueblo pesquero en el extremo norte de la península de Tröllaskagi, antiguo centro de la industria del arenque en Islandia."
+  notes: "Se llega por los túneles de montaña desde Ólafsfjörður o por la carretera 76 desde Skagafjörður. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: grafarkirkja
   name: Grafarkirkja
@@ -219,11 +221,12 @@
     currency: ISK
     notes: "Gratuito, pero actualmente cerrada por dentro."
     verified_at: 2025-09-21
-  description: "Una de las iglesias de turba más antiguas de Islandia, en la península de Höfðaströnd, en el norte del país."
-  notes: "Pequeña iglesia de turba, una de las más antiguas de Islandia, en la península de Höfðaströnd. Muy paisajística, con techo de césped. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Pequeña iglesia de turba del siglo XVII en Höfðaströnd, en la orilla oriental de Skagafjörður, considerada la iglesia más antigua que se conserva en Islandia."
+  notes: "Junto a la carretera 76, unos kilómetros al sur de Hofsós; se llega a pie desde un pequeño aparcamiento por un camino corto. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: glaumbaer
-  name: Glaumbær Farm
+  name: "Granja de Glaumbær"
+  short_name: "Glaumbær"
   destination: islandia
   lat: 65.5375
   lng: -19.5000
@@ -239,10 +242,11 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Granja tradicional de turba convertida en museo etnográfico, en la región de Skagafjörður."
-  notes: "Museo etnográfico en una granja tradicional de turba en Skagafjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Junto a la carretera 75, entre Varmahlíð y Sauðárkrókur. Las casas de turba solo se visitan por dentro en horario de museo; fuera de ese horario se puede recorrer el exterior. Parking gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: vidimyrarkirkja
   name: Víðimýrarkirkja
+  short_name: "Víðimýri"
   destination: islandia
   lat: 65.4200
   lng: -19.4200
@@ -257,11 +261,12 @@
     price: 0
     currency: ISK
     verified_at: 2026-10-04
-  description: "Iglesia de turba construida en 1834, una de las mejor conservadas de Islandia."
-  notes: "Iglesia de turba de 1834, una de las mejor conservadas de Islandia. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  description: "Iglesia de turba construida en 1834 y custodiada por el Museo Nacional de Islandia, junto a Varmahlíð, en Skagafjörður."
+  notes: "A pie de la Ring Road, a la altura de Varmahlíð, con parking gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: kolugljufur
   name: Cañón de Kolugljúfur
+  short_name: "Kolugljúfur"
   destination: islandia
   lat: 65.3800
   lng: -20.6700
@@ -277,7 +282,7 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Cañón excavado por el río Víðidalsá, con varias cascadas a lo largo de su recorrido, en el norte de Islandia."
-  notes: "Cañón excavado por el río Víðidalsá, con varias cascadas. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Desvío de unos 6 km desde la Ring Road por la carretera 715, hasta el puente sobre el cañón; se recorre a pie por las orillas. Parking gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: kolgrafarfjordur
   name: Kolgrafarfjörður
@@ -287,10 +292,11 @@
   type: area
   verified_at: 2025-09-21
   description: "Fiordo en la costa norte de la península de Snæfellsnes."
-  notes: "Fiordo en la costa norte de la península de Snæfellsnes, de camino a Grundarfjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "La carretera 54 cruza el fiordo por un puente-dique, de camino a Grundarfjörður; la parada es el aparcamiento junto al puente. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: kirkjufell
   name: Mirador de Kirkjufell
+  short_name: "Kirkjufell"
   destination: islandia
   lat: 64.9377
   lng: -23.3084
@@ -305,8 +311,8 @@
     price: 1400
     currency: ISK
     verified_at: 2026-10-04
-  description: "Montaña de forma cónica junto a la costa norte de Snæfellsnes, una de las más fotografiadas de Islandia, especialmente junto a la cascada cercana de Kirkjufellsfoss."
-  notes: "La montaña más fotografiada de Islandia, junto a la cascada Kirkjufellsfoss, cerca de Grundarfjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  description: "Montaña de forma cónica junto a la costa norte de Snæfellsnes, cerca de Grundarfjörður, con la cascada Kirkjufellsfoss a sus pies."
+  notes: "Junto a la carretera 54, a la salida de Grundarfjörður hacia Ólafsvík. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: olafsvik
   name: Ólafsvík
@@ -316,10 +322,11 @@
   type: area
   verified_at: 2025-09-22
   description: "Pueblo pesquero en la costa norte de la península de Snæfellsnes."
-  notes: "Pueblo pesquero en la costa norte de la península de Snæfellsnes. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Aparcamiento gratuito en el pueblo, que se recorre a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: djupalonssandur
   name: Playa de Djúpalónssandur
+  short_name: "Djúpalónssandur"
   destination: islandia
   lat: 64.7642
   lng: -23.9066
@@ -335,7 +342,7 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio pesquero y piedras tradicionales usadas antiguamente para medir la fuerza de los pescadores. Junto a la playa de Dritvik."
-  notes: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio y piedras de fuerza tradicionales. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Desde el aparcamiento gratuito se baja a pie a la playa; un sendero corto por el acantilado lleva a la vecina playa de Dritvík. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: londrangar
   name: Londrangar
@@ -345,10 +352,11 @@
   type: viewpoint
   verified_at: 2025-09-22
   description: "Dos formaciones rocosas volcánicas junto al mar, restos erosionados de un antiguo cráter, en la costa sur de la península de Snæfellsnes."
-  notes: "Aparcamiento y mirador de dos formaciones rocosas volcánicas junto al mar. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se ven desde un mirador a pocos minutos a pie del aparcamiento, que es gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hellnar
   name: Mirador de Hellnar
+  short_name: "Hellnar"
   destination: islandia
   lat: 64.7527
   lng: -23.6674
@@ -364,7 +372,7 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Pequeño asentamiento costero con acantilados y colonias de aves marinas, unido a Arnarstapi por un sendero costero."
-  notes: "Pequeño pueblo con acantilados y colonias de aves marinas, a unos 2,5 km a pie de Arnarstapi por el sendero costero, en la costa sur de Snæfellsnes. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "A unos 2,5 km a pie de Arnarstapi por el sendero costero; también se llega en coche, con aparcamiento gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: arnarstapi
   name: Arnarstapi
@@ -387,6 +395,7 @@
 
 - place_id: raudfeldsgja
   name: Garganta de Rauðfeldsgjá
+  short_name: "Rauðfeldsgjá"
   destination: islandia
   lat: 64.7690
   lng: -23.5850
@@ -402,7 +411,7 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Grieta estrecha en la montaña con un arroyo en el fondo, cerca de Arnarstapi."
-  notes: "Grieta estrecha en la montaña que se puede recorrer a pie, cerca de Arnarstapi. Lleva agua en el fondo, calzado adecuado necesario. La entrada hacia el interior de la montaña es muy fotogénica, con una pequeña cascada dentro que no se puede ascender. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se entra a pie desde el aparcamiento por el cauce de un arroyo, así que hace falta calzado adecuado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: budakirkja
   name: Búðakirkja
@@ -421,7 +430,7 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Iglesia negra de madera construida en 1848, junto al pueblo de Búðir, en la costa sur de la península de Snæfellsnes. Junto a ella hay un cementerio paseable y un sendero que lleva hasta la playa."
-  notes: "Iglesia negra de madera de 1848 junto al pueblo de Búðir. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Aparcamiento gratuito junto a la iglesia. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: reykjavik
   name: Reikiavik
@@ -441,14 +450,15 @@
   notes: "Aparcamiento gratuito en Perlan, al sur de la ciudad; el centro queda a unos 2 km a pie. En el centro hay calles donde se puede aparcar y parkings de pago."
 
 - place_id: trekking_glaciar_svinafellsjokull
-  name: "Trekking en el glaciar Svínafellsjökull"
+  name: "Trekking en Svínafellsjökull"
+  short_name: "Trekking en el glaciar"
   destination: islandia
   lat: 64.0114
   lng: -16.8800
   type: activity
   verified_at: 2025-09-15
-  description: "Excursión guiada con crampones sobre la lengua glaciar de Svínafellsjökull, una de las salidas del casquete Vatnajökull, el más extenso de Europa."
-  notes: "Excursión guiada de 5 horas sobre la lengua glaciar de Svínafellsjökull, en el Parque Nacional de Vatnajökull. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Excursión guiada con crampones sobre la lengua glaciar de Svínafellsjökull, una de las salidas del casquete Vatnajökull, en el Parque Nacional de Vatnajökull."
+  notes: "Se contrata con un operador; el punto de encuentro y la duración dependen de la excursión elegida (la del autor fue de unas 6 horas, con base cerca de Skaftafell). Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: svartifoss
   name: Svartifoss
@@ -459,7 +469,7 @@
   type: monument
   verified_at: 2025-09-15
   description: "Cascada del Parque Nacional de Vatnajökull, en la zona de Skaftafell, enmarcada por columnas de basalto negro de formación hexagonal."
-  notes: "Cascada rodeada de columnas de basalto negro, en el área de Skaftafell. Se llega con una excursión corta a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se llega a pie desde el aparcamiento de Skaftafell por el sendero señalizado S2, en subida, pasando por Hundafoss. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: svinafellsjokull
   name: Svínafellsjökull
@@ -469,10 +479,11 @@
   type: viewpoint
   verified_at: 2025-09-15
   description: "Lengua del glaciar Vatnajökull, con un mirador en la zona de Skaftafell."
-  notes: "Visible desde el aparcamiento sin necesidad de excursión guiada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se ve desde el aparcamiento, sin necesidad de excursión guiada; el mirador queda a unos 5 minutos a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: mulagljufur
   name: "Cañón de Múlagljúfur"
+  short_name: "Múlagljúfur"
   destination: islandia
   lat: 63.9719
   lng: -16.3755
@@ -488,10 +499,11 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Cañón junto al glaciar Öræfajökull, con vistas al valle y a la lengua glaciar."
-  notes: "Cañón poco transitado cerca de Fjallsárlón, con vistas al glaciar. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se recorre a pie desde el aparcamiento: hasta los miradores sobre el cañón son unos 45 minutos de ida y otros tantos de vuelta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: fjallsarlon
   name: Laguna Glaciar Fjallsárlón
+  short_name: "Fjallsárlón"
   destination: islandia
   lat: 64.0206
   lng: -16.3799
@@ -507,17 +519,18 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Laguna glaciar alimentada por Fjallsjökull, una salida del Vatnajökull. Más pequeña y menos concurrida que Jökulsárlón, a pocos kilómetros de distancia."
-  notes: "Laguna glaciar más pequeña y tranquila que Jökulsárlón, a pocos minutos en coche. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "A unos 12 minutos en coche de Jökulsárlón por la Ring Road. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: eystrahorn
-  name: "Eystrahorn (Silla Roja / Red Chair)"
+  name: "Eystrahorn (Silla Roja)"
+  short_name: "Eystrahorn"
   destination: islandia
   lat: 64.3028
   lng: -14.8350
   type: monument
   verified_at: 2025-09-16
   description: "Montaña en el extremo sureste de Islandia, junto a la Ring Road, con una silla gigante de color rojo que le da el apodo de \"silla roja\" (Red Chair) y desde la que se contempla el paisaje."
-  notes: "Montaña y playa de guijarros negros junto a la carretera. Parada rápida, muy cerca de la carretera. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Parada rápida junto a la Ring Road, con aparcamiento gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: thjodvegur_renos
   name: "Þjóðvegur (zona de renos)"
@@ -526,7 +539,8 @@
   lng: -14.6500
   type: viewpoint
   verified_at: 2025-09-16
-  notes: "Tramo de la Ring Road en el sureste donde es habitual avistar manadas de renos salvajes, la única población de renos de Islandia. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Tramo de la Ring Road en el sureste de Islandia por el que se mueven manadas de renos salvajes, presentes en Islandia solo en el este del país."
+  notes: "No es una parada en sí: el avistamiento no está garantizado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: laekjavik
   name: Lækjavík
@@ -535,7 +549,8 @@
   lng: -14.3500
   type: area
   verified_at: 2025-09-16
-  notes: "Cala de guijarros poco conocida cerca de Djúpivogur. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Cala de playa negra con una roca en el mar, cerca de Djúpivogur."
+  notes: "Mirador con aparcamiento gratuito junto a la carretera. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: djupavogskorin
   name: Djúpavogskörin
@@ -544,7 +559,8 @@
   lng: -14.2800
   type: viewpoint
   verified_at: 2025-09-16
-  notes: "Formaciones rocosas junto al mar cerca de Djúpivogur. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Poza de agua termal junto al mar, cerca de Djúpivogur."
+  notes: "Puede estar cerrada: conviene comprobarlo antes de desviarse. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: breiddalsvik
   name: Breiðdalsvík
@@ -554,7 +570,7 @@
   type: area
   verified_at: 2025-09-17
   description: "Pueblo pesquero en el fondo del fiordo de Breiðdalsvík, en el este de Islandia."
-  notes: "Pequeño pueblo pesquero del este de Islandia, al fondo del fiordo Breiðdalsvík. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Pequeño pueblo pesquero del este de Islandia, al fondo del fiordo Breiðdalsvík. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: stodvarfjordur
   name: Stöðvarfjörður
@@ -564,7 +580,7 @@
   type: area
   verified_at: 2025-09-17
   description: "Pueblo de pescadores del este de Islandia, conocido por Steinasafn Petru, un museo privado de minerales y piedras semipreciosas."
-  notes: "Pueblo de pescadores del este, conocido por el museo de minerales Petra. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Pueblo de pescadores del este, conocido por el museo de minerales Petra. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: reydarfjordur
   name: Reyðarfjörður
@@ -574,7 +590,7 @@
   type: area
   verified_at: 2025-09-17
   description: "Pueblo industrial en el fondo del fiordo de Reyðarfjörður, en el este de Islandia."
-  notes: "Pueblo industrial en el fondo del fiordo más largo del este de Islandia. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Pueblo industrial en el fondo del fiordo más largo del este de Islandia. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: fardagafoss
   name: Fardagafoss
@@ -621,11 +637,12 @@
   lng: -13.9558
   type: area
   verified_at: 2025-09-17
-  description: "Pueblo del este de Islandia construido alrededor de un fiordo estrecho, con arquitectura de principios del siglo XX y puerto de ferry hacia las Islas Feroe y Dinamarca. Su iglesia azul, Seyðisfjarðarkirkja, da nombre a la calle arcoíris pintada en el suelo que lleva hasta ella."
-  notes: "Pueblo del este con casas de colores y la calle arcoíris, puerto del ferry a Europa continental. Hay aparcamiento gratuito dentro del pueblo. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  description: "Pueblo del este de Islandia construido alrededor de un fiordo estrecho, con arquitectura de principios del siglo XX y puerto del ferry hacia las Islas Feroe y Dinamarca. Su iglesia azul, Seyðisfjarðarkirkja, está al final de la calle arcoíris pintada en el suelo."
+  notes: "Hay aparcamiento gratuito dentro del pueblo. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: vok_baths
   name: Vök Baths
+  short_name: "Vök"
   destination: islandia
   lat: 65.2667
   lng: -14.4000
@@ -641,7 +658,8 @@
   lng: -13.9833
   type: monument
   verified_at: 2025-09-17
-  notes: "Conjunto de cascadas en un valle cerca de Seyðisfjörður, se llega con una caminata. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Conjunto de cascadas en el valle de Vestdalur, a la entrada de Seyðisfjörður, con vistas al fiordo."
+  notes: "Se llega con una caminata corta, de unos 5 minutos desde el parking. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: rjukandifoss
   name: Rjúkandifoss
@@ -663,7 +681,8 @@
   notes: "Cascada escalonada bien visible desde la Ring Road en Jökuldalur. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: studlagil
-  name: "Cañón de Stuðlagil (lado este)"
+  name: "Stuðlagil (lado este)"
+  short_name: "Stuðlagil"
   destination: islandia
   lat: 65.3064
   lng: -15.5597
@@ -682,7 +701,8 @@
   notes: "Cañón de columnas de basalto, acceso desde el lado este sin cruzar el río — es el único de los dos lados desde el que se puede bajar al cañón (con cuidado); el otro lado solo permite verlo desde arriba. Ruta de unos 5 km, unos 45 minutos de ida y otros 45 de vuelta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: dettifoss_selfoss
-  name: "Dettifoss (lado oeste) y Selfoss"
+  name: "Dettifoss y Selfoss"
+  short_name: "Dettifoss"
   destination: islandia
   lat: 65.8142
   lng: -16.3833
@@ -697,7 +717,7 @@
     price: 0
     currency: ISK
     verified_at: 2026-10-04
-  description: "Dos cascadas del río Jökulsá á Fjöllum, en el Parque Nacional de Vatnajökull: Dettifoss, una de las cascadas más potentes de Europa, y Selfoss, río arriba, de menor tamaño. Accesibles juntas desde el lado oeste del cañón."
+  description: "Dos cascadas del río Jökulsá á Fjöllum, en el Parque Nacional de Vatnajökull: Dettifoss, de unos 100 m de ancho y 44 m de caída, y Selfoss, río arriba, más baja y ancha."
   notes: "Dettifoss tiene dos lados de acceso, oeste y este, con aparcamientos distintos y sin conexión directa entre ellos — no comparten parking. Desde el lado oeste (este place_id) se llega también a Selfoss, a poca distancia a pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: grjotagja
@@ -716,7 +736,7 @@
     price: 0
     currency: ISK
     verified_at: 2026-10-04
-  description: "Cueva de lava con una poza de agua termal en su interior, cerca del lago Mývatn. El baño está prohibido desde que las erupciones de Krafla elevaron la temperatura del agua."
+  description: "Cueva de lava con una poza de agua termal en su interior, cerca del lago Mývatn. Fue un lugar de baño hasta que las erupciones de Krafla (1975-1984) elevaron la temperatura del agua."
   notes: "Cueva de lava con agua termal, cerca de Mývatn. El baño está prohibido por la temperatura del agua. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hengifoss
@@ -726,10 +746,12 @@
   lng: -14.6167
   type: monument
   verified_at: 2025-09-18
-  notes: "Una de las cascadas más altas de Islandia, rodeada de capas de basalto y arcilla roja. Caminata de ida y vuelta de unas 2-3 horas. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Cascada de 128 m de caída en el río Hengifossá, sobre el lago Lagarfljót. Su pared muestra capas de basalto separadas por franjas de arcilla roja."
+  notes: "Caminata de ida y vuelta de unas 2-3 horas desde el aparcamiento, con subida continua; a mitad de camino se pasa junto a Litlanesfoss, con columnas de basalto. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: krafla_viti
   name: "Krafla (cráter Víti)"
+  short_name: "Krafla"
   destination: islandia
   lat: 65.7167
   lng: -16.7667
@@ -749,6 +771,7 @@
 
 - place_id: hverir_namafjall
   name: "Hverir / Námafjall"
+  short_name: "Hverir"
   destination: islandia
   lat: 65.6386
   lng: -16.8056
@@ -764,7 +787,10 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Área geotérmica de fumarolas y pozas de barro hirviendo, junto a la montaña Námafjall, cerca del lago Mývatn."
-  notes: "Área geotérmica con fumarolas y pozas de barro hirviendo, junto a la montaña Námafjall. Lugar agrupado (un solo place_id para una visita única, igual que jokulsarlon): al confirmar coordenadas, deben ser las del parking/punto de acceso común a Hverir y Námafjall, no las de uno solo de los dos, para que el marcador del mapa no quede desplazado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  # Grouped place (one place_id for a single visit, like jokulsarlon): once the author confirms the
+  # coordinates, use the car park / access point shared by Hverir and Námafjall, not one of the two, so
+  # the map marker is not off.
+  notes: "Área geotérmica con fumarolas y pozas de barro hirviendo, junto a la montaña Námafjall. Desde el aparcamiento de Hverir sale una ruta circular de unos 3 km que sube a Námafjall, con vistas a las fumarolas y a la caldera de Krafla. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hverfjall
   name: Hverfjall
@@ -805,7 +831,8 @@
   notes: "Campo de formaciones de lava con forma de castillos, varias rutas de senderismo señalizadas. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: myvatn_viewpoint
-  name: "Mirador panorámico del lago Mývatn"
+  name: "Mirador del lago Mývatn"
+  short_name: "Mývatn"
   destination: islandia
   lat: 65.6000
   lng: -17.0000
@@ -830,15 +857,18 @@
   lng: -16.7981
   type: viewpoint
   verified_at: 2025-09-19
-  notes: "Campo de lava activo con fumarolas, junto al área de Krafla. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Campo de lava y zona geotérmica al pie del volcán Krafla, con fumarolas, pozas de barro hirviendo y coladas de las erupciones de 1975-1984, los llamados fuegos de Krafla."
+  notes: "Recorrido circular completo de unos 45 minutos desde el aparcamiento, a un par de minutos en coche del cráter Víti. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: skutustadagigar
   name: "Pseudocráteres de Skútustaðagígar"
+  short_name: "Skútustaðagígar"
   destination: islandia
   lat: 65.5700
   lng: -17.0100
   type: viewpoint
   verified_at: 2025-09-19
+  description: "Grupo de pseudocráteres en la orilla sur del lago Mývatn, formados por explosiones de vapor cuando una colada de lava cubrió terreno encharcado. No son volcanes: no tienen conducto propio de magma."
   notes: "Grupo de pseudocráteres volcánicos junto al lago Mývatn, con sendero circular corto. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: glymur
@@ -849,7 +879,7 @@
   lng: -21.2567
   type: monument
   verified_at: 2025-09-23
-  description: "Una de las cascadas más altas de Islandia, en el fondo del fiordo de Hvalfjörður."
+  description: "Cascada del río Botnsá, con unos 198 metros de caída, en el fondo del fiordo de Hvalfjörður."
   notes: "Accesible solo a pie, por una ruta de montaña de 2-3 horas ida y vuelta hasta la base. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: reykjadalur
@@ -988,7 +1018,8 @@
   notes: "Parada corta de camino a Svartifoss, en la misma ruta señalizada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: raudafell
-  name: "Rauðafell mountain view point"
+  name: "Mirador de Rauðafell"
+  short_name: "Rauðafell"
   destination: islandia
   lat: 64.7500
   lng: -14.1500
@@ -1008,17 +1039,18 @@
   notes: "La época habitual de avistamiento de frailecillos es de abril a agosto aproximadamente; fuera de esas fechas no hay garantía de verlos. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: jardgangalaug
-  name: "Jarðgangalaug (poza termal)"
+  name: "Jarðgangalaug"
   destination: islandia
   lat: 65.6939
   lng: -18.0594
   type: activity
   verified_at: 2025-09-19
-  description: "Poza termal natural en el curso de un río que cae en una cascada de unos 15 metros hacia el mar, en el norte de Islandia. El agua es más caliente río arriba, cerca del nacimiento del manantial."
-  notes: "Aparcamiento muy limitado, en un apartadero de la carretera para pocos coches."
+  description: "Poza termal junto al fiordo Eyjafjörður, frente a Akureyri, en el curso de un arroyo de agua caliente que cae en una cascada de unos 15 metros hacia el mar."
+  notes: "Aparcamiento muy limitado, en un apartadero de la carretera para pocos coches. El agua está más caliente río arriba, cerca de donde brota, y más templada junto a la cascada."
 
 - place_id: svortuloft
   name: "Faro de Svörtuloft"
+  short_name: "Svörtuloft"
   destination: islandia
   lat: 64.8744
   lng: -24.0217
@@ -1038,6 +1070,7 @@
 
 - place_id: ytri_tunga
   name: "Playa de Ytri Tunga"
+  short_name: "Ytri Tunga"
   destination: islandia
   lat: 64.8056
   lng: -23.3017
@@ -1056,7 +1089,7 @@
   notes: "Tiene mesas de picnic. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: landbrotalaug
-  name: "Landbrotalaug (poza termal)"
+  name: "Landbrotalaug"
   destination: islandia
   lat: 64.7867
   lng: -22.8333
@@ -1076,12 +1109,13 @@
 
 - place_id: raudhals
   name: "Volcán Raudhals"
+  short_name: "Raudhals"
   destination: islandia
   lat: 64.842896
   lng: -22.236739
   type: viewpoint
   verified_at: 2025-09-22
-  description: "Paisaje volcánico poco conocido en el sur de Islandia, de aspecto lunar."
+  description: "Paisaje volcánico poco conocido en el oeste de Islandia, al sur de la península de Snæfellsnes, de aspecto lunar."
   notes: "Parada poco frecuentada."
 
 - place_id: thorufoss
@@ -1191,7 +1225,7 @@
   notes: "Tjaldsvæðið í Svínafelli. Camping muy amplio en Svínafell, a 12 minutos de Skaftafell. 4 duchas interiores y 2 exteriores de agua caliente sin límite de tiempo, 4 baños, sala común amplia con muchas mesas, 4 fuegos para cocinar, utensilios, 3 fregaderos y nevera. Lavandería aparte (lavadora y secadora), 1.800 ISK. Abierto de mayo a septiembre."
 
 - place_id: camp_skaftafell
-  name: "Skaftafell Campground"
+  name: "Camping Skaftafell"
   short_name: "Camping Skaftafell"
   destination: islandia
   lat: 64.016287
@@ -1212,7 +1246,7 @@
   notes: "Camping del Parque Nacional de Vatnajökull, junto al centro de visitantes y con salida directa a las rutas al glaciar y a Svartifoss. 8 duchas interiores de agua caliente sin límite de tiempo, 2 baños (4 WC en el de mujeres, 3 en el de hombres), sin sala común, 4 fregaderos de agua caliente exteriores cubiertos. Lavandería incluida en el precio; detergente a la venta en el centro de visitantes (350 ISK)."
 
 - place_id: camp_laugar
-  name: "Laugar Camping"
+  name: "Camping Laugar"
   short_name: "Camping Laugar"
   destination: islandia
   lat: 65.72179
@@ -1232,7 +1266,7 @@
   notes: "Camping en Laugar (Reykjadalur, Þingeyjarsveit), junto al polideportivo. 4 duchas interiores de agua caliente sin límite de tiempo en un vestuario compartido (uno de hombres, otro de mujeres), 4 baños más 1 en el vestuario, sala común amplia con muchas mesas y sofá, vitrocerámica, utensilios, fregadero, tostadora, hervidores y nevera. Se paga por la noche, cuando pasa el encargado."
 
 - place_id: camp_systragil
-  name: "Systragil Camping Ground"
+  name: "Camping Systragil"
   short_name: "Camping Systragil"
   destination: islandia
   lat: 65.70654
@@ -1272,7 +1306,7 @@
   notes: "Camping en Laugarhvammur, cerca de Varmahlíð, junto a un río. 4 duchas de agua caliente sin límite de tiempo en la zona de la piscina, 4 baños, 2 salas comunes completas con vitrocerámica, utensilios, fregadero, horno y tostadora. Piscina pequeña de agua caliente y lavandería."
 
 - place_id: camp_hellissandur
-  name: "Hellissandur Camping"
+  name: "Camping Hellissandur"
   short_name: "Camping Hellissandur"
   destination: islandia
   lat: 64.9125
@@ -1292,7 +1326,7 @@
   notes: "Camping en un campo de lava a la entrada de Hellissandur (Útnesvegur 360). 2 duchas interiores de agua caliente sin límite de tiempo (2 de hombres, 2 de mujeres), 2 baños (2 de hombres, 2 de mujeres), sala común pequeña pero completa, 2 fregaderos cubiertos con agua caliente. Se paga por la noche, cuando pasa el guarda."
 
 - place_id: camp_mosskogar
-  name: "Mosskógar Camping"
+  name: "Camping Mosskógar"
   short_name: "Camping Mosskógar"
   destination: islandia
   lat: 64.179586
