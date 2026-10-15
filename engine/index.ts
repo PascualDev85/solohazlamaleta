@@ -10,3 +10,5 @@ export type {
   CompiledAccommodation, CompiledAccommodationZone, CompiledAccommodationPick,
   PlaceRegistry, AffiliateRegistry, AffiliateRegistryEntry,
 } from './types.ts'
+// Source types that src/ needs to name (src/ may import engine, never schemas).
+export type { BudgetItemSource, Facilities } from '../schemas/index.ts'

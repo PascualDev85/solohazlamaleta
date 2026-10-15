@@ -55,3 +55,5 @@ ui-devices/
 /shot*.mjs
 /probe.mjs
 /contrast.mjs
+# Capturas de escritorio antes/después (diseño de las secciones)
+ui-desktop/

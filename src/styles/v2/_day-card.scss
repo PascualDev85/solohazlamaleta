@@ -67,7 +67,6 @@
     color: #fff;
   }
 
-  // No photo: the same block on a glacier band, in normal flow.
   // No photo: the same block on a light, neutral ground (--day-placeholder,
   // set in _tokens.scss for light and dark), in normal flow and in the page's
   // own text colours, so it reads as a designed panel, not a missing image.
@@ -299,7 +298,8 @@
   }
 
   // The way through the day: the stops in order, in a line that wraps onto a
-  // second one when it has to (a third on a long day), never scrolls.
+  // second one when it has to (a third from seven route stops, a fourth from
+  // nine), never scrolls.
   .day-card__route {
     display: flex;
     flex-wrap: wrap;
@@ -315,16 +315,21 @@
       flex: none;
     }
 
+    // The arrow is drawn, not read: its alternative text is empty, so a
+    // screen reader says "Kvernufoss", not "flecha Kvernufoss". Browsers
+    // without the "/ alt" syntax keep the first declaration.
     li + li::before {
       content: "→";
+      content: "→" / "";
       margin-inline: 0.25em;
       font-weight: 600;
       color: rgb(255 255 255 / 0.7);
     }
   }
 
-  // One line each: the numbers of the day, then where it ends. On a narrow
-  // phone a line may wrap; nothing is ever cut off.
+  // One line each: the numbers of the day, then where it ends. From 350px
+  // the type scale below keeps each on one line; narrower, a line may wrap,
+  // but nothing is ever cut off.
   // Gaps and icons in em: when the type shrinks on a small phone (type scale
   // below), the whole line shrinks with it.
   .day-card__facts,
@@ -362,6 +367,7 @@
   // The night's campsite: a link to its card in "Dónde dormir", white like the
   // rest of the line, underlined so it reads as a link on the photo.
   .day-card__night-link {
+    position: relative;
     font-weight: 800;
     color: #fff;
     text-decoration-color: rgb(255 255 255 / 0.55);
@@ -369,6 +375,18 @@
 
     &:hover {
       text-decoration-color: #fff;
+    }
+
+    // An invisible layer makes the tap area 44px tall around a 19px line
+    // (WCAG 2.5.8 asks 24px; 44px is the recommended size). Same on the stop
+    // marks below: the target grows, the drawing does not. The insets are in
+    // % of the element itself, so the area is 46px (44 plus sub-pixel
+    // headroom) whatever the card's type scale, and never smaller than the
+    // element.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: min(0px, calc(50% - 23px)) 0;
     }
   }
 
@@ -476,10 +494,6 @@
     gap: var(--space-xs);
     align-items: baseline;
     padding-block: 0.6rem;
-
-    & + & {
-      border-top: 1px solid var(--color-border);
-    }
   }
 
   .day-stop__n {
@@ -567,10 +581,18 @@
     align-items: center;
     // Padding is the tap target; the negative block margin keeps the line
     // as tall as the text, so the time stays on the name's baseline.
+    position: relative;
     margin: -0.2rem 0 -0.2rem 0.05rem;
     padding: 0.2rem;
     border-radius: 50%;
     line-height: 0;
+
+    // 20px mark, 44×44 tap area.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: min(0px, calc(50% - 23px));
+    }
   }
 
   .day-stop__bubble {
@@ -669,8 +691,8 @@
   // then holds: on wider phones and on desktop the card is as wide as at 414px
   // and keeps the 414px sizes (it used to jump back to the larger base sizes,
   // and the night line wrapped at 448-480px). Down to 350px it shrinks so each
-  // line keeps its shape: the route in two rows at most (three on a long day,
-  // seven route stops or more), the facts, the night and each stop's name in
+  // line keeps its shape: the route in two rows at most (three from seven
+  // route stops, four from nine), the facts, the night and each stop's name in
   // one line. Measured on the real content (days 1 to 3) at 350, 360, 375, 390
   // and 414px: each formula passes through the largest size that fits at every
   // width.
@@ -724,6 +746,21 @@
     }
   }
 
+  // In forced colours the sign's blue and its masked P were painted over:
+  // keep the sign as it is, white on blue.
+  @media (forced-colors: active) {
+    .day-stop__p {
+      forced-color-adjust: none;
+    }
+
+    // The bubble's 92% dark ground became 92% Canvas with no edge: the text
+    // under it showed through. Opaque, with an outline, like a system popup.
+    .day-stop__bubble {
+      border: 1px solid CanvasText;
+      background: Canvas;
+    }
+  }
+
   // "/ 5 h" after a time-based price: lighter, so the figure leads.
   .day-stop__period {
     font-weight: 600;
@@ -738,6 +775,7 @@
   // A free car park next door: a small green-edged pill after the price with
   // a tiny info mark; tapping it opens the bubble saying where it is.
   .day-stop__free-nearby {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.3em;
@@ -752,9 +790,17 @@
       height: 0.95em;
       color: var(--color-positive);
     }
+
+    // 20px pill, 44px tall tap area.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: min(0px, calc(50% - 23px)) 0;
+    }
   }
 
   .day-stop__map {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.2rem;
@@ -765,6 +811,13 @@
     .section-icon {
       width: 1.1em;
       height: 1.1em;
+    }
+
+    // 17px line, 44px tall tap area.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: min(0px, calc(50% - 23px)) 0;
     }
   }
 

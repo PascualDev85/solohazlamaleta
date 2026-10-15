@@ -22,6 +22,11 @@ $section-icons: (
   "road": "M8.5 3 4.5 21 M15.5 3l4 18 M12 4v2.5 M12 10.5v3 M12 17.5V20",
   "wheel": "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z M12 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z M3.2 11 9.5 12 M20.8 11 14.5 12 M12 14.5V21",
   "info": "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z M12 11v5.5 M12 7.5v.01",
+  "plane": "M2.5 12.5 21 4l-5 17-4-6.5-9.5-2Z M12 14.5 21 4",
+  "doc": "M7 3h7l5 5v13H7V3Z M14 3v5h5 M9.5 13h5 M9.5 17h5",
+  "plug": "M9 3v5 M15 3v5 M6 8h12v4a6 6 0 0 1-12 0V8Z M12 18v3",
+  "bulb": "M9 18h6 M10 21h4 M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.3 1-1.8A6 6 0 0 0 12 3Z",
+  "check": "M5 12.5l4.5 4.5L19 7",
 );
 
 [data-design="v2"] .section-icon {
@@ -35,5 +40,17 @@ $section-icons: (
 @each $name, $d in $section-icons {
   [data-design="v2"] .section-icon[data-icon="#{$name}"] {
     --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='#{$d}'/%3E%3C/svg%3E");
+  }
+}
+
+// Forced colours (Windows high contrast) repaint every background, and these
+// icons are a background behind a mask: they vanished, the info mark on the
+// visit times with them. Opted out, they would keep their own colour (the
+// accent blue, unreadable on a dark system theme), so they are painted in the
+// system text colour instead.
+@media (forced-colors: active) {
+  [data-design="v2"] .section-icon {
+    forced-color-adjust: none;
+    background: CanvasText;
   }
 }

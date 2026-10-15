@@ -113,8 +113,10 @@
     line-height: 1.45;
     color: var(--color-text-muted);
 
+    // Read as a pause between stops, not as "flecha" (see _day-card.scss).
     span + span::before {
       content: "→";
+      content: "→" / ", ";
       margin-inline: 0.3em;
       color: var(--color-label);
     }

@@ -9,3 +9,12 @@ export function placeMapUrl(lat: number, lng: number): string {
   // ask, so the pin lands on the exact point instead of a nearby named place.
   return `https://www.google.com/maps/search/?api=1&query=${lat.toFixed(6)}%2C${lng.toFixed(6)}`
 }
+
+/**
+ * Where a place's "Mapa" link goes: the author's own Google Maps link when
+ * there is one (it opens the named place, with its reviews and photos),
+ * otherwise a pin on the coordinates.
+ */
+export function placeMapLink(place: { lat: number; lng: number; maps_url?: string }): string {
+  return place.maps_url ?? placeMapUrl(place.lat, place.lng)
+}

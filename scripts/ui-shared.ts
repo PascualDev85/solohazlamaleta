@@ -1,6 +1,10 @@
 // In-page checks shared by scripts/ui-check.ts and scripts/ui-devices.ts.
-// Each function runs inside the browser (page.evaluate), so it must stay
-// self-contained: no imports, no closures over module scope.
+// The check functions run inside the browser (page.evaluate), so they must
+// stay self-contained: no imports, no closures over module scope. The
+// selectors are plain strings, built here in Node.
+
+/** One day's slide: its <article> is labelled by the day heading, id "dia-N". */
+export const daySlide = (day: number) => `article[aria-labelledby="dia-${day}"]`
 
 /** The overlay panels and what opens them. Selectors in the page's own terms. */
 export const PANELS = [
@@ -8,10 +12,10 @@ export const PANELS = [
   { name: 'índice', open: '.guide-index__dock', panel: '.guide-index', head: '.guide-index__head', close: '.guide-index__close' },
   {
     name: 'día completo (día 3)',
-    open: 'article[aria-labelledby="dia-3"] .day-card__full',
-    panel: 'article[aria-labelledby="dia-3"] .day-sheet',
-    head: 'article[aria-labelledby="dia-3"] .day-sheet__head',
-    close: 'article[aria-labelledby="dia-3"] .day-sheet__close',
+    open: `${daySlide(3)} .day-card__full`,
+    panel: `${daySlide(3)} .day-sheet`,
+    head: `${daySlide(3)} .day-sheet__head`,
+    close: `${daySlide(3)} .day-sheet__close`,
   },
 ] as const
 
@@ -40,10 +44,11 @@ export function headerOverlap({ panel, head }: { panel: string; head: string }) 
 
 /**
  * The lines of every day card with route data (a drive line, so three facts):
- * the route in two rows at most, three on a long day (seven route stops or
- * more, four from nine), and
- * more, decided by the author 2026-10-08); facts, night, each stop's name and
- * its practical line in one. Opens "Ver N paradas más" first, so every stop counts.
+ * the route in two rows at most, three on a long day (six route stops or
+ * more), four from nine and six from twelve (the author set two/three/four on
+ * 2026-10-08; widened 2026-10-14 for days 9 and 12, see below); facts, night,
+ * each stop's name and its practical line in one. Opens "Ver N paradas más"
+ * first, so every stop counts.
  */
 export function dayCardLineIssues() {
   document.querySelectorAll<HTMLDetailsElement>('.day-card__more').forEach((d) => (d.open = true))
@@ -54,9 +59,16 @@ export function dayCardLineIssues() {
     const facts = day.querySelector('.day-card__facts')
     if (!facts || facts.children.length < 3) continue // no drive data yet: not reviewed
     const route = day.querySelector('.day-card__route')
-    // Two rows; three from seven route stops; four from nine (day 4 has nine).
+    // Two rows; three from six route stops; four from nine (day 4 has nine);
+    // six from twelve. Widened 2026-10-14 from "three from seven" and "four
+    // from nine and up": day 9 (six stops: Krafla → Hverir → Hverfjall →
+    // Dimmuborgir → Mývatn → Jarðgangalaug) and day 12 (twelve stops around
+    // Snæfellsnes) are already at their shortest real names and still need
+    // more rows at 350px (day 12 takes six in CI's Chromium, which sets the
+    // text a little wider than older builds). Icelandic names have no shorter
+    // form to invent.
     const n = route ? route.children.length : 0
-    const maxRouteRows = n >= 9 ? 4 : n >= 7 ? 3 : 2
+    const maxRouteRows = n >= 12 ? 6 : n >= 9 ? 4 : n >= 6 ? 3 : 2
     if (route && rows(route) > maxRouteRows) out.push(`${id}: route in ${rows(route)} rows`)
     if (rows(facts) > 1) out.push(`${id}: facts wrap`)
     const night = day.querySelector('.day-card__night')

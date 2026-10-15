@@ -1,5 +1,5 @@
-// Who travelled the route, how big it is and when it was last updated, said once
-// instead of per stop.
+// Who travelled the route and when the guide was last updated, said once
+// instead of per stop. No figures (1.12 §5): they are in the quick facts.
 [data-design="v2"] .trip-facts {
   padding-left: var(--space-md);
   border-left: 3px solid var(--color-accent);
