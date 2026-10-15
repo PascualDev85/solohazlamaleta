@@ -15,6 +15,7 @@ trabajo difícil. Tú solo haz la maleta."*
    - `docs/1.7_arquitectura.md` — principios de arquitectura
    - `docs/1.7.1_repository_domain.md` — estructura del repo y límites de módulos
    - `docs/1.7.2_data_contract.md` — tipos exactos, esquemas Zod y reglas de compilación
+   - `docs/1.13_guia_hub_satelites.md` — qué va en la guía, en el hub y en las satélites
    - `docs/redes.md` — estrategia de redes sociales
 
 ## Idioma
@@ -50,6 +51,9 @@ Lighthouse ≥ 95 · el build falla con una guía inválida.
 reducido: PDF, Mi viaje, pagos y adaptación siguen fuera. **Excepción al "sin
 mapa":** el mapa solo se permite en el sub-checkpoint C3.5, y únicamente cuando
 el autor haya confirmado las coordenadas. Hasta entonces sigue prohibido.
+**Desde el 15 de octubre, el hub `/islandia/` también entra**, con el reparto
+guía / hub / satélites de `docs/1.13_guia_hub_satelites.md`. Las satélites siguen
+fuera hasta que pasen la validación de su §7.
 
 ## Reglas duras — no hacer
 
