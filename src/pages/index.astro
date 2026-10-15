@@ -1,16 +1,22 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { GROUP_LABELS } from '../lib/guide';
 import '../styles/v1-components.scss';
+import { loadCompiledGuide } from '../lib/engine-guide.ts';
+import {
+  ENGINE_GUIDE_SOURCES, fromLegacyGuide, fromCompiledGuide, sortGuideList,
+} from '../lib/guide-list.ts';
 
-const guides = await getCollection('guides');
+const legacyGuides = await getCollection('guides');
+const engineGuides = await Promise.all(
+  ENGINE_GUIDE_SOURCES.map((source) => loadCompiledGuide(source.guide, source.places)),
+);
 
 /** Published guides first; drafts are listed but clearly marked. */
-const sorted = [...guides].sort((a, b) => {
-  if (a.data.meta.draft !== b.data.meta.draft) return a.data.meta.draft ? 1 : -1;
-  return b.data.meta.updatedAt.localeCompare(a.data.meta.updatedAt);
-});
+const sorted = sortGuideList([
+  ...legacyGuides.map((guide) => fromLegacyGuide(guide.id, guide.data)),
+  ...engineGuides.map(fromCompiledGuide),
+]);
 ---
 
 <BaseLayout
@@ -35,37 +41,30 @@ const sorted = [...guides].sort((a, b) => {
       <p>Todavía no hay guías publicadas.</p>
     ) : (
       <ul class="guide-list" aria-labelledby="guias">
-        {sorted.map((guide) => {
-          const { meta } = guide.data;
-          const trip = meta.tripDone;
+        {sorted.map((guide) => (
+          <li>
+            <a class="guide-list__item" href={guide.url}>
+              <p class="guide-list__meta">
+                <span>{guide.destination}</span>
+                <span>·</span>
+                <span>{guide.days.join(' · ')} días</span>
+                {guide.lived && <span class="badge badge--lived">Lo hicimos</span>}
+                {guide.draft && <span class="badge badge--adapted">Borrador</span>}
+              </p>
 
-          return (
-            <li>
-              <a class="guide-list__item" href={`/${meta.destination}/${guide.id}/`}>
-                <p class="guide-list__meta">
-                  <span>{meta.destination}</span>
-                  <span>·</span>
-                  <span>{meta.days.join(' · ')} días</span>
-                  {trip && <span class="badge badge--lived">Lo hicimos</span>}
-                  {meta.draft && <span class="badge badge--adapted">Borrador</span>}
+              <h3 class="guide-list__title">{guide.title}</h3>
+              <p class="guide-list__desc">{guide.description}</p>
+
+              {guide.livedNote && (
+                <p class="guide-list__desc">
+                  <small>{guide.livedNote}</small>
                 </p>
+              )}
 
-                <h3 class="guide-list__title">{meta.title}</h3>
-                <p class="guide-list__desc">{meta.description}</p>
-
-                {trip && (
-                  <p class="guide-list__desc">
-                    <small>
-                      {GROUP_LABELS[trip.group]} · {trip.season} de {trip.date.slice(0, 4)}
-                    </small>
-                  </p>
-                )}
-
-                <span class="guide-list__go">Ver la guía →</span>
-              </a>
-            </li>
-          );
-        })}
+              <span class="guide-list__go">Ver la guía →</span>
+            </a>
+          </li>
+        ))}
       </ul>
     )
   }
