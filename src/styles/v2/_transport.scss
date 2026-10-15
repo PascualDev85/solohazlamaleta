@@ -1,7 +1,7 @@
 @use "../abstracts" as *;
 
 // "Cómo llegamos y nos movimos": two steps, the flight and the road, each with
-// its icon on a thin line. A quiet kicker says which is which.
+// its icon. A quiet kicker says which is which.
 [data-design="v2"] .transport {
   &__steps {
     display: grid;
@@ -12,21 +12,9 @@
   }
 
   &__step {
-    position: relative;
     display: grid;
     grid-template-columns: 2.5rem minmax(0, 1fr);
     gap: var(--space-sm);
-
-    // The line joining one step to the next.
-    & + &::before {
-      content: "";
-      position: absolute;
-      top: calc(-1 * var(--space-md));
-      left: 1.25rem;
-      width: 2px;
-      height: var(--space-md);
-      background: var(--color-rule);
-    }
   }
 
   &__icon {

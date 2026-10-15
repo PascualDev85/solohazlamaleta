@@ -30,7 +30,6 @@
   .trip-facts,
   .guide-index,
   .quick-facts,
-  .guide__stop-meta,
   .guide__verified {
     font-family: var(--font-display);
   }
@@ -42,12 +41,6 @@
 
   h3 {
     font-size: var(--step-1);
-  }
-
-  h4 {
-    font-family: var(--font-display);
-    font-weight: 800;
-    color: var(--color-label);
   }
 
   strong {

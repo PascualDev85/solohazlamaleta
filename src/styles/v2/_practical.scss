@@ -93,7 +93,23 @@
 
   &__tips {
     display: grid;
-    gap: var(--space-xs);
+    gap: var(--space-xs) var(--space-lg);
     padding-left: 1.1rem;
+  }
+
+  // Desktop: documents down the left, plugs and apps stacked on the right,
+  // tips across the full width with their items two by two.
+  @include from("md") {
+    &__card:first-child {
+      grid-row: span 2;
+    }
+
+    &__card:last-child {
+      grid-column: 1 / -1;
+    }
+
+    &__tips {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 }
