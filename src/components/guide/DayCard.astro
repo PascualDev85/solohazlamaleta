@@ -4,6 +4,7 @@ import { formatMinutes } from '../../lib/formatDuration.ts';
 import { minutesOnRoute, roundToHour } from '../../lib/dayTime.ts';
 import { campsiteAnchorId, dayAnchorId } from '../../lib/anchors.ts';
 import { guideImage } from '../../lib/guide-images.ts';
+import { nightLabel } from '../../lib/nightLabel.ts';
 import { shortName } from '../../lib/placeName.ts';
 import GuidePhoto from './GuidePhoto.astro';
 import SectionIcon from './SectionIcon.astro';
@@ -36,8 +37,7 @@ const hasFullDay =
   experiences.length > 0 || skipped.length > 0 || Boolean(nightNote) || Boolean(day.our_take) || Boolean(day.plan_b);
 // The night links to its campsite card in "Dónde dormir"; null is a night outside any campsite.
 const overnight = day.overnight;
-const outsideCampsite = overnight === null;
-const nightLabel = overnight ? shortName(overnight) : outsideCampsite ? 'Fuera de camping' : undefined;
+const nightText = nightLabel(overnight);
 const overnightHref = overnight ? `#${campsiteAnchorId(overnight.place_id)}` : undefined;
 ---
 
@@ -90,23 +90,23 @@ const overnightHref = overnight ? `#${campsiteAnchorId(overnight.place_id)}` : u
         </ul>
 
         {/* Second line: the whole day door to door, then where it ends. */}
-        {(onRouteLabel || nightLabel) && (
+        {(onRouteLabel || nightText) && (
           <p class="day-card__night">
             {onRouteLabel && (
               <span class="day-card__fact">
                 <SectionIcon name="clock" />≈ {onRouteLabel} en ruta
               </span>
             )}
-            {nightLabel && (
+            {nightText && (
               <span class="day-card__fact day-card__fact--night">
                 <SectionIcon name="tent" />
                 <span class="day-card__night-label">Noche</span>
                 <span class="day-card__arrow" aria-hidden="true">→</span>
                 <span class="visually-hidden">: </span>
                 {overnightHref ? (
-                  <a class="day-card__night-link" href={overnightHref}>{nightLabel}</a>
+                  <a class="day-card__night-link" href={overnightHref}>{nightText}</a>
                 ) : (
-                  <strong>{nightLabel}</strong>
+                  <strong>{nightText}</strong>
                 )}
               </span>
             )}
@@ -192,7 +192,7 @@ const overnightHref = overnight ? `#${campsiteAnchorId(overnight.place_id)}` : u
           {nightNote && (
             <section class="day-sheet__block" aria-labelledby={`${sheetId}-night`}>
               <h3 id={`${sheetId}-night`}>La noche</h3>
-              {nightLabel && <p class="day-sheet__place">{nightLabel}</p>}
+              {nightText && <p class="day-sheet__place">{nightText}</p>}
               <p>{nightNote}</p>
             </section>
           )}

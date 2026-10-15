@@ -1,7 +1,7 @@
 ---
 import type { CompiledDay } from '../../../engine/index.ts';
 import { dayAnchorId } from '../../lib/anchors.ts';
-import { shortName } from '../../lib/placeName.ts';
+import { nightLabel } from '../../lib/nightLabel.ts';
 import DayCard from './DayCard.astro';
 import SectionIcon from './SectionIcon.astro';
 
@@ -95,13 +95,10 @@ const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
                   {day.route_line.map((name) => <span>{name}</span>)}
                 </span>
               )}
-              {day.overnight && (
+              {nightLabel(day.overnight) && (
                 <span class="route-glance__night">
-                  <SectionIcon name="tent" />{shortName(day.overnight)}
+                  <SectionIcon name="tent" />{nightLabel(day.overnight)}
                 </span>
-              )}
-              {day.overnight === null && (
-                <span class="route-glance__night"><SectionIcon name="tent" />Fuera de camping</span>
               )}
             </span>
           </a>
