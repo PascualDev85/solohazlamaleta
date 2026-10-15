@@ -1,5 +1,5 @@
-import type { BudgetItemSource } from '../../schemas/index.ts'
 import { applyBasis } from '../../engine/index.ts'
+import type { BudgetItemSource } from '../../engine/index.ts'
 
 export interface BudgetRow {
   label: string
