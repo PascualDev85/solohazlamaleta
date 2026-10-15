@@ -1,0 +1,322 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadCompiledGuide } from '../../lib/engine-guide.ts';
+import { formatDate } from '../../lib/formatDate.ts';
+import { formatWholePrice } from '../../lib/formatPrice.ts';
+import { splitDetail } from '../../lib/splitDetail.ts';
+import { whatToSeeByDay } from '../../lib/whatToSee.ts';
+import { guideImage } from '../../lib/guide-images.ts';
+import TrustBlock from '../../components/guide/TrustBlock.astro';
+import GuideIndex from '../../components/guide/GuideIndex.astro';
+import GuidePhoto from '../../components/guide/GuidePhoto.astro';
+import Breadcrumb from '../../components/guide/Breadcrumb.astro';
+import SectionTitle from '../../components/guide/SectionTitle.astro';
+import SectionIcon from '../../components/guide/SectionIcon.astro';
+import HubFacts from '../../components/hub/HubFacts.astro';
+import StartHere from '../../components/hub/StartHere.astro';
+import WhatToSee from '../../components/hub/WhatToSee.astro';
+import { getImage } from 'astro:assets';
+import '../../styles/hub-v2.scss';
+
+const PLACES = 'content/places/islandia.yaml';
+
+// The destination hub (1.13 §6): a guide of type hub. Everything it shows of
+// a route (the card, "Qué ver", the budget) is derived from the guides it
+// lists in `related`, never written in the hub.
+const hub = await loadCompiledGuide('content/guides/islandia/islandia.yaml', PLACES);
+const guides = await Promise.all(
+  (hub.related ?? []).map((slug) => loadCompiledGuide(`content/guides/${hub.destination}/${slug}.yaml`, PLACES)),
+);
+// "Empieza aquí": the first related guide is the way in.
+const mainGuide = guides[0];
+const mainVariant = mainGuide?.variants?.[0];
+const mainGuideUrl = mainGuide ? `/${mainGuide.destination}/${mainGuide.slug}/` : undefined;
+
+// Who travelled the route. No model field for it, as on the guide page.
+const travelerNames = 'David y Natalia';
+
+// The hub's own line (summary.tagline), two lines like the guide's (1.12 §4).
+const [taglineLead, ...taglineRest] = hub.summary.tagline.split('\n');
+const taglineMore = taglineRest.join(' ');
+
+const cover = guideImage(hub.cover_image);
+// Temporary, as on the guide: the model has no alt for cover_image yet. This
+// is the alt of the same photo on day 2 of the guide.
+const coverAlt = 'Cascada de Gullfoss en dos saltos, con nubes oscuras y gente en el mirador de la izquierda';
+const ogImage = await getImage({ src: cover, width: 1200, format: 'jpg', quality: 70 });
+// The guide's cover and its alt (hard-coded on the guide page too).
+const mainCoverAlt =
+  'Cascada de Gljúfrafoss dentro de una grieta cubierta de musgo, con una persona agachada y los brazos abiertos frente al agua';
+
+const tripMonth = hub.trip_done ? formatDate(hub.trip_done) : undefined;
+const capitalized = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+
+const seeGroups = mainVariant && mainGuideUrl ? whatToSeeByDay(mainVariant.days, mainGuideUrl) : [];
+const seeCount = seeGroups.reduce((sum, group) => sum + group.places.length, 0);
+
+const mainBudget = mainGuide?.summary.budget_per_person;
+const mainCurrency = mainGuide?.budget?.currency ?? 'EUR';
+const mainDays = mainVariant?.days.length;
+
+const currency = hub.practical?.currency;
+const localTransport = hub.transport?.local ?? [];
+
+// One source for "does this section render" (1.11 §9: no empty sections),
+// read by the index and by the sections below.
+const show = {
+  guide: Boolean(mainGuide && mainGuideUrl),
+  see: seeGroups.length > 0,
+  when: (hub.when_to_go?.length ?? 0) > 0,
+  practical: Boolean(hub.practical),
+  moving: localTransport.length > 0,
+  faq: (hub.faq?.length ?? 0) > 0,
+};
+
+const indexSections = [
+  { id: 'nuestra-guia', label: 'Nuestra guía', icon: 'route', visible: show.guide },
+  { id: 'que-ver', label: 'Qué ver', icon: 'pin', visible: show.see },
+  { id: 'cuando-ir', label: 'Cuándo ir', icon: 'booking', visible: show.when },
+  { id: 'practico', label: 'Lo práctico', icon: 'practical', visible: show.practical },
+  { id: 'moverse', label: 'Cómo moverse', icon: 'transport', visible: show.moving },
+  { id: 'faq', label: 'Preguntas sobre Islandia', icon: 'faq', visible: show.faq },
+].filter((section) => section.visible);
+
+// Each quick fact links to where it is told in full.
+const facts = [
+  tripMonth && show.when && {
+    icon: 'booking', label: 'Cuándo fuimos', value: capitalized(tripMonth),
+    href: '#cuando-ir', linkLabel: 'Lo que encontramos',
+  },
+  currency && show.practical && {
+    icon: 'wallet', label: 'Moneda', value: currency.name, note: currency.code,
+    href: '#practico', linkLabel: 'Tarjeta o efectivo',
+  },
+  mainBudget != null && mainGuideUrl && {
+    icon: 'budget', label: 'Presupuesto', value: formatWholePrice(mainBudget, mainCurrency), unit: '/pers.',
+    note: mainDays ? `Nuestra ruta de ${mainDays} días` : undefined,
+    href: `${mainGuideUrl}#presupuesto`, linkLabel: 'Ver desglose',
+  },
+  hub.summary.getting_around && show.moving && {
+    icon: 'transport', label: 'Cómo moverse', value: hub.summary.getting_around,
+    href: '#moverse', linkLabel: 'Lo que sabemos',
+  },
+].filter((fact) => Boolean(fact)) as {
+  icon: string; label: string; value: string; unit?: string; note?: string; href: string; linkLabel: string;
+}[];
+
+const startFacts = [
+  mainDays && `${mainDays} días`,
+  mainBudget != null && `${formatWholePrice(mainBudget, mainCurrency)}/pers.`,
+  mainGuide?.summary.getting_around?.replaceAll('**', ''),
+].filter((fact): fact is string => Boolean(fact));
+const mainLived =
+  mainGuide?.has_experience && mainGuide.trip_done ? `Lo hicimos · ${formatDate(mainGuide.trip_done)}` : undefined;
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+
+// Criteria of the guide's SEO pass (#16): every crumb is a real page; the hub
+// is the last one. No Article: the hub is the destination's page, not a story.
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: 'Islandia', item: pageUrl },
+  ],
+};
+
+/** Only the questions marked fit for rich results; the visible list shows them all. */
+const faqForSchema = (hub.faq ?? []).filter((item) => item.schema === true);
+const faqJsonLd =
+  faqForSchema.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqForSchema.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
+      }
+    : null;
+---
+
+{/* noindex while the 13-day guide is noindex (1.13 §6); astro.config.mjs keeps it out of the sitemap too. */}
+<BaseLayout
+  title={hub.title}
+  description={hub.description}
+  image={ogImage.src}
+  imageWidth={ogImage.attributes.width}
+  imageHeight={ogImage.attributes.height}
+  imageAlt={coverAlt}
+  design="v2"
+  noindex
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} slot="head" />
+
+  <article class="guide hub">
+    <header class="guide-hero">
+      <div class="guide-hero__text">
+        <div class="guide-hero__title">
+          <Breadcrumb crumbs={[{ label: 'Inicio', href: '/' }, { label: 'Islandia' }]} />
+          <h1>Viajar a Islandia</h1>
+        </div>
+
+        <p class="guide-hero__intro">
+          <span class="guide-hero__lead">{taglineLead}</span>
+          {taglineMore && <span class="guide-hero__more">{taglineMore}</span>}
+        </p>
+      </div>
+
+      <div class="guide-hero__media">
+        <GuidePhoto
+          class="guide-hero__photo"
+          image={cover}
+          alt={coverAlt}
+          sizes="(min-width: 48rem) 55vw, 100vw"
+          priority
+          crop={{ media: '(max-width: 47.99rem)', ratio: 1, position: 'bottom' }}
+        />
+      </div>
+    </header>
+
+    <section class="guide-overview" aria-label="Resumen de Islandia">
+      {hub.has_experience && hub.trip_done && (
+        <TrustBlock travelers={travelerNames} tripDone={hub.trip_done} updatedAt={hub.updated_at} />
+      )}
+      {facts.length > 0 && <HubFacts facts={facts} />}
+    </section>
+
+    {indexSections.length > 4 && <GuideIndex sections={indexSections} title="En esta página" />}
+
+    {show.guide && mainGuide && mainGuideUrl && (
+      <section class="hub-section" aria-labelledby="nuestra-guia">
+        <SectionTitle id="nuestra-guia" icon="route">Nuestra guía</SectionTitle>
+        <StartHere
+          href={mainGuideUrl}
+          title={mainGuide.title}
+          subtitle={mainGuide.summary.tagline.split('\n')[0]}
+          image={guideImage(mainGuide.cover_image)}
+          alt={mainCoverAlt}
+          facts={startFacts}
+          lived={mainLived}
+        />
+      </section>
+    )}
+
+    {show.see && (
+      <section class="hub-section hub-see" aria-labelledby="que-ver">
+        <SectionTitle id="que-ver" icon="pin">Qué ver</SectionTitle>
+        <p class="hub-section__lead quiet">
+          Los {seeCount} sitios que visitamos, en el orden de nuestra ruta. Cada uno lleva al día en que lo vimos,
+          con lo que hicimos allí.
+        </p>
+        <WhatToSee groups={seeGroups} />
+      </section>
+    )}
+
+    {show.when && hub.when_to_go && (
+      <section class="hub-section hub-when" aria-labelledby="cuando-ir">
+        <SectionTitle id="cuando-ir" icon="booking">Cuándo ir</SectionTitle>
+        {tripMonth && <p class="kicker hub-when__kicker">Lo que encontramos en {tripMonth}</p>}
+        <ul class="hub-when__list">
+          {hub.when_to_go.map((item) => (
+            <li><SectionIcon name="sparkles" /><span>{item}</span></li>
+          ))}
+        </ul>
+        {tripMonth && <p class="hub-section__lead quiet">Solo hemos ido en septiembre: de los demás meses no tenemos datos propios.</p>}
+      </section>
+    )}
+
+    {show.practical && hub.practical && (
+      <section class="practical" aria-labelledby="practico">
+        <SectionTitle id="practico" icon="practical">Lo práctico</SectionTitle>
+        <div class="practical__grid">
+          {hub.practical.documents && hub.practical.documents.length > 0 && (
+            <div class="practical__card">
+              <h3 class="practical__title"><SectionIcon name="doc" />Documentos</h3>
+              <ul class="practical__checks">
+                {hub.practical.documents.map((item) => (
+                  <li><SectionIcon name="check" /><span>{item}</span></li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {hub.practical.plugs && (
+            <div class="practical__card">
+              <h3 class="practical__title"><SectionIcon name="plug" />Enchufes</h3>
+              <p class="practical__text">{hub.practical.plugs}</p>
+            </div>
+          )}
+          {hub.practical.apps && hub.practical.apps.length > 0 && (
+            <div class="practical__card">
+              <h3 class="practical__title"><SectionIcon name="list" />Apps</h3>
+              <ul class="practical__apps">
+                {hub.practical.apps.map(splitDetail).map(({ name, detail }) => (
+                  <li class="practical__app">
+                    <span class="practical__app-name">{name}</span>
+                    {detail && <span class="practical__app-detail">{detail}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {currency && (
+            <div class="practical__card practical__card--wide">
+              <h3 class="practical__title"><SectionIcon name="wallet" />Moneda</h3>
+              <p class="practical__text"><strong>{currency.name}</strong> ({currency.code})</p>
+              {currency.notes && <p class="practical__text quiet">{currency.notes}</p>}
+            </div>
+          )}
+          {hub.practical.tips && hub.practical.tips.length > 0 && (
+            <div class="practical__card">
+              <h3 class="practical__title"><SectionIcon name="bulb" />Consejos</h3>
+              <ul class="practical__tips">
+                {hub.practical.tips.map((item) => <li>{item}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    {show.moving && (
+      <section class="transport" aria-labelledby="moverse">
+        <SectionTitle id="moverse" icon="transport">Cómo moverse</SectionTitle>
+        <ol class="transport__steps">
+          {localTransport.map((local) => (
+            <li class="transport__step">
+              {/* What we drove carries its check date; what we did not try has none, and an info mark. */}
+              <span class="transport__icon"><SectionIcon name={local.verified_at ? 'wheel' : 'info'} /></span>
+              <div class="transport__body">
+                <p class="kicker">{local.mode}</p>
+                <p class="transport__text">{local.description}</p>
+                {local.notes && <p class="quiet">{local.notes}</p>}
+                {local.verified_at && <p class="guide__verified">Comprobado {formatDate(local.verified_at)}</p>}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+
+    {show.faq && hub.faq && (
+      <section class="faq" aria-labelledby="faq">
+        <SectionTitle id="faq" icon="faq">Preguntas sobre Islandia</SectionTitle>
+        <div class="faq__list">
+          {hub.faq.map((item) => (
+            <details class="faq__item">
+              <summary class="faq__q">
+                <span>{item.q}</span>
+                <span class="fold-chevron" aria-hidden="true"></span>
+              </summary>
+              <p class="faq__a">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {faqJsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(faqJsonLd)} />}
+  </article>
+</BaseLayout>
