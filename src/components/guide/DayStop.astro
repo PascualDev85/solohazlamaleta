@@ -1,6 +1,6 @@
 ---
 import type { CompiledStop } from '../../../engine/index.ts';
-import { placeMapUrl } from '../../lib/maps.ts';
+import { placeMapLink } from '../../lib/maps.ts';
 import { dayAnchorId } from '../../lib/anchors.ts';
 import { formatDuration, formatMinutes } from '../../lib/formatDuration.ts';
 import { formatWholePrice } from '../../lib/formatPrice.ts';
@@ -79,7 +79,7 @@ const price = parking ? formatWholePrice(parking.price, parking.currency) : unde
               </summary>
               <span class="day-stop__bubble" id={`${hintId}-parking`}>
                 En {parking.free_nearby.label}
-                <a href={parking.free_nearby.maps_url ?? place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">
+                <a href={parking.free_nearby.maps_url ?? placeMapLink(place)} target="_blank">
                   Mapa<span class="visually-hidden"> de ese parking (se abre en una pestaña nueva)</span>
                 </a>
               </span>
@@ -87,7 +87,7 @@ const price = parking ? formatWholePrice(parking.price, parking.currency) : unde
           )}
         </span>
       )}
-      <a class="day-stop__map" href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">
+      <a class="day-stop__map" href={placeMapLink(place)} target="_blank">
         <SectionIcon name="pin" />Mapa<span class="visually-hidden"> de {place.name} (se abre en una pestaña nueva)</span>
       </a>
     </div>

@@ -4,7 +4,7 @@ import { campsiteAnchorId } from '../../lib/anchors.ts';
 import { facilityLabels } from '../../lib/facilityLabels.ts';
 import { formatDate } from '../../lib/formatDate.ts';
 import { formatWholePrice } from '../../lib/formatPrice.ts';
-import { placeMapUrl } from '../../lib/maps.ts';
+import { placeMapLink } from '../../lib/maps.ts';
 import SectionIcon from './SectionIcon.astro';
 
 interface Props {
@@ -53,7 +53,7 @@ const hasMore = Boolean(place.notes || pick.notes || paid);
         </p>
       )}
       <p class="camp__links">
-        <a href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">
+        <a href={placeMapLink(place)} target="_blank">
           <SectionIcon name="pin" />Mapa<span class="visually-hidden"> de {place.name} (se abre en una pestaña nueva)</span>
         </a>
         {place.source_url && (
