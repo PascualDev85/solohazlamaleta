@@ -1,6 +1,10 @@
 // In-page checks shared by scripts/ui-check.ts and scripts/ui-devices.ts.
-// Each function runs inside the browser (page.evaluate), so it must stay
-// self-contained: no imports, no closures over module scope.
+// The check functions run inside the browser (page.evaluate), so they must
+// stay self-contained: no imports, no closures over module scope. The
+// selectors are plain strings, built here in Node.
+
+/** One day's slide: its <article> is labelled by the day heading, id "dia-N". */
+export const daySlide = (day: number) => `article[aria-labelledby="dia-${day}"]`
 
 /** The overlay panels and what opens them. Selectors in the page's own terms. */
 export const PANELS = [
@@ -8,10 +12,10 @@ export const PANELS = [
   { name: 'índice', open: '.guide-index__dock', panel: '.guide-index', head: '.guide-index__head', close: '.guide-index__close' },
   {
     name: 'día completo (día 3)',
-    open: 'article[aria-labelledby="dia-3"] .day-card__full',
-    panel: 'article[aria-labelledby="dia-3"] .day-sheet',
-    head: 'article[aria-labelledby="dia-3"] .day-sheet__head',
-    close: 'article[aria-labelledby="dia-3"] .day-sheet__close',
+    open: `${daySlide(3)} .day-card__full`,
+    panel: `${daySlide(3)} .day-sheet`,
+    head: `${daySlide(3)} .day-sheet__head`,
+    close: `${daySlide(3)} .day-sheet__close`,
   },
 ] as const
 

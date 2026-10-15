@@ -11,7 +11,7 @@
 // that cannot install WebKit; the report says so on every iPhone row.
 import { chromium, devices, webkit, type Browser, type BrowserContextOptions, type Page } from 'playwright'
 import { mkdir, rm } from 'node:fs/promises'
-import { PANELS, dayCardLineIssues, headerOverlap } from './ui-shared.ts'
+import { PANELS, dayCardLineIssues, daySlide, headerOverlap } from './ui-shared.ts'
 
 const [base, page = '/islandia/islandia-en-camper-13-dias/'] = process.argv.slice(2)
 if (!base) {
@@ -111,7 +111,7 @@ async function checkDevice(browser: Browser, device: Device, engineLabel: string
     const onLoad = await overflow(tab)
     if (onLoad) fail(`desbordamiento horizontal al cargar: ${onLoad}`)
     for (const day of [1, 2, 3]) {
-      const more = tab.locator(`article[aria-labelledby="dia-${day}"] .day-card__more > summary`)
+      const more = tab.locator(`${daySlide(day)} .day-card__more > summary`)
       if ((await more.count()) === 0) continue
       await more.scrollIntoViewIfNeeded()
       await settle(tab)
@@ -131,7 +131,8 @@ async function checkDevice(browser: Browser, device: Device, engineLabel: string
     // 4. The time bubble on Háifoss (day 3): opens on tap, stays inside its
     //    card, closes on a tap elsewhere. The bubble closes itself on any
     //    scroll, so the stop is brought into view first.
-    const hike = tab.locator('article[aria-labelledby="dia-3"] .day-stop', { hasText: 'Háifoss' }).locator('.day-stop__hike').first()
+    const haifoss = tab.locator(`${daySlide(3)} .day-stop`, { hasText: 'Háifoss' })
+    const hike = haifoss.locator('.day-stop__hike').first()
     if ((await hike.count()) === 0) fail('no encuentro el bocadillo del tiempo de Háifoss (día 3)')
     else {
       await hike.scrollIntoViewIfNeeded()
@@ -149,7 +150,7 @@ async function checkDevice(browser: Browser, device: Device, engineLabel: string
       else {
         if (!bubble.inside) fail(`el bocadillo del tiempo de Háifoss se sale de la tarjeta (${bubble.b})`)
         // Outside the bubble, on screen: the stop's own name, just beside it.
-        const other = await tab.locator('article[aria-labelledby="dia-3"] .day-stop', { hasText: 'Háifoss' }).locator('.day-stop__name').first().boundingBox()
+        const other = await haifoss.locator('.day-stop__name').first().boundingBox()
         // Note whether the tap reaches the document as a click: iOS only
         // synthesises one on elements it considers clickable.
         await tab.evaluate(() => {
@@ -183,7 +184,7 @@ async function checkDevice(browser: Browser, device: Device, engineLabel: string
     }
 
     // Day 1 with its stops unfolded, once its photo has loaded.
-    const day1 = tab.locator('article[aria-labelledby="dia-1"]')
+    const day1 = tab.locator(daySlide(1))
     await day1.scrollIntoViewIfNeeded()
     await settle(tab)
     // A card taller than the screen is captured by growing the viewport, and
