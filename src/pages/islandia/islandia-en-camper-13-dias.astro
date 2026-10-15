@@ -110,7 +110,14 @@ const articleJsonLd = {
   '@type': 'Article',
   headline: guide.title,
   description: guide.description,
+  // The same 1200px cover file the Open Graph tags share, so no extra image is built.
+  image: new URL(ogImage.src, Astro.site).href,
   dateModified: guide.updated_at,
+  inLanguage: 'es',
+  mainEntityOfPage: pageUrl,
+  // No datePublished or author yet: neither exists in the guide data, and both
+  // are the author's call (see the SEO audit PR).
+  publisher: { '@type': 'Organization', name: 'Solo Haz la Maleta', url: new URL('/', Astro.site).href },
 };
 
 const faqJsonLd =
