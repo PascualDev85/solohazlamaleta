@@ -1,8 +1,10 @@
 ---
 import type { CompiledAccommodationPick } from '../../../engine/index.ts';
+import { campsiteAnchorId } from '../../lib/anchors.ts';
 import { facilityLabels } from '../../lib/facilityLabels.ts';
 import { formatDate } from '../../lib/formatDate.ts';
-import { placeMapUrl } from '../../lib/maps.ts';
+import { formatWholePrice } from '../../lib/formatPrice.ts';
+import { placeMapLink } from '../../lib/maps.ts';
 import SectionIcon from './SectionIcon.astro';
 
 interface Props {
@@ -16,16 +18,9 @@ const { place, price_paid: paid } = pick;
 
 // Folded: name, what we paid, what it has and one line of opinion. Open: the
 // rest (1.12 §9). The id is the target of "Noche → …" on the day card.
-const id = `dormir-${place.place_id}`;
+const id = campsiteAnchorId(place.place_id);
 
-const price = paid
-  ? new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: paid.currency,
-      maximumFractionDigits: 0,
-      useGrouping: true,
-    }).format(paid.amount)
-  : undefined;
+const price = paid ? formatWholePrice(paid.amount, paid.currency) : undefined;
 
 const facilities = place.facilities ? facilityLabels(place.facilities) : [];
 const hasMore = Boolean(place.notes || pick.notes || paid);
@@ -71,7 +66,7 @@ const hasMore = Boolean(place.notes || pick.notes || paid);
       )}
       {/* "Mapa" and "Web" read in the context of the card (its list item names the campsite), as WCAG 2.4.4 allows. */}
       <p class="camp__links">
-        <a href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank" rel="noopener">
+        <a href={placeMapLink(place)} target="_blank" rel="noopener">
           <SectionIcon name="pin" />Mapa<span class="visually-hidden"> (se abre en una pestaña nueva)</span>
         </a>
         {place.source_url && (

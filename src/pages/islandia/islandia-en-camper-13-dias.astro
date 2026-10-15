@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCompiledGuide } from '../../lib/engine-guide.ts';
 import { formatDate, formatLongDate } from '../../lib/formatDate.ts';
+import { formatPrice } from '../../lib/formatPrice.ts';
+import { shortName } from '../../lib/placeName.ts';
 import TrustBlock from '../../components/guide/TrustBlock.astro';
 import GuideIndex from '../../components/guide/GuideIndex.astro';
 import GuidePhoto from '../../components/guide/GuidePhoto.astro';
@@ -74,19 +76,9 @@ const indexSections = [
   { id: 'faq', label: 'Preguntas frecuentes', icon: 'faq', visible: show.faq },
 ].filter((section) => section.visible);
 
-/**
- * Spanish decimal format (1.234,56 €), not toFixed's "1234.56" — this is a
- * Spanish-language page. `useGrouping: true` is explicit and required: this
- * Node/ICU build does not group thousands for the "es-ES" locale by default
- * (verified: `Intl.NumberFormat('es-ES').format(4495.21)` gives "4495,21",
- * not "4.495,21", while "de-DE" groups the same number correctly with no
- * extra options).
- */
-const currencyFormatter = new Intl.NumberFormat('es-ES', {
-  style: 'currency',
-  currency: guide.budget?.currency ?? 'EUR',
-  useGrouping: true,
-});
+// The budget keeps the cents (the trip facts round to whole euros).
+const currency = guide.budget?.currency ?? 'EUR';
+const price = (amount: number) => formatPrice(amount, currency);
 
 // Budget rows (1.10 §3.5): concept, group total, the derived per-person figure and each row's share, for its bar.
 const travelers = guide.base_travelers ?? 1;
@@ -196,7 +188,7 @@ const faqJsonLd =
       )}
 
       <QuickFacts
-        currency={guide.budget?.currency ?? 'EUR'}
+        currency={currency}
         budgetPerPerson={guide.summary.budget_per_person}
         budgetTotal={guide.budget?.total_reference}
         budgetHref={show.budget ? '#presupuesto' : undefined}
@@ -289,11 +281,11 @@ const faqJsonLd =
         {/* Every figure here is derived: the per-person one from the group total and base_travelers (1.10 §3.5). */}
         <div class="budget__hero">
           <p class="budget__per-person">
-            <span class="budget__big">{currencyFormatter.format(guide.budget.total_reference / travelers)}</span>
+            <span class="budget__big">{price(guide.budget.total_reference / travelers)}</span>
             <span class="budget__per-person-unit">por persona</span>
           </p>
           <p class="budget__head-rest">
-            {currencyFormatter.format(guide.budget.total_reference)} en total · {travelers} {travelers === 1 ? 'persona' : 'personas'}
+            {price(guide.budget.total_reference)} en total · {travelers} {travelers === 1 ? 'persona' : 'personas'}
             {variant && ` · ${variant.days.length} días`}
           </p>
           <p class="guide__verified">Precios comprobados {formatDate(guide.budget.verified_at)}</p>
@@ -304,12 +296,12 @@ const faqJsonLd =
               <p class="budget__row-head">
                 <span class="budget__label">{row.label}</span>
                 <span class="budget__amount">
-                  {currencyFormatter.format(row.per_person)}<span class="budget__amount-unit"> /pers.</span>
+                  {price(row.per_person)}<span class="budget__amount-unit"> /pers.</span>
                 </span>
               </p>
               <span class="budget__bar" aria-hidden="true"></span>
               <p class="budget__row-meta">
-                {currencyFormatter.format(row.total)} en total · {percent(row.share)} del viaje
+                {price(row.total)} en total · {percent(row.share)} del viaje
               </p>
               {row.notes && <p class="budget__row-note">{row.notes}</p>}
             </li>
@@ -391,7 +383,7 @@ const faqJsonLd =
                     <li>
                       <details class="skip">
                         <summary class="skip__summary">
-                          <span class="skip__name">{stop.place.short_name ?? stop.place.name}</span>
+                          <span class="skip__name">{shortName(stop.place)}</span>
                           <span class="pill skip__day">Día {day}</span>
                           <span class="fold-chevron" aria-hidden="true"></span>
                         </summary>

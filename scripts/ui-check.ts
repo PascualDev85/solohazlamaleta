@@ -35,8 +35,9 @@ const browser = await chromium.launch()
 }
 
 // 2. Day cards on phones from 350 to 414px wide, for every day with route data
-//    (a drive line): the route in two rows at most; facts, night, each stop's
-//    name and its practical line in one.
+//    (a drive line): the route in two rows at most (three from seven route
+//    stops, four from nine); facts, night, each stop's name and its practical
+//    line in one.
 for (const width of [350, 360, 375, 390, 414]) {
   const tab = await browser.newPage({ viewport: { width, height: 844 } })
   await tab.goto(url, { waitUntil: 'networkidle' })

@@ -1,4 +1,4 @@
-import type { Facilities } from '../../schemas/index.ts'
+import type { Facilities } from '../../engine/index.ts'
 
 const SHOWERS: Record<Facilities['showers'], string> = {
   included: 'Duchas incluidas',
