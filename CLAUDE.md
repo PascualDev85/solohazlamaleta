@@ -136,7 +136,7 @@ npm run build      # build de producción (falla si una guía es inválida)
 npm run preview    # previsualizar el build
 npm run test:devices  # iPhone (WebKit) y Android (Chromium) contra el preview; capturas en ui-devices/
 npm test           # tests unitarios (node --test)
-npm run lighthouse # con el preview en marcha: exige 100 en móvil y escritorio
+npm run lighthouse # con el preview en marcha: exige 100 en móvil y escritorio (salvo la guía de Islandia en móvil: ≥ 99, ver docs/1.13 §5)
 npm run test:ui    # con el preview en marcha: capas de los paneles y líneas de las tarjetas en móviles de 350 a 414 px (Chromium)
 npm run photo -- <foto> <destino> [--name slug] [--caption lugar] [--day N]  # redimensiona, quita metadatos y la copia a src/assets/guides/; con --day la pone en ese día (alt vacío: el build falla hasta escribirlo)
 npm run day:status [-- N] [--json]  # qué le falta a cada día de Islandia para cerrarlo (foto, lo mejor, conducción, noche, duraciones, paradas) y resumen
