@@ -3,6 +3,7 @@ import type { CompiledStop } from '../../../engine/index.ts';
 import { placeMapUrl } from '../../lib/maps.ts';
 import { formatDuration, formatMinutes } from '../../lib/formatDuration.ts';
 import { formatWholePrice } from '../../lib/formatPrice.ts';
+import { shortName } from '../../lib/placeName.ts';
 import SectionIcon from './SectionIcon.astro';
 
 interface Props {
@@ -61,7 +62,7 @@ const price = parking ? formatWholePrice(parking.price, parking.currency) : unde
           <span class="day-stop__p" aria-hidden="true"></span>
           <span class="visually-hidden">Parking: </span>
           {sharedWith ? (
-            <strong>Incluido con {sharedWith.short_name ?? sharedWith.name}</strong>
+            <strong>Incluido con {shortName(sharedWith)}</strong>
           ) : parking.price === 0 ? (
             <strong class="day-stop__free">Gratis</strong>
           ) : (

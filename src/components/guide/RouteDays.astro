@@ -1,5 +1,6 @@
 ---
 import type { CompiledDay } from '../../../engine/index.ts';
+import { shortName } from '../../lib/placeName.ts';
 import DayCard from './DayCard.astro';
 import SectionIcon from './SectionIcon.astro';
 
@@ -95,7 +96,7 @@ const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
               )}
               {day.overnight && (
                 <span class="route-glance__night">
-                  <SectionIcon name="tent" />{day.overnight.short_name ?? day.overnight.name}
+                  <SectionIcon name="tent" />{shortName(day.overnight)}
                 </span>
               )}
               {day.overnight === null && (

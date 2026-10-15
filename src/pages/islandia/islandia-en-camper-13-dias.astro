@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCompiledGuide } from '../../lib/engine-guide.ts';
 import { formatDate, formatLongDate } from '../../lib/formatDate.ts';
 import { formatPrice } from '../../lib/formatPrice.ts';
+import { shortName } from '../../lib/placeName.ts';
 import TrustBlock from '../../components/guide/TrustBlock.astro';
 import GuideIndex from '../../components/guide/GuideIndex.astro';
 import GuidePhoto from '../../components/guide/GuidePhoto.astro';
@@ -315,7 +316,7 @@ const faqJsonLd =
                 {skippedStops.map(({ day, stop }) => (
                   <li>
                     <p class="criteria__decision">
-                      {stop.place.short_name ?? stop.place.name}
+                      {shortName(stop.place)}
                       <span class="criteria__day">Día {day}</span>
                     </p>
                     {stop.place.description && <p class="criteria__desc">{stop.place.description}</p>}

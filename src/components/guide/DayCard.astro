@@ -3,6 +3,7 @@ import type { CompiledDay } from '../../../engine/index.ts';
 import { formatMinutes } from '../../lib/formatDuration.ts';
 import { minutesOnRoute, roundToHour } from '../../lib/dayTime.ts';
 import { guideImage } from '../../lib/guide-images.ts';
+import { shortName } from '../../lib/placeName.ts';
 import GuidePhoto from './GuidePhoto.astro';
 import SectionIcon from './SectionIcon.astro';
 import DayStop from './DayStop.astro';
@@ -35,7 +36,7 @@ const hasFullDay =
 // The night links to its campsite card in "Dónde dormir"; null is a night outside any campsite.
 const overnight = day.overnight;
 const outsideCampsite = overnight === null;
-const nightLabel = overnight ? (overnight.short_name ?? overnight.name) : outsideCampsite ? 'Fuera de camping' : undefined;
+const nightLabel = overnight ? shortName(overnight) : outsideCampsite ? 'Fuera de camping' : undefined;
 const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
 ---
 
@@ -179,7 +180,7 @@ const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
               <ul class="day-sheet__experiences">
                 {experiences.map((stop) => (
                   <li>
-                    <p class="day-sheet__place">{stop.place.short_name ?? stop.place.name}</p>
+                    <p class="day-sheet__place">{shortName(stop.place)}</p>
                     <p>{stop.variant_note}</p>
                   </li>
                 ))}
@@ -201,7 +202,7 @@ const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
               <ul class="day-sheet__experiences day-sheet__experiences--skipped">
                 {skipped.map((stop) => (
                   <li>
-                    <p class="day-sheet__place">{stop.place.short_name ?? stop.place.name}</p>
+                    <p class="day-sheet__place">{shortName(stop.place)}</p>
                     <p>{stop.skip_reason}</p>
                   </li>
                 ))}
