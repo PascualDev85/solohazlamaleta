@@ -1,6 +1,7 @@
 ---
 import type { CompiledStop } from '../../../engine/index.ts';
 import { placeMapUrl } from '../../lib/maps.ts';
+import { dayAnchorId } from '../../lib/anchors.ts';
 import { formatDuration, formatMinutes } from '../../lib/formatDuration.ts';
 import { formatWholePrice } from '../../lib/formatPrice.ts';
 import { shortName } from '../../lib/placeName.ts';
@@ -17,7 +18,7 @@ interface Props {
 const { stop, n, day } = Astro.props;
 // The hike mark opens a speech bubble (native <details>, no script) saying
 // what the upper end of the visit time includes: "2 h 30 min con la ruta…".
-const hintId = `dia-${day}-parada-${n}-nota`;
+const hintId = `${dayAnchorId(day)}-parada-${n}-nota`;
 const hintTime = stop.duration_max_min != null ? formatMinutes(stop.duration_max_min) : formatMinutes(stop.duration_min);
 const { place } = stop;
 const { parking } = place;

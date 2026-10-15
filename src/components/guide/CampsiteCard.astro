@@ -1,5 +1,6 @@
 ---
 import type { CompiledAccommodationPick } from '../../../engine/index.ts';
+import { campsiteAnchorId } from '../../lib/anchors.ts';
 import { facilityLabels } from '../../lib/facilityLabels.ts';
 import { formatDate } from '../../lib/formatDate.ts';
 import { formatWholePrice } from '../../lib/formatPrice.ts';
@@ -15,7 +16,7 @@ const { place, price_paid: paid } = pick;
 
 // Folded: name, what we paid, what it has and one line of opinion. Open: the
 // rest (1.12 §9). The id is the target of "Noche → …" on the day card.
-const id = `dormir-${place.place_id}`;
+const id = campsiteAnchorId(place.place_id);
 
 const price = paid ? formatWholePrice(paid.amount, paid.currency) : undefined;
 
