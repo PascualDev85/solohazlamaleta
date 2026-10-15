@@ -24,7 +24,18 @@ const { href, title, subtitle, image, alt, facts, lived } = Astro.props;
 */}
 <article class="start-here">
   <div class="start-here__media">
-    <GuidePhoto class="start-here__photo" image={image} alt={alt} sizes="(min-width: 48rem) 18rem, 100vw" />
+    {/*
+      Phones get a 16:9 crop, the shape the card shows there. This photo is
+      within the lazy-load margin at first paint, so Lighthouse counts its
+      bytes towards the hero's LCP: the smaller, the better.
+    */}
+    <GuidePhoto
+      class="start-here__photo"
+      image={image}
+      alt={alt}
+      sizes="(min-width: 48rem) 18rem, 100vw"
+      crop={{ media: '(max-width: 29.99rem)', ratio: 16 / 9, position: 'center' }}
+    />
   </div>
   <div class="start-here__body">
     <p class="kicker">Empieza aquí</p>

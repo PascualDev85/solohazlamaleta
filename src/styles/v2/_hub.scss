@@ -71,6 +71,10 @@
     object-position: 50% 60%;
     background: var(--color-surface);
 
+    @include up-to("sm") {
+      aspect-ratio: 16 / 9;
+    }
+
     @include from("sm") {
       aspect-ratio: auto;
       min-height: 16rem;
@@ -152,6 +156,21 @@
     background: var(--color-surface);
   }
 
+  // Phones: a small square thumbnail beside the day's text.
+  &__card--photo {
+    @include up-to("sm") {
+      display: grid;
+      grid-template-columns: 5.5rem minmax(0, 1fr);
+      align-items: start;
+      gap: var(--space-sm);
+      padding: var(--space-sm) 0 0 var(--space-sm);
+
+      .hub-see__body {
+        padding: 0 var(--space-md) var(--space-md) 0;
+      }
+    }
+  }
+
   &__photo {
     display: block;
     width: 100%;
@@ -159,6 +178,11 @@
     aspect-ratio: 3 / 2;
     object-fit: cover;
     background: var(--color-surface-deep);
+
+    @include up-to("sm") {
+      aspect-ratio: 1;
+      border-radius: var(--radius);
+    }
   }
 
   &__body {
