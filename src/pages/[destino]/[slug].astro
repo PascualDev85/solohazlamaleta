@@ -36,13 +36,13 @@ const dayCounts = [...meta.days].sort((a, b) => b - a);
 
 const trip = meta.tripDone;
 
+/** A 0–0 € range is placeholder data, and printing it is worse than silence. */
+const hasBudget = summary.budgetPerPerson.max > 0;
+
 /**
  * The disclosure only belongs on a page that actually carries commission
  * links. Showing it otherwise is legal noise without a cause.
  */
-/** A 0–0 € range is placeholder data, and printing it is worse than silence. */
-const hasBudget = summary.budgetPerPerson.max > 0;
-
 const hasAffiliateLinks =
   bookingChecklist.some((item) => item.affiliate) ||
   lodging.some((zone) => zone.picks.some((pick) => pick.affiliate)) ||

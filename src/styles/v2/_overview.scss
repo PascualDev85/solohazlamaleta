@@ -241,7 +241,7 @@
   }
 }
 
-// Width of the right-edge fade on the trip-facts row. Registered so it can be
+// Width of the right-edge fade on the quick-facts row. Registered so it can be
 // animated; initial value in px because @property needs a fixed length.
 @property --rail-fade {
   syntax: "<length>";
