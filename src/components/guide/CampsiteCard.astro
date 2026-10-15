@@ -2,6 +2,7 @@
 import type { CompiledAccommodationPick } from '../../../engine/index.ts';
 import { facilityLabels } from '../../lib/facilityLabels.ts';
 import { formatDate } from '../../lib/formatDate.ts';
+import { formatWholePrice } from '../../lib/formatPrice.ts';
 import { placeMapUrl } from '../../lib/maps.ts';
 import SectionIcon from './SectionIcon.astro';
 
@@ -16,14 +17,7 @@ const { place, price_paid: paid } = pick;
 // rest (1.12 §9). The id is the target of "Noche → …" on the day card.
 const id = `dormir-${place.place_id}`;
 
-const price = paid
-  ? new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: paid.currency,
-      maximumFractionDigits: 0,
-      useGrouping: true,
-    }).format(paid.amount)
-  : undefined;
+const price = paid ? formatWholePrice(paid.amount, paid.currency) : undefined;
 
 const facilities = place.facilities ? facilityLabels(place.facilities) : [];
 const hasMore = Boolean(place.notes || pick.notes || paid);

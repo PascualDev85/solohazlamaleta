@@ -2,6 +2,7 @@
 import type { CompiledStop } from '../../../engine/index.ts';
 import { placeMapUrl } from '../../lib/maps.ts';
 import { formatDuration, formatMinutes } from '../../lib/formatDuration.ts';
+import { formatWholePrice } from '../../lib/formatPrice.ts';
 import SectionIcon from './SectionIcon.astro';
 
 interface Props {
@@ -24,14 +25,7 @@ const { parking } = place;
 
 // A car park shared with another place: the card says so instead of a price.
 const sharedWith = stop.parking_shared_with;
-const price = parking
-  ? new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: parking.currency,
-      maximumFractionDigits: 0,
-      useGrouping: true,
-    }).format(parking.price)
-  : undefined;
+const price = parking ? formatWholePrice(parking.price, parking.currency) : undefined;
 ---
 
 <li class="day-stop">

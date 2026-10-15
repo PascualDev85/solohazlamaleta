@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCompiledGuide } from '../../lib/engine-guide.ts';
 import { formatDate, formatLongDate } from '../../lib/formatDate.ts';
+import { formatPrice } from '../../lib/formatPrice.ts';
 import TrustBlock from '../../components/guide/TrustBlock.astro';
 import GuideIndex from '../../components/guide/GuideIndex.astro';
 import GuidePhoto from '../../components/guide/GuidePhoto.astro';
@@ -70,19 +71,9 @@ const indexSections = [
   { id: 'faq', label: 'Preguntas frecuentes', icon: 'faq', visible: show.faq },
 ].filter((section) => section.visible);
 
-/**
- * Spanish decimal format (1.234,56 €), not toFixed's "1234.56" — this is a
- * Spanish-language page. `useGrouping: true` is explicit and required: this
- * Node/ICU build does not group thousands for the "es-ES" locale by default
- * (verified: `Intl.NumberFormat('es-ES').format(4495.21)` gives "4495,21",
- * not "4.495,21", while "de-DE" groups the same number correctly with no
- * extra options).
- */
-const currencyFormatter = new Intl.NumberFormat('es-ES', {
-  style: 'currency',
-  currency: guide.budget?.currency ?? 'EUR',
-  useGrouping: true,
-});
+// The budget keeps the cents (the trip facts round to whole euros).
+const currency = guide.budget?.currency ?? 'EUR';
+const price = (amount: number) => formatPrice(amount, currency);
 
 // Budget table (1.10 §3.5): concept, group total and the derived per-person figure.
 const travelers = guide.base_travelers ?? 1;
@@ -165,7 +156,7 @@ const faqJsonLd =
       )}
 
       <QuickFacts
-        currency={guide.budget?.currency ?? 'EUR'}
+        currency={currency}
         budgetPerPerson={guide.summary.budget_per_person}
         budgetTotal={guide.budget?.total_reference}
         budgetHref={show.budget ? '#presupuesto' : undefined}
@@ -233,9 +224,9 @@ const faqJsonLd =
         <h2 id="presupuesto">Presupuesto real</h2>
         {/* Every figure here is derived: the per-person one from the group total and base_travelers (1.10 §3.5). */}
         <p class="budget__head">
-          <strong class="budget__per-person">{currencyFormatter.format(guide.budget.total_reference / travelers)} por persona</strong>
+          <strong class="budget__per-person">{price(guide.budget.total_reference / travelers)} por persona</strong>
           <span class="budget__head-rest">
-            {currencyFormatter.format(guide.budget.total_reference)} en total · {travelers} {travelers === 1 ? 'persona' : 'personas'}
+            {price(guide.budget.total_reference)} en total · {travelers} {travelers === 1 ? 'persona' : 'personas'}
             {variant && ` · ${variant.days.length} días`}
           </span>
         </p>
@@ -252,16 +243,16 @@ const faqJsonLd =
             {budgetTable.map((row) => (
               <tr>
                 <th scope="row">{row.label}</th>
-                <td>{currencyFormatter.format(row.total)}</td>
-                <td>{currencyFormatter.format(row.per_person)}</td>
+                <td>{price(row.total)}</td>
+                <td>{price(row.per_person)}</td>
               </tr>
             ))}
           </tbody>
           <tfoot>
             <tr>
               <th scope="row">Total</th>
-              <td>{currencyFormatter.format(guide.budget.total_reference)}</td>
-              <td>{currencyFormatter.format(guide.budget.total_reference / travelers)}</td>
+              <td>{price(guide.budget.total_reference)}</td>
+              <td>{price(guide.budget.total_reference / travelers)}</td>
             </tr>
           </tfoot>
         </table>
