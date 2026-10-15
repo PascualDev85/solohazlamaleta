@@ -71,7 +71,7 @@ const hasMore = Boolean(place.notes || pick.notes || paid);
       )}
       {/* "Mapa" and "Web" read in the context of the card (its list item names the campsite), as WCAG 2.4.4 allows. */}
       <p class="camp__links">
-        <a href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">
+        <a href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank" rel="noopener">
           <SectionIcon name="pin" />Mapa<span class="visually-hidden"> (se abre en una pestaña nueva)</span>
         </a>
         {place.source_url && (

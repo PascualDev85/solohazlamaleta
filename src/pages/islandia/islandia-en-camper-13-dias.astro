@@ -105,13 +105,15 @@ const faqForSchema = (guide.faq ?? []).filter((item) => item.schema === true);
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 
+// /islandia/ does not exist yet (1.11), so it stays out of the schema too:
+// every non-final crumb needs an `item` URL, and that one would be a 404.
+// Add it back as position 2 when the hub is published.
 const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', Astro.site).href },
-    { '@type': 'ListItem', position: 2, name: destinationName, item: new URL('/islandia/', Astro.site).href },
-    { '@type': 'ListItem', position: 3, name: guide.title, item: pageUrl },
+    { '@type': 'ListItem', position: 2, name: guide.title, item: pageUrl },
   ],
 };
 
@@ -120,7 +122,14 @@ const articleJsonLd = {
   '@type': 'Article',
   headline: guide.title,
   description: guide.description,
+  // The same 1200px cover file the Open Graph tags share, so no extra image is built.
+  image: new URL(ogImage.src, Astro.site).href,
   dateModified: guide.updated_at,
+  inLanguage: 'es',
+  mainEntityOfPage: pageUrl,
+  // No datePublished or author yet: neither exists in the guide data, and both
+  // are the author's call (see the SEO audit PR).
+  publisher: { '@type': 'Organization', name: 'Solo Haz la Maleta', url: new URL('/', Astro.site).href },
 };
 
 const faqJsonLd =
@@ -137,7 +146,17 @@ const faqJsonLd =
     : null;
 ---
 
-<BaseLayout title={guide.title} description={guide.description} image={ogImage.src} design="v2" noindex>
+<BaseLayout
+  title={guide.title}
+  description={guide.description}
+  image={ogImage.src}
+  imageWidth={ogImage.attributes.width}
+  imageHeight={ogImage.attributes.height}
+  imageAlt={coverAlt}
+  ogType="article"
+  design="v2"
+  noindex
+>
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} slot="head" />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(articleJsonLd)} slot="head" />
 
