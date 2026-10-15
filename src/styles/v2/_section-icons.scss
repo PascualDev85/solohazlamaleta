@@ -40,9 +40,12 @@ $section-icons: (
 
 // Forced colours (Windows high contrast) repaint every background, and these
 // icons are a background behind a mask: they vanished, the info mark on the
-// visit times with them. Opted out, they keep drawing in the forced text colour.
+// visit times with them. Opted out, they would keep their own colour (the
+// accent blue, unreadable on a dark system theme), so they are painted in the
+// system text colour instead.
 @media (forced-colors: active) {
   [data-design="v2"] .section-icon {
     forced-color-adjust: none;
+    background: CanvasText;
   }
 }
