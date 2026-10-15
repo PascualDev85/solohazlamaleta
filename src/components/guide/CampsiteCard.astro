@@ -58,7 +58,7 @@ const hasMore = Boolean(place.notes || pick.notes || paid);
         </p>
       )}
       <p class="camp__links">
-        <a href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">
+        <a href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank" rel="noopener">
           <SectionIcon name="pin" />Mapa<span class="visually-hidden"> de {place.name} (se abre en una pestaña nueva)</span>
         </a>
         {place.source_url && (
