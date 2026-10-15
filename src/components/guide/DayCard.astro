@@ -98,9 +98,10 @@ const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
             {nightLabel && (
               <span class="day-card__fact day-card__fact--night">
                 <SectionIcon name="tent" />
+                {/* Read "Noche en Camping Árnes" (or "Noche: Fuera de camping"); the arrow is only drawn. */}
                 <span class="day-card__night-label">Noche</span>
                 <span class="day-card__arrow" aria-hidden="true">→</span>
-                <span class="visually-hidden">: </span>
+                <span class="visually-hidden">{overnightHref ? ' en ' : ': '}</span>
                 {overnightHref ? (
                   <a class="day-card__night-link" href={overnightHref}>{nightLabel}</a>
                 ) : (
@@ -148,16 +149,17 @@ const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
 
       {hasFullDay && (
         <button class="day-card__full" type="button" popovertarget={sheetId}>
-          Ver día completo <SectionIcon name="arrow" />
+          {/* The hidden day tells the 13 identical buttons apart in a screen reader's list of controls. */}
+          Ver día completo<span class="visually-hidden"> del día {day.day}</span><SectionIcon name="arrow" />
         </button>
       )}
     </div>
 
     {hasFullDay && (
-      <div id={sheetId} class="day-sheet" popover role="dialog" aria-labelledby={`${sheetId}-title`}>
+      <div id={sheetId} class="day-sheet" popover role="dialog" aria-labelledby={`${sheetId}-eyebrow ${sheetId}-title`}>
         <header class="day-sheet__head">
           <div>
-            <p class="day-sheet__eyebrow">Día {num}</p>
+            <p class="day-sheet__eyebrow" id={`${sheetId}-eyebrow`}>Día {num}</p>
             <h2 class="day-sheet__title" id={`${sheetId}-title`}>{day.title}</h2>
           </div>
           <button
