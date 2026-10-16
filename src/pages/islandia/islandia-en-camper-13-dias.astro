@@ -94,15 +94,14 @@ const faqForSchema = (guide.faq ?? []).filter((item) => item.schema === true);
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 
-// /islandia/ does not exist yet (1.11), so it stays out of the schema too:
-// every non-final crumb needs an `item` URL, and that one would be a 404.
-// Add it back as position 2 when the hub is published.
+// The destination crumb points at the hub (1.10 §3.8), here and in the visible breadcrumb.
 const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', Astro.site).href },
-    { '@type': 'ListItem', position: 2, name: guide.title, item: pageUrl },
+    { '@type': 'ListItem', position: 2, name: destinationName, item: new URL(guide.hub, Astro.site).href },
+    { '@type': 'ListItem', position: 3, name: guide.title, item: pageUrl },
   ],
 };
 
@@ -153,8 +152,7 @@ const faqJsonLd =
     <header class="guide-hero">
       <div class="guide-hero__text">
         <div class="guide-hero__title">
-          {/* /islandia/ does not exist yet, so the destination crumb is not a link (1.10 §3.8). */}
-          <Breadcrumb crumbs={[{ label: 'Inicio', href: '/' }, { label: destinationName }]} />
+          <Breadcrumb crumbs={[{ label: 'Inicio', href: '/' }, { label: destinationName, href: guide.hub }]} />
           <h1>{guide.title}</h1>
         </div>
 
