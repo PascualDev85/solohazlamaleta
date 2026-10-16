@@ -1,0 +1,236 @@
+@use "../abstracts" as *;
+
+[data-design="v2"] {
+  .home {
+    max-width: 64rem;
+    margin-inline: auto;
+  }
+
+  // The claim, at size. Its second sentence carries the brand, so it gets the
+  // accent and its own line.
+  .home-hero {
+    padding-block: var(--space-md) var(--space-lg);
+
+    @include from("md") {
+      padding-block: var(--space-xl) var(--space-2xl);
+    }
+  }
+
+  .home-hero__title {
+    margin: 0 0 var(--space-md);
+    font-size: clamp(2rem, 1.4rem + 3vw, 3.75rem);
+    line-height: 1.08;
+    text-wrap: balance;
+
+    @include from("md") {
+      max-width: 18ch;
+    }
+  }
+
+  .home-hero__claim {
+    display: block;
+    color: var(--color-accent);
+  }
+
+  .home-hero__lede {
+    max-width: 38rem;
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+
+    @include from("md") {
+      font-size: 1.25rem;
+    }
+  }
+
+  .home-section-title {
+    margin: 0 0 var(--space-md);
+  }
+
+  // Guide cards. The title's link covers the whole card (::after), so the card
+  // is one tap target with a short accessible name: the guide's title.
+  .home-guides__list {
+    display: grid;
+    gap: var(--space-lg);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .home-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg);
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:focus-within {
+      outline: 3px solid var(--color-accent);
+      outline-offset: 3px;
+    }
+
+    // Desktop: photo on the left, text on the right. A card without a photo
+    // is text only, at the same width: no empty frame where a photo would go.
+    @include from("md") {
+      &--photo {
+        display: grid;
+        grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+
+      &:hover {
+        transform: none;
+      }
+    }
+  }
+
+  // Desktop: the photo fills the card's height, whatever the text needs,
+  // instead of setting it from the (portrait) file.
+  .home-card__media {
+    @include from("md") {
+      position: relative;
+      min-height: 17rem;
+    }
+  }
+
+  .home-card__photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    background: var(--color-surface);
+
+    @include from("md") {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      aspect-ratio: auto;
+      object-position: 50% 65%;
+    }
+  }
+
+  .home-card__body {
+    display: grid;
+    gap: var(--space-sm);
+    align-content: start;
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+
+    @include from("md") {
+      padding: var(--space-lg) var(--space-xl);
+    }
+  }
+
+  .home-card__title {
+    margin: 0;
+    font-size: var(--step-1);
+    line-height: 1.2;
+
+    a {
+      color: var(--color-text);
+      font-weight: inherit;
+      text-decoration: none;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+      }
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+  }
+
+  .home-card__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  // "Lo hicimos" in the lived colour; "Borrador" outlined in the label coral,
+  // so a draft reads as a warning, not as one more fact.
+  .pill--lived {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+
+  .pill--draft {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--color-label);
+    color: var(--color-label);
+  }
+
+  .home-card__desc,
+  .home-card__note {
+    margin: 0;
+  }
+
+  .home-card__note {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+  }
+
+  .home-card__go {
+    margin-top: var(--space-xs);
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--color-accent);
+  }
+
+  .home-card:hover .home-card__go {
+    text-decoration: underline;
+  }
+
+  // Why these guides: a short list, two columns from tablet up.
+  .home-why {
+    margin-top: var(--space-2xl);
+    padding: var(--space-lg) var(--space-md);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+
+    @include from("md") {
+      padding: var(--space-xl);
+    }
+  }
+
+  .home-why__list {
+    display: grid;
+    gap: var(--space-lg);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @include from("md") {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-lg) var(--space-xl);
+    }
+  }
+
+  .home-why__title {
+    margin: 0 0 var(--space-2xs);
+    font-size: 1.125rem;
+  }
+
+  .home-why__text {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+}

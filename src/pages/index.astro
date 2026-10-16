@@ -1,8 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import '../styles/v1-components.scss';
+import GuidePhoto from '../components/guide/GuidePhoto.astro';
+import '../styles/home-v2.scss';
 import { loadCompiledGuide } from '../lib/engine-guide.ts';
+import { guideImage } from '../lib/guide-images.ts';
+import { formatWholePrice } from '../lib/formatPrice.ts';
 import {
   ENGINE_GUIDE_SOURCES, fromLegacyGuide, fromCompiledGuide, sortGuideList,
 } from '../lib/guide-list.ts';
@@ -17,55 +20,128 @@ const sorted = sortGuideList([
   ...legacyGuides.map((guide) => fromLegacyGuide(guide.id, guide.data)),
   ...engineGuides.map(fromCompiledGuide),
 ]);
+
+// Card photos illustrate what the title already says, so they stay decorative
+// (empty alt). Only the first can be on screen at load: it alone loads eagerly.
+const cards = sorted.map((guide) => ({
+  ...guide,
+  cover: guide.coverImage ? guideImage(guide.coverImage) : null,
+}));
+const firstPhoto = cards.findIndex((card) => card.cover);
+const cardSizes = '(min-width: 48rem) 22rem, 100vw';
+
+// Claims backed by the brief (D, E) and by the guides themselves; text for the author to review.
+const reasons = [
+  {
+    title: 'Viajes hechos, no copiados',
+    text: 'Cada ruta sale de un viaje que hicimos, y la guía dice cuándo y cómo lo hicimos. Lo que no pisamos no se presenta como vivido.',
+  },
+  {
+    title: 'Presupuesto real',
+    text: 'Lo que costó, partida a partida, con la cifra por persona. Los precios y horarios llevan la fecha en que los comprobamos.',
+  },
+  {
+    title: 'Lo que dejamos fuera, y por qué',
+    text: 'No listamos todo lo que se puede ver. Elegimos lo que merece tus días y contamos qué descartamos y el motivo.',
+  },
+  {
+    title: 'Gratis y completas',
+    text: 'La guía entera está en la web. Sin registro, sin pedirte el correo y sin banners.',
+  },
+];
+
+const siteUrl = new URL('/', Astro.site).href;
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Solo Haz la Maleta',
+  url: siteUrl,
+  inLanguage: 'es',
+  description: 'Guías de viaje ya planificadas, de viajes hechos.',
+  publisher: { '@type': 'Organization', name: 'Solo Haz la Maleta', url: siteUrl },
+};
 ---
 
 <BaseLayout
   title="Solo Haz la Maleta — Guías de viaje ya planificadas"
   description="Itinerarios día a día con la ruta lista para Google Maps y qué reservar y cuándo. De viajes hechos, no copiados, y adaptados a cómo viajas."
+  design="v2"
 >
-  <section class="hero">
-    <h1 class="hero__title">Nosotros hacemos el trabajo difícil.<br /><em>Tú solo haz la maleta.</em></h1>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(websiteJsonLd)} slot="head" />
 
-    <p class="lede">
-      Itinerarios día a día, con la ruta lista para abrir en Google Maps y qué hay que
-      reservar y cuándo. De viajes hechos, no copiados.
-    </p>
+  <div class="home">
+    <section class="home-hero" aria-labelledby="home-title">
+      <h1 id="home-title" class="home-hero__title">
+        Nosotros hacemos el trabajo difícil. <span class="home-hero__claim">Tú solo haz la maleta.</span>
+      </h1>
+      <p class="home-hero__lede">
+        Guías de viajes que hemos hecho, con la ruta día a día lista para abrir en Google Maps y qué
+        reservar y cuándo. Gratis y completas, sin pedirte el correo.
+      </p>
+    </section>
 
-    <p>Gratis y completas. Sin pedirte el correo.</p>
-  </section>
+    <section class="home-guides" aria-labelledby="guias">
+      <h2 class="home-section-title" id="guias">Las guías</h2>
 
-  <h2 class="section-label" id="guias">Guías</h2>
+      {
+        cards.length === 0 ? (
+          <p>Todavía no hay guías publicadas.</p>
+        ) : (
+          <ul class="home-guides__list">
+            {cards.map((guide, i) => (
+              <li class:list={['home-card', { 'home-card--photo': guide.cover }]}>
+                {guide.cover && (
+                  <div class="home-card__media">
+                    <GuidePhoto
+                      class="home-card__photo"
+                      image={guide.cover}
+                      alt=""
+                      sizes={cardSizes}
+                      priority={i === firstPhoto}
+                      crop={{ media: '(max-width: 47.99rem)', ratio: 3 / 2, position: 'center' }}
+                    />
+                  </div>
+                )}
 
-  {
-    sorted.length === 0 ? (
-      <p>Todavía no hay guías publicadas.</p>
-    ) : (
-      <ul class="guide-list" aria-labelledby="guias">
-        {sorted.map((guide) => (
-          <li>
-            <a class="guide-list__item" href={guide.url}>
-              <p class="guide-list__meta">
-                <span>{guide.destination}</span>
-                <span>·</span>
-                <span>{guide.days.join(' · ')} días</span>
-                {guide.lived && <span class="badge badge--lived">Lo hicimos</span>}
-                {guide.draft && <span class="badge badge--adapted">Borrador</span>}
-              </p>
+                <div class="home-card__body">
+                  <p class="kicker">{guide.destination}</p>
+                  <h3 class="home-card__title">
+                    <a href={guide.url}>{guide.title}</a>
+                  </h3>
 
-              <h3 class="guide-list__title">{guide.title}</h3>
-              <p class="guide-list__desc">{guide.description}</p>
+                  <ul class="home-card__facts" aria-label="Datos de la guía">
+                    {guide.days.length > 0 && <li class="pill">{guide.days.join(' · ')} días</li>}
+                    {guide.budgetPerPerson && (
+                      <li class="pill">
+                        {formatWholePrice(guide.budgetPerPerson.amount, guide.budgetPerPerson.currency)} por persona
+                      </li>
+                    )}
+                    {guide.lived && <li class="pill pill--lived">Lo hicimos</li>}
+                    {guide.draft && <li class="pill pill--draft">Borrador</li>}
+                  </ul>
 
-              {guide.livedNote && (
-                <p class="guide-list__desc">
-                  <small>{guide.livedNote}</small>
-                </p>
-              )}
+                  <p class="home-card__desc quiet">{guide.description}</p>
+                  {guide.livedNote && <p class="home-card__note">{guide.livedNote}</p>}
 
-              <span class="guide-list__go">Ver la guía →</span>
-            </a>
+                  <span class="home-card__go" aria-hidden="true">Ver la guía →</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    <section class="home-why" aria-labelledby="por-que">
+      <h2 class="home-section-title" id="por-que">Por qué estas guías son distintas</h2>
+      <ul class="home-why__list">
+        {reasons.map((reason) => (
+          <li class="home-why__item">
+            <h3 class="home-why__title">{reason.title}</h3>
+            <p class="home-why__text">{reason.text}</p>
           </li>
         ))}
       </ul>
-    )
-  }
+    </section>
+  </div>
 </BaseLayout>
