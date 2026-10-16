@@ -2,8 +2,8 @@
 # "Qué ver", the route card and the budget per person are derived from the
 # guides in `related`; nothing of that is written here.
 #
-# Temporary duplication: `practical` and the 4x4 question are copied from the
-# 13-day guide. Step 5 of 1.13 §8 removes them from the guide.
+# `practical` lives only here: step 5 of 1.13 §8 moved it out of the 13-day
+# guide, which links to it.
 slug: islandia
 destination: islandia
 hub: /islandia/
@@ -50,7 +50,7 @@ transport:
     - mode: "Coche, autobús o excursiones organizadas"
       description: "No los probamos: hicimos todo el viaje en camper, así que no podemos contarte cómo funcionan."
 
-# Copied from the 13-day guide (temporary, see the top of this file).
+# Moved here from the 13-day guide (1.13 §3); the guide links to #practico.
 practical:
   documents:
     - "DNI o pasaporte (Islandia es espacio Schengen)"

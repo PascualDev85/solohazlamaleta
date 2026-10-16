@@ -26,11 +26,10 @@ test('the hub has no affiliate_id anywhere (no affiliate is active, 1.13 §6)', 
   assert.strictEqual(JSON.stringify(await loadGuide(HUB_PATH)).includes('affiliate_id'), false)
 })
 
-// Temporary duplication until step 5 of 1.13 §8 moves "Lo práctico" out of the
-// guide: while both copies exist they must not drift apart.
-test('the hub copy of practical matches the guide, currency aside', async () => {
+// "Lo práctico" lives only in the hub (step 5 of 1.13 §8): one source, no copy to drift.
+test('practical lives in the hub and not in the guide', async () => {
   const hub = (await loadGuide(HUB_PATH)) as GuideSource
   const guide = (await loadGuide(GUIDE_PATH)) as GuideSource
-  const { currency: _, ...hubPractical } = hub.practical ?? {}
-  assert.deepStrictEqual(hubPractical, guide.practical)
+  assert.ok(hub.practical)
+  assert.strictEqual(guide.practical, undefined)
 })
