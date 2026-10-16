@@ -1,0 +1,465 @@
+{
+  "meta": {
+    "lang": "es",
+    "destination": "egipto",
+    "title": "Egipto en 8 días: El Cairo, Asuán, Abu Simbel, Luxor y Hurghada",
+    "description": "Itinerario de 8 días por Egipto: El Cairo, Asuán, Abu Simbel, Luxor y Hurghada. Borrador, con precios y horarios pendientes de verificar.",
+    "type": "itinerary",
+    "days": [8],
+    "tripDone": null,
+    "updatedAt": "2026-10-14",
+    "draft": true
+  },
+  "variants": {
+    "8": [1, 2, 3, 4, 5, 6, 7, 8]
+  },
+  "summary": {
+    "forWho": "PENDIENTE AUTOR: para quién recomendarías este itinerario. Recorre El Cairo, Asuán, Abu Simbel, Luxor, Dendera y Hurghada en 8 días por carretera y vuelos internos, con los templos faraónicos como eje central.",
+    "budgetPerPerson": { "min": 0, "max": 0 },
+    "bestSeason": "PENDIENTE AUTOR: mejor época para repetirlo. El viaje de las notas fue del 22 de febrero al 1 de marzo de 2025.",
+    "gettingAround": "Coche con conductor contratado por tramos: un guía en El Cairo y alrededores (Mustafá) y otro conductor para Asuán, Luxor y Hurghada (Saleh), según las notas. Un vuelo entre El Cairo y Asuán, y otro entre Hurghada y El Cairo.",
+    "baseArea": "Ruta por varias ciudades, sin una única base: El Cairo, Asuán, Abu Simbel, Luxor y Hurghada, enlazadas por carretera y vuelos internos.",
+    "pace": "intense"
+  },
+  "groups": ["couple", "friends", "family_seniors"],
+  "days": [
+    {
+      "day": 1,
+      "title": "Llegada a El Cairo (sábado 22 de febrero)",
+      "summary": "Vuelo desde Madrid con llegada a El Cairo a las 22:20 y traslado al hotel en Guiza.",
+      "physicalLevel": { "walkingKm": 0, "hills": "none" },
+      "stops": [
+        {
+          "name": "Aeropuerto Internacional de El Cairo",
+          "lat": 30.1219,
+          "lng": 31.4056,
+          "kind": "transport",
+          "durationMin": 60,
+          "startTime": "22:20",
+          "notes": "Llegada del vuelo Madrid–El Cairo. Traslado después al hotel en Guiza. PENDIENTE AUTOR: medio de traslado al hotel; las notas apuntan 'falta taxi: inDrive o Uber', sin confirmar cuál se usó.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 2,
+      "title": "Guiza y traslado a Asuán (domingo 23 de febrero)",
+      "summary": "Pirámides de Guiza, Saqqara y Menfis por la mañana con guía local; mercado de Khan el-Khalili al final de la tarde; vuelo nocturno a Asuán.",
+      "physicalLevel": { "walkingKm": 6, "hills": "none" },
+      "stops": [
+        {
+          "name": "Pirámides de Guiza y la Esfinge",
+          "lat": 29.9792,
+          "lng": 31.1342,
+          "kind": "sight",
+          "durationMin": 210,
+          "notes": "Visita de un día completo con guía local contratado de antemano (tour con almuerzo incluido, 160 € para el grupo de 4, en efectivo y en euros). Entrada: 10 € (según las notas de 2025). PENDIENTE AUTOR: confirmar recorrido y hora con el guía antes del viaje.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Necrópolis de Saqqara",
+          "lat": 29.8713,
+          "lng": 31.2165,
+          "kind": "sight",
+          "durationMin": 90,
+          "notes": "Entrada: 8,50 € (según las notas de 2025).",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Menfis",
+          "lat": 29.8450,
+          "lng": 31.2500,
+          "kind": "sight",
+          "durationMin": 45,
+          "notes": "Menos de una hora según las notas. Entrada: 2,70 € (según las notas de 2025).",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Khan el-Khalili (mercado)",
+          "lat": 30.0477,
+          "lng": 31.2622,
+          "kind": "sight",
+          "durationMin": 105,
+          "startTime": "17:00",
+          "notes": "Llegada hacia las 17:00, salida hacia las 19:30-20:00 según las notas (ventana algo más amplia que la duración de visita indicada). PENDIENTE AUTOR: dónde cenar; las notas dudan entre 'Egyptian Pancakes' y 'El Fishawi' (aparecen con un signo de interrogación).",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Traslado y vuelo a Asuán",
+          "lat": 30.1219,
+          "lng": 31.4056,
+          "kind": "transport",
+          "durationMin": 120,
+          "startTime": "20:30",
+          "notes": "Traslado al aeropuerto de El Cairo hacia las 20:30, vuelo a Asuán con salida a las 22:30. A la llegada, taxi hasta el embarcadero (7,56 € según las notas) y barco hasta la vivienda de Labib, donde se alojaron esa noche.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 3,
+      "title": "Asuán: Templo de Filae y Abu Simbel (lunes 24 de febrero)",
+      "summary": "Barca a la isla de Agilkia para ver el Templo de Filae por la mañana, después unos 300 km por carretera hasta Abu Simbel y vuelta a Asuán por la noche.",
+      "physicalLevel": { "walkingKm": 3, "hills": "none" },
+      "stops": [
+        {
+          "name": "Templo de Filae (isla de Agilkia)",
+          "lat": 24.0244,
+          "lng": 32.8847,
+          "kind": "sight",
+          "durationMin": 120,
+          "startTime": "07:30",
+          "travelToNextMin": 180,
+          "notes": "Salida en barca desde el embarcadero hacia las 6:30-7:00h (20-30 min de trayecto, 8,50 € según las notas). Entrada al templo: 8,50 € (según las notas de 2025). Salida hacia las 9:00-9:30h. A Abu Simbel hay unas 3 horas de carretera (300 km).",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Templos de Abu Simbel (Ramsés II y Nefertari)",
+          "lat": 22.3372,
+          "lng": 31.6258,
+          "kind": "sight",
+          "durationMin": 165,
+          "startTime": "12:00",
+          "travelToNextMin": 210,
+          "notes": "Llegada estimada entre las 12:00 y las 12:30. Entrada: 11,40 € (según las notas de 2025). Visita y comida en el lugar, con fin hacia las 15:30-16:00. Regreso a Asuán hacia las 19:15-19:30.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR: qué hacer al volver a Asuán por la tarde. Las notas dejan como opciones el mercado de Asuán, un paseo en faluca (8-10 €) o el Pueblo Nubio, sin confirmar cuál se eligió. Cena en Asuán sin restaurante confirmado.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 4,
+      "title": "Asuán a Luxor: Kom Ombo, Edfu y Esna (martes 25 de febrero)",
+      "summary": "Carretera de Asuán a Luxor visitando tres templos por el camino, check-in y templo de Luxor al atardecer.",
+      "physicalLevel": { "walkingKm": 5, "hills": "none" },
+      "stops": [
+        {
+          "name": "Templo de Kom Ombo",
+          "lat": 24.4514,
+          "lng": 32.9284,
+          "kind": "sight",
+          "durationMin": 105,
+          "startTime": "08:15",
+          "travelToNextMin": 90,
+          "notes": "A 1-1,15h de Asuán. Entrada: 6,70 € (según las notas de 2025).",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Templo de Edfu",
+          "lat": 24.9781,
+          "lng": 32.8738,
+          "kind": "sight",
+          "durationMin": 105,
+          "startTime": "10:30",
+          "travelToNextMin": 60,
+          "notes": "A 1,5h de Kom Ombo. Entrada: 8,30 € (según las notas de 2025).",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Templo de Jnum (Esna)",
+          "lat": 25.2933,
+          "lng": 32.5531,
+          "kind": "sight",
+          "durationMin": 60,
+          "startTime": "13:00",
+          "travelToNextMin": 75,
+          "notes": "A 1h de Edfu. Entrada: 3 € (según las notas de 2025).",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Llegada a Luxor",
+          "lat": 25.6872,
+          "lng": 32.6396,
+          "kind": "stay",
+          "durationMin": 60,
+          "startTime": "16:00",
+          "notes": "A 1,15h de Esna. Check-in; si da tiempo, visita al Templo de Luxor al atardecer (ver siguiente parada). PENDIENTE AUTOR: paseo en globo en Luxor mencionado en las notas de este día como actividad a confirmar con una agencia local (25-30 €); el precio no coincide con el que aparece en el resumen de gastos del viaje (100-120 €, 'por confirmar divisa') — ver día 6.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Templo de Luxor",
+          "lat": 25.6995,
+          "lng": 32.6421,
+          "kind": "sight",
+          "durationMin": 135,
+          "startTime": "19:30",
+          "notes": "Visita al atardecer. Entrada: 5 € (según las notas de 2025). PENDIENTE AUTOR: dónde comer; en las notas aparece como candidato 'Al-Sahaby Street'.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 5,
+      "title": "Luxor: Karnak, Hatshepsut, Valle de los Reyes y Colosos de Memnón (miércoles 26 de febrero)",
+      "summary": "Día completo en la orilla este y oeste de Luxor, con tarde libre en la ciudad.",
+      "physicalLevel": { "walkingKm": 8, "hills": "some" },
+      "stops": [
+        {
+          "name": "Templo de Karnak",
+          "lat": 25.7188,
+          "lng": 32.6573,
+          "kind": "sight",
+          "durationMin": 90,
+          "startTime": "08:45",
+          "travelToNextMin": 25,
+          "notes": "Salida del hotel a las 8:00h. Entrada: 8,40 € (según las notas de 2025).",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Templo de Hatshepsut",
+          "lat": 25.7382,
+          "lng": 32.6064,
+          "kind": "sight",
+          "durationMin": 75,
+          "startTime": "10:45",
+          "travelToNextMin": 15,
+          "notes": "A 20-30 min de Karnak. PENDIENTE AUTOR: el precio de la entrada varía entre las notas del día (6,40 €) y el resumen de gastos del viaje (6,70 €); confirmar cuál es correcto.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Valle de los Reyes",
+          "lat": 25.7402,
+          "lng": 32.6014,
+          "kind": "sight",
+          "durationMin": 135,
+          "startTime": "12:45",
+          "travelToNextMin": 10,
+          "notes": "A 15-20 min de Hatshepsut. Entrada general: 11,20 € (según el resumen de gastos de las notas). PENDIENTE AUTOR: confirmar si se visitaron tumbas adicionales de pago; las notas mencionan la Tumba de Sety (33,40 €) y la de Ramsés (2,40 €) sin decir si se incluyeron en esta visita.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Colosos de Memnón",
+          "lat": 25.7206,
+          "lng": 32.6103,
+          "kind": "sight",
+          "durationMin": 20,
+          "startTime": "15:10",
+          "travelToNextMin": 75,
+          "notes": "A 5-10 min del Valle de los Reyes. El regreso a Luxor figura en las notas como '1,15 min', que probablemente sea una errata por 1h15 — PENDIENTE AUTOR: confirmar la duración real del regreso.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR: qué se hizo en la tarde libre en Luxor. Las notas dejan como opciones el paseo por el mercado o en faluca por el Nilo, sin confirmar cuál. Cena sin restaurante confirmado.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 6,
+      "title": "Luxor a Hurghada: paseo en globo y Templo de Dendera (jueves 27 de febrero)",
+      "summary": "Vuelo en globo al amanecer sobre el Valle de los Reyes, templo de Dendera en el camino y llegada a Hurghada.",
+      "physicalLevel": { "walkingKm": 2, "hills": "none" },
+      "stops": [
+        {
+          "name": "Templo de Dendera",
+          "lat": 26.1417,
+          "lng": 32.6701,
+          "kind": "sight",
+          "durationMin": 75,
+          "startTime": "10:30",
+          "travelToNextMin": 150,
+          "notes": "A 1h15 desde la zona de los globos, según las notas. Entrada: 4,50 € (según las notas de 2025). Después, 3-3,5h de carretera hasta Hurghada.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Llegada a Hurghada",
+          "lat": 27.2579,
+          "lng": 33.8116,
+          "kind": "stay",
+          "durationMin": 60,
+          "startTime": "13:00",
+          "notes": "Llegada entre las 13:00 y las 14:00h. Check-in, comida y descanso. Apartamento Lilly, pagado 56,62 € por PayPal el 22 feb 2025 según las notas (ver alojamiento).",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR: paseo en globo sobre el Valle de los Reyes (recogida en el hotel 4:30-5:00h, despegue hacia las 5:30h, vuelo de 45 min a 1h). Se deja fuera como parada por no tener la ubicación exacta del punto de despegue. El precio aparece contradictorio en las notas: 25-30 € en los apuntes del día 4, y 100-120 € 'por confirmar divisa' en el resumen de gastos del viaje — confirmar cuál es correcto.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 7,
+      "title": "Hurghada a El Cairo: tour Orange Bay (viernes 28 de febrero)",
+      "summary": "Mañana en Hurghada con el tour a Orange Bay y vuelo de noche de vuelta a El Cairo.",
+      "physicalLevel": { "walkingKm": 2, "hills": "none" },
+      "stops": [
+        {
+          "name": "Traslado al aeropuerto de Hurghada",
+          "lat": 27.1783,
+          "lng": 33.7994,
+          "kind": "transport",
+          "durationMin": 15,
+          "startTime": "20:00",
+          "notes": "Salida del hotel a las 20:00h hacia el vuelo de las 21:30h a El Cairo (llegada estimada 22:40h). Noche en El Cairo.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR: tour Orange Bay en Hurghada (8h, salida por la mañana). Se deja fuera como parada por no tener la ubicación exacta del muelle de salida. El precio también es contradictorio: 20 € en el itinerario del día, y 80-100 € 'por confirmar divisa' en el resumen de gastos del viaje — confirmar cuál es correcto.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 8,
+      "title": "El Cairo: Ciudadela, museos y Torre antes del vuelo (sábado 1 de marzo)",
+      "summary": "Último día en El Cairo: la Ciudadela de Saladino, el Museo Egipcio, el Museo de la Civilización, la calle Al-Muizz, la Torre de El Cairo y el aeropuerto.",
+      "physicalLevel": { "walkingKm": 9, "hills": "some" },
+      "stops": [
+        {
+          "name": "Ciudadela de Saladino",
+          "lat": 30.0287,
+          "lng": 31.2600,
+          "kind": "sight",
+          "durationMin": 135,
+          "startTime": "08:00",
+          "travelToNextMin": 30,
+          "notes": "Incluye las mezquitas de Alabastro (Mohamed Alí) y Al-Nasir Muhammad, el Museo de la Policía y el Museo Militar. Entrada: 8,30 € (según las notas de 2025). Parada rápida para un snack cerca, hacia las 11:00-11:30h.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Museo Egipcio de El Cairo",
+          "lat": 30.0478,
+          "lng": 31.2336,
+          "kind": "sight",
+          "durationMin": 180,
+          "startTime": "12:00",
+          "travelToNextMin": 60,
+          "notes": "Entrada: 8,40 € (según las notas de 2025). Comida después, sobre las 15:00-16:00h, sin restaurante confirmado en las notas.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Museo Nacional de la Civilización Egipcia (Momias)",
+          "lat": 30.0135,
+          "lng": 31.2495,
+          "kind": "sight",
+          "durationMin": 90,
+          "startTime": "16:00",
+          "travelToNextMin": 75,
+          "notes": "PENDIENTE AUTOR: el precio de la entrada varía entre las notas del día (13 €) y el resumen de gastos del viaje (9,20 €); confirmar cuál es correcto.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Calle Al-Muizz y El Cairo Viejo",
+          "lat": 30.0516,
+          "lng": 31.2608,
+          "kind": "sight",
+          "durationMin": 45,
+          "startTime": "17:15",
+          "travelToNextMin": 15,
+          "notes": "Calle peatonal histórica con edificios islámicos, mezquitas y bazares.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Torre de El Cairo",
+          "lat": 30.0459,
+          "lng": 31.2243,
+          "kind": "sight",
+          "durationMin": 52,
+          "startTime": "18:15",
+          "travelToNextMin": 15,
+          "notes": "PENDIENTE AUTOR: precio de la entrada; las notas lo dejan con un doble signo de interrogación ('10 € ??').",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Paseo por la ribera del Nilo",
+          "lat": 30.0444,
+          "lng": 31.2357,
+          "kind": "sight",
+          "durationMin": 30,
+          "startTime": "19:15",
+          "travelToNextMin": 15,
+          "notes": "Paseo tranquilo por la ribera antes de la cena.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        },
+        {
+          "name": "Traslado al aeropuerto de El Cairo",
+          "lat": 30.1219,
+          "lng": 31.4056,
+          "kind": "transport",
+          "durationMin": 60,
+          "startTime": "20:30",
+          "notes": "Cena antes de salir hacia el aeropuerto, sin restaurante confirmado en las notas ('cerca del Nilo o en la zona del Cairo Viejo'). Vuelo de regreso a las 23:20h.",
+          "source": { "label": "Notas propias del viaje a Egipto (febrero-marzo 2025)" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    }
+  ],
+  "lodging": [
+    {
+      "zone": "Guiza (noche 1)",
+      "pros": [
+        "Primera noche cerca de las pirámides: New Top Pyramids Hotel, pagado en efectivo a la llegada (29 € y 36 € según las notas)."
+      ],
+      "cons": ["PENDIENTE AUTOR: valorar el alojamiento."],
+      "picks": []
+    },
+    {
+      "zone": "Asuán (noche 2)",
+      "pros": [
+        "Alojamiento en la vivienda de Labib, con traslado en barco desde el embarcadero; pago de 77 € gestionado 5 días antes, según las notas."
+      ],
+      "cons": ["PENDIENTE AUTOR: valorar el alojamiento."],
+      "picks": []
+    },
+    {
+      "zone": "Luxor (noches 4 y 5)",
+      "pros": [
+        "Apartamento Tara, pagado 49,44 € por PayPal el 18 de febrero de 2025 según las notas."
+      ],
+      "cons": ["PENDIENTE AUTOR: valorar el alojamiento."],
+      "picks": []
+    },
+    {
+      "zone": "Hurghada (noche 6)",
+      "pros": [
+        "Apartamento Lilly, pagado 56,62 € por PayPal el 22 de febrero de 2025 según las notas."
+      ],
+      "cons": ["PENDIENTE AUTOR: valorar el alojamiento."],
+      "picks": []
+    },
+    {
+      "zone": "El Cairo (noche 7)",
+      "pros": [
+        "Hotel para la última noche antes del vuelo, pagado 61,09 € por PayPal el 26 de febrero de 2025 según las notas. Nombre del hotel sin confirmar."
+      ],
+      "cons": ["PENDIENTE AUTOR: valorar el alojamiento."],
+      "picks": []
+    }
+  ],
+  "bookingChecklist": [
+    {
+      "item": "SIM local con datos (unos 10 €, 30 GB, 200 min nacionales y 30 min internacionales)",
+      "when": "A la llegada al aeropuerto, según las notas."
+    },
+    {
+      "item": "Acordar con el guía en El Cairo (Mustafá) el recorrido y la hora exactos.",
+      "when": "Antes del día 2."
+    },
+    {
+      "item": "Acordar con el conductor en Asuán, Luxor y Hurghada (Saleh) los traslados y horarios.",
+      "when": "Antes del día 3."
+    },
+    {
+      "item": "PENDIENTE AUTOR: confirmar y reservar el paseo en globo en Luxor y el tour Orange Bay en Hurghada; las notas no confirman si se reservaron con antelación o in situ, y los precios son contradictorios entre secciones de las notas.",
+      "when": "PENDIENTE AUTOR."
+    }
+  ],
+  "pitfalls": [
+    "Llevar bastante efectivo: unos 250 € en efectivo, y los traslados con conductor se pagan también en euros y efectivo, según las notas.",
+    "Los templos cierran a las 17:00, según las notas.",
+    "Para ver el Templo de Filae y Abu Simbel en el mismo viaje, conviene visitar primero Filae y luego Abu Simbel (a unas 3 horas en coche desde Asuán) para evitar los cruceros, según las notas."
+  ],
+  "faq": [],
+  "related": []
+}
