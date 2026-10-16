@@ -1092,9 +1092,6 @@ faq:
   - q: "¿Qué ruta es mejor, horaria o antihoraria?"
     a: "Nosotros hicimos la antihoraria (sur primero) y nos gustó: el sur tiene los atractivos más impactantes como aperitivo. El norte tiene menos turistas para el final."
     schema: true
-  - q: "¿Hace falta 4x4 para la Ring Road?"
-    a: "No. La Ring Road está asfaltada y se hace sin problema con un camper estándar. El 4x4 solo es necesario para las F-roads, prohibidas para campers de alquiler estándar."
-    schema: true
 
 adaptation_notes:
   - id: parents_road_conditions

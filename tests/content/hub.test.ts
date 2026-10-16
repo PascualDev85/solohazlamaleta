@@ -33,3 +33,12 @@ test('practical lives in the hub and not in the guide', async () => {
   assert.ok(hub.practical)
   assert.strictEqual(guide.practical, undefined)
 })
+
+// FAQ split (1.13 §3): destination questions in the hub, route questions in the guide, none in both.
+test('no FAQ question is in both the hub and the guide', async () => {
+  const hub = (await loadGuide(HUB_PATH)) as GuideSource
+  const guide = (await loadGuide(GUIDE_PATH)) as GuideSource
+  const hubQuestions = new Set((hub.faq ?? []).map((item) => item.q))
+  const shared = (guide.faq ?? []).filter((item) => hubQuestions.has(item.q)).map((item) => item.q)
+  assert.deepStrictEqual(shared, [])
+})

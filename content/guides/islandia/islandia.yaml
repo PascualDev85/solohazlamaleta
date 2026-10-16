@@ -70,7 +70,8 @@ practical:
     name: "Corona islandesa"
     notes: "Casi todo se paga con tarjeta, pero algún camping aislado pide solo efectivo (en nuestra ruta, Mosskógar): lleva algunas coronas encima."
 
-# Preguntas sobre Islandia: the guide's destination question, plus those
+# Preguntas sobre Islandia: the destination question moved from the guide
+# (4x4, 1.13 §3; the guide keeps only questions about its route), plus those
 # proposed by docs/fuentes/seo-islandia-grupo.md §3 whose answer is already in
 # the repo. Borrador del implementador, pendiente del autor; only the one the
 # author already marked in the guide goes into the JSON-LD.
