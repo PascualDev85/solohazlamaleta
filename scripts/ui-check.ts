@@ -3,7 +3,7 @@
 // They guard what unit tests cannot see: the layers of the overlay panels and
 // the lines of the day cards on small phones. Each check names what broke.
 import { chromium } from 'playwright'
-import { PANELS, dayCardLineIssues, headerOverlap, siteHeaderIssues } from './ui-shared.ts'
+import { PANELS, dayCardLineIssues, headerOverlap, scrollAnimationIssues, siteHeaderIssues } from './ui-shared.ts'
 
 const [base, page = '/'] = process.argv.slice(2)
 if (!base) {
@@ -43,6 +43,14 @@ for (const width of [350, 360, 375, 390, 414]) {
   await tab.goto(url, { waitUntil: 'networkidle' })
   const bad = [...(await tab.evaluate(dayCardLineIssues)), ...(await tab.evaluate(siteHeaderIssues))]
   for (const b of bad) fail(`${width}px: ${b}`)
+  await tab.close()
+}
+
+// 3. Scroll-driven animations survive the minified build (see scrollAnimationIssues).
+{
+  const tab = await browser.newPage({ viewport: { width: 390, height: 844 } })
+  await tab.goto(url, { waitUntil: 'networkidle' })
+  for (const b of await tab.evaluate(scrollAnimationIssues)) fail(b)
   await tab.close()
 }
 

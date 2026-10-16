@@ -102,3 +102,28 @@ export function siteHeaderIssues() {
   if (!header.querySelector('nav[aria-label="Principal"]')) issues.push('main navigation landmark missing')
   return issues
 }
+
+/**
+ * The scroll-driven animations must survive the production build. The
+ * minifier folds "animation" and "animation-timeline" into one shorthand that
+ * carries the timeline; no browser accepts that, so it drops the declaration
+ * and the effect silently disappears (the day cards' 3D turn and the glance's
+ * "Hasta el día 13" fade did, until 2026-10-16; dev builds, unminified, still
+ * showed them). Two checks: no shorthand in the page's own CSS carries a
+ * timeline, and the elements that should animate really have an animation.
+ */
+export function scrollAnimationIssues() {
+  const bad: string[] = []
+  const css = [...document.querySelectorAll('style')].map((s) => s.textContent ?? '').join('\n')
+  for (const m of css.matchAll(/animation:([^;}]*)/g)) {
+    if (/\b(view|scroll)\(/.test(m[1])) bad.push(`animation shorthand carries a timeline: "${m[1].slice(0, 80)}"`)
+  }
+  // Only where the browser supports scroll timelines and motion is allowed.
+  const supported = CSS.supports('animation-timeline: view()')
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (supported && !reduced) {
+    const card = document.querySelector<HTMLElement>('.route__rail > .day')
+    if (card && getComputedStyle(card).animationName === 'none') bad.push('day cards have no 3D turn animation')
+  }
+  return bad
+}
