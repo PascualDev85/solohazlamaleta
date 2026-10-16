@@ -23,6 +23,12 @@ jobs:
       - name: Unit tests
         run: npm test
 
+      # Types of src/, engine/, schemas/, scripts/ and tests/, .astro files
+      # included. Test fixtures typed against the schema fail here when the
+      # schema moves and they do not.
+      - name: Type check
+        run: npm run typecheck
+
       # A guide that does not satisfy the schema must stop the build.
       # This is the project's content quality gate, not a formality.
       - name: Build

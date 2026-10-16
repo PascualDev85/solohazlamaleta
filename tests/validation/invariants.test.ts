@@ -5,7 +5,7 @@ import { PlaceSourceSchema } from '../../schemas/index.ts'
 import type { PlaceRegistry, AffiliateRegistry, GuideSource } from '../../engine/index.ts'
 
 const places: PlaceRegistry = {
-  get: (id) => (id === 'a' ? { place_id: 'a', name: 'A', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2024-01-01', entry: { price: 10, currency: 'EUR', verified_at: '2024-01-01' } } : undefined),
+  get: (id) => (id === 'a' ? { place_id: 'a', name: 'A', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2024-01-01', review_interval: 12, entry: { price: 10, currency: 'EUR', verified_at: '2024-01-01' } } : undefined),
 }
 const emptyAffiliates: AffiliateRegistry = { get: () => undefined }
 const now = new Date('2024-06-01')

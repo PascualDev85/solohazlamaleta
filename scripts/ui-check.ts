@@ -3,7 +3,7 @@
 // They guard what unit tests cannot see: the layers of the overlay panels and
 // the lines of the day cards on small phones. Each check names what broke.
 import { chromium } from 'playwright'
-import { PANELS, dayCardLineIssues, headerOverlap } from './ui-shared.ts'
+import { PANELS, dayCardLineIssues, headerOverlap, siteHeaderIssues } from './ui-shared.ts'
 
 const [base, page = '/'] = process.argv.slice(2)
 if (!base) {
@@ -37,11 +37,11 @@ const browser = await chromium.launch()
 // 2. Day cards on phones from 350 to 414px wide, for every day with route data
 //    (a drive line): the route in two rows, more on long days (see
 //    dayCardLineIssues); facts, night, each stop's name and its practical
-//    line in one.
+//    line in one. The site header too: one row, 44px links, never sticky.
 for (const width of [350, 360, 375, 390, 414]) {
   const tab = await browser.newPage({ viewport: { width, height: 844 } })
   await tab.goto(url, { waitUntil: 'networkidle' })
-  const bad = await tab.evaluate(dayCardLineIssues)
+  const bad = [...(await tab.evaluate(dayCardLineIssues)), ...(await tab.evaluate(siteHeaderIssues))]
   for (const b of bad) fail(`${width}px: ${b}`)
   await tab.close()
 }
