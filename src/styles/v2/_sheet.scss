@@ -1,6 +1,7 @@
 @use "../abstracts" as *;
 
-// The overlay panel shared by the guide index and the full-day view: a centred
+// The overlay panel shared by the guide index, the full-day view and the route
+// at a glance: a centred
 // card on desktop, a sheet rising from the bottom on mobile. Native popover,
 // so opening, closing, Esc and light-dismiss need no JavaScript.
 
@@ -54,6 +55,14 @@
       @starting-style {
         transform: translateY(100%);
       }
+    }
+
+    // A sheet rests on the bottom edge: its end scrolls clear of the home
+    // indicator (0 where there is none).
+    &::after {
+      content: "";
+      display: block;
+      height: env(safe-area-inset-bottom);
     }
   }
 }

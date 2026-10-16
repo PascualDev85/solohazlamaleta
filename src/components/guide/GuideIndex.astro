@@ -1,4 +1,6 @@
 ---
+import { dayAnchorId } from '../../lib/anchors.ts';
+import { twoDigitDay } from '../../lib/dayNumber.ts';
 import SectionIcon from './SectionIcon.astro';
 
 interface Props {
@@ -57,8 +59,8 @@ const { sections, routeId, days = [] } = Astro.props;
                 <li><a href={`#${section.id}`}>Toda la ruta</a></li>
                 {days.map((day) => (
                   <li>
-                    <a href={`#dia-${day.day}`}>
-                      <span class="guide-index__daynum">{String(day.day).padStart(2, '0')}</span>
+                    <a href={`#${dayAnchorId(day.day)}`}>
+                      <span class="guide-index__daynum">{twoDigitDay(day.day)}</span>
                       <span>{day.title}</span>
                     </a>
                   </li>
@@ -81,9 +83,15 @@ const { sections, routeId, days = [] } = Astro.props;
 
 <script>
   import { nextDock } from '../../lib/scroll-direction.ts';
+  import { keepFocusIn } from '../../lib/popover-focus.ts';
 
   // Close the index once a section is chosen, so it does not cover it.
   const index = document.getElementById('guide-index');
+
+  // Tab stays inside whichever panel is open: this index, the route at a
+  // glance and each day's full sheet. Wired here once, so the helper ships
+  // inside this script instead of as a chunk of its own.
+  for (const panel of document.querySelectorAll<HTMLElement>('[popover][role="dialog"]')) keepFocusIn(panel);
   index?.addEventListener('click', (event) => {
     if ((event.target as Element).closest('a')) index.hidePopover();
   });

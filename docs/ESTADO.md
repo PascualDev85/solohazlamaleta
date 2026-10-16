@@ -1,104 +1,317 @@
 # Estado del proyecto
 
-Última actualización: 2026-09-22
+Última actualización: 2026-10-15
+
+Reconstruido desde el historial de `develop` y de las ramas
+`feature/checkpoint3-diseno-v6*`, las PR #6 a #17, la issue #11 y los
+documentos 1.10, 1.11 y 1.12. Lo que no se puede demostrar con esas fuentes
+va marcado **(a confirmar)**.
 
 ---
 
 ## Dónde está todo
 
-- **Repo:** https://github.com/PascualDev85/solohazlamaleta (privado)
-- **PR abierto:** [#1 — F1: project foundation, specialist agents and the guide schema](https://github.com/PascualDev85/solohazlamaleta/pull/1)
-- **Ramas:** `main` (producción) · `develop` (integración) · `feature/agents-and-conventions` (el trabajo de F1)
+- **Repo:** https://github.com/PascualDev85/solohazlamaleta
+- **Ramas:** `main` (producción) · `develop` (integración; último merge: PR #8,
+  2026-10-07) · ramas `feature/checkpoint3-diseno-v6-*` con el trabajo en curso.
+- **Guía de Islandia (motor nuevo):**
+  `content/guides/islandia/islandia-en-camper-13-dias.yaml` y
+  `content/places/islandia.yaml`, validados por `schemas/` y compilados por
+  `engine/`. Página: `src/pages/islandia/islandia-en-camper-13-dias.astro`
+  → `/islandia/islandia-en-camper-13-dias/`, en `noindex` y fuera del sitemap.
+- **Guía de Alsacia (sistema antiguo):** `src/content/guides/ruta-pueblos-y-vinos.json`,
+  borrador. Lo que falta, en [PENDIENTE-ALSACIA.md](PENDIENTE-ALSACIA.md).
+- **Notas de viaje del autor:** `docs/fuentes/` (Islandia, Egipto, Tailandia,
+  Macedonia del Norte).
+- **Contratos (no se editan desde las rutinas):** `docs/BRIEF.md` (incluye las
+  decisiones cerradas: `DECISIONES.md` se fusionó en él en `1853c72`,
+  2026-09-30) y los documentos `docs/1.x`. El marco del trabajo actual está en
+  `docs/1.10_checkpoint3_diseno.md`, `docs/1.11_islandia_estructura_contenidos.md`
+  y `docs/1.12_direccion_guia_islandia.md`.
+
+### PR abiertas (a 2026-10-15)
+
+| PR | Rama | Qué | Estado | CI en su head |
+|---|---|---|---|---|
+| [#9](https://github.com/PascualDev85/solohazlamaleta/pull/9) | `…-v6-dia-4` | Día 4 (Skógafoss → Svínafell) con parkings, mapas y tiempos del autor; `free_nearby`; `test:devices`; área segura; bocadillo con `pointerdown` | Borrador | ✅ build, lighthouse, devices (`f491206`) |
+| [#10](https://github.com/PascualDev85/solohazlamaleta/pull/10) | `fix/deps-2026-10-12` | Parches y menores: astro 7.3.8, sass, zod, pdfjs-dist, playwright 1.64 | Lista | ✅ build, lighthouse |
+| [#12](https://github.com/PascualDev85/solohazlamaleta/pull/12) | `feature/guia-egipto` | Guía de Egipto estructurada desde las notas, borrador, **en el esquema antiguo** (`src/content/`, JSON) | Lista para revisar | ✅ build, lighthouse |
+| [#13](https://github.com/PascualDev85/solohazlamaleta/pull/13) | `…-v6-secciones` | Diseño móvil de las siete secciones tras la ruta | Borrador | ✅ build, lighthouse, devices |
+| [#14](https://github.com/PascualDev85/solohazlamaleta/pull/14) | `…-v6-dias-5-13` | Días 5 a 13: conducción, tramos, nombres cortos, descartes, textos; informe de coordenadas | Borrador | ✅ build · ❌ lighthouse (`test:ui`) · ❌ devices |
+| [#15](https://github.com/PascualDev85/solohazlamaleta/pull/15) | `…-v6-escritorio` | Diseño de escritorio de las secciones tras la ruta (solo CSS) | Borrador, depende de #13 | ✅ build, lighthouse, devices |
+| [#16](https://github.com/PascualDev85/solohazlamaleta/pull/16) | `…-v6-seo` | Auditoría SEO técnica: `noopener`, BreadcrumbList, Article, Open Graph, canonical de `/ir/` | Borrador | ✅ build, lighthouse, devices |
+| [#17](https://github.com/PascualDev85/solohazlamaleta/pull/17) | `…-v6-a11y` | Auditoría WCAG 2.2 AA y arreglos sin cambio visual | Borrador | ✅ build, lighthouse, devices |
+
+Las ramas de #13, #14, #16 y #17 salen de la del día 4, y la de #15 sale de
+la de #13: hasta que #9 entre en `develop`, sus diffs llevan también los
+commits de #9 (y #15 los de #13). Orden de merge que se deduce de esas
+dependencias: **#9 → #13 → #15**, y después #16, #17 y #14. Si #16 y #17
+chocan entre sí al rebasarlas: **(a confirmar)**.
+
+Issue abierta: [#11](https://github.com/PascualDev85/solohazlamaleta/issues/11)
+— `npm audit`: 2 vulnerabilidades altas sin actualizar
+(`http-cache-semantics`, `sharp`), abierta por la auditoría de dependencias el
+2026-10-12.
 
 ## Qué hay hecho
 
 | | Estado |
 |---|---|
 | Repo, gitflow, `.gitignore` | ✅ |
-| Brief y decisiones versionados | ✅ |
-| 9 agentes especialistas | ✅ |
+| Brief y decisiones versionados (decisiones fusionadas en `BRIEF.md`, `1853c72`) | ✅ |
+| Agentes especialistas, reducidos de nueve a tres (PR #3, 2026-09-28) | ✅ |
 | Convenciones: SOLID, gitflow, definición de terminado | ✅ |
 | Astro 7 + Vue + sitemap, TypeScript estricto | ✅ |
-| Esquema de guía con los huecos de D9 cerrados | ✅ |
-| Layout, plantilla de guía, componentes | ✅ |
+| Arquitectura de Sass y render completo del esquema antiguo (PR #2, 2026-09-28) | ✅ |
+| Arquitectura de información y documentos 1.5–1.9 (PR #4 y #5, 2026-09-30) | ✅ |
+| Motor de dominio (`engine/`): carga YAML, tres capas de validación, compilación, presupuesto, invariantes I1–I17 con tests | ✅ (PR #6) |
+| Guía de Islandia renderizada desde el motor (Checkpoint 2) | ✅ (PR #6, 2026-10-03) |
+| Checkpoint 3 — C3.1 bloque de experiencia, índice, sin "Vivido" | ✅ (`4a691c6`) |
+| Checkpoint 3 — C3.2 día como unidad, parada compacta, frescura del dato | ✅ en `develop` (v2–v6: `857b758`, `dfceaff`, `5c7f08b`, `3efd081`) |
+| Checkpoint 3 — C3.3 presupuesto en tabla y "Lo que dejamos fuera" | ✅ (`3efd081`, PR #8) |
+| Checkpoint 3 — C3.4 fotos | 🟡 portada (`3dcd013`) y días 1–3 con foto; días 4–13 sin foto |
+| Checkpoint 3 — C3.5 mapa | ⬜ bloqueado por las coordenadas (1.10 §5) |
+| Checkpoint 3 v6 — modelo de campings y criterio, días 1–3, ruta de un vistazo | ✅ (PR #8, 2026-10-07) |
+| Días 1–3 de Islandia revisados con el autor | ✅ (`e8fff2e`, en `develop`) |
+| Día 4 con parkings, mapas y tiempos del autor | 🟡 en PR #9, sin mergear |
+| Días 5–13 integrados en borrador | 🟡 en PR #14, sin mergear y con la CI en rojo |
+| Diseño móvil y de escritorio de las secciones tras la ruta | 🟡 en PR #13 y #15 |
+| Auditorías SEO técnica y WCAG 2.2 AA | 🟡 en PR #16 y #17 |
+| CI: tests, build, guía inválida, Lighthouse 100 móvil y escritorio, `test:ui` | ✅ en `develop` (PR #7 y #8) |
+| CI: job `devices` (`test:devices`, iPhone con WebKit y Android con Chromium) | 🟡 en la rama del día 4 (PR #9) y sus derivadas |
 | Páginas legales (pendientes de tus datos) | ✅ |
-| `/ir/[id]` y registro de afiliados | ✅ |
+| `/ir/[id]` y registro de afiliados | ✅ (sin partners activos) |
 | `robots.txt`, sitemap, canonical, Open Graph | ✅ |
-| CI en GitHub Actions | ✅ |
 | Guía de Alsacia como borrador con variantes | ✅ |
+| Guía de Egipto como borrador (esquema antiguo) | 🟡 en PR #12 |
+
+### El modelo de datos, tal como está
+
+Las enmiendas están documentadas en `docs/1.7.2_data_contract.md`:
+
+- **Campings como lugares** (Enmienda 1.12, 2026-10-06): un camping es un
+  lugar `type: accommodation` con `facilities`, `entry` (precio actual con
+  fecha) y `source_url`; lo nuestro (lo que pagamos, la opinión, la noche) va
+  en `accommodation.picks[]`, que referencia el `place_id`.
+- **`overnight` por `place_id`** (Enmienda 1.12): nunca un nombre. `null` =
+  noche fuera de camping (decisión del autor, 2026-10-07). Inexistente o de
+  otro tipo → error de validación.
+- **`how_we_choose` y `route_decisions`** sustituyen a `our_criteria`
+  (Enmienda 1.12). `route_decisions` son pares `{ decision, reason }`; los
+  descartes de parada siguen en `skip_reason`.
+- **Tiempos de visita:** `duration_max_min` (rango, 2026-10-06) y
+  `duration_note` (qué incluye el límite superior; bocadillo en la tarjeta,
+  2026-10-07).
+- **Parking:** `parking` estructurado con fecha (Enmienda C3, 2026-10-04),
+  `period_hours` (2026-10-06), `shared_with` (aparcamiento de otro lugar,
+  p. ej. Gljúfrafoss con Seljalandsfoss, 2026-10-07) y `free_nearby`
+  (aparcamiento gratuito al lado de uno de pago, 2026-10-08). **`free_nearby`
+  solo existe en la rama del día 4 (PR #9)**; el resto está en `develop`.
+- **Tarjeta de día** (Enmienda C3, 2026-10-04): `photo`, `highlight`, `drive`,
+  `overnight` en el día y `short_name` en el lugar.
 
 ### Verificado, no supuesto
 
+En `develop` (`c68ff44`), el 2026-10-15, en esta sesión:
+
 ```
-build con guía válida     exit 0, 6 páginas
-build con guía inválida   exit 1, mensaje accionable
-Lighthouse home           100 / 100 / 100 / 100
+npm test                  158 tests, 158 en verde
+npm run build             exit 0, 7 páginas
+```
+
+De la CI y de las PR (no repetido aquí):
+
+```
+Lighthouse                100 / 100 / 100 / 100, móvil y escritorio, mediana de 3,
+                          en /, Alsacia e Islandia (gate de la CI desde PR #7)
+guía inválida             la CI comprueba que el build falla
+test:ui                   en verde en develop y en #9, #13, #15, #16, #17;
+                          en rojo en #14 (línea de la noche de los días 11 y 12)
+test:devices              15 iPhone (WebKit) + 8 Android (Chromium) en la CI;
+                          en verde en #9, #13, #15, #16, #17; en rojo en #14
 guía borrador             noindex presente y fuera del sitemap
 ```
+
+Con las secciones nuevas (PR #13) el HTML de la guía queda a ~100 bytes del
+umbral de unos 43,8 KB comprimidos a partir del cual Lighthouse móvil baja a
+99. Cualquier PR que añada marcado o CSS a la guía tiene que compensarlo.
+
+### Comprobaciones de interfaz y dispositivos
+
+- **`npm run test:ui`** (`scripts/ui-check.ts`, en `develop`): capas de los
+  paneles y líneas de las tarjetas de día en móviles de 350 a 414 px, en
+  Chromium. Las comprobaciones comunes viven en `scripts/ui-shared.ts` (en la
+  rama del día 4).
+- **`npm run test:devices`** (`scripts/ui-devices.ts`, en PR #9): 23 perfiles
+  de Playwright. Comprueba que no haya scroll horizontal, las líneas de las
+  tarjetas, los tres paneles, el bocadillo del tiempo, el área segura y la
+  carga de fotos, y avisa de objetivos táctiles < 44 px. Sube capturas como
+  artefacto `ui-devices`.
+- **Regla de filas de la línea de ruta:** 2 filas; 3 desde 7 paradas (decisión
+  del autor, 2026-10-08, `1297f88`); en PR #14 pasa a 3 desde 6, 4 desde 9 y
+  6 desde 12, **pendiente de que la apruebes**.
+- **Avisos que siguen abiertos:**
+  - 320 px (Galaxy S9+), por debajo de la escala de diseño de 350 px.
+  - Objetivos táctiles de menos de 44 px. PR #17 amplía a 44 px la "i", el
+    enlace Mapa, el de la noche y "Gratis"; el resto queda como su propuesta P5.
+- **Limitación:** WebKit en Linux no es Safari de iOS. Quedan por mirar en un
+  iPhone real la pastilla del índice con la barra de Safari, las hojas
+  inferiores frente al indicador de inicio, la vista horizontal con la muesca
+  y el cierre del bocadillo (comentario en PR #9).
 
 ---
 
 ## Lo primero al volver
 
-### 1. Revisar y mergear el PR #1
+### 1. Mergear el día 4 (PR #9)
 
-```bash
-cd ~/Desktop/solo_haz_la_maleta
-git pull
-gh pr view 1 --web
-```
+La CI está en verde y es la base de #13, #14, #16 y #17. Antes, los puntos
+abiertos de la revisión automática del 2026-10-15:
 
-### 2. Decidir si Alsacia sigue
+- El `our_take` del día 4 sigue hablando solo de Skógafoss.
+- El `drive` del día 4 pone 210 min; el comentario dice 205 y los tramos
+  suman 206.
+- Foss á Síðu: está como `visited` (10 min), pero su nota dice "la vimos
+  desde el coche".
+- El enlace "Mapa de ese parking" cae al parking de pago si falta
+  `free_nearby.maps_url`.
 
-La guía existe como **borrador explícito**: `draft: true`, `tripDone: null`, y
-todo precio, horario y recomendación marcado `PENDIENTE AUTOR`. Solo están
-rellenos nombres y coordenadas, que son verificables en un mapa.
+### 2. Decidir lo que deja la PR #14 en rojo
 
-No se inventó nada porque no has hecho ese viaje y el proyecto vende
-experiencia de primera mano. Rellenarlo con datos plausibles habría producido
-justo el contenido genérico que prohíbe `CLAUDE.md`.
+La línea de la noche de los días 11 y 12 no cabe en una fila a 350–375 px en
+el Chromium de la CI. Hay tres opciones:
 
-La decisión D6 sigue diciendo **Mallorca primero**: es donde tienes 8 años de
-experiencia real, fotos propias y competencia desactualizada, y donde puedes
-rankear en 3-6 meses. Alsacia es un dominio nuevo compitiendo sin ventaja.
-La estructura de Alsacia ya está montada y sirve igual cuando la quieras.
+- (a) `short_name` de los campings sin "Camping";
+- (b) cambiar el diseño de esa línea;
+- (c) aceptar dos filas en días largos.
 
-### 3. Completar lo que solo puedes hacer tú
+Además: la nueva regla de filas y el nombre "Jökulsárlón" (antes "Laguna
+Glaciar Jökulsárlón y Diamond Beach").
+
+### 3. Revisar y mergear el resto de PR en borrador
+
+#13 → #15 (secciones móvil y escritorio), #16 (SEO) y #17 (accesibilidad).
+Cada una deja propuestas sin aplicar que necesitan tu decisión: ver
+[BACKLOG.md](BACKLOG.md). En #13 hay una regresión: el selector de Sass
+`& + &` dentro de `[data-design="v2"]` nunca coincide, así que se pierde el
+hueco entre zonas de "Dónde dormir". #15 lo documenta y no lo restaura.
+
+### 4. #10 (dependencias) y #12 (Egipto)
+
+- **#10** está en verde. Sube Playwright a 1.64, y los jobs `test:ui` y
+  `devices` dependen de sus perfiles de dispositivo: conviene ver la CI de #9
+  después de mergearla.
+- **#12** usa el esquema antiguo, no el motor. Decide si Egipto debe pasar al
+  motor antes de seguir.
+
+### 5. Lo que solo puedes hacer tú
+
+Lo de la guía de Islandia, día a día, en la tabla de abajo. Además:
 
 - [ ] Datos identificativos en `privacidad` y `aviso-legal`.
       **Bloquea recoger el primer correo.**
-- [ ] `sobre-mi` escrita en primera persona. Es la página que sostiene la
-      credibilidad del proyecto entero.
-- [ ] Paleta, tipografía e icono de marca. Los colores de
-      `src/styles/tokens.css` son provisionales.
+- [ ] `sobre-mi` escrita en primera persona (también la pide #16 para el
+      `author` del schema Article).
+- [ ] Paleta, tipografía e icono de marca (`theme-color` y
+      `apple-touch-icon` dependen de ello).
+- [ ] Decidir Islandia o Mallorca como laboratorio SEO (1.11 §10), con los
+      datos de Keyword Planner.
+
+### Guía de Islandia: qué falta por día
+
+Datos de la rama de #14, que incluye el día 4. Las columnas "Parking" y
+"Ficha de mapa" cuentan las paradas visitadas con `parking` y con `maps_url`
+en su lugar. "Coord. pend." cuenta los lugares visitados cuyas `notes` dicen
+"pendiente de confirmar".
+
+| Día | Dónde está | Foto | Lo mejor del día | Parking | Ficha de mapa | Coord. pend. | Duraciones |
+|---|---|---|---|---|---|---|---|
+| 1 | `develop`, revisado | ✅ | ✅ | 2/2 | 2/2 | 0 | confirmadas |
+| 2 | `develop`, revisado | ✅ | ✅ | 4/4 | 1/4 | 1 | confirmadas |
+| 3 | `develop`, revisado | ✅ | ✅ | 6/6 | 6/6 | 2 | confirmadas |
+| 4 | PR #9, revisado | ❌ | ❌ | 9/9 | 9/9 | 0 | confirmadas el 2026-10-08 **(a confirmar:** el YAML aún mezcla textos de estimación) |
+| 5 | PR #14, borrador | ❌ | ❌ | 0/3 | 0/3 | 3 | estimadas |
+| 6 | PR #14, borrador | ❌ | ❌ | 3/6 | 0/6 | 4 | estimadas |
+| 7 | PR #14, borrador | ❌ | ❌ | 2/7 | 0/7 | 7 | estimadas |
+| 8 | PR #14, borrador | ❌ | ❌ | 4/4 | 0/4 | 4 | estimadas |
+| 9 | PR #14, borrador | ❌ | ❌ | 5/6 | 0/6 | 5 | estimadas |
+| 10 | PR #14, borrador | ❌ | ❌ | 1/5 | 0/5 | 5 | estimadas |
+| 11 | PR #14, borrador | ❌ | ❌ | 3/5 | 0/5 | 5 | estimadas |
+| 12 | PR #14, borrador | ❌ | ❌ | 9/12 | 0/12 | 10 | estimadas |
+| 13 | PR #14, borrador | ❌ | ❌ | 1/1 | 1/1 | 0 | estimadas |
+
+Además, en los días 5 a 13 (PR #14):
+
+- Confirmar el `drive` de cada día y quitar "Estimación pendiente de
+  confirmar por el autor.".
+- Notas de las noches 6 y 7 (`overnight_note`).
+- Noches que no cuadran con las notas: 5, 8, 10 y 11.
+- Djúpavogskörin (¿poza termal?), el túnel de Vaðlaheiði, Sky Lagoon y si
+  hubo paseo por Reikiavik el día 13.
+
+El informe `docs/fuentes/coordenadas-por-confirmar.md` (en la rama de #14,
+`136b7ae`) revisa 74 lugares:
+
+| Estado | Lugares |
+|---|---|
+| OK | 13 |
+| Revisar | 28 |
+| Erróneos (> 2 km) | 27 |
+| Sin verificar | 6 |
+
+Los más graves son Grafarkirkja (37,8 km) y Stuðlagil (18,3 km). No se
+publica sin corregirlos: el botón "Mapa" usa esas coordenadas.
 
 ---
 
 ## Pendientes técnicos
 
-### Protección de ramas — RESUELTO
+### Protección de ramas
 
-El repo es público y `main` y `develop` están protegidas: exigen PR con los
-checks `build` y `lighthouse` en verde, y no admiten force-push ni borrado.
+`main` y `develop` exigen PR con los checks `build` y `lighthouse` en verde, y
+no admiten force-push ni borrado. Si `devices` se añade como check obligatorio
+cuando entre #9: **(a confirmar)**.
 
 ### Tareas programadas en la nube
 
-Dos rutinas corriendo en la nube de Anthropic, independientes de tu equipo:
+Rutinas de este proyecto, independientes de tu equipo. Horas en UTC. Se
+gestionan en https://claude.ai/code/routines.
+
+**Recurrentes:**
 
 | Rutina | Cuándo | Qué hace |
 |---|---|---|
-| Auditoría de dependencias | Lunes 08:00 (Madrid) | `npm audit`, dependencias desactualizadas, comprueba que el build pasa y que el esquema sigue rechazando datos inválidos. PR para parches, issue para mayores o vulnerabilidades. Nunca mergea. |
-| Caducidad de datos (D8) | Día 1 de cada mes, 08:00 | Busca `checkedAt` de más de 12 meses, datos sensibles sin fuente, y marcadores PENDIENTE AUTOR en guías ya publicadas. Solo lectura: abre una issue. |
+| Revisión nocturna de PRs | Cada día, 01:00 | Revisa cada PR abierta con cambios nuevos frente a `CLAUDE.md` y deja un comentario. Solo lee y comenta. Es la que firma las "Revisión automática" de las PR. |
+| Auditoría de dependencias | Lunes, 06:00 | `npm audit`, `npm outdated` y build, y comprueba que el esquema rechaza una guía inválida. Abre una PR para parches y menores (#10) y una issue para mayores o vulnerabilidades (#11). Nunca mergea. |
+| Estructurar una guía desde las notas | Miércoles, 06:00 | Estructura (no redacta, D2) el primer destino con notas y sin guía, en borrador. El 2026-10-14 abrió #12 (Egipto). |
+| Caducidad de datos (D8) | Día 1 de cada mes, 06:00 | Solo lectura: busca datos caducados o sin fecha y `PENDIENTE AUTOR` en guías publicadas, y abre una issue si hay hallazgos. |
 
-Ambas callan cuando no hay nada que decir. Se gestionan en
-https://claude.ai/code/routines
+**Puntuales, programadas para la madrugada del 2026-10-15:**
+
+| Rutina | Hora | Qué hace |
+|---|---|---|
+| Herramientas del autor | 02:30 | `npm run photo` (añadir una foto a un día) y `npm run day:status` (qué falta por día). Rama `feature/author-tools`. |
+| Avisos de calidad editorial | 03:30 | Avisos (`WARNING`) en la validación de contenido. Rama `feature/content-quality-warnings`. |
+| Revisión de calidad del código de la guía | 04:30 | Informe y refactors sin cambio de HTML. Rama `refactor/guide-code-quality`. |
+| Portada | 05:30 | Que la portada liste la guía de Islandia desde el motor. Rama `feature/landing-lists-engine-guides`. |
+
+Hay también dos recordatorios de seguimiento de las sesiones que abrieron #16
+y #17, y esta misma rutina de estado y backlog.
+
+**Ojo:** la auditoría de dependencias (paso de la guía inválida), la de
+caducidad y la de estructurar guías leen `src/content/guides/*.json`, el
+esquema antiguo. La guía de Islandia vive en el motor (YAML), así que la
+rutina de caducidad no la revisa. Si eso es intencionado: **(a confirmar)**.
 
 ### Otros
 
 - [ ] Conectar Cloudflare Pages al repo y desplegar `develop` a un dominio de
       pruebas.
 - [ ] Analítica sin cookies (Umami o Plausible).
-- [ ] Dominio `solohazlamaleta.com` — `astro.config.mjs` ya lo da por hecho.
+- [ ] Dominio `solohazlamaleta.com`: `astro.config.mjs` ya lo da por hecho.
+- [ ] Issue #11: `http-cache-semantics` y `sharp`.
+- [ ] El build avisa de unos 90 lugares con `verified_at` caducado (nota de
+      #16).
 
 ---
 
@@ -112,21 +325,13 @@ Están en `.claude/agents/`. Se invocan por nombre:
 | `qa` | Verificar ejecutando, antes de mergear nada |
 | `seo` | Palabras clave, datos estructurados, enlazado interno |
 
-Se redujeron de nueve a tres el 2026-09-28. Los otros seis (`frontend-dev`,
+Se redujeron a tres el 2026-09-28 (PR #3). Los otros siete (`frontend-dev`,
 `junior-dev`, `product-owner`, `marketing`, `social-content`, `devops` y
 `ui-designer`) describían un equipo que no existe: el trabajo lo hace una
-persona con ~6 h/semana, y mantener nueve definiciones sincronizadas era
+persona con ~6 h/semana, y mantener tantas definiciones sincronizadas era
 coste sin retorno. Están en el historial de git si alguna vez hacen falta.
 
 `_SHARED.md` tiene gitflow, el estándar de código y la definición de terminado.
 
-## Lo que no se pudo hacer, y por qué
-
-Pediste agentes trabajando con el PC apagado. **No es posible**: los subagentes
-de Claude Code se ejecutan en el proceso local, no en un servidor. Apagar el
-portátil los apaga. Tampoco puedo encadenar sesiones automáticamente cuando una
-se agota, ni hacer que los agentes se coordinen entre ellos sin alguien
-orquestando.
-
-Lo que sí se hizo: aprovechar la sesión con el equipo encendido para dejar F1
-construido, verificado y en un PR que puedes revisar de una sentada.
+El trabajo largo sin el equipo encendido no lo hacen estos agentes, que se
+ejecutan en local, sino las rutinas en la nube de la sección anterior.

@@ -20,3 +20,23 @@ test('findFailures reports each page, device and category below the threshold, w
   ]
   assert.deepStrictEqual(findFailures(results, 100), ['/guia/ (mobile) performance: 99'])
 })
+
+test('findFailures applies an exception only to its page, device and category', () => {
+  const exceptions = [{ page: '/guia/', device: 'mobile' as const, category: 'performance', threshold: 99 }]
+  const results = [
+    { page: '/guia/', device: 'mobile', runs: { performance: [99, 99, 100], accessibility: [99, 99, 99] } },
+    { page: '/guia/', device: 'desktop', runs: { performance: [99, 99, 99] } },
+    { page: '/', device: 'mobile', runs: { performance: [99, 99, 99] } },
+  ]
+  assert.deepStrictEqual(findFailures(results, 100, exceptions), [
+    '/guia/ (mobile) accessibility: 99',
+    '/guia/ (desktop) performance: 99',
+    '/ (mobile) performance: 99',
+  ])
+})
+
+test('findFailures still fails a page with an exception when it drops below the exception', () => {
+  const exceptions = [{ page: '/guia/', device: 'mobile' as const, category: 'performance', threshold: 99 }]
+  const results = [{ page: '/guia/', device: 'mobile', runs: { performance: [98, 98, 99] } }]
+  assert.deepStrictEqual(findFailures(results, 100, exceptions), ['/guia/ (mobile) performance: 98 (minimum 99)'])
+})

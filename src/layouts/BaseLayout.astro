@@ -7,11 +7,27 @@ interface Props {
   /** Keeps a page out of search results: print views, redirects, offers. */
   noindex?: boolean;
   image?: string;
+  /** Pixel size and description of `image`, for the Open Graph card. */
+  imageWidth?: number;
+  imageHeight?: number;
+  imageAlt?: string;
+  /** Open Graph type: guides are articles; everything else stays a website. */
+  ogType?: 'website' | 'article';
   /** Opt-in to the redesign; scoped so pages without it render unchanged. */
   design?: 'v2';
 }
 
-const { title, description, noindex = false, image, design } = Astro.props;
+const {
+  title,
+  description,
+  noindex = false,
+  image,
+  imageWidth,
+  imageHeight,
+  imageAlt,
+  ogType = 'website',
+  design,
+} = Astro.props;
 
 const preloadFonts =
   design === 'v2'
@@ -32,18 +48,22 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
 <html lang="es" data-design={design}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Solo Haz la Maleta" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="es_ES" />
     {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && imageWidth && <meta property="og:image:width" content={String(imageWidth)} />}
+    {ogImage && imageHeight && <meta property="og:image:height" content={String(imageHeight)} />}
+    {ogImage && imageAlt && <meta property="og:image:alt" content={imageAlt} />}
     <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

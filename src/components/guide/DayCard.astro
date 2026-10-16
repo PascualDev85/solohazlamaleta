@@ -1,8 +1,12 @@
 ---
 import type { CompiledDay } from '../../../engine/index.ts';
 import { formatMinutes } from '../../lib/formatDuration.ts';
-import { minutesOnRoute, roundToHalfHour } from '../../lib/dayTime.ts';
+import { minutesOnRoute, roundToHour } from '../../lib/dayTime.ts';
+import { campsiteAnchorId, dayAnchorId } from '../../lib/anchors.ts';
+import { twoDigitDay } from '../../lib/dayNumber.ts';
 import { guideImage } from '../../lib/guide-images.ts';
+import { nightLabel } from '../../lib/nightLabel.ts';
+import { shortName } from '../../lib/placeName.ts';
 import GuidePhoto from './GuidePhoto.astro';
 import SectionIcon from './SectionIcon.astro';
 import DayStop from './DayStop.astro';
@@ -17,14 +21,14 @@ const { day } = Astro.props;
 // in place (CSS :has(), no script).
 const moreCount = Math.max(0, day.route_stops.length - 1);
 
-const num = String(day.day).padStart(2, '0');
-const headingId = `dia-${day.day}`;
-const sheetId = `dia-${day.day}-completo`;
+const num = twoDigitDay(day.day);
+const headingId = dayAnchorId(day.day);
+const sheetId = `${headingId}-completo`;
 
 const km = new Intl.NumberFormat('es-ES', { useGrouping: true });
-// Door to door, to the nearest half hour: a planning figure, never a promise.
+// Door to door, to the nearest hour: a planning figure, never a promise.
 const onRoute = minutesOnRoute(day);
-const onRouteLabel = onRoute == null ? undefined : formatMinutes(roundToHalfHour(onRoute));
+const onRouteLabel = onRoute == null ? undefined : formatMinutes(roundToHour(onRoute));
 const experiences = day.route_stops.filter((stop) => stop.variant_note);
 // What we left out that day, with the reason: a skip without one is not shown (1.10 §3.6).
 const skipped = day.skipped_stops.filter((stop) => stop.skip_reason);
@@ -34,9 +38,8 @@ const hasFullDay =
   experiences.length > 0 || skipped.length > 0 || Boolean(nightNote) || Boolean(day.our_take) || Boolean(day.plan_b);
 // The night links to its campsite card in "Dónde dormir"; null is a night outside any campsite.
 const overnight = day.overnight;
-const outsideCampsite = overnight === null;
-const nightLabel = overnight ? (overnight.short_name ?? overnight.name) : outsideCampsite ? 'Fuera de camping' : undefined;
-const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
+const nightText = nightLabel(overnight);
+const overnightHref = overnight ? `#${campsiteAnchorId(overnight.place_id)}` : undefined;
 ---
 
 {/*
@@ -88,23 +91,24 @@ const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
         </ul>
 
         {/* Second line: the whole day door to door, then where it ends. */}
-        {(onRouteLabel || nightLabel) && (
+        {(onRouteLabel || nightText) && (
           <p class="day-card__night">
             {onRouteLabel && (
               <span class="day-card__fact">
                 <SectionIcon name="clock" />≈ {onRouteLabel} en ruta
               </span>
             )}
-            {nightLabel && (
+            {nightText && (
               <span class="day-card__fact day-card__fact--night">
                 <SectionIcon name="tent" />
+                {/* Read "Noche en Camping Árnes" (or "Noche: Fuera de camping"); the arrow is only drawn. */}
                 <span class="day-card__night-label">Noche</span>
                 <span class="day-card__arrow" aria-hidden="true">→</span>
-                <span class="visually-hidden">: </span>
+                <span class="visually-hidden">{overnightHref ? ' en ' : ': '}</span>
                 {overnightHref ? (
-                  <a class="day-card__night-link" href={overnightHref}>{nightLabel}</a>
+                  <a class="day-card__night-link" href={overnightHref}>{nightText}</a>
                 ) : (
-                  <strong>{nightLabel}</strong>
+                  <strong>{nightText}</strong>
                 )}
               </span>
             )}
@@ -148,16 +152,17 @@ const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
 
       {hasFullDay && (
         <button class="day-card__full" type="button" popovertarget={sheetId}>
-          Ver día completo <SectionIcon name="arrow" />
+          {/* The hidden day tells the 13 identical buttons apart in a screen reader's list of controls. */}
+          Ver día completo<span class="visually-hidden"> del día {day.day}</span><SectionIcon name="arrow" />
         </button>
       )}
     </div>
 
     {hasFullDay && (
-      <div id={sheetId} class="day-sheet" popover role="dialog" aria-labelledby={`${sheetId}-title`}>
+      <div id={sheetId} class="day-sheet" popover role="dialog" aria-labelledby={`${sheetId}-eyebrow ${sheetId}-title`}>
         <header class="day-sheet__head">
           <div>
-            <p class="day-sheet__eyebrow">Día {num}</p>
+            <p class="day-sheet__eyebrow" id={`${sheetId}-eyebrow`}>Día {num}</p>
             <h2 class="day-sheet__title" id={`${sheetId}-title`}>{day.title}</h2>
           </div>
           <button
@@ -179,7 +184,7 @@ const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
               <ul class="day-sheet__experiences">
                 {experiences.map((stop) => (
                   <li>
-                    <p class="day-sheet__place">{stop.place.short_name ?? stop.place.name}</p>
+                    <p class="day-sheet__place">{shortName(stop.place)}</p>
                     <p>{stop.variant_note}</p>
                   </li>
                 ))}
@@ -190,7 +195,7 @@ const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
           {nightNote && (
             <section class="day-sheet__block" aria-labelledby={`${sheetId}-night`}>
               <h3 id={`${sheetId}-night`}>La noche</h3>
-              {nightLabel && <p class="day-sheet__place">{nightLabel}</p>}
+              {nightText && <p class="day-sheet__place">{nightText}</p>}
               <p>{nightNote}</p>
             </section>
           )}
@@ -201,7 +206,7 @@ const overnightHref = overnight ? `#dormir-${overnight.place_id}` : undefined;
               <ul class="day-sheet__experiences day-sheet__experiences--skipped">
                 {skipped.map((stop) => (
                   <li>
-                    <p class="day-sheet__place">{stop.place.short_name ?? stop.place.name}</p>
+                    <p class="day-sheet__place">{shortName(stop.place)}</p>
                     <p>{stop.skip_reason}</p>
                   </li>
                 ))}
