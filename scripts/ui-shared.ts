@@ -78,3 +78,27 @@ export function dayCardLineIssues() {
   }
   return out
 }
+
+/**
+ * The site header on a phone: brand and links in one row (no hamburger, so
+ * nothing may wrap), every link at least 44px tall, nothing pushing the page
+ * sideways, and not fixed or sticky (it would cover anchors and fight the
+ * guide's floating index pill). Returns what broke.
+ */
+export function siteHeaderIssues() {
+  const issues: string[] = []
+  const header = document.querySelector<HTMLElement>('.site-header')
+  if (!header) return ['site header missing']
+  const position = getComputedStyle(header).position
+  if (position === 'fixed' || position === 'sticky') issues.push(`site header is ${position}`)
+  const links = [...header.querySelectorAll<HTMLElement>('a')]
+  const tops = new Set(links.map((a) => Math.round(a.getBoundingClientRect().top)))
+  if (tops.size > 1) issues.push('site header wraps onto a second row')
+  for (const a of links) {
+    const box = a.getBoundingClientRect()
+    if (box.height < 44) issues.push(`site header link "${a.textContent?.trim()}" is ${Math.round(box.height)}px tall (< 44)`)
+    if (box.right > document.documentElement.clientWidth) issues.push(`site header link "${a.textContent?.trim()}" overflows the viewport`)
+  }
+  if (!header.querySelector('nav[aria-label="Principal"]')) issues.push('main navigation landmark missing')
+  return issues
+}
