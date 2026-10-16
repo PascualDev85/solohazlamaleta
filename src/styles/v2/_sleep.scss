@@ -21,6 +21,13 @@
     margin: 0 0 var(--space-lg);
   }
 
+  // Room between one zone's last card and the next zone's kicker. The second
+  // compound is written out: '&__zone + &__zone' would repeat the
+  // [data-design] parent and never match.
+  &__zone + .sleep__zone {
+    margin-top: var(--space-lg);
+  }
+
   &__zone-name {
     margin: var(--space-2xs) 0 var(--space-2xs);
   }
