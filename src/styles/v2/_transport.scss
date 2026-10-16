@@ -17,15 +17,18 @@
     grid-template-columns: 2.5rem minmax(0, 1fr);
     gap: var(--space-sm);
 
-    // The line joining one step to the next, in the gap above the step and
-    // centred on the 2.5rem icon. Written out, not '& + &' (see _sleep.scss).
-    & + .transport__step::before {
+    // The line joining one step's icon to the next one's, like a timeline:
+    // it starts under this step's 2.5rem icon, runs down beside its text and
+    // through the gap, and ends where the next step (and its icon) begins.
+    // Centred on the icon. Only steps with a next step draw it (author,
+    // 2026-10-16: icon to icon, not a short dash in the gap).
+    &:not(:last-child)::after {
       content: "";
       position: absolute;
-      top: calc(-1 * var(--space-md));
+      top: 2.5rem;
+      bottom: calc(-1 * var(--space-md));
       left: calc(1.25rem - 1px);
       width: 2px;
-      height: var(--space-md);
       background: var(--color-rule);
     }
   }
