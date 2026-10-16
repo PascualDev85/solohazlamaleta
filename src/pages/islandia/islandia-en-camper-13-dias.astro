@@ -15,7 +15,6 @@ import SectionTitle from '../../components/guide/SectionTitle.astro';
 import SectionIcon from '../../components/guide/SectionIcon.astro';
 import { budgetRows } from '../../lib/budgetRows.ts';
 import { nightsByPlace, nightCounts } from '../../lib/nightsByPlace.ts';
-import { splitDetail } from '../../lib/splitDetail.ts';
 import { guideImage } from '../../lib/guide-images.ts';
 import { getImage } from 'astro:assets';
 import '../../styles/guide-v2.scss';
@@ -59,7 +58,6 @@ const show = {
   howWeChoose: (guide.how_we_choose?.length ?? 0) > 0,
   leftOut: (guide.route_decisions?.length ?? 0) > 0 || skippedStops.length > 0,
   pitfalls: (guide.pitfalls?.length ?? 0) > 0 || (guide.terrain_tips?.length ?? 0) > 0,
-  practical: Boolean(guide.practical),
   faq: (guide.faq?.length ?? 0) > 0,
 };
 // "Nuestro criterio" holds three parts (1.12 §13); it shows when any of them has content.
@@ -72,7 +70,6 @@ const indexSections = [
   { id: 'presupuesto', label: 'Presupuesto real', icon: 'budget', visible: show.budget },
   { id: 'reservar', label: 'Qué reservamos y cuándo', icon: 'booking', visible: show.booking },
   { id: 'criterio', label: 'Nuestro criterio', icon: 'criteria', visible: showCriteria },
-  { id: 'practico', label: 'Lo práctico', icon: 'practical', visible: show.practical },
   { id: 'faq', label: 'Preguntas frecuentes', icon: 'faq', visible: show.faq },
 ].filter((section) => section.visible);
 
@@ -97,15 +94,14 @@ const faqForSchema = (guide.faq ?? []).filter((item) => item.schema === true);
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 
-// /islandia/ does not exist yet (1.11), so it stays out of the schema too:
-// every non-final crumb needs an `item` URL, and that one would be a 404.
-// Add it back as position 2 when the hub is published.
+// The destination crumb points at the hub (1.10 §3.8), here and in the visible breadcrumb.
 const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', Astro.site).href },
-    { '@type': 'ListItem', position: 2, name: guide.title, item: pageUrl },
+    { '@type': 'ListItem', position: 2, name: destinationName, item: new URL(guide.hub, Astro.site).href },
+    { '@type': 'ListItem', position: 3, name: guide.title, item: pageUrl },
   ],
 };
 
@@ -156,8 +152,7 @@ const faqJsonLd =
     <header class="guide-hero">
       <div class="guide-hero__text">
         <div class="guide-hero__title">
-          {/* /islandia/ does not exist yet, so the destination crumb is not a link (1.10 §3.8). */}
-          <Breadcrumb crumbs={[{ label: 'Inicio', href: '/' }, { label: destinationName }]} />
+          <Breadcrumb crumbs={[{ label: 'Inicio', href: '/' }, { label: destinationName, href: guide.hub }]} />
           <h1>{guide.title}</h1>
         </div>
 
@@ -425,50 +420,11 @@ const faqJsonLd =
       </section>
     )}
 
-    {show.practical && guide.practical && (
-      <section class="practical" aria-labelledby="practico">
-        <SectionTitle id="practico" icon="practical">Lo práctico</SectionTitle>
-        <div class="practical__grid">
-          {guide.practical.documents && guide.practical.documents.length > 0 && (
-            <div class="practical__card">
-              <h3 class="practical__title"><SectionIcon name="doc" />Documentos</h3>
-              <ul class="practical__checks">
-                {guide.practical.documents.map((item) => (
-                  <li><SectionIcon name="check" /><span>{item}</span></li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {guide.practical.plugs && (
-            <div class="practical__card">
-              <h3 class="practical__title"><SectionIcon name="plug" />Enchufes</h3>
-              <p class="practical__text">{guide.practical.plugs}</p>
-            </div>
-          )}
-          {guide.practical.apps && guide.practical.apps.length > 0 && (
-            <div class="practical__card">
-              <h3 class="practical__title"><SectionIcon name="list" />Apps</h3>
-              <ul class="practical__apps">
-                {guide.practical.apps.map(splitDetail).map(({ name, detail }) => (
-                  <li class="practical__app">
-                    <span class="practical__app-name">{name}</span>
-                    {detail && <span class="practical__app-detail">{detail}</span>}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {guide.practical.tips && guide.practical.tips.length > 0 && (
-            <div class="practical__card">
-              <h3 class="practical__title"><SectionIcon name="bulb" />Consejos</h3>
-              <ul class="practical__tips">
-                {guide.practical.tips.map((item) => <li>{item}</li>)}
-              </ul>
-            </div>
-          )}
-        </div>
-      </section>
-    )}
+    {/* "Lo práctico" is about the destination, so it lives only in the hub (1.13 §3): the guide points there. */}
+    <p class="guide__hub-link">
+      <SectionIcon name="practical" />
+      <a href="/islandia/#practico">Documentos, enchufes y apps: en la guía de Islandia →</a>
+    </p>
 
     {show.faq && guide.faq && (
       <section class="faq" aria-labelledby="faq">

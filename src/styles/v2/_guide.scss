@@ -81,6 +81,21 @@
     font-weight: 700;
   }
 
+  // The one line that sends "Lo práctico" to the hub (1.13 §3): the section's
+  // icon, then the link. It sits between two sections and takes their gap.
+  &__hub-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: var(--space-2xl) 0 0;
+    font-family: var(--font-display);
+
+    .section-icon {
+      flex: none;
+      color: var(--color-accent);
+    }
+  }
+
   &__verified {
     font-size: var(--step--1);
     letter-spacing: 0;
