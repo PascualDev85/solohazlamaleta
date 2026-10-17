@@ -21,6 +21,8 @@ test('fromLegacyGuide maps the Alsacia guide to the same card the landing page s
     livedNote: 'En familia con mayores · el puente de diciembre de 2024',
     draft: true,
     updatedAt: '2026-09-22',
+    coverImage: null,
+    budgetPerPerson: null,
   })
 })
 
@@ -47,6 +49,8 @@ test('fromCompiledGuide maps the real Islandia guide: 13 variant days, lived, dr
     livedNote: null,
     draft: true,
     updatedAt: '2026-10-04',
+    coverImage: 'islandia/islandia-gljufrafoss.jpg',
+    budgetPerPerson: item.budgetPerPerson,
   })
   assert.ok(item.description.length > 0)
 })
@@ -70,9 +74,38 @@ test('fromCompiledGuide falls back to the guide days when there are no variants'
   assert.deepStrictEqual(fromCompiledGuide({ ...guide, variants: undefined, days: undefined }).days, [])
 })
 
+test('fromLegacyGuide keeps a cover image when the guide has one', async () => {
+  const alsacia = JSON.parse(await readFile(ALSACIA_PATH, 'utf-8'))
+  const item = fromLegacyGuide('x', { ...alsacia, meta: { ...alsacia.meta, coverImage: 'alsacia/colmar.jpg' } })
+
+  assert.strictEqual(item.coverImage, 'alsacia/colmar.jpg')
+})
+
+test('fromCompiledGuide lists the derived budget per person: total over travellers, in the budget currency', async () => {
+  const [source] = ENGINE_GUIDE_SOURCES
+  const guide = await loadCompiledGuide(source.guide, source.places)
+  const item = fromCompiledGuide(guide)
+
+  assert.ok(guide.budget && guide.base_travelers)
+  assert.deepStrictEqual(item.budgetPerPerson, {
+    amount: guide.budget.total_reference / guide.base_travelers,
+    currency: 'EUR',
+  })
+})
+
+test('fromCompiledGuide lists no budget when the engine did not derive one', async () => {
+  const [source] = ENGINE_GUIDE_SOURCES
+  const guide = await loadCompiledGuide(source.guide, source.places)
+
+  const noPerPerson = { ...guide, summary: { ...guide.summary, budget_per_person: undefined } }
+  assert.strictEqual(fromCompiledGuide(noPerPerson).budgetPerPerson, null)
+  assert.strictEqual(fromCompiledGuide({ ...guide, budget: undefined }).budgetPerPerson, null)
+})
+
 test('sortGuideList puts published guides first, then the most recently updated', () => {
   const item = (title: string, draft: boolean, updatedAt: string): GuideListItem => ({
     title, description: '', destination: '', days: [], url: '', lived: false, livedNote: null, draft, updatedAt,
+    coverImage: null, budgetPerPerson: null,
   })
   const sorted = sortGuideList([
     item('old draft', true, '2026-01-01'),
