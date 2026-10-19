@@ -1,5 +1,8 @@
 ---
 import type { CompiledDay } from '../../../engine/index.ts';
+import { dayAnchorId } from '../../lib/anchors.ts';
+import { twoDigitDay } from '../../lib/dayNumber.ts';
+import { nightLabel } from '../../lib/nightLabel.ts';
 import DayCard from './DayCard.astro';
 import SectionIcon from './SectionIcon.astro';
 
@@ -13,7 +16,6 @@ const { days, id } = Astro.props;
 
 // "De un vistazo": the whole route in one panel, a day per row with its stops.
 const glanceId = `${id}-vistazo`;
-const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
 ---
 
 {/*
@@ -40,8 +42,8 @@ const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
           {days.map((day) => (
             <li>
               {/* The name includes the visible "02" (WCAG 2.5.3, label in name). */}
-              <a href={`#dia-${day.day}`} aria-label={`Día ${String(day.day).padStart(2, '0')}: ${day.title}`}>
-                {String(day.day).padStart(2, '0')}
+              <a href={`#${dayAnchorId(day.day)}`} aria-label={`Día ${twoDigitDay(day.day)}: ${day.title}`}>
+                {twoDigitDay(day.day)}
               </a>
             </li>
           ))}
@@ -84,8 +86,8 @@ const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
     <ol class="route-glance__days">
       {days.map((day) => (
         <li class="route-glance__day" id={`${glanceId}-dia-${day.day}`}>
-          <a href={`#dia-${day.day}`}>
-            <span class="route-glance__n" aria-hidden="true">{num(day)}</span>
+          <a href={`#${dayAnchorId(day.day)}`}>
+            <span class="route-glance__n" aria-hidden="true">{twoDigitDay(day.day)}</span>
             <span class="route-glance__body">
               <span class="route-glance__name"><span class="visually-hidden">Día {day.day}: </span>{day.title}</span>
               {day.route_line.length > 0 && (
@@ -93,13 +95,10 @@ const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
                   {day.route_line.map((name) => <span>{name}</span>)}
                 </span>
               )}
-              {day.overnight && (
+              {nightLabel(day.overnight) && (
                 <span class="route-glance__night">
-                  <SectionIcon name="tent" />{day.overnight.short_name ?? day.overnight.name}
+                  <SectionIcon name="tent" />{nightLabel(day.overnight)}
                 </span>
-              )}
-              {day.overnight === null && (
-                <span class="route-glance__night"><SectionIcon name="tent" />Fuera de camping</span>
               )}
             </span>
           </a>
@@ -134,6 +133,15 @@ const num = (day: CompiledDay) => String(day.day).padStart(2, '0');
     for (const hint of openHints()) if (!hint.contains(event.target as Node)) hint.open = false;
   }, { passive: true });
   document.addEventListener('scroll', () => { for (const hint of openHints()) hint.open = false; }, { capture: true, passive: true });
+  // Esc closes it too, and puts focus back on its mark if it was inside.
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    for (const hint of openHints()) {
+      const inside = hint.contains(document.activeElement);
+      hint.open = false;
+      if (inside) hint.querySelector('summary')?.focus();
+    }
+  });
 
   // The glance panel closes itself once a day is chosen, so it never covers
   // the card it just jumped to. Without this it still closes by hand.

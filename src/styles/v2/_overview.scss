@@ -98,8 +98,9 @@
     }
   }
 
-  // Desktop: the column has room for every fact, so no swiping. The budget
-  // takes the full row and the rest share the one below.
+  // Desktop: the column has room for every fact, so no swiping and no fade:
+  // the four tiles share one row. The budget keeps its lead through its big
+  // figure and first place, not through width.
   @include from("md") {
     &__rail {
       margin: 0;
@@ -109,17 +110,13 @@
 
     &__list {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       width: auto;
       padding: 0;
     }
 
     &__tile {
       width: auto;
-    }
-
-    &__tile--wide {
-      grid-column: 1 / -1;
     }
   }
 
@@ -188,11 +185,6 @@
     a {
       display: block;
       font-weight: 800;
-
-      @include from("md") {
-        display: inline;
-        margin-left: 0.4em;
-      }
     }
   }
 }
@@ -241,7 +233,7 @@
   }
 }
 
-// Width of the right-edge fade on the trip-facts row. Registered so it can be
+// Width of the right-edge fade on the quick-facts row. Registered so it can be
 // animated; initial value in px because @property needs a fixed length.
 @property --rail-fade {
   syntax: "<length>";

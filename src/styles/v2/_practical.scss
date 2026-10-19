@@ -1,0 +1,115 @@
+@use "../abstracts" as *;
+
+// "Lo práctico": a card per block (documents, plugs, apps, tips), each with
+// its icon in the title. Documents are a checklist; apps are chips.
+[data-design="v2"] .practical {
+  &__grid {
+    display: grid;
+    gap: var(--space-sm);
+
+    @include from("sm") {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__card {
+    padding: var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+
+    p,
+    ul {
+      margin: 0;
+    }
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: 0 0 var(--space-sm);
+    font-size: var(--step-0);
+
+    .section-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: var(--color-label);
+    }
+  }
+
+  &__checks {
+    display: grid;
+    gap: var(--space-xs);
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: grid;
+      grid-template-columns: 1.25rem minmax(0, 1fr);
+      gap: var(--space-xs);
+      align-items: start;
+    }
+
+    .section-icon {
+      width: 1.1rem;
+      height: 1.1rem;
+      margin-top: 0.35rem;
+      color: var(--color-positive);
+    }
+  }
+
+  &__apps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__app {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  &__app-name {
+    font-weight: 800;
+  }
+
+  &__app-detail {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+
+  &__tips {
+    display: grid;
+    gap: var(--space-xs) var(--space-lg);
+    padding-left: 1.1rem;
+  }
+
+  // Desktop: documents down the left, plugs and apps stacked on the right,
+  // tips across the full width with their items two by two.
+  @include from("md") {
+    &__card:first-child {
+      grid-row: span 2;
+    }
+
+    &__card:last-child {
+      grid-column: 1 / -1;
+    }
+
+    &__tips {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}

@@ -17,7 +17,7 @@ function emptyAffiliateRegistry(): AffiliateRegistry {
 }
 
 /**
- * The only point of contact between src/ and engine/. Pure orchestration —
+ * The one place src/ runs the engine's pipeline. Pure orchestration —
  * load, validate, compile — no business logic. Which variant to show, how
  * to filter stops, any calculation: that belongs in the engine, never here.
  */

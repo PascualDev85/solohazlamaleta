@@ -7,7 +7,7 @@ import type { PlaceSource } from '../../schemas/index.ts'
 
 const camp: PlaceSource = {
   place_id: 'camp_x', name: 'Camping X', destination: 'islandia', lat: 64, lng: -21, type: 'accommodation',
-  verified_at: '2025-09-15',
+  verified_at: '2025-09-15', review_interval: 12,
   facilities: { showers: 'included', toilets: true, common_room: false, electricity: false, verified_at: '2025-09-15' },
 }
 const places: PlaceRegistry = { get: (id) => (id === 'camp_x' ? camp : undefined) }
@@ -81,8 +81,8 @@ test('compileDay leaves overnight undefined when the day has none', () => {
 })
 
 test('compileStop resolves parking.shared_with to the host place and keeps duration_note', () => {
-  const host: PlaceSource = { place_id: 'host', name: 'Host', short_name: 'H', destination: 'islandia', lat: 1, lng: 1, type: 'monument', verified_at: '2025-09-13', parking: { price: 1000, currency: 'ISK', verified_at: '2025-09-13' } }
-  const guest: PlaceSource = { place_id: 'guest', name: 'Guest', destination: 'islandia', lat: 1, lng: 1, type: 'monument', verified_at: '2025-09-13', parking: { price: 1000, currency: 'ISK', shared_with: 'host', verified_at: '2025-09-13' } }
+  const host: PlaceSource = { place_id: 'host', name: 'Host', short_name: 'H', destination: 'islandia', lat: 1, lng: 1, type: 'monument', verified_at: '2025-09-13', review_interval: 12, parking: { price: 1000, currency: 'ISK', verified_at: '2025-09-13' } }
+  const guest: PlaceSource = { place_id: 'guest', name: 'Guest', destination: 'islandia', lat: 1, lng: 1, type: 'monument', verified_at: '2025-09-13', review_interval: 12, parking: { price: 1000, currency: 'ISK', shared_with: 'host', verified_at: '2025-09-13' } }
   const reg: PlaceRegistry = { get: (id) => ({ host, guest } as Record<string, PlaceSource>)[id] }
   const stop = compileStop(
     { place_id: 'guest', order: 1, duration_min: 30, duration_max_min: 60, duration_note: 'con la ruta', planning_status: 'required', visit_status: 'visited' },
@@ -93,7 +93,7 @@ test('compileStop resolves parking.shared_with to the host place and keeps durat
 })
 
 test('compileStop throws when parking.shared_with names a place that does not exist', () => {
-  const guest: PlaceSource = { place_id: 'guest', name: 'Guest', destination: 'islandia', lat: 1, lng: 1, type: 'monument', verified_at: '2025-09-13', parking: { price: 0, currency: 'ISK', shared_with: 'nope', verified_at: '2025-09-13' } }
+  const guest: PlaceSource = { place_id: 'guest', name: 'Guest', destination: 'islandia', lat: 1, lng: 1, type: 'monument', verified_at: '2025-09-13', review_interval: 12, parking: { price: 0, currency: 'ISK', shared_with: 'nope', verified_at: '2025-09-13' } }
   const reg: PlaceRegistry = { get: (id) => (id === 'guest' ? guest : undefined) }
   assert.throws(() => compileStop({ place_id: 'guest', order: 1, duration_min: 30, planning_status: 'required', visit_status: 'visited' }, reg, affiliates, now))
 })

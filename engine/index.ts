@@ -4,9 +4,12 @@ export { validatePlaceSchema } from './validate/schema.ts'
 export { buildPlaceRegistry } from './validate/registry.ts'
 export { compileGuide } from './compile/index.ts'
 export { applyBasis } from './compile/budget.ts'
+export { ENGINE_GUIDE_SOURCES, isPublished, guidePath, unpublishedGuidePaths } from './publication.ts'
 export type {
   GuideSource, PlaceSource, CompiledGuide, CompiledPlace, CompiledStop, CompiledDay,
   CompiledVariant, CompiledBudget, CompiledSummary, CompiledAffiliate,
   CompiledAccommodation, CompiledAccommodationZone, CompiledAccommodationPick,
   PlaceRegistry, AffiliateRegistry, AffiliateRegistryEntry,
 } from './types.ts'
+// Source types that src/ needs to name (src/ may import engine, never schemas).
+export type { BudgetItemSource, Facilities } from '../schemas/index.ts'

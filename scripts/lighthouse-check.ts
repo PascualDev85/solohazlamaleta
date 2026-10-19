@@ -1,5 +1,6 @@
 // Lighthouse quality gate: every listed page must score 100 in performance,
-// accessibility, best practices and SEO, on mobile and on desktop.
+// accessibility, best practices and SEO, on mobile and on desktop, save the
+// exceptions below, each one decided by the author.
 //
 //   node scripts/lighthouse-check.ts <base-url> <page> [<page>...]
 //   e.g. node scripts/lighthouse-check.ts http://localhost:4321 / /islandia/islandia-en-camper-13-dias/
@@ -13,9 +14,18 @@ import { execFileSync } from 'node:child_process'
 import { readFileSync, mkdtempSync } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
-import { findFailures, median, type PageResult } from './lighthouse-scores.ts'
+import { findFailures, median, type PageResult, type ThresholdException } from './lighthouse-scores.ts'
 
 const THRESHOLD = 100
+
+// The 13-day guide in full is ~45 KB of compressed HTML. Lighthouse's
+// simulated network then needs one more round trip for the document (the
+// window ends near 43.8 KB), which costs 1 point of mobile performance with
+// nothing else changed. The author accepted 99 for this page only on
+// 2026-10-15 rather than move the day panels out of the HTML (docs/1.13 §5).
+const EXCEPTIONS: ThresholdException[] = [
+  { page: '/islandia/islandia-en-camper-13-dias/', device: 'mobile', category: 'performance', threshold: 99 },
+]
 const RUNS = 3
 const CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo']
 const DEVICES = ['mobile', 'desktop'] as const
@@ -64,9 +74,9 @@ for (const page of pages) {
   }
 }
 
-const failures = findFailures(results, THRESHOLD)
+const failures = findFailures(results, THRESHOLD, EXCEPTIONS)
 if (failures.length > 0) {
   console.error(`\nBelow ${THRESHOLD}:\n  ${failures.join('\n  ')}`)
   process.exit(1)
 }
-console.log(`\nAll pages at ${THRESHOLD}, mobile and desktop.`)
+console.log(`\nAll pages at ${THRESHOLD}, mobile and desktop${EXCEPTIONS.length ? ' (save the exceptions listed in the script)' : ''}.`)

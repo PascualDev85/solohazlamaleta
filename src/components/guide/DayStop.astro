@@ -1,7 +1,10 @@
 ---
 import type { CompiledStop } from '../../../engine/index.ts';
-import { placeMapUrl } from '../../lib/maps.ts';
+import { placeMapLink } from '../../lib/maps.ts';
+import { dayAnchorId } from '../../lib/anchors.ts';
 import { formatDuration, formatMinutes } from '../../lib/formatDuration.ts';
+import { formatWholePrice } from '../../lib/formatPrice.ts';
+import { shortName } from '../../lib/placeName.ts';
 import SectionIcon from './SectionIcon.astro';
 
 interface Props {
@@ -15,7 +18,7 @@ interface Props {
 const { stop, n, day } = Astro.props;
 // The hike mark opens a speech bubble (native <details>, no script) saying
 // what the upper end of the visit time includes: "2 h 30 min con la ruta…".
-const hintId = `dia-${day}-parada-${n}-nota`;
+const hintId = `${dayAnchorId(day)}-parada-${n}-nota`;
 const hintTime = stop.duration_max_min != null ? formatMinutes(stop.duration_max_min) : formatMinutes(stop.duration_min);
 const { place } = stop;
 const { parking } = place;
@@ -24,14 +27,7 @@ const { parking } = place;
 
 // A car park shared with another place: the card says so instead of a price.
 const sharedWith = stop.parking_shared_with;
-const price = parking
-  ? new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: parking.currency,
-      maximumFractionDigits: 0,
-      useGrouping: true,
-    }).format(parking.price)
-  : undefined;
+const price = parking ? formatWholePrice(parking.price, parking.currency) : undefined;
 ---
 
 <li class="day-stop">
@@ -67,7 +63,7 @@ const price = parking
           <span class="day-stop__p" aria-hidden="true"></span>
           <span class="visually-hidden">Parking: </span>
           {sharedWith ? (
-            <strong>Incluido con {sharedWith.short_name ?? sharedWith.name}</strong>
+            <strong>Incluido con {shortName(sharedWith)}</strong>
           ) : parking.price === 0 ? (
             <strong class="day-stop__free">Gratis</strong>
           ) : (
@@ -81,18 +77,23 @@ const price = parking
               <summary class="day-stop__free-nearby" aria-label={`Parking gratis en ${parking.free_nearby.label}`}>
                 <span class="day-stop__free">Gratis</span><SectionIcon name="info" />
               </summary>
-              <span class="day-stop__bubble" id={`${hintId}-parking`}>
+              {/* A note, like the visit-time bubble. "Mapa" only when the free car
+                  park has its own map card: falling back to the stop's own map
+                  would send the reader to the paid car park. */}
+              <span class="day-stop__bubble" role="note">
                 En {parking.free_nearby.label}
-                <a href={parking.free_nearby.maps_url ?? place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">
-                  Mapa<span class="visually-hidden"> de ese parking (se abre en una pestaña nueva)</span>
-                </a>
+                {parking.free_nearby.maps_url && (
+                  <a href={parking.free_nearby.maps_url} target="_blank" rel="noopener">
+                    Mapa<span class="visually-hidden"> del parking (se abre en una pestaña nueva)</span>
+                  </a>
+                )}
               </span>
             </details>
           )}
         </span>
       )}
-      <a class="day-stop__map" href={place.maps_url ?? placeMapUrl(place.lat, place.lng)} target="_blank">
-        <SectionIcon name="pin" />Mapa<span class="visually-hidden"> de {place.name} (se abre en una pestaña nueva)</span>
+      <a class="day-stop__map" href={placeMapLink(place)} target="_blank" rel="noopener">
+        <SectionIcon name="pin" />Mapa<span class="visually-hidden"> (se abre en una pestaña nueva)</span>
       </a>
     </div>
   </div>

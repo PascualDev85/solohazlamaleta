@@ -1,6 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
 import { median, findFailures } from '../../scripts/lighthouse-scores.ts'
+import type { PageResult } from '../../scripts/lighthouse-scores.ts'
 
 test('median of an odd and an even list of runs', () => {
   assert.strictEqual(median([99, 100, 100]), 100)
@@ -9,14 +10,34 @@ test('median of an odd and an even list of runs', () => {
 })
 
 test('findFailures returns nothing when every median reaches the threshold', () => {
-  const results = [{ page: '/', device: 'mobile', runs: { performance: [100, 99, 100], seo: [100, 100, 100] } }]
+  const results: PageResult[] = [{ page: '/', device: 'mobile', runs: { performance: [100, 99, 100], seo: [100, 100, 100] } }]
   assert.deepStrictEqual(findFailures(results, 100), [])
 })
 
 test('findFailures reports each page, device and category below the threshold, with its median', () => {
-  const results = [
+  const results: PageResult[] = [
     { page: '/', device: 'desktop', runs: { performance: [100, 100, 100] } },
     { page: '/guia/', device: 'mobile', runs: { performance: [99, 99, 100], accessibility: [100, 100, 100] } },
   ]
   assert.deepStrictEqual(findFailures(results, 100), ['/guia/ (mobile) performance: 99'])
+})
+
+test('findFailures applies an exception only to its page, device and category', () => {
+  const exceptions = [{ page: '/guia/', device: 'mobile' as const, category: 'performance', threshold: 99 }]
+  const results: PageResult[] = [
+    { page: '/guia/', device: 'mobile', runs: { performance: [99, 99, 100], accessibility: [99, 99, 99] } },
+    { page: '/guia/', device: 'desktop', runs: { performance: [99, 99, 99] } },
+    { page: '/', device: 'mobile', runs: { performance: [99, 99, 99] } },
+  ]
+  assert.deepStrictEqual(findFailures(results, 100, exceptions), [
+    '/guia/ (mobile) accessibility: 99',
+    '/guia/ (desktop) performance: 99',
+    '/ (mobile) performance: 99',
+  ])
+})
+
+test('findFailures still fails a page with an exception when it drops below the exception', () => {
+  const exceptions = [{ page: '/guia/', device: 'mobile' as const, category: 'performance', threshold: 99 }]
+  const results: PageResult[] = [{ page: '/guia/', device: 'mobile', runs: { performance: [98, 98, 99] } }]
+  assert.deepStrictEqual(findFailures(results, 100, exceptions), ['/guia/ (mobile) performance: 98 (minimum 99)'])
 })
