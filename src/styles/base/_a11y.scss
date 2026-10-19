@@ -6,9 +6,15 @@
   outline-offset: 2px;
 }
 
+// Hidden with the same clip as .visually-hidden until it takes focus, not
+// moved 9999px off screen: audit tools flagged that as content outside the
+// viewport, and the clip keeps it in reading order all the same.
 .skip-link {
   position: absolute;
-  left: -9999px;
+
+  &:not(:focus) {
+    @include visually-hidden;
+  }
 
   &:focus {
     left: var(--space-sm);

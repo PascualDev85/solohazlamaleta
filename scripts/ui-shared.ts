@@ -1,6 +1,10 @@
 // In-page checks shared by scripts/ui-check.ts and scripts/ui-devices.ts.
-// Each function runs inside the browser (page.evaluate), so it must stay
-// self-contained: no imports, no closures over module scope.
+// The check functions run inside the browser (page.evaluate), so they must
+// stay self-contained: no imports, no closures over module scope. The
+// selectors are plain strings, built here in Node.
+
+/** One day's slide: its <article> is labelled by the day heading, id "dia-N". */
+export const daySlide = (day: number) => `article[aria-labelledby="dia-${day}"]`
 
 /** The overlay panels and what opens them. Selectors in the page's own terms. */
 export const PANELS = [
@@ -8,10 +12,10 @@ export const PANELS = [
   { name: 'índice', open: '.guide-index__dock', panel: '.guide-index', head: '.guide-index__head', close: '.guide-index__close' },
   {
     name: 'día completo (día 3)',
-    open: 'article[aria-labelledby="dia-3"] .day-card__full',
-    panel: 'article[aria-labelledby="dia-3"] .day-sheet',
-    head: 'article[aria-labelledby="dia-3"] .day-sheet__head',
-    close: 'article[aria-labelledby="dia-3"] .day-sheet__close',
+    open: `${daySlide(3)} .day-card__full`,
+    panel: `${daySlide(3)} .day-sheet`,
+    head: `${daySlide(3)} .day-sheet__head`,
+    close: `${daySlide(3)} .day-sheet__close`,
   },
 ] as const
 
@@ -40,10 +44,11 @@ export function headerOverlap({ panel, head }: { panel: string; head: string }) 
 
 /**
  * The lines of every day card with route data (a drive line, so three facts):
- * the route in two rows at most, three on a long day (seven route stops or
- * more, four from nine), and
- * more, decided by the author 2026-10-08); facts, night, each stop's name and
- * its practical line in one. Opens "Ver N paradas más" first, so every stop counts.
+ * the route in two rows at most, three on a long day (six route stops or
+ * more), four from nine and six from twelve (the author set two/three/four on
+ * 2026-10-08; widened 2026-10-14 for days 9 and 12, see below); facts, night,
+ * each stop's name and its practical line in one. Opens "Ver N paradas más"
+ * first, so every stop counts.
  */
 export function dayCardLineIssues() {
   document.querySelectorAll<HTMLDetailsElement>('.day-card__more').forEach((d) => (d.open = true))
@@ -54,9 +59,16 @@ export function dayCardLineIssues() {
     const facts = day.querySelector('.day-card__facts')
     if (!facts || facts.children.length < 3) continue // no drive data yet: not reviewed
     const route = day.querySelector('.day-card__route')
-    // Two rows; three from seven route stops; four from nine (day 4 has nine).
+    // Two rows; three from six route stops; four from nine (day 4 has nine);
+    // six from twelve. Widened 2026-10-14 from "three from seven" and "four
+    // from nine and up": day 9 (six stops: Krafla → Hverir → Hverfjall →
+    // Dimmuborgir → Mývatn → Jarðgangalaug) and day 12 (twelve stops around
+    // Snæfellsnes) are already at their shortest real names and still need
+    // more rows at 350px (day 12 takes six in CI's Chromium, which sets the
+    // text a little wider than older builds). Icelandic names have no shorter
+    // form to invent.
     const n = route ? route.children.length : 0
-    const maxRouteRows = n >= 9 ? 4 : n >= 7 ? 3 : 2
+    const maxRouteRows = n >= 12 ? 6 : n >= 9 ? 4 : n >= 6 ? 3 : 2
     if (route && rows(route) > maxRouteRows) out.push(`${id}: route in ${rows(route)} rows`)
     if (rows(facts) > 1) out.push(`${id}: facts wrap`)
     const night = day.querySelector('.day-card__night')
@@ -65,4 +77,53 @@ export function dayCardLineIssues() {
     for (const p of day.querySelectorAll<HTMLElement>('.day-stop__practical')) if (p.scrollWidth > p.clientWidth + 0.5) out.push(`${id}: practical line overflows`)
   }
   return out
+}
+
+/**
+ * The site header on a phone: brand and links in one row (no hamburger, so
+ * nothing may wrap), every link at least 44px tall, nothing pushing the page
+ * sideways, and not fixed or sticky (it would cover anchors and fight the
+ * guide's floating index pill). Returns what broke.
+ */
+export function siteHeaderIssues() {
+  const issues: string[] = []
+  const header = document.querySelector<HTMLElement>('.site-header')
+  if (!header) return ['site header missing']
+  const position = getComputedStyle(header).position
+  if (position === 'fixed' || position === 'sticky') issues.push(`site header is ${position}`)
+  const links = [...header.querySelectorAll<HTMLElement>('a')]
+  const tops = new Set(links.map((a) => Math.round(a.getBoundingClientRect().top)))
+  if (tops.size > 1) issues.push('site header wraps onto a second row')
+  for (const a of links) {
+    const box = a.getBoundingClientRect()
+    if (box.height < 44) issues.push(`site header link "${a.textContent?.trim()}" is ${Math.round(box.height)}px tall (< 44)`)
+    if (box.right > document.documentElement.clientWidth) issues.push(`site header link "${a.textContent?.trim()}" overflows the viewport`)
+  }
+  if (!header.querySelector('nav[aria-label="Principal"]')) issues.push('main navigation landmark missing')
+  return issues
+}
+
+/**
+ * The scroll-driven animations must survive the production build. The
+ * minifier folds "animation" and "animation-timeline" into one shorthand that
+ * carries the timeline; no browser accepts that, so it drops the declaration
+ * and the effect silently disappears (the day cards' 3D turn and the glance's
+ * "Hasta el día 13" fade did, until 2026-10-16; dev builds, unminified, still
+ * showed them). Two checks: no shorthand in the page's own CSS carries a
+ * timeline, and the elements that should animate really have an animation.
+ */
+export function scrollAnimationIssues() {
+  const bad: string[] = []
+  const css = [...document.querySelectorAll('style')].map((s) => s.textContent ?? '').join('\n')
+  for (const m of css.matchAll(/animation:([^;}]*)/g)) {
+    if (/\b(view|scroll)\(/.test(m[1])) bad.push(`animation shorthand carries a timeline: "${m[1].slice(0, 80)}"`)
+  }
+  // Only where the browser supports scroll timelines and motion is allowed.
+  const supported = CSS.supports('animation-timeline: view()')
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (supported && !reduced) {
+    const card = document.querySelector<HTMLElement>('.route__rail > .day')
+    if (card && getComputedStyle(card).animationName === 'none') bad.push('day cards have no 3D turn animation')
+  }
+  return bad
 }

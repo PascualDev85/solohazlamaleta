@@ -1,0 +1,17 @@
+---
+// A section heading with its icon: the same drawing the index uses for the
+// section, so the reader lands where the index said.
+import SectionIcon from './SectionIcon.astro';
+
+interface Props {
+  id: string;
+  icon: string;
+}
+
+const { id, icon } = Astro.props;
+---
+
+<h2 class="section-title" id={id}>
+  <span class="section-title__icon"><SectionIcon name={icon} /></span>
+  <slot />
+</h2>

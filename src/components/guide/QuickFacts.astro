@@ -1,4 +1,5 @@
 ---
+import { formatWholePrice } from '../../lib/formatPrice.ts';
 import SectionIcon from './SectionIcon.astro';
 
 interface Props {
@@ -12,14 +13,6 @@ interface Props {
 }
 
 const { currency, budgetPerPerson, budgetTotal, budgetHref, pace, vehicle, baseArea } = Astro.props;
-
-// Whole euros at a glance; the budget section keeps the cents.
-const euros = new Intl.NumberFormat('es-ES', {
-  style: 'currency',
-  currency,
-  maximumFractionDigits: 0,
-  useGrouping: true,
-});
 
 const paceLabel = { intensivo: 'Intensivo', equilibrado: 'Equilibrado', tranquilo: 'Tranquilo' };
 
@@ -42,11 +35,11 @@ const vehicleParts = (vehicle ?? '').split('**').map((text, i) => ({ text, stron
       <li class="quick-facts__tile quick-facts__tile--wide">
         <p class="quick-facts__label"><SectionIcon name="wallet" />Presupuesto</p>
         <p class="quick-facts__value">
-          <span class="quick-facts__big">{euros.format(budgetPerPerson)}</span><span class="quick-facts__unit">/pers.</span>
+          <span class="quick-facts__big">{formatWholePrice(budgetPerPerson, currency)}</span><span class="quick-facts__unit">/pers.</span>
         </p>
         {budgetTotal != null && (
           <p class="quick-facts__note">
-            {euros.format(budgetTotal)} en total
+            {formatWholePrice(budgetTotal, currency)} en total
             {budgetHref && <a href={budgetHref}>Ver desglose</a>}
           </p>
         )}

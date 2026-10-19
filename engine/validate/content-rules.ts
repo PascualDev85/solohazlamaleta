@@ -1,13 +1,24 @@
-import type { GuideSource } from '../../schemas/index.ts'
+import type { GuideSource, PlaceSource } from '../../schemas/index.ts'
 import type { PlaceRegistry } from '../types.ts'
 import { resolvePlace } from '../compile/place.ts'
+import {
+  FIRST_PERSON,
+  placeDescriptionWarnings,
+  placeNotesOpinionWarnings,
+  placeNotesInternalWarnings,
+  longRouteNameWarnings,
+  outdatedPriceWarnings,
+  skippedStopWithoutReasonWarnings,
+  driveDayTravelTimeWarnings,
+  dayPhotoAltWarnings,
+  driveDayRoutePlaces,
+  overnightSequenceWarnings,
+} from './quality-rules.ts'
 
 export interface ContentRuleResult {
   errors: string[]
   warnings: string[]
 }
-
-const FIRST_PERSON = /\b(nosotros|nuestro|nuestra|nuestros|nuestras|nos|hicimos|vimos|fuimos|comimos|llegamos|estuvimos|recomendamos)\b/i
 
 export type BuildEnv = 'development' | 'production'
 
@@ -23,7 +34,8 @@ export function validateContentRules(
 ): ContentRuleResult {
   const errors: string[] = []
   const warnings: string[] = []
-  const warnedStalePlaces = new Set<string>()
+  // place_id → stale fields already reported for it.
+  const warnedStalePlaces = new Map<string, string[]>()
 
   if (guide.status === 'draft') {
     if (env === 'production') {
@@ -76,19 +88,67 @@ export function validateContentRules(
         if (place && !warnedStalePlaces.has(place.place_id)) {
           const resolved = resolvePlace(place, now)
           if (resolved.is_stale) {
-            warnedStalePlaces.add(place.place_id)
+            warnedStalePlaces.set(place.place_id, resolved.stale_fields)
             warnings.push(
               `[WARNING] ${place.place_id}: datos caducados (${resolved.stale_fields.join(', ')})`,
             )
           }
         }
       }
+
+      warnings.push(...skippedStopWithoutReasonWarnings(variant, day))
+      warnings.push(...driveDayTravelTimeWarnings(variant, day))
+      warnings.push(...dayPhotoAltWarnings(variant, day))
     }
+
+    warnings.push(...overnightSequenceWarnings(variant))
   }
+
+  warnings.push(...placeQualityWarnings(guide, places, now, warnedStalePlaces))
 
   if (guide.content_type === 'experience' && !guide.trip_done) {
     warnings.push('[WARNING] content_type: experience sin trip_done')
   }
 
   return { errors, warnings }
+}
+
+function referencedPlaceIds(guide: GuideSource): Set<string> {
+  const ids = new Set<string>()
+  for (const variant of guide.variants ?? []) {
+    for (const day of variant.days) {
+      for (const stop of day.stops) ids.add(stop.place_id)
+      if (day.overnight) ids.add(day.overnight)
+    }
+  }
+  for (const zone of guide.accommodation?.zones ?? []) {
+    for (const pick of zone.picks ?? []) ids.add(pick.place_id)
+  }
+  return ids
+}
+
+/** Editorial checks on every place the guide references, once per place. */
+function placeQualityWarnings(
+  guide: GuideSource,
+  places: PlaceRegistry,
+  now: Date,
+  reportedStale: Map<string, string[]>,
+): string[] {
+  const warnings: string[] = []
+  for (const placeId of referencedPlaceIds(guide)) {
+    const place = places.get(placeId)
+    if (!place) continue
+    warnings.push(...placeDescriptionWarnings(place))
+    warnings.push(...placeNotesOpinionWarnings(place))
+    warnings.push(...placeNotesInternalWarnings(place))
+    warnings.push(...outdatedPriceWarnings(place, now, reportedStale.get(placeId) ?? []))
+  }
+
+  const routePlaces = new Map<string, PlaceSource>()
+  for (const variant of guide.variants ?? []) {
+    for (const place of driveDayRoutePlaces(variant, places)) routePlaces.set(place.place_id, place)
+  }
+  for (const place of routePlaces.values()) warnings.push(...longRouteNameWarnings(place))
+
+  return warnings
 }

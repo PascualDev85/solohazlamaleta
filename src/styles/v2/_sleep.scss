@@ -4,17 +4,50 @@
 // we paid, what it has and one line of opinion; open, the rest. Native
 // <details>, no script. Each card is the target of "Noche → …" on its day.
 [data-design="v2"] .sleep {
+  // How the nights went, in one line of pills under the heading.
+  &__tally {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  &__tally strong {
+    font-weight: 900;
+    color: var(--color-text);
+  }
+
+  &__intro {
+    margin: 0 0 var(--space-lg);
+  }
+
+  // Room between one zone's last card and the next zone's kicker. The second
+  // compound is written out: '&__zone + &__zone' would repeat the
+  // [data-design] parent and never match.
+  &__zone + .sleep__zone {
+    margin-top: var(--space-lg);
+  }
+
+  &__zone-name {
+    margin: var(--space-2xs) 0 var(--space-2xs);
+  }
+
   &__zone-desc {
-    margin-top: calc(-1 * var(--space-xs));
-    color: var(--color-text-muted);
+    margin: 0 0 var(--space-sm);
   }
 
   &__list {
     display: grid;
     gap: var(--space-sm);
-    margin: 0 0 var(--space-lg);
+    margin: 0;
     padding: 0;
     list-style: none;
+
+    // Desktop: two cards a row per zone. Cards in a row share its height,
+    // so folded ones line up; an open card makes its row taller.
+    @include from("md") {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 }
 
@@ -25,6 +58,36 @@
   border-radius: var(--radius-lg);
   background: var(--color-bg);
   box-shadow: var(--shadow-soft);
+
+  // The nights spent here, as small chips at the top of the card, each a
+  // link back to its day.
+  &__nights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin: 0;
+    padding: var(--space-sm) var(--space-md) 0;
+  }
+
+  &__night {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.1rem 0.6rem 0.1rem 0.45rem;
+    border-radius: 999px;
+    background: linear-gradient(145deg, var(--color-blush-from), var(--color-blush-to));
+    border: 1px solid var(--color-blush-edge);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--color-label-on-blush);
+
+    .section-icon {
+      width: 0.85rem;
+      height: 0.85rem;
+    }
+  }
 
   &__summary {
     position: relative;
@@ -91,21 +154,11 @@
     color: var(--color-text-muted);
   }
 
-  // The chevron sits at the right of the first line and turns when open.
+  // The chevron (.fold-chevron) sits at the right of the first line.
   &__chevron {
     position: absolute;
     top: calc(var(--space-md) + 0.45rem);
     right: var(--space-md);
-    width: 0.55rem;
-    height: 0.55rem;
-    border-right: 2px solid var(--color-accent);
-    border-bottom: 2px solid var(--color-accent);
-    transform: rotate(45deg);
-    transition: transform 0.2s var(--ease-out);
-  }
-
-  &__details[open] &__chevron {
-    transform: rotate(-135deg);
   }
 
   &__more {
@@ -138,7 +191,8 @@
 
   @include from("sm") {
     &__summary,
-    &__more {
+    &__more,
+    &__nights {
       padding-inline: var(--space-lg);
     }
 
