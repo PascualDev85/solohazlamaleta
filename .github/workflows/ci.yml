@@ -86,8 +86,9 @@ jobs:
           npm run lighthouse
 
       # Browser checks of the guide (scripts/ui-check.ts): overlay panels keep
-      # their header on top while scrolling, and the day cards keep their lines
-      # on phones from 350 to 414px wide.
+      # their header on top while scrolling, the day cards keep their lines
+      # on phones from 350 to 414px wide, and every page runs clean under the
+      # headers in dist/_headers (Content-Security-Policy included).
       - name: UI checks in Chromium
         run: |
           npx playwright install --with-deps chromium
