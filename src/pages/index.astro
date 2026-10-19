@@ -30,19 +30,20 @@ const cards = sorted.map((guide) => ({
 const firstPhoto = cards.findIndex((card) => card.cover);
 const cardSizes = '(min-width: 48rem) 22rem, 100vw';
 
-// Claims backed by the brief (D, E) and by the guides themselves; text for the author to review.
+// Claims backed by the brief (D, E) and true of every guide listed today,
+// Alsacia included; text for the author to review.
 const reasons = [
   {
     title: 'Viajes hechos, no copiados',
     text: 'Cada ruta sale de un viaje que hicimos, y la guía dice cuándo y cómo lo hicimos. Lo que no pisamos no se presenta como vivido.',
   },
   {
-    title: 'Presupuesto real',
-    text: 'Lo que costó, partida a partida, con la cifra por persona. Los precios y horarios llevan la fecha en que los comprobamos.',
+    title: 'Con criterio, no un listado',
+    text: 'No te contamos todo lo que se puede ver: elegimos lo que merece tus días y te decimos por qué.',
   },
   {
-    title: 'Lo que dejamos fuera, y por qué',
-    text: 'No listamos todo lo que se puede ver. Elegimos lo que merece tus días y contamos qué descartamos y el motivo.',
+    title: 'Cifras sin maquillar',
+    text: 'Cuando damos un presupuesto, es lo que pagamos, partida a partida. Si una cifra es una estimación, lo decimos.',
   },
   {
     title: 'Gratis y completas',
@@ -64,7 +65,7 @@ const websiteJsonLd = {
 
 <BaseLayout
   title="Solo Haz la Maleta — Guías de viaje ya planificadas"
-  description="Itinerarios día a día con la ruta lista para Google Maps y qué reservar y cuándo. De viajes hechos, no copiados, y adaptados a cómo viajas."
+  description="Itinerarios día a día con la ruta lista para Google Maps y qué reservar y cuándo. De viajes hechos, no copiados."
   design="v2"
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(websiteJsonLd)} slot="head" />
