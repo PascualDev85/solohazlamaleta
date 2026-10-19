@@ -77,11 +77,16 @@ const price = parking ? formatWholePrice(parking.price, parking.currency) : unde
               <summary class="day-stop__free-nearby" aria-label={`Parking gratis en ${parking.free_nearby.label}`}>
                 <span class="day-stop__free">Gratis</span><SectionIcon name="info" />
               </summary>
-              <span class="day-stop__bubble" id={`${hintId}-parking`}>
+              {/* A note, like the visit-time bubble. "Mapa" only when the free car
+                  park has its own map card: falling back to the stop's own map
+                  would send the reader to the paid car park. */}
+              <span class="day-stop__bubble" role="note">
                 En {parking.free_nearby.label}
-                <a href={parking.free_nearby.maps_url ?? placeMapLink(place)} target="_blank" rel="noopener">
-                  Mapa<span class="visually-hidden"> del parking (se abre en una pestaña nueva)</span>
-                </a>
+                {parking.free_nearby.maps_url && (
+                  <a href={parking.free_nearby.maps_url} target="_blank" rel="noopener">
+                    Mapa<span class="visually-hidden"> del parking (se abre en una pestaña nueva)</span>
+                  </a>
+                )}
               </span>
             </details>
           )}

@@ -1,4 +1,4 @@
-import { z } from 'astro:content';
+import { z } from 'astro/zod';
 
 /**
  * The guide schema is the project's contract: the web, the engine and the

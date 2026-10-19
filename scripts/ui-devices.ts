@@ -55,7 +55,7 @@ const DEVICES: Device[] = [
   },
 ]
 
-// The day cards' type scale is designed for 350px and up (_day-card.scss):
+// The day cards' type scale is designed for 350px and up (_day-stop.scss):
 // below that, their lines are reported as warnings, not failures.
 const LINES_MIN_WIDTH = 350
 const TOUCH_MIN = 44
@@ -291,7 +291,7 @@ async function checkDevice(browser: Browser, device: Device, engineLabel: string
         if (!r.width || !r.height) continue
         if (getComputedStyle(el).display === 'inline' && el.closest('p, li, dd, td') && el.closest('p, li, dd, td')!.textContent!.trim() !== el.textContent!.trim()) continue
         // An invisible ::after layer with negative insets widens the tap area
-        // without changing the drawing (_day-card.scss): measure that area.
+        // without changing the drawing (_day-card.scss, _day-stop.scss): measure that area.
         const after = getComputedStyle(el, '::after')
         const outset = (v: string) => Math.min(0, parseFloat(v) || 0)
         const layer = after.content !== 'none' && after.position === 'absolute'

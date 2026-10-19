@@ -115,10 +115,8 @@ borrador en PR #14. El detalle está en la tabla de [ESTADO.md](ESTADO.md).
 
 ## Web — pendientes de la auditoría de QA
 
-- [ ] `.skip-link` usa `left: -9999px` (sigue así en
-      `src/styles/base/_a11y.scss`). Cambiar al mixin `visually-hidden` que ya
-      existe en `_mixins.scss`, para que las herramientas de auditoría no lo
-      marquen como elemento fuera del viewport.
+- [x] `.skip-link` ya no usa `left: -9999px`: se oculta con el mixin
+      `visually-hidden` hasta que recibe el foco (2026-10-19).
 - [x] Avisar de que el enlace de Google Maps abre en pestaña nueva. En móvil
       es lo que más desorienta. (Guía de Islandia: texto oculto "se abre en
       una pestaña nueva" en `DayStop` y `CampsiteCard`, `857b758`/`3efd081`.
@@ -163,10 +161,9 @@ Salen de las PR #9, #14 y #17.
       - las hojas inferiores frente al indicador de inicio;
       - la vista en horizontal con la muesca;
       - el cierre del bocadillo.
-- [ ] Bocadillo de `free_nearby` (#9):
-      - no pintar "Mapa de ese parking" si falta su `maps_url`;
-      - `role="note"`;
-      - quitar el `id` sin uso.
+- [x] Bocadillo de `free_nearby` (#9): "Mapa" solo si el parking gratis
+      tiene su `maps_url`, `role="note"` y sin el `id` que no usaba nadie
+      (2026-10-19).
 
 ## Web — funcionalidad
 

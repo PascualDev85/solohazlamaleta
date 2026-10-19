@@ -1,12 +1,17 @@
 .site-header {
-  padding-block: var(--space-md);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-xs);
+  padding-block: var(--space-xs);
   margin-bottom: var(--space-xl);
   border-bottom: 1px solid var(--color-border);
 
+  // 44px tall: the brand and the links are the only way around the site.
   .brand {
     display: inline-flex;
     align-items: center;
-    min-height: 24px;
+    min-height: 44px;
     font-family: var(--font-display);
     font-size: var(--step-1);
     letter-spacing: -0.01em;
@@ -15,6 +20,47 @@
   }
 
   .brand:hover {
+    color: var(--color-accent);
+  }
+}
+
+// Not sticky: the guide already floats its own index pill at the bottom, and a
+// static header can neither cover an anchor nor collide with a popover.
+// Pushed right; under 350px (below the design scale) it drops to a second row,
+// still on the right.
+.site-nav {
+  margin-inline-start: auto;
+
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: var(--space-xs);
+    color: var(--color-text);
+    font-size: var(--step--1);
+    text-decoration: none;
+    text-underline-offset: 0.3em;
+  }
+
+  // Right edge of the last link lines up with the page column.
+  li:last-child a {
+    padding-inline-end: 0;
+  }
+
+  a:hover,
+  a[aria-current="page"] {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  a:hover {
     color: var(--color-accent);
   }
 }

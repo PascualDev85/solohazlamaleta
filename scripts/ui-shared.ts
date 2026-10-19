@@ -78,3 +78,52 @@ export function dayCardLineIssues() {
   }
   return out
 }
+
+/**
+ * The site header on a phone: brand and links in one row (no hamburger, so
+ * nothing may wrap), every link at least 44px tall, nothing pushing the page
+ * sideways, and not fixed or sticky (it would cover anchors and fight the
+ * guide's floating index pill). Returns what broke.
+ */
+export function siteHeaderIssues() {
+  const issues: string[] = []
+  const header = document.querySelector<HTMLElement>('.site-header')
+  if (!header) return ['site header missing']
+  const position = getComputedStyle(header).position
+  if (position === 'fixed' || position === 'sticky') issues.push(`site header is ${position}`)
+  const links = [...header.querySelectorAll<HTMLElement>('a')]
+  const tops = new Set(links.map((a) => Math.round(a.getBoundingClientRect().top)))
+  if (tops.size > 1) issues.push('site header wraps onto a second row')
+  for (const a of links) {
+    const box = a.getBoundingClientRect()
+    if (box.height < 44) issues.push(`site header link "${a.textContent?.trim()}" is ${Math.round(box.height)}px tall (< 44)`)
+    if (box.right > document.documentElement.clientWidth) issues.push(`site header link "${a.textContent?.trim()}" overflows the viewport`)
+  }
+  if (!header.querySelector('nav[aria-label="Principal"]')) issues.push('main navigation landmark missing')
+  return issues
+}
+
+/**
+ * The scroll-driven animations must survive the production build. The
+ * minifier folds "animation" and "animation-timeline" into one shorthand that
+ * carries the timeline; no browser accepts that, so it drops the declaration
+ * and the effect silently disappears (the day cards' 3D turn and the glance's
+ * "Hasta el día 13" fade did, until 2026-10-16; dev builds, unminified, still
+ * showed them). Two checks: no shorthand in the page's own CSS carries a
+ * timeline, and the elements that should animate really have an animation.
+ */
+export function scrollAnimationIssues() {
+  const bad: string[] = []
+  const css = [...document.querySelectorAll('style')].map((s) => s.textContent ?? '').join('\n')
+  for (const m of css.matchAll(/animation:([^;}]*)/g)) {
+    if (/\b(view|scroll)\(/.test(m[1])) bad.push(`animation shorthand carries a timeline: "${m[1].slice(0, 80)}"`)
+  }
+  // Only where the browser supports scroll timelines and motion is allowed.
+  const supported = CSS.supports('animation-timeline: view()')
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (supported && !reduced) {
+    const card = document.querySelector<HTMLElement>('.route__rail > .day')
+    if (card && getComputedStyle(card).animationName === 'none') bad.push('day cards have no 3D turn animation')
+  }
+  return bad
+}
