@@ -41,6 +41,15 @@ const preloadFonts =
     : ['/fonts/instrument-serif-latin.woff2'];
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+// Only pages that exist today; no empty links. "Guías" is the list on the home
+// page, so it never marks itself current: that page's own link is the brand.
+const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const currentFor = (href: string) => (href === pathname ? 'page' : undefined);
+const navLinks = [
+  { href: '/#guias', label: 'Guías' },
+  { href: '/sobre-mi/', label: 'Sobre mí' },
+];
 const ogImage = image ? new URL(image, Astro.site).href : undefined;
 ---
 
@@ -77,7 +86,14 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
     <a class="skip-link" href="#main">Saltar al contenido</a>
 
     <header class="wrap site-header">
-      <a href="/" class="brand">Solo Haz la Maleta</a>
+      <a href="/" class="brand" aria-current={currentFor('/')}>Solo Haz la Maleta</a>
+      <nav class="site-nav" aria-label="Principal">
+        <ul>
+          {navLinks.map((link) => (
+            <li><a href={link.href} aria-current={currentFor(link.href)}>{link.label}</a></li>
+          ))}
+        </ul>
+      </nav>
     </header>
 
     <main id="main" class="wrap">

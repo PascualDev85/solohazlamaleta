@@ -141,7 +141,11 @@
     background: linear-gradient(to bottom, transparent, var(--color-bg) 70%);
     text-decoration: none;
     pointer-events: none;
-    animation: route-glance-more-out linear both;
+    // Longhands on purpose, as in _route.scss: a shorthand plus a timeline
+    // is minified into an invalid declaration and the fade never ran.
+    animation-name: route-glance-more-out;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
     animation-timeline: scroll(nearest);
     animation-range: calc(100% - 10rem) calc(100% - 2rem);
   }
@@ -153,7 +157,12 @@
     padding: 0.4rem 0.9rem;
     border: 1px solid rgb(255 255 255 / 0.25);
     border-radius: 999px;
-    background: rgb(10 20 30 / 0.55);
+    // WCAG 1.4.3: white 12px text needs 4.5:1 against the pill as composited
+    // over the panel. 0.61 is the lowest alpha giving >= 5:1, measured with
+    // Playwright on the lightest pill pixel (2026-10-16): light theme 5.09:1
+    // (was 4.16:1 at 0.55), dark theme 18.6:1. Even over pure white it stays
+    // at 5.04:1, should anything lighter than the panel slide behind.
+    background: rgb(10 20 30 / 0.61);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     color: #fff;

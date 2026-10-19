@@ -257,9 +257,19 @@
           translateY(calc(var(--turn) * 16px))
           translateZ(calc(var(--turn) * -110px))
           rotateY(calc((var(--in) - var(--out)) * 26deg));
-        animation:
-          route-in linear both,
-          route-out linear both;
+        // Longhands on purpose: the minifier folds "animation" and
+        // "animation-timeline" into one shorthand that carries the timeline,
+        // which no browser accepts, so the whole declaration was dropped and
+        // the cards stopped turning in production builds (dev, unminified,
+        // still showed it). scripts/ui-check.ts now fails if that comes back.
+        animation-name: route-in, route-out;
+        animation-timing-function: linear;
+        // No fill: a card wholly outside the row (before it starts entering,
+        // after it has left) stays flat. It turns from the first pixel that
+        // shows, so nothing visible changes, and a flat card off screen keeps
+        // its buttons' boxes where they are: turned, the "Ver día completo"
+        // box grew over "Lo mejor del día" and failed target size (2.5.8).
+        animation-fill-mode: none;
         animation-timeline: view(inline), view(inline);
         animation-range: entry, exit;
       }

@@ -5,8 +5,8 @@ import { compileGuide } from '../../engine/compile/index.ts'
 import type { PlaceRegistry, AffiliateRegistry } from '../../engine/types.ts'
 
 const places: PlaceRegistry = {
-  get: (id) => (id === 'a' ? { place_id: 'a', name: 'A', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2024-01-01' }
-    : id === 'camp' ? { place_id: 'camp', name: 'Camping', destination: 'islandia', lat: 1, lng: 1, type: 'accommodation', verified_at: '2024-01-01' }
+  get: (id) => (id === 'a' ? { place_id: 'a', name: 'A', destination: 'islandia', lat: 1, lng: 1, type: 'other', verified_at: '2024-01-01', review_interval: 12 }
+    : id === 'camp' ? { place_id: 'camp', name: 'Camping', destination: 'islandia', lat: 1, lng: 1, type: 'accommodation', verified_at: '2024-01-01', review_interval: 12 }
     : undefined),
 }
 const affiliates: AffiliateRegistry = {

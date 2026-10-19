@@ -1,4 +1,5 @@
 import type { Guide } from '../content/schema'
+import { isPublished, guidePath } from '../../engine/index.ts'
 import type { CompiledGuide } from '../../engine/index.ts'
 import { GROUP_LABELS } from './guide.ts'
 
@@ -42,7 +43,7 @@ export function fromLegacyGuide(id: string, guide: Guide): GuideListItem {
   }
 }
 
-/** A guide compiled by the engine. Anything not yet `published` is listed as a draft. */
+/** A guide compiled by the engine. Anything not yet `published` is listed as a draft (see isPublished). */
 export function fromCompiledGuide(guide: CompiledGuide): GuideListItem {
   const variantDays = guide.variants?.[0]?.days.length ?? guide.days
   const perPerson = guide.summary.budget_per_person
@@ -51,10 +52,10 @@ export function fromCompiledGuide(guide: CompiledGuide): GuideListItem {
     description: guide.description,
     destination: guide.destination,
     days: variantDays ? [variantDays] : [],
-    url: `/${guide.destination}/${guide.slug}/`,
+    url: guidePath(guide),
     lived: Boolean(guide.trip_done),
     livedNote: null,
-    draft: guide.status !== 'published',
+    draft: !isPublished(guide),
     updatedAt: guide.updated_at,
     coverImage: guide.cover_image,
     budgetPerPerson:
@@ -70,14 +71,5 @@ export function sortGuideList(items: GuideListItem[]): GuideListItem[] {
   })
 }
 
-/**
- * Engine guides listed on the landing page, as paths for loadCompiledGuide.
- * Explicit while there is a single engine guide: a glob over content/guides
- * would be the first discovery mechanism, and it is not needed yet.
- */
-export const ENGINE_GUIDE_SOURCES: { guide: string; places: string }[] = [
-  {
-    guide: 'content/guides/islandia/islandia-en-camper-13-dias.yaml',
-    places: 'content/places/islandia.yaml',
-  },
-]
+// The engine guides to list live in the engine, shared with the sitemap.
+export { ENGINE_GUIDE_SOURCES } from '../../engine/index.ts'
