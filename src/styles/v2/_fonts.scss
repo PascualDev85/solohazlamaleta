@@ -1,5 +1,32 @@
 // All faces are self-hosted and subset (hb-subset) to Basic Latin, Latin-1 and
 // the punctuation the guides use: Spanish and Icelandic letters included.
+//
+// Each file holds about 200 code points: U+0020-007E, U+00A0-00FF, – — ‘ ’ “ ”
+// • … € − (Nunito, Fraunces and Literata; no Latin Extended-A, no → or ≈).
+// The unicode-range below is wider than that; it is only a download hint.
+// `npm run fonts:check` (scripts/font-coverage.ts) reads every woff2 and fails
+// the CI when the built site uses a character none of them covers.
+//
+// Measured 2026-10-20: re-subsetting does not pay. Adding Latin Extended-A, →
+// and ≈ for future guides takes the four v2 files from 118.5KB to ~146KB, and
+// Literata and Fraunces rebuilt from upstream do not match these files to the
+// pixel. To add characters anyway, from the google/fonts upstream files
+// (fonttools; then compare screenshots before and after):
+//   U="U+0020-007E,U+00A0-017F,U+2013-2014,U+2018-201E,U+2022,U+2026,U+2039-203A,U+20AC,U+2122,U+2192,U+2212,U+2248"
+//   pyftsubset "Nunito[wght].ttf" --unicodes="$U" \
+//     --layout-features=calt,dnom,frac,kern,liga,locl,numr,ccmp,mark,mkmk \
+//     --flavor=woff2 --output-file=nunito-latin-var.woff2
+//   fonttools varLib.instancer "Fraunces[SOFT,WONK,opsz,wght].ttf" wght=700 SOFT=100 WONK=0 -o f.ttf
+//   pyftsubset f.ttf --unicodes="$U" --layout-features=kern,liga,rvrn,ccmp,mark,mkmk \
+//     --flavor=woff2 --output-file=fraunces-latin-700-soft.woff2
+//   fonttools varLib.instancer "Literata[opsz,wght].ttf" opsz=14 wght=400:900 -o l.ttf
+//   pyftsubset l.ttf --unicodes="$U" \
+//     --layout-features=ccmp,dnom,frac,kern,liga,locl,numr,pnum,rvrn,tnum,mark,mkmk \
+//     --flavor=woff2 --output-file=literata-latin-wght.woff2
+//   fonttools varLib.instancer "Literata-Italic[opsz,wght].ttf" opsz=14 wght=400 -o li.ttf
+//   pyftsubset li.ttf --unicodes="$U" \
+//     --layout-features=ccmp,dnom,frac,kern,liga,locl,numr,pnum,tnum,mark,mkmk \
+//     --flavor=woff2 --output-file=literata-latin-400-italic.woff2
 
 // Nunito (SIL OFL, licence in public/fonts/OFL-Nunito.txt), self-hosted.
 // One variable file covers every weight from 400 to 900: 33KB, latin subset,
