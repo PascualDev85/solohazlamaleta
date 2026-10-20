@@ -124,11 +124,13 @@ borrador en PR #14. El detalle está en la tabla de [ESTADO.md](ESTADO.md).
 - [x] `<article class="guide">` no tenía reglas CSS propias. Ahora las tiene:
       `[data-design="v2"] .guide` en `src/styles/v2/_guide.scss`
       (`d3d7e4d`).
-- [ ] La ruta `/ir/{id}` nunca se ha ejecutado en el repo: todos los
+- [x] La ruta `/ir/{id}` nunca se ha ejecutado en el repo: todos los
       partners están inactivos, así que no genera ninguna página. #16 la probó
       activando un afiliado temporal (sin commitear): salen `noindex` y
       `rel="sponsored nofollow noopener"`. Falta una prueba que quede en el
-      repo.
+      repo. (2026-10-20: `tests/pages/affiliate-route.test.ts` renderiza la
+      página real con un afiliado de prueba de `tests/fixtures/`, y
+      `affiliateRoutes` en `src/lib/affiliate-routes.ts` tiene sus tests)
 
 ## Web — accesibilidad y dispositivos
 
