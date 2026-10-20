@@ -38,6 +38,11 @@ jobs:
       # system font without anyone noticing (scripts/font-coverage.ts).
       - name: Every painted character is in a self-hosted font
         run: npm run fonts:check
+      # Gzipped HTML of every page under its cap (scripts/html-size.ts):
+      # 43.8 KB, Lighthouse's first TCP windows; 95 KB for the 13-day guide,
+      # under the next window at ~102 KB (docs/1.13 §5). Prints what is left.
+      - name: HTML size budget
+        run: npm run size:check
 
       - name: Assert an invalid guide fails the build
         run: |
@@ -92,8 +97,9 @@ jobs:
 
       # Browser checks of the guide (scripts/ui-check.ts): overlay panels keep
       # their header on top while scrolling, the day cards keep their lines
-      # on phones from 350 to 414px wide, and every page runs clean under the
-      # headers in dist/_headers (Content-Security-Policy included).
+      # on phones from 350 to 414px wide, every page runs clean under the
+      # headers in dist/_headers (Content-Security-Policy included), and the
+      # panels work by keyboard.
       - name: UI checks in Chromium
         run: |
           npx playwright install --with-deps chromium
