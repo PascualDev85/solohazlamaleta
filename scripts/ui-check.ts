@@ -110,7 +110,8 @@ for (const width of [350, 360, 375, 390, 414]) {
         await tab.keyboard.press('Escape')
         await tab.waitForTimeout(200)
       }
-      // A time bubble opens on tap and closes on a tap elsewhere (script).
+      // A time bubble opens on tap and closes on a tap elsewhere, or on a
+      // page scroll that moves it (script).
       const hint = tab.locator('.day-stop__hint:visible').first()
       if ((await hint.count()) > 0) {
         await hint.scrollIntoViewIfNeeded()
@@ -119,6 +120,10 @@ for (const width of [350, 360, 375, 390, 414]) {
         await tab.locator('h1').first().dispatchEvent('pointerdown')
         const closed = await hint.evaluate((el: HTMLDetailsElement) => !el.open)
         if (!opened || !closed) fail(`${path}: time bubble (opened: ${opened}, closed by a tap elsewhere: ${closed})`)
+        await hint.locator('summary').click()
+        await tab.mouse.wheel(0, 120)
+        await tab.waitForTimeout(300)
+        if (await hint.evaluate((el: HTMLDetailsElement) => el.open)) fail(`${path}: time bubble stays open after a page scroll`)
       }
     }
     for (const complaint of [...new Set(complaints)]) fail(`${path}: console: ${complaint}`)
@@ -130,30 +135,9 @@ for (const width of [350, 360, 375, 390, 414]) {
 //    opener, Enter opens it, focus goes inside, Esc closes it and puts focus
 //    back on the opener; and while closed, nothing inside it takes focus on
 //    the way through the page. Same for a visit-time bubble.
-//    A failure listed in KNOWN_KEYBOARD_ISSUES is reported but does not fail
-//    the run: the author decides on the fix (see its reason).
-const KNOWN_KEYBOARD_ISSUES: { target: string; width?: number; check: string; reason: string }[] = [
-  {
-    // Found 2026-10-20. Tab onto the first stop of a new day scrolls the rail
-    // to that card, and the carousel script then smooth-scrolls the day strip
-    // to its number (~200 ms). RouteDays' scroll listener closes every open
-    // bubble on any scroll, so an Enter pressed during that glide opens the
-    // bubble and closes it again. After a pause it opens fine. It depends on
-    // timing, so not every run hits it (390px nearly always, 1280px sometimes).
-    target: DURATION_HINT.name,
-    check: 'Enter right after Tab does not open it',
-    reason: 'the day strip\'s smooth scroll after Tab closes it (RouteDays scroll listener); opens after a pause',
-  },
-]
 const MAX_TABS = 1500
-const known = (target: string, width: number, check: string) =>
-  KNOWN_KEYBOARD_ISSUES.find((k) => k.target === target && (k.width ?? width) === width && k.check === check)
-const knownSeen: string[] = []
-const keyboardFail = (target: string, width: number, check: string, detail: string) => {
-  const k = known(target, width, check)
-  if (k) knownSeen.push(`${width}px ${target}: ${check} (${detail}) — known: ${k.reason}`)
-  else fail(`${width}px keyboard, ${target}: ${check} (${detail})`)
-}
+const keyboardFail = (target: string, width: number, check: string, detail: string) =>
+  fail(`${width}px keyboard, ${target}: ${check} (${detail})`)
 const closedPanels = [...PANELS.map((p) => p.panel), '.day-sheet', '[popover]', DURATION_HINT.panel]
 for (const width of [390, 1280]) {
   const tab = await browser.newPage({ viewport: { width, height: 844 } })
@@ -210,8 +194,6 @@ for (const width of [390, 1280]) {
 }
 
 await browser.close()
-
-for (const k of knownSeen) console.warn(`Known keyboard issue (not failing): ${k}`)
 
 if (failures.length) {
   console.error('UI checks failed:\n' + failures.map((f) => `  - ${f}`).join('\n'))
