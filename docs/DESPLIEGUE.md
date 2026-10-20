@@ -37,7 +37,7 @@ del 2026-09-22, sin `package.json`). La web entera está en `develop`. Si eliges
 `main` como rama de producción tal cual, **el primer build de producción
 fallará**.
 
-Dos salidas. Elige una antes de empezar:
+Dos salidas. **Decidido el 20 de octubre de 2026: la A** (el autor deja la elección en la recomendada).
 
 - **A (recomendada).** Abre en GitHub un PR de `develop` → `main` y mérgealo tú.
   Así producción ya tiene la web desde el primer día. Ojo: con `main` publicado
