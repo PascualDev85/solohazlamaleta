@@ -17,6 +17,7 @@ import SectionIcon from '../../components/guide/SectionIcon.astro';
 import { budgetRows } from '../../lib/budgetRows.ts';
 import { nightsByPlace, nightCounts } from '../../lib/nightsByPlace.ts';
 import { guideImage } from '../../lib/guide-images.ts';
+import { HUB_PRACTICAL_ID, hubSectionHref } from '../../lib/anchors.ts';
 import { getImage } from 'astro:assets';
 import '../../styles/guide-v2.scss';
 
@@ -424,7 +425,7 @@ const faqJsonLd =
     {/* "Lo práctico" is about the destination, so it lives only in the hub (1.13 §3): the guide points there. */}
     <p class="guide__hub-link">
       <SectionIcon name="practical" />
-      <a href="/islandia/#practico">Documentos, enchufes y apps: en la guía de Islandia →</a>
+      <a href={hubSectionHref(guide.hub, HUB_PRACTICAL_ID)}>Documentos, enchufes y apps: en la guía de Islandia →</a>
     </p>
 
     {show.faq && guide.faq && (

@@ -6,6 +6,7 @@ import { formatWholePrice } from '../../lib/formatPrice.ts';
 import { splitDetail } from '../../lib/splitDetail.ts';
 import { whatToSeeByDay } from '../../lib/whatToSee.ts';
 import { guideImage } from '../../lib/guide-images.ts';
+import { HUB_PRACTICAL_ID } from '../../lib/anchors.ts';
 import TrustBlock from '../../components/guide/TrustBlock.astro';
 import GuideIndex from '../../components/guide/GuideIndex.astro';
 import GuidePhoto from '../../components/guide/GuidePhoto.astro';
@@ -76,7 +77,7 @@ const indexSections = [
   { id: 'nuestra-guia', label: 'Nuestra guía', icon: 'route', visible: show.guide },
   { id: 'que-ver', label: 'Qué ver', icon: 'pin', visible: show.see },
   { id: 'cuando-ir', label: 'Cuándo ir', icon: 'booking', visible: show.when },
-  { id: 'practico', label: 'Lo práctico', icon: 'practical', visible: show.practical },
+  { id: HUB_PRACTICAL_ID, label: 'Lo práctico', icon: 'practical', visible: show.practical },
   { id: 'moverse', label: 'Cómo moverse', icon: 'transport', visible: show.moving },
   { id: 'faq', label: 'Preguntas sobre Islandia', icon: 'faq', visible: show.faq },
 ].filter((section) => section.visible);
@@ -89,7 +90,7 @@ const facts = [
   },
   currency && show.practical && {
     icon: 'wallet', label: 'Moneda', value: currency.name, note: currency.code,
-    href: '#practico', linkLabel: 'Tarjeta o efectivo',
+    href: `#${HUB_PRACTICAL_ID}`, linkLabel: 'Tarjeta o efectivo',
   },
   mainBudget != null && mainGuideUrl && {
     icon: 'budget', label: 'Presupuesto', value: formatWholePrice(mainBudget, mainCurrency), unit: '/pers.',
@@ -229,8 +230,8 @@ const faqJsonLd =
     )}
 
     {show.practical && hub.practical && (
-      <section class="practical" aria-labelledby="practico">
-        <SectionTitle id="practico" icon="practical">Lo práctico</SectionTitle>
+      <section class="practical" aria-labelledby={HUB_PRACTICAL_ID}>
+        <SectionTitle id={HUB_PRACTICAL_ID} icon="practical">Lo práctico</SectionTitle>
         <div class="practical__grid">
           {hub.practical.documents && hub.practical.documents.length > 0 && (
             <div class="practical__card">
