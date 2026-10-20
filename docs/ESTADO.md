@@ -56,18 +56,17 @@ cuelga de #26. CI = build, lighthouse y devices en el head actual.
 | [#26](https://github.com/PascualDev85/solohazlamaleta/pull/26) | `feature/hub-islandia` | Hub `/islandia/`, v1 | Borrador; el 19 de octubre tuvo conflictos con #28 y #34, ya resueltos | ✅ |
 | [#31](https://github.com/PascualDev85/solohazlamaleta/pull/31) | `feature/landing-v2` | Portada en el diseño v2 | Borrador; revisión atendida en `a7c32cb` | ✅ |
 | [#35](https://github.com/PascualDev85/solohazlamaleta/pull/35) | `feature/guia-al-hub` | Lo práctico de la guía, al hub | Borrador, sobre #26 | sin CI (su base no es `develop`) |
-| [#43](https://github.com/PascualDev85/solohazlamaleta/pull/43) | `feature/http-headers` | `_headers` y CSP por página generada en el build | Borrador | ✅ |
-| [#44](https://github.com/PascualDev85/solohazlamaleta/pull/44) | `perf/font-subsetting` | El recorte de fuentes no se aplica; `fonts:check` en la CI | Borrador; chocará con #43 | ✅ |
+| [#43](https://github.com/PascualDev85/solohazlamaleta/pull/43) | `feature/http-headers` | `_headers` y CSP por página generada en el build | Mezclado 2026-10-20 | ✅ |
+| [#44](https://github.com/PascualDev85/solohazlamaleta/pull/44) | `perf/font-subsetting` | El recorte de fuentes no se aplica; `fonts:check` en la CI | Mezclado 2026-10-20 | ✅ |
 | [#45](https://github.com/PascualDev85/solohazlamaleta/pull/45) | `feature/404-v2` | Página 404 propia | Borrador | ✅ |
-| [#46](https://github.com/PascualDev85/solohazlamaleta/pull/46) | `test/affiliate-route` | Prueba de `/ir/{id}` con un afiliado de prueba | Borrador | ✅ |
-| [#47](https://github.com/PascualDev85/solohazlamaleta/pull/47) | `test/keyboard-and-size-budget` | Tests de teclado y tope de tamaño del HTML; encuentra un fallo de teclado sin arreglar | Borrador | ✅ |
-| [#48](https://github.com/PascualDev85/solohazlamaleta/pull/48) | `docs/despliegue` | `docs/DESPLIEGUE.md`, Cloudflare Pages paso a paso | Borrador | ✅ |
+| [#46](https://github.com/PascualDev85/solohazlamaleta/pull/46) | `test/affiliate-route` | Prueba de `/ir/{id}` con un afiliado de prueba | Mezclado 2026-10-20 | ✅ |
+| [#47](https://github.com/PascualDev85/solohazlamaleta/pull/47) | `test/keyboard-and-size-budget` | Tests de teclado y tope de tamaño del HTML; el fallo de teclado que encontró quedó arreglado en la integración | Mezclado 2026-10-20 | ✅ |
+| [#48](https://github.com/PascualDev85/solohazlamaleta/pull/48) | `docs/despliegue` | `docs/DESPLIEGUE.md`, Cloudflare Pages paso a paso | Mezclado 2026-10-20 | ✅ |
 
 No hay PR de TypeScript 7: la rutina lo probó en local y no abrió PR, porque
 `astro check` no lo admite (issue #41).
 
 Orden de merge que se deduce de las dependencias: **#23 → #25 → #26 → #35**.
-#43 y #44 tocan los mismos ficheros: primero una y luego la otra.
 
 Issues abiertas:
 
@@ -143,9 +142,9 @@ Issue abierta: [#11](https://github.com/PascualDev85/solohazlamaleta/issues/11)
 | Dependencias al día, 0 vulnerabilidades altas | ✅ PR #10 (2026-10-16) y #40 (2026-10-19, cierra #11) |
 | Hub `/islandia/` | 🟡 en PR #26 (borrador), con #35 encima |
 | Doc 1.13 (guía, hub y satélites) e investigación SEO | 🟡 en PR #23 y #25 |
-| Cabeceras HTTP, 404, prueba de `/ir/`, tests de teclado, guía de despliegue | 🟡 en PR #43, #45, #46, #47 y #48 (borradores de la noche del 19 al 20) |
+| Cabeceras HTTP, prueba de `/ir/`, tests de teclado, guía de despliegue | ✅ mezclados el 2026-10-20 (#43, #46, #47, #48; la 404 sigue en PR #45) |
 | Páginas legales (pendientes de tus datos) | ✅ |
-| `/ir/[id]` y registro de afiliados | ✅ (sin partners activos; prueba en PR #46, borrador) |
+| `/ir/[id]` y registro de afiliados | ✅ (sin partners activos; prueba en `tests/pages/affiliate-route.test.ts`) |
 | `robots.txt`, sitemap, canonical, Open Graph | ✅ |
 | Guía de Alsacia como borrador con variantes | ✅ |
 | Guía de Egipto como borrador (esquema antiguo) | 🟡 en PR #12 |
@@ -261,8 +260,8 @@ La lista completa, con tiempos, está en [DEBERES.md](DEBERES.md). En corto:
    preguntas del informe de paneles (#30).
 4. **Datos de fuera:** Keyword Planner y Trends (bloques de #25), tasa por km
    en island.is, Sky Lagoon y los precios de los campings.
-5. **Más pequeñas:** #31 (textos de portada), #45, #46, #47 (fallo de teclado),
-   #44 (→ y ≈) y la issue #41 (seguir en TS 6).
+5. **Más pequeñas:** #31 (textos de portada), #45, → y ≈ de #44 y la issue
+   #41 (seguir en TS 6).
 
 ### Guía de Islandia: qué falta por día (2026-10-20)
 

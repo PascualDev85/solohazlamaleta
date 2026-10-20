@@ -90,9 +90,9 @@ Borrador, en verde. Solo añade tests.
 
 ### 8. #47 · Tests de teclado y tope de tamaño del HTML (5 min)
 
-Borrador, en verde.
+Mezclado el 2026-10-20 con la integración de #43, #44, #46, #48 y #49.
 
-- [ ] **Fallo de teclado sin arreglar:** con Tab y después Enter, el bocadillo de duración no se abre porque el scroll del carrusel lo cierra. Hay dos arreglos posibles: ignorar el scroll de `.route__days` y `.route__rail`, o cerrar solo si el bocadillo sale de la vista. Elige uno.
+- [x] **Fallo de teclado:** arreglado en esa integración. La causa real no era el carrusel sino que el evento de scroll del propio Tab llega después del Enter; ahora un scroll solo cierra el bocadillo si ha movido su icono en pantalla. `test:ui` lo exige desde entonces, sin excepción.
 
 ### 9. #43 · Cabeceras HTTP y CSP por página (5 min, más 15 el día del despliegue)
 

@@ -216,11 +216,13 @@ Salen de las PR #9, #14 y #17.
       ≤ 414 px en los días 5–13 (P2 de #17). Puede quedar resuelto con los
       nombres acortados de #14: comprobarlo tras el merge. (Comprobado en el
       informe de #30: 0 de 70 desbordan, de 320 a 414 px)
-- [ ] **(tuya)** Fallo de teclado que encontró #47: con Tab y después Enter,
-      el bocadillo de duración no se abre, porque el scroll del carrusel lo
-      cierra. Elegir el arreglo (ignorar el scroll de `.route__days` y
-      `.route__rail`, o cerrar solo si el bocadillo sale de la vista) y
-      después quitarlo de `KNOWN_KEYBOARD_ISSUES`.
+- [x] Fallo de teclado que encontró #47: con Tab y después Enter, el
+      bocadillo de duración no se abría. (Arreglado 2026-10-20 en la
+      integración de #43–#49: la causa real era que el evento de scroll del
+      propio Tab llega un fotograma tarde, después del Enter. Ahora un scroll
+      solo cierra el bocadillo si ha movido su icono en pantalla,
+      `closesHintOnScroll` en `src/lib/hint-scroll.ts`. La excepción
+      `KNOWN_KEYBOARD_ISSUES` desapareció: `test:ui` lo exige)
 - [ ] La sombra de la marca del hero en móvil está a 4,33:1 (sugerencia
       opcional de #33, en #36). Comprobar.
 - [ ] **(tuya)** Propuestas de #17 sin aplicar:
@@ -314,8 +316,8 @@ peticiones. Nada es urgente; se revisa con la página terminada, no antes.
 - [ ] **(tuya)** TypeScript 7 (issue #41): `astro check` no lo admite. La
       recomendación es seguir en `^6.0.3` y dejar la issue abierta hasta que
       `@astrojs/check` admita la 7 o salga TS 7.1 estable.
-- [ ] Tests de teclado en los paneles y tope de tamaño del HTML
-      (`size:check`): están en #47, en borrador y en verde.
+- [x] Tests de teclado en los paneles y tope de tamaño del HTML
+      (`size:check`): #47, mezclado el 2026-10-20.
 - [ ] El job `devices` repite `npm ci` y `build` y usa `npx --yes wait-on`
       sin versión fija. Coste menor de CI (revisión de #9).
 - [ ] `scripts/ui-devices.ts` descarta en silencio los modelos que la versión
