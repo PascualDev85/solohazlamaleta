@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && node scripts/write-headers.ts",
+    "fonts:check": "node scripts/font-coverage.ts",
     "preview": "astro preview",
     "astro": "astro",
     "content:validate": "node scripts/validate-content.ts",
