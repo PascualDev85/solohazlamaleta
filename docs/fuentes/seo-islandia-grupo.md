@@ -35,7 +35,7 @@ Leyenda: demanda y competencia son estimaciones sin Keyword Planner (ver §6 par
 | 2 | Campings de Islandia | campings Islandia | **Media.** Capture the Atlas, Guide to Iceland, Kayak, Holidu, Reykjavik Cars y GoCampers tienen página; preguntas recurrentes: acampada libre, Camping Card, abiertos todo el año | **Media-baja.** Listas genéricas y normas; ninguna con opinión de campings concretos en primera persona (según fragmentos) | **10 campings con opinión, precio pagado en ISK y fecha**, cuáles evitar (Árnes), cuál solo efectivo (Mosskógar), nevada en Systragil | **Media** con "Dónde dormir" de la guía: la guía queda en una tarjeta por noche (1.13 §3) | **P1** | **Sube** (P2 → P1) |
 | 3 | Alquilar camper en Islandia | alquilar camper Islandia | **Media, dudosa.** Mucho anunciante (Hertz, Guide to Iceland, Camper Champ, Roadgenius), pero el BRIEF dice que Trends no ve el término | **Muy alta.** Las propias empresas y comparadores | Precio real (1.982,60 € / 13 días con seguro básico), sin 4x4, fianza, viento y puertas, nevera y batería, calefacción averiada | Baja si "¿hace falta 4x4?" es sección aquí y no página aparte | **P1** (tras las dos anteriores) | = (baja en el orden) |
 | 4 | Costa sur de Islandia | qué ver en la costa sur de Islandia | **Media.** Hay tours de un día vendiéndose (Musement, Manawa, Guide to Iceland): señal de demanda | **Media.** Un blog checo traducido, OndaTravel y vendedores de tours; los blogs grandes españoles no salen en este top | Días 3-4: **23 lugares** con aparcamiento y precio; Kvernufoss gratis por el museo, Dyrhólaey con un ticket para dos zonas, Gljúfrafoss, Nauthúsagil, DC-3 | Baja: los días 3 y 4 de la guía resumen, la satélite amplía | **P2** (primera de zona) | **Sube** dentro de P2 |
-| 5 | Baños termales de Islandia | aguas termales Islandia | **Media.** GoCar, GoCampers, Guide to Iceland, Mochileando, Viajeros Callejeros, Tiqets: mucha oferta | **Alta.** Listas de 16 a 30 sitios; Mochileando y Viajeros Callejeros con piezas propias | 5 vividos y en el registro: Reykjadalur, Seljavallalaug, Vök, Jarðgangalaug, Landbrotalaug. **Sky Lagoon no está en el registro** (solo en las notas del día 13): confirmar | Baja | **P2** | = |
+| 5 | Baños termales de Islandia | aguas termales Islandia | **Media.** GoCar, GoCampers, Guide to Iceland, Mochileando, Viajeros Callejeros, Tiqets: mucha oferta | **Alta.** Listas de 16 a 30 sitios; Mochileando y Viajeros Callejeros con piezas propias | 5 vividos y en el registro: Reykjadalur, Seljavallalaug, Vök, Jarðgangalaug, Landbrotalaug. Sky Lagoon no: el autor confirmó el 20 de octubre que no fueron | Baja | **P2** | = |
 | 6 | Círculo Dorado | Círculo Dorado Islandia | **Alta.** Es la excursión más vendida (Exoticca, tours) | **Muy alta.** Mochileando, Viajeros Callejeros, Capture the Atlas, Hertz, GoCampers | Día 2 completo; Þingvellir con parking P1 y precio, Reykjadalur | Baja | **P2** (tras costa sur) | Baja en el orden |
 | 7 | Mývatn | qué ver en Mývatn | **Baja-media.** Tours desde Akureyri | **Media-baja.** En el top solo empresas de alquiler (GoCar, GoCampers, Reykjavik Cars, Guide to Iceland); ningún blog grande español | Día 9: 8 lugares (Krafla-Víti, Hverir, Hverfjall, Dimmuborgir, Grjótagjá…), Jarðgangalaug | Baja | **P3** (candidata a subir si Keyword Planner da algo) | = |
 | 8 | Snæfellsnes | península de Snæfellsnes | **Media.** Tours de un día desde Reikiavik | **Alta.** Mochileando, Viajeros Callejeros, Capture the Atlas, Felices Vacaciones, Icelandair | Día 12: 12 lugares; camping de Hellissandur | Baja | **P3** | = |
@@ -128,7 +128,7 @@ Salen de lo que repiten los resultados (ver §6) y de lo que podemos responder c
 | Alquilar camper | "Cómo llegamos y nos movimos" · línea "Alquiler del camper" de "Qué reservamos y cuándo" · trampas de F-roads y puertas |
 | Costa sur | Días **3 y 4** ("Más sobre la costa sur →") |
 | Círculo Dorado | Día **2** |
-| Baños termales | Día 2 (Reykjadalur) · día 3 (Seljavallalaug) · día 7 (Vök) · día 9 (Jarðgangalaug) · día 12 (Landbrotalaug) · día 13 (Sky Lagoon, si se confirma) |
+| Baños termales | Día 2 (Reykjadalur) · día 3 (Seljavallalaug) · día 7 (Vök) · día 9 (Jarðgangalaug) · día 12 (Landbrotalaug) |
 | Fiordos del este | Días **7 y 8** |
 | Mývatn | Día **9** |
 | Snæfellsnes | Día **12** |
@@ -299,7 +299,7 @@ Todas consultadas el 15 de octubre de 2026 desde el buscador (sin abrir las pág
 
 ### Lo propio (repositorio)
 - `content/guides/islandia/islandia-en-camper-13-dias.yaml` (`origin/develop`): presupuesto (8 partidas, 4.495,21 €), `accommodation` (10 campings con opinión y precio), `pitfalls`, `route_decisions`, `practical`, `faq`, nota de auroras del día 6.
-- `content/places/islandia.yaml` (`origin/develop`): 97 lugares, 10 de ellos campings. Sky Lagoon no figura; aparece en `docs/fuentes/mi-ruta-islandia.md` como plan del día 13.
+- `content/places/islandia.yaml` (`origin/develop`): 97 lugares, 10 de ellos campings. Sky Lagoon no figura; aparecía en `docs/fuentes/mi-ruta-islandia.md` como plan del día 13, pero no fueron (autor, 20 de octubre).
 
 ---
 
@@ -307,6 +307,6 @@ Todas consultadas el 15 de octubre de 2026 desde el buscador (sin abrir las pág
 
 1. Meter los bloques del §5 en Keyword Planner y anotar el resultado en la plantilla del 1.11 §5.
 2. Mirar en Google Trends (España, 5 años) "islandia", "viaje islandia" y "camper islandia" para la estacionalidad: no se ha podido desde aquí.
-3. Confirmar si Sky Lagoon se visitó (para la satélite de baños termales).
+3. ~~Confirmar si Sky Lagoon se visitó~~ Hecho el 20 de octubre: no fueron. La satélite de baños termales cuenta con cinco.
 4. Verificar la tasa por kilómetro en island.is antes de escribir el presupuesto.
 5. Decidir el límite de la satélite "Costa sur" (§4).
