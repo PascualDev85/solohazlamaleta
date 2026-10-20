@@ -123,16 +123,34 @@ const glanceId = `${id}-vistazo`;
 
 <script>
   import { closestIndex, clampIndex } from '../../lib/carousel.ts';
+  import { closesHintOnScroll, type ScreenPoint } from '../../lib/hint-scroll.ts';
 
   // The time's info bubble (a <details> on each stop) closes when the reader
-  // taps anywhere else or scrolls, which a <details> cannot do on its own.
-  // pointerdown, not click: iOS only fires click on elements it deems
+  // taps anywhere else or scrolls it away, which a <details> cannot do on its
+  // own. pointerdown, not click: iOS only fires click on elements it deems
   // clickable, so a tap on plain text would leave the bubble open.
   const openHints = () => document.querySelectorAll<HTMLDetailsElement>('.day-stop__hint[open]');
   document.addEventListener('pointerdown', (event) => {
     for (const hint of openHints()) if (!hint.contains(event.target as Node)) hint.open = false;
   }, { passive: true });
-  document.addEventListener('scroll', () => { for (const hint of openHints()) hint.open = false; }, { capture: true, passive: true });
+  // A scroll closes a bubble only if it moved its mark on screen (see
+  // closesHintOnScroll): where the mark was is noted on the click that opens
+  // it, before the <details> toggles.
+  const markAtOpen = new WeakMap<HTMLDetailsElement, ScreenPoint>();
+  const markPosition = (hint: HTMLDetailsElement): ScreenPoint => {
+    const { top, left } = hint.querySelector('summary')!.getBoundingClientRect();
+    return { top, left };
+  };
+  document.addEventListener('click', (event) => {
+    const hint = (event.target as Element).closest<HTMLDetailsElement>('.day-stop__hint');
+    if (hint) markAtOpen.set(hint, markPosition(hint));
+  }, { capture: true, passive: true });
+  document.addEventListener('scroll', () => {
+    for (const hint of openHints()) {
+      const atOpen = markAtOpen.get(hint);
+      if (!atOpen || closesHintOnScroll(atOpen, markPosition(hint))) hint.open = false;
+    }
+  }, { capture: true, passive: true });
   // Esc closes it too, and puts focus back on its mark if it was inside.
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;

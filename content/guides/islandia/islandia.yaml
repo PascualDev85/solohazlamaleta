@@ -14,8 +14,10 @@ content_type: experience
 # reviewed this file yet: see the PR.
 status: reviewed
 trip_done: "2025-09"
-# Title, H1 and description from docs/fuentes/seo-islandia-grupo.md §3 (the
-# description shortened to fit 155 characters).
+# Title and description from docs/fuentes/seo-islandia-grupo.md §3 (the
+# description shortened to fit 155 characters). The H1 is "Islandia", the
+# author's choice of 2026-10-20 over the research's "Viajar a Islandia"; the
+# <title> keeps the search phrase.
 title: "Viajar a Islandia: qué ver, cuándo ir y lo práctico"
 description: "Lo que hay que saber antes de ir a Islandia, contado desde nuestra ruta de 13 días en camper: qué ver, cuándo ir, documentos, dinero y cómo moverse."
 updated_at: 2026-10-15
@@ -38,6 +40,8 @@ when_to_go:
   - "Hay menos luz que en verano y puede nevar: por eso no apretamos los días del norte."
   - "Con ese frío, los campings sin ducha caliente ni sala común se hacen muy duros."
   - "Aun así, algunos campings estaban muy concurridos, como Skaftafell y Hellissandur: conviene llegar temprano."
+  # From the author, 2026-10-20.
+  - "Había gente en las atracciones principales del Círculo Dorado y del sur. A partir del este, conforme subíamos hacia el norte, encontramos poca."
 
 # Cómo moverse: what the guide says about the camper and the Ring Road, and
 # what we did not try, said as such.

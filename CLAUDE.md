@@ -15,6 +15,7 @@ trabajo difícil. Tú solo haz la maleta."*
    - `docs/1.7_arquitectura.md` — principios de arquitectura
    - `docs/1.7.1_repository_domain.md` — estructura del repo y límites de módulos
    - `docs/1.7.2_data_contract.md` — tipos exactos, esquemas Zod y reglas de compilación
+   - `docs/1.13_guia_hub_satelites.md` — qué va en la guía, en el hub y en las satélites
    - `docs/redes.md` — estrategia de redes sociales
 
 ## Idioma
@@ -50,6 +51,9 @@ Lighthouse ≥ 95 · el build falla con una guía inválida.
 reducido: PDF, Mi viaje, pagos y adaptación siguen fuera. **Excepción al "sin
 mapa":** el mapa solo se permite en el sub-checkpoint C3.5, y únicamente cuando
 el autor haya confirmado las coordenadas. Hasta entonces sigue prohibido.
+**Desde el 15 de octubre, el hub `/islandia/` también entra**, con el reparto
+guía / hub / satélites de `docs/1.13_guia_hub_satelites.md`. Las satélites siguen
+fuera hasta que pasen la validación de su §7.
 
 ## Reglas duras — no hacer
 
@@ -132,13 +136,15 @@ abrir ficheros de finanzas desde este proyecto.
 
 ```bash
 npm run dev        # servidor de desarrollo
-npm run build      # build de producción (falla si una guía es inválida)
+npm run build      # build de producción (falla si una guía es inválida); después escribe la CSP de cada página en dist/_headers (scripts/write-headers.ts)
 npm run preview    # previsualizar el build
+npm run fonts:check  # tras el build: falla si dist/ usa un carácter que ninguna fuente de public/fonts/ cubre (son subconjuntos)
 npm run test:devices  # iPhone (WebKit) y Android (Chromium) contra el preview; capturas en ui-devices/
 npm test           # tests unitarios (node --test)
 npm run typecheck  # tipos con astro check (src, engine, schemas, scripts, tests y .astro); también en la CI, antes del build
+npm run size:check # tras el build: HTML comprimido (gzip 6) de cada página bajo su tope (43,8 KB; la guía de 13 días, 95 KB; ver docs/1.13 §5), con lo que le queda a cada una
 npm run lighthouse # con el preview en marcha: exige 100 en móvil y escritorio (salvo la guía de Islandia en móvil: ≥ 99, ver docs/1.13 §5)
-npm run test:ui    # con el preview en marcha: capas de los paneles y líneas de las tarjetas en móviles de 350 a 414 px (Chromium)
+npm run test:ui    # con el preview en marcha: capas de los paneles y líneas de las tarjetas en móviles de 350 a 414 px, cada página con las cabeceras de dist/_headers (CSP) sin errores, y paneles con teclado a 390 y 1280 px (Chromium)
 npm run photo -- <foto> <destino> [--name slug] [--caption lugar] [--day N]  # redimensiona, quita metadatos y la copia a src/assets/guides/; con --day la pone en ese día (alt vacío: el build falla hasta escribirlo)
 npm run day:status [-- N] [--json]  # qué le falta a cada día de Islandia para cerrarlo (foto, lo mejor, conducción, noche, duraciones, paradas) y resumen
 ```
