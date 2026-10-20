@@ -242,6 +242,9 @@ peticiones. Nada es urgente; se revisa con la página terminada, no antes.
 
 ## Infraestructura
 
+Paso a paso para desplegar, dominio, analítica y Search Console:
+[DESPLIEGUE.md](DESPLIEGUE.md).
+
 - [ ] Conectar Cloudflare Pages al repo y desplegar `develop` a un dominio de
       pruebas.
 - [ ] **(tuya)** Registrar `solohazlamaleta.com`. `astro.config.mjs` ya lo da
