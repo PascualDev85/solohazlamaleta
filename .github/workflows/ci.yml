@@ -34,6 +34,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Gzipped HTML of every page under its cap (scripts/html-size.ts):
+      # 43.8 KB, Lighthouse's first TCP windows; 95 KB for the 13-day guide,
+      # under the next window at ~102 KB (docs/1.13 §5). Prints what is left.
+      - name: HTML size budget
+        run: npm run size:check
+
       - name: Assert an invalid guide fails the build
         run: |
           GUIDE=$(ls src/content/guides/*.json | head -1)
@@ -86,8 +92,8 @@ jobs:
           npm run lighthouse
 
       # Browser checks of the guide (scripts/ui-check.ts): overlay panels keep
-      # their header on top while scrolling, and the day cards keep their lines
-      # on phones from 350 to 414px wide.
+      # their header on top while scrolling, the day cards keep their lines
+      # on phones from 350 to 414px wide, and the panels work by keyboard.
       - name: UI checks in Chromium
         run: |
           npx playwright install --with-deps chromium
