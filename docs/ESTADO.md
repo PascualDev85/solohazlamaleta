@@ -1,6 +1,12 @@
 # Estado del proyecto
 
-Última actualización: 2026-10-15
+Última actualización: 2026-10-20
+
+**2026-10-20:** puesto al día con las PR mergeadas desde el 15 de octubre (#9,
+#10, #13 a #22, #24, #27 a #30, #32 a #34, #37 a #40 y #42), las PR abiertas
+(#12, #23, #25, #26, #31, #35 y #43 a #48), las issues #36 y #41 y la salida
+de `npm run day:status` y `npm run content:validate` en `develop` (`dc83129`).
+Lo que te toca, por orden, en [DEBERES.md](DEBERES.md).
 
 Reconstruido desde el historial de `develop` y de las ramas
 `feature/checkpoint3-diseno-v6*`, las PR #6 a #17, la issue #11 y los
@@ -14,11 +20,19 @@ va marcado **(a confirmar)**.
 - **Repo:** https://github.com/PascualDev85/solohazlamaleta
 - **Ramas:** `main` (producción) · `develop` (integración; último merge: PR #8,
   2026-10-07) · ramas `feature/checkpoint3-diseno-v6-*` con el trabajo en curso.
+  (A 2026-10-20: último merge en `develop`, PR #42, 2026-10-19. Las ramas
+  `…-v6-*` ya están mergeadas. `main` sigue casi vacía, según #48)
 - **Guía de Islandia (motor nuevo):**
   `content/guides/islandia/islandia-en-camper-13-dias.yaml` y
   `content/places/islandia.yaml`, validados por `schemas/` y compilados por
   `engine/`. Página: `src/pages/islandia/islandia-en-camper-13-dias.astro`
   → `/islandia/islandia-en-camper-13-dias/`, en `noindex` y fuera del sitemap.
+  (Desde #34, el `noindex` y el sitemap se derivan de `status`)
+- **Hub de Islandia:** `content/guides/islandia/islandia.yaml` (`type: hub`)
+  → `/islandia/`, en la PR #26, en borrador.
+- **Informes para el autor en `docs/fuentes/`:** `coordenadas-por-confirmar.md`
+  (entró con #14) e `informe-paneles-y-nombres.md` (#30). El de SEO,
+  `seo-islandia-grupo.md`, está en la PR #25.
 - **Guía de Alsacia (sistema antiguo):** `src/content/guides/ruta-pueblos-y-vinos.json`,
   borrador. Lo que falta, en [PENDIENTE-ALSACIA.md](PENDIENTE-ALSACIA.md).
 - **Notas de viaje del autor:** `docs/fuentes/` (Islandia, Egipto, Tailandia,
@@ -29,7 +43,46 @@ va marcado **(a confirmar)**.
   `docs/1.10_checkpoint3_diseno.md`, `docs/1.11_islandia_estructura_contenidos.md`
   y `docs/1.12_direccion_guia_islandia.md`.
 
+### PR abiertas (a 2026-10-20)
+
+Todas tienen la base en `develop` salvo #25, que cuelga de #23, y #35, que
+cuelga de #26. CI = build, lighthouse y devices en el head actual.
+
+| PR | Rama | Qué | Estado | CI |
+|---|---|---|---|---|
+| [#12](https://github.com/PascualDev85/solohazlamaleta/pull/12) | `feature/guia-egipto` | Guía de Egipto en el esquema antiguo | Lista para revisar; 108 commits por detrás de `develop` | ✅ del 14 de octubre, sobre una base antigua |
+| [#23](https://github.com/PascualDev85/solohazlamaleta/pull/23) | `docs/1.13-guia-hub-satelites` | Doc 1.13: guía, hub y satélites | Lista; puesta al día el 19 de octubre sin conflictos | ✅ |
+| [#25](https://github.com/PascualDev85/solohazlamaleta/pull/25) | `docs/seo-islandia-grupo` | Investigación SEO del grupo Islandia | Borrador, sobre #23 | sin CI (su base no es `develop`) |
+| [#26](https://github.com/PascualDev85/solohazlamaleta/pull/26) | `feature/hub-islandia` | Hub `/islandia/`, v1 | Borrador; el 19 de octubre tuvo conflictos con #28 y #34, ya resueltos | ✅ |
+| [#31](https://github.com/PascualDev85/solohazlamaleta/pull/31) | `feature/landing-v2` | Portada en el diseño v2 | Borrador; revisión atendida en `a7c32cb` | ✅ |
+| [#35](https://github.com/PascualDev85/solohazlamaleta/pull/35) | `feature/guia-al-hub` | Lo práctico de la guía, al hub | Borrador, sobre #26 | sin CI (su base no es `develop`) |
+| [#43](https://github.com/PascualDev85/solohazlamaleta/pull/43) | `feature/http-headers` | `_headers` y CSP por página generada en el build | Borrador | ✅ |
+| [#44](https://github.com/PascualDev85/solohazlamaleta/pull/44) | `perf/font-subsetting` | El recorte de fuentes no se aplica; `fonts:check` en la CI | Borrador; chocará con #43 | ✅ |
+| [#45](https://github.com/PascualDev85/solohazlamaleta/pull/45) | `feature/404-v2` | Página 404 propia | Borrador | ✅ |
+| [#46](https://github.com/PascualDev85/solohazlamaleta/pull/46) | `test/affiliate-route` | Prueba de `/ir/{id}` con un afiliado de prueba | Borrador | ✅ |
+| [#47](https://github.com/PascualDev85/solohazlamaleta/pull/47) | `test/keyboard-and-size-budget` | Tests de teclado y tope de tamaño del HTML; encuentra un fallo de teclado sin arreglar | Borrador | ✅ |
+| [#48](https://github.com/PascualDev85/solohazlamaleta/pull/48) | `docs/despliegue` | `docs/DESPLIEGUE.md`, Cloudflare Pages paso a paso | Borrador | ✅ |
+
+No hay PR de TypeScript 7: la rutina lo probó en local y no abrió PR, porque
+`astro check` no lo admite (issue #41).
+
+Orden de merge que se deduce de las dependencias: **#23 → #25 → #26 → #35**.
+#43 y #44 tocan los mismos ficheros: primero una y luego la otra.
+
+Issues abiertas:
+
+- [#36](https://github.com/PascualDev85/solohazlamaleta/issues/36), el parte
+  del 16 de octubre. Sus integraciones entraron con #37 y #38, y lo que queda
+  son las PR abiertas de la tabla.
+- [#41](https://github.com/PascualDev85/solohazlamaleta/issues/41), TypeScript
+  6 → 7. La recomendación es esperar.
+
+La #11 está cerrada por #40.
+
 ### PR abiertas (a 2026-10-15)
+
+(Histórico. Todas las de esta tabla menos #12 se mergearon el 15 y el 16 de
+octubre.)
 
 | PR | Rama | Qué | Estado | CI en su head |
 |---|---|---|---|---|
@@ -69,18 +122,30 @@ Issue abierta: [#11](https://github.com/PascualDev85/solohazlamaleta/issues/11)
 | Checkpoint 3 — C3.1 bloque de experiencia, índice, sin "Vivido" | ✅ (`4a691c6`) |
 | Checkpoint 3 — C3.2 día como unidad, parada compacta, frescura del dato | ✅ en `develop` (v2–v6: `857b758`, `dfceaff`, `5c7f08b`, `3efd081`) |
 | Checkpoint 3 — C3.3 presupuesto en tabla y "Lo que dejamos fuera" | ✅ (`3efd081`, PR #8) |
-| Checkpoint 3 — C3.4 fotos | 🟡 portada (`3dcd013`) y días 1–3 con foto; días 4–13 sin foto |
-| Checkpoint 3 — C3.5 mapa | ⬜ bloqueado por las coordenadas (1.10 §5) |
+| Checkpoint 3 — C3.4 fotos | 🟡 portada (`3dcd013`) y días 1–3 con foto; días 4–13 sin foto (sigue igual a 2026-10-20; `npm run photo`, #19) |
+| Checkpoint 3 — C3.5 mapa | ⬜ bloqueado por las coordenadas (1.10 §5); 74 lugares pendientes según `day:status` (2026-10-20) |
 | Checkpoint 3 v6 — modelo de campings y criterio, días 1–3, ruta de un vistazo | ✅ (PR #8, 2026-10-07) |
 | Días 1–3 de Islandia revisados con el autor | ✅ (`e8fff2e`, en `develop`) |
-| Día 4 con parkings, mapas y tiempos del autor | 🟡 en PR #9, sin mergear |
-| Días 5–13 integrados en borrador | 🟡 en PR #14, sin mergear y con la CI en rojo |
-| Diseño móvil y de escritorio de las secciones tras la ruta | 🟡 en PR #13 y #15 |
-| Auditorías SEO técnica y WCAG 2.2 AA | 🟡 en PR #16 y #17 |
+| Día 4 con parkings, mapas y tiempos del autor | ✅ PR #9, 2026-10-15 |
+| Días 5–13 integrados en borrador | ✅ PR #14, 2026-10-15 (campings sin "Camping" en `short_name`, `8094987`); el contenido sigue en borrador |
+| Diseño móvil y de escritorio de las secciones tras la ruta | ✅ PR #13 y #15, 2026-10-15; hueco y línea recuperados en PR #27 |
+| Auditorías SEO técnica y WCAG 2.2 AA | ✅ PR #16 y #17, 2026-10-15; contraste de la pastilla en PR #33, enlace de salto en PR #42 |
 | CI: tests, build, guía inválida, Lighthouse 100 móvil y escritorio, `test:ui` | ✅ en `develop` (PR #7 y #8) |
-| CI: job `devices` (`test:devices`, iPhone con WebKit y Android con Chromium) | 🟡 en la rama del día 4 (PR #9) y sus derivadas |
+| CI: job `devices` (`test:devices`, iPhone con WebKit y Android con Chromium) | ✅ PR #9, 2026-10-15 |
+| CI: comprobación de tipos (`astro check`) | ✅ PR #28, 2026-10-16 |
+| CI: Lighthouse acepta 99 en móvil solo para la guía de 13 días (1.13 §5) | ✅ `4276f2b` |
+| Herramientas del autor: `npm run photo` y `npm run day:status` | ✅ PR #19, 2026-10-15 |
+| Avisos de calidad editorial (`WARNING`) en la validación | ✅ PR #20, 2026-10-15 |
+| Portada que lista las guías del motor | ✅ PR #21, 2026-10-15; portada v2 en PR #31 (borrador) |
+| Cabecera del sitio con "Guías" y "Sobre mí" | ✅ PR #29, 2026-10-16 |
+| Borrador de una sola fuente: `noindex` y sitemap derivados de `status` | ✅ PR #34, 2026-10-16 |
+| `DayCard` partido en `DaySheet` y SCSS en tres ficheros | ✅ PR #32, 2026-10-16 |
+| Dependencias al día, 0 vulnerabilidades altas | ✅ PR #10 (2026-10-16) y #40 (2026-10-19, cierra #11) |
+| Hub `/islandia/` | 🟡 en PR #26 (borrador), con #35 encima |
+| Doc 1.13 (guía, hub y satélites) e investigación SEO | 🟡 en PR #23 y #25 |
+| Cabeceras HTTP, 404, prueba de `/ir/`, tests de teclado, guía de despliegue | 🟡 en PR #43, #45, #46, #47 y #48 (borradores de la noche del 19 al 20) |
 | Páginas legales (pendientes de tus datos) | ✅ |
-| `/ir/[id]` y registro de afiliados | ✅ (sin partners activos) |
+| `/ir/[id]` y registro de afiliados | ✅ (sin partners activos; prueba en PR #46, borrador) |
 | `robots.txt`, sitemap, canonical, Open Graph | ✅ |
 | Guía de Alsacia como borrador con variantes | ✅ |
 | Guía de Egipto como borrador (esquema antiguo) | 🟡 en PR #12 |
@@ -107,10 +172,30 @@ Las enmiendas están documentadas en `docs/1.7.2_data_contract.md`:
   p. ej. Gljúfrafoss con Seljalandsfoss, 2026-10-07) y `free_nearby`
   (aparcamiento gratuito al lado de uno de pago, 2026-10-08). **`free_nearby`
   solo existe en la rama del día 4 (PR #9)**; el resto está en `develop`.
+  (Desde el 2026-10-15, con #9, también `free_nearby` está en `develop`)
 - **Tarjeta de día** (Enmienda C3, 2026-10-04): `photo`, `highlight`, `drive`,
   `overnight` en el día y `short_name` en el lugar.
 
 ### Verificado, no supuesto
+
+En `develop` (`dc83129`), el 2026-10-20, en la rutina de deberes:
+
+```
+npm ci                    exit 0
+npm run content:validate  pasa; 100 avisos: 87 lugares con datos caducados,
+                          10 campings con precio de hace más de 12 meses,
+                          2 de estilo (gullfoss, seljalandsfoss) y 1 del día 1
+                          (parada reykjavik sin travel_to_next_min)
+npm run day:status        0 de 13 días cerrados; 74 lugares con coordenadas
+                          pendientes; foto y "lo mejor del día" faltan en 4–13
+```
+
+De las PR puestas al día con `develop` la noche del 19 de octubre (no se ha
+repetido aquí): tienen typecheck limpio, 260–275 tests en verde, Lighthouse a
+100 salvo la guía de 13 días en móvil (99, excepción del 1.13 §5) y `test:ui`
+en verde.
+
+Lo que sigue es del 2026-10-15 y queda como histórico:
 
 En `develop` (`c68ff44`), el 2026-10-15, en esta sesión:
 
@@ -161,7 +246,55 @@ umbral de unos 43,8 KB comprimidos a partir del cual Lighthouse móvil baja a
 
 ---
 
-## Lo primero al volver
+## Lo primero al volver (2026-10-20)
+
+La lista completa, con tiempos, está en [DEBERES.md](DEBERES.md). En corto:
+
+1. **Revisar la cadena #23 → #25 → #26 → #35.** Es el doc 1.13, el SEO, el
+   hub y lo práctico al hub. La decisión que más desbloquea es el H1 y el
+   `<title>` del hub, que dejan abiertos a la vez #25 y #26.
+2. **Despliegue:** elegir la rama de producción (#48; la recomendada es la A,
+   `develop` → `main`) y después seguir `docs/DESPLIEGUE.md`. Las cabeceras de
+   #43 y la 404 de #45 conviene tenerlas antes.
+3. **Contenido de Islandia:** coordenadas (las 27 erróneas primero), fotos y
+   "lo mejor del día" de los días 4 a 13, las noches (`overnight_note`) y las
+   preguntas del informe de paneles (#30).
+4. **Datos de fuera:** Keyword Planner y Trends (bloques de #25), tasa por km
+   en island.is, Sky Lagoon y los precios de los campings.
+5. **Más pequeñas:** #31 (textos de portada), #45, #46, #47 (fallo de teclado),
+   #44 (→ y ≈) y la issue #41 (seguir en TS 6).
+
+### Guía de Islandia: qué falta por día (2026-10-20)
+
+Salida de `npm run day:status` en `develop`. Todos los días están en `develop`.
+"Paradas" cuenta las paradas con algo pendiente (parking, ficha de mapa o
+coordenadas) frente al total del día; ✅ quiere decir que no queda ninguna.
+"Pend." es el total de pendientes del día.
+
+| Día | Foto | Lo mejor | Conducción | Noche | Duraciones | Paradas | Pend. |
+|---|---|---|---|---|---|---|---|
+| 1 | ✅ | ✅ | ✅ | camping | ✅ | ✅ (2) | 1 |
+| 2 | ✅ | ✅ | ✅ | camping | ✅ | 3 de 4 | 5 |
+| 3 | ✅ | ✅ | ✅ | camping | ✅ | 5 de 9 | 6 |
+| 4 | ❌ | ❌ | estimada | camping | ✅ | 5 de 14 | 9 |
+| 5 | ❌ | ❌ | ✅ | camping | estimadas | 4 de 4 | 14 |
+| 6 | ❌ | ❌ | estimada | fuera | estimadas | 9 de 9 | 21 |
+| 7 | ❌ | ❌ | estimada | fuera | estimadas | 9 de 9 | 26 |
+| 8 | ❌ | ❌ | estimada | camping | estimadas | 5 de 5 | 14 |
+| 9 | ❌ | ❌ | estimada | camping | estimadas | 8 de 8 | 19 |
+| 10 | ❌ | ❌ | estimada | camping | estimadas | 5 de 5 | 19 |
+| 11 | ❌ | ❌ | estimada | camping | estimadas | 5 de 5 | 17 |
+| 12 | ❌ | ❌ | ✅ | camping | estimadas | 12 de 12 | 29 |
+| 13 | ❌ | ❌ | ✅ | — | estimadas | 1 de 2 | 4 |
+
+Ningún día tiene texto en `overnight_note`. Según el informe de #30, los
+paneles de los días 3, 6, 8 y 9 pasan de 150 palabras.
+
+## Lo primero al volver (2026-10-15)
+
+(Histórico. #9, #13, #14, #15, #16, #17 y #10 se mergearon el 15 y el 16 de
+octubre. La línea de la noche se resolvió con la opción (a). Lo que sigue
+abierto de aquí está en la sección de arriba y en [DEBERES.md](DEBERES.md).)
 
 ### 1. Mergear el día 4 (PR #9)
 
@@ -217,7 +350,7 @@ Lo de la guía de Islandia, día a día, en la tabla de abajo. Además:
 - [ ] Decidir Islandia o Mallorca como laboratorio SEO (1.11 §10), con los
       datos de Keyword Planner.
 
-### Guía de Islandia: qué falta por día
+### Guía de Islandia: qué falta por día (2026-10-15, histórico)
 
 Datos de la rama de #14, que incluye el día 4. Las columnas "Parking" y
 "Ficha de mapa" cuentan las paradas visitadas con `parking` y con `maps_url`
@@ -306,12 +439,14 @@ rutina de caducidad no la revisa. Si eso es intencionado: **(a confirmar)**.
 ### Otros
 
 - [ ] Conectar Cloudflare Pages al repo y desplegar `develop` a un dominio de
-      pruebas.
-- [ ] Analítica sin cookies (Umami o Plausible).
+      pruebas. (Paso a paso en #48; falta elegir la rama de producción)
+- [ ] Analítica sin cookies (Umami o Plausible). (#48 recomienda Umami Cloud
+      gratis)
 - [ ] Dominio `solohazlamaleta.com`: `astro.config.mjs` ya lo da por hecho.
-- [ ] Issue #11: `http-cache-semantics` y `sharp`.
+- [x] Issue #11: `http-cache-semantics` y `sharp`. (PR #40, 2026-10-19)
 - [ ] El build avisa de unos 90 lugares con `verified_at` caducado (nota de
-      #16).
+      #16). (87 a 2026-10-20, más el precio de los 10 campings)
+- [ ] Issue #41: TypeScript 7 bloqueado por `astro check`. Seguir en 6.
 
 ---
 

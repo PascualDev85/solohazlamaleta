@@ -5,7 +5,8 @@ desbloquea antes. Marca la casilla al cerrarlas.
 
 Las que llevan **(tuya)** dependen de ti y nadie más puede hacerlas.
 
-Última revisión: 2026-10-15. El estado detallado está en [ESTADO.md](ESTADO.md).
+Última revisión: 2026-10-20. El estado detallado está en [ESTADO.md](ESTADO.md).
+Lo tuyo, junto y por orden, en [DEBERES.md](DEBERES.md).
 
 ---
 
@@ -20,40 +21,82 @@ Las que llevan **(tuya)** dependen de ti y nadie más puede hacerlas.
 
 ## Guía de Islandia — desbloquea el cierre del Checkpoint 3
 
-- [ ] **(tuya)** Revisar y mergear el día 4 (PR #9). Es la base de #13, #14,
+- [x] **(tuya)** Revisar y mergear el día 4 (PR #9). Es la base de #13, #14,
       #16 y #17. Antes, cerrar lo que dejó abierto la revisión automática:
+      (PR #9, mergeado el 2026-10-15)
       - [ ] `our_take` del día 4: solo habla de Skógafoss y es texto visible.
+            (Sigue igual en `develop` a 2026-10-20)
       - [ ] `drive` del día 4: 210 min frente a 205 en el comentario y 206 en
-            los tramos. Dejar un solo número.
+            los tramos. Dejar un solo número. (Sigue: `minutes: 210` y el
+            comentario dice "203 min → 205")
       - [ ] Foss á Síðu: está como `visited` pero "la vimos desde el coche".
-      - [ ] ¿Skool Beans y The Soup Company son un sitio o dos?
-- [ ] **(tuya)** Decidir cómo cabe la línea de la noche de los días 11 y 12.
+            (Ahora lleva `duration_note` "solo desde la carretera"; comprobar
+            si basta)
+      - [x] ¿Skool Beans y The Soup Company son un sitio o dos? (Uno: "Skool
+            Beans Cafe", ficha confirmada por el autor el 2026-10-08)
+- [x] **(tuya)** Decidir cómo cabe la línea de la noche de los días 11 y 12.
       Es lo que deja en rojo la CI de #14. Opciones:
       (a) `short_name` de los campings sin "Camping";
       (b) cambiar el diseño de esa línea;
       (c) aceptar dos filas en días largos.
-- [ ] **(tuya)** Aprobar o cambiar la nueva regla de filas de la línea de
+      (Opción a, `8094987`; entró con #14 el 2026-10-15)
+- [x] **(tuya)** Aprobar o cambiar la nueva regla de filas de la línea de
       ruta en #14 (3 desde 6 paradas, 4 desde 9, 6 desde 12). La revisión
       sugiere otro formato para el día 12, porque 6 filas ya son una lista.
-- [ ] **(tuya)** Decidir los nombres acortados en #14 para que quepan en una
+      (Entró con #14, mergeado el 2026-10-15)
+- [x] **(tuya)** Decidir los nombres acortados en #14 para que quepan en una
       línea, sobre todo "Jökulsárlón" (antes "Laguna Glaciar Jökulsárlón y
-      Diamond Beach").
+      Diamond Beach"). (Entró con #14; el informe de #30 mide 0 nombres que
+      desborden, incluso a 320 px)
 - [ ] **(tuya)** El `name` de los campings. En #14 se pasan a español
       ("Camping Skaftafell", "Camping Laugar"…). En el registro siguen
       "Camping Svínafell (Skaftafell)" frente a "Camping Skaftafell", y el
       `short_name` con "Camping" es el que no cabe en la línea de la noche.
-- [ ] **(tuya)** Mergear #13 (secciones en móvil) y después #15 (escritorio).
-- [ ] Arreglar en #13 los selectores Sass `& + &` dentro de
+      (Los `short_name` ya van sin "Camping". Queda solo decidir si
+      "Camping Svínafell (Skaftafell)" se queda así)
+- [x] **(tuya)** Mergear #13 (secciones en móvil) y después #15 (escritorio).
+      (PR #13 y #15, mergeados el 2026-10-15)
+- [x] Arreglar en #13 los selectores Sass `& + &` dentro de
       `[data-design="v2"]`, que nunca coinciden: el hueco entre zonas de
       "Dónde dormir", la línea entre los pasos de "Cómo llegamos", el
       `padding-top` tras los chips de noche y la separación entre partes de
       "Nuestro criterio". Cuesta unos 60 B: ojo al margen de bytes de la guía.
-- [ ] **(tuya)** Revisar y mergear #16 (SEO) y #17 (accesibilidad).
+      (PR #27, mergeado el 2026-10-16)
+- [x] **(tuya)** Revisar y mergear #16 (SEO) y #17 (accesibilidad).
+      (PR #16 y #17, mergeados el 2026-10-15)
+
+### Hub, satélites y portada — PR abiertas (tuya)
+
+Salen de las PR #23, #25, #26, #31 y #35. El detalle, en
+[DEBERES.md](DEBERES.md).
+
+- [ ] **(tuya)** Mergear #23 (doc 1.13). Está en verde. Antes conviene
+      corregir tres cosas: el texto del PR desfasado, "10" frente a "once"
+      PR en el §8 y "menos gente" en "Cuándo ir".
+- [ ] **(tuya)** #25 (SEO): decidir "Ruta de 7 días", que choca con la regla
+      de no duplicar por días. También el límite de la satélite "Costa sur" y
+      el orden de las satélites.
+- [ ] **(tuya)** #26 (hub): decidir el H1 y si el `<title>` lleva la marca,
+      las fotos 16:9 en móvil, la foto de portada, las enmiendas del modelo,
+      qué FAQ llevan `schema: true`, cómo sale el hub de borrador
+      (`HUB_SOURCES` o el estado de la guía) y el enlace "Islandia" en la
+      cabecera. Además, revisar sus textos.
+- [ ] `practical` (fianza, "Mosskógar solo efectivo") sin `verified_at`, en el
+      hub y en `islandia.yaml` (#26, #35).
+- [ ] **(tuya)** #35: el texto del enlace al hub. Al mergear #26, reapuntarla a
+      `develop` para que pase la CI.
+- [ ] #35: `href="/islandia/#practico"` escrito a mano; usar `guide.hub`.
+- [ ] **(tuya)** #31 (portada v2): revisar los textos, la foto de cabecera en
+      escritorio y la alineación de la cabecera en escritorio.
+- [ ] Antes de la tercera guía: `alt` de `cover_image` en el modelo y un nombre
+      visible del destino con tildes (#31).
 
 ### Contenido de Islandia, por día (tuya)
 
 Días 1–3 revisados y en `develop`; día 4 revisado en PR #9; días 5–13 en
 borrador en PR #14. El detalle está en la tabla de [ESTADO.md](ESTADO.md).
+(Desde el 2026-10-15 los 13 días están en `develop`, con #9 y #14. Qué falta
+en cada uno, siempre al día: `npm run day:status`)
 
 - [ ] **(tuya)** Foto de cada día y su `alt`, días 4 a 13.
 - [ ] **(tuya)** "Lo mejor del día" (`highlight`), días 4 a 13.
@@ -62,7 +105,9 @@ borrador en PR #14. El detalle está en la tabla de [ESTADO.md](ESTADO.md).
 - [ ] **(tuya)** Fichas de Google Maps (`maps_url`): día 2 (1/4) y días
       5 a 12 (ninguna).
 - [ ] **(tuya)** Confirmar las coordenadas con el informe
-      `docs/fuentes/coordenadas-por-confirmar.md` (rama de #14):
+      `docs/fuentes/coordenadas-por-confirmar.md` (rama de #14; en `develop`
+      desde el 2026-10-15, sin ninguna corregida todavía; `day:status`
+      cuenta 74 lugares):
       - 27 erróneas, 28 por revisar y 6 sin verificar;
       - las peores son Grafarkirkja (37,8 km), Stuðlagil (18,3 km),
         Landbrotalaug, Lækjavík y Víðimýrarkirkja;
@@ -83,6 +128,19 @@ borrador en PR #14. El detalle está en la tabla de [ESTADO.md](ESTADO.md).
       - Mígandifoss;
       - el trekking de Svínafellsjökull (5 h o 6 h, y Icelandia lo da por
         suspendido).
+- [ ] **(tuya)** Paneles "Ver día completo" (informe de #30,
+      `docs/fuentes/informe-paneles-y-nombres.md`):
+      - recortar los días 6, 3 y 9, que repiten frases dentro del panel
+        (≈ 15 min);
+      - contestar las preguntas de los días 1, 2, 5, 7, 10, 11 y 13 (la
+        noche, lo que haríamos distinto y el plan B).
+- [ ] **(tuya)** ¿Fuisteis a Sky Lagoon? Lo piden el panel del día 13 y la
+      satélite de baños termales (#25).
+- [ ] Aviso de `content:validate`: el día 1 tiene `drive` y la parada
+      `reykjavik` sin `travel_to_next_min`.
+- [ ] **(tuya)** Dos avisos de estilo de `content:validate`: "una de las
+      cascadas más" en `gullfoss`, y "espectacular" en las `notes` de
+      `seljalandsfoss`.
 - [ ] Datos de acceso en prosa sin fecha propia ("aparcamiento gratuito" en
       `notes`, el horario de Glaumbær). Pasarlos a
       `parking: { price: 0, verified_at }` cuando se confirmen.
@@ -112,6 +170,9 @@ borrador en PR #14. El detalle está en la tabla de [ESTADO.md](ESTADO.md).
       - el globo y Orange Bay sin parada;
       - los precios sin fecha;
       - quitar los nombres de guías y conductores y los pagos de PayPal.
+      Además faltan `meta.tripDone` (con quién fue el viaje) y si el
+      presupuesto es por persona. La rama va 108 commits por detrás de
+      `develop` (a 2026-10-20).
 
 ## Web — pendientes de la auditoría de QA
 
@@ -148,11 +209,20 @@ Salen de las PR #9, #14 y #17.
       - las migas (32);
       - el título de la ruta (30).
       Ampliarlos cambia el espaciado visible (propuesta P5 de #17).
-- [ ] **(tuya)** Contraste de "Hasta el día 13": 4,16:1, falla 1.4.3. Subir
-      la opacidad a 0,68 daría ~6,7:1 (P1 de #17).
-- [ ] Nombres de parada largos que se montan sobre el tiempo de visita a
+- [x] **(tuya)** Contraste de "Hasta el día 13": 4,16:1, falla 1.4.3. Subir
+      la opacidad a 0,68 daría ~6,7:1 (P1 de #17). (PR #33, a 5:1,
+      mergeado el 2026-10-16)
+- [x] Nombres de parada largos que se montan sobre el tiempo de visita a
       ≤ 414 px en los días 5–13 (P2 de #17). Puede quedar resuelto con los
-      nombres acortados de #14: comprobarlo tras el merge.
+      nombres acortados de #14: comprobarlo tras el merge. (Comprobado en el
+      informe de #30: 0 de 70 desbordan, de 320 a 414 px)
+- [ ] **(tuya)** Fallo de teclado que encontró #47: con Tab y después Enter,
+      el bocadillo de duración no se abre, porque el scroll del carrusel lo
+      cierra. Elegir el arreglo (ignorar el scroll de `.route__days` y
+      `.route__rail`, o cerrar solo si el bocadillo sale de la vista) y
+      después quitarlo de `KNOWN_KEYBOARD_ISSUES`.
+- [ ] La sombra de la marca del hero en móvil está a 4,33:1 (sugerencia
+      opcional de #33, en #36). Comprobar.
 - [ ] **(tuya)** Propuestas de #17 sin aplicar:
       - texto de las tarjetas que no crece con la fuente del navegador (P3);
       - `prefers-contrast: more` (P4);
@@ -169,13 +239,15 @@ Salen de las PR #9, #14 y #17.
 
 ## Web — funcionalidad
 
-- [ ] Enlace a `/sobre-mi/` en la cabecera, no solo en el pie. La prueba de
-      autoría debe estar por encima del pliegue.
+- [x] Enlace a `/sobre-mi/` en la cabecera, no solo en el pie. La prueba de
+      autoría debe estar por encima del pliegue. (PR #29, cabecera con
+      "Guías" y "Sobre mí", mergeado el 2026-10-16)
 - [ ] Descarga KML por guía, para importar en Google My Maps (§6).
 - [ ] Página hub de destino (`/{destino}/`). Ahora mismo no existe y las
       guías cuelgan de una ruta sin índice. Para Islandia, el 1.10 §6 la deja
       fuera del Checkpoint 3 y el 1.11 §8 la condiciona a validar antes las
-      palabras clave.
+      palabras clave. (El hub `/islandia/` está en #26, en borrador. Con el
+      1.13 (#23) entra en el Checkpoint 3)
 - [ ] Enlazado interno automático hub ↔ guías ↔ relacionadas, generado desde
       el dato y no mantenido a mano.
 - [x] Datos estructurados `Article` y `BreadcrumbList` (§7). El `FAQPage` ya
@@ -190,9 +262,12 @@ Salen de las PR #9, #14 y #17.
 - [x] Optimización de imágenes con `astro:assets` cuando haya fotos.
       (`getImage` en `GuidePhoto.astro` y en la página de Islandia,
       `d3d7e4d`)
-- [ ] La portada no lista la guía de Islandia: solo se llega por URL. Hay una
+- [x] La portada no lista la guía de Islandia: solo se llega por URL. Hay una
       rutina programada para el 2026-10-15
-      (`feature/landing-lists-engine-guides`).
+      (`feature/landing-lists-engine-guides`). (PR #21, mergeado el
+      2026-10-15. La portada v2 está en #31)
+- [ ] **(tuya)** Página 404 propia (#45, en borrador): revisar sus textos.
+      Sin ella, Cloudflare Pages sirve `/` en las rutas que no existen.
 
 ## Web — rendimiento (cuando la guía de Islandia esté completa)
 
@@ -203,7 +278,9 @@ peticiones. Nada es urgente; se revisa con la página terminada, no antes.
 - [ ] **Margen de bytes del HTML de la guía**: con #13 queda a ~100 bytes del
       umbral (~43,8 KB comprimidos) a partir del cual Lighthouse móvil baja a
       99. Cualquier PR que añada marcado o CSS a la guía tiene que
-      compensarlo.
+      compensarlo. (Ya no aplica tal cual: desde #23/1.13 §5, decidido el
+      2026-10-15, la CI acepta 99 en móvil solo para la guía de 13 días,
+      `4276f2b`. #47 propone un tope fijo con `npm run size:check`)
 - [ ] **Tamaño del DOM**: 2.022 elementos (Lighthouse avisa hacia 1.500).
       Crece porque cada día lleva en el HTML todas sus paradas y su panel
       "Ver día completo". Con 13 días va bien; medir de nuevo con todos los
@@ -217,6 +294,8 @@ peticiones. Nada es urgente; se revisa con la página terminada, no antes.
       caracteres de hoy ahorraría ~40 KB, pero rompería con el primer nombre
       nuevo. Queda `npm run fonts:check` en la CI para que ningún carácter
       caiga en una fuente del sistema sin que se note. Detalle en el PR.
+- [ ] **(tuya)** → y ≈ en las etiquetas de Nunito se pintan con la fuente
+      del sistema (#44). Dejarlo así o cambiarlos por texto o un SVG.
 - [x] **CSS que bloquea el primer pintado** (2026-10-06): todo el CSS va
       incrustado en el HTML (`build.inlineStylesheets: 'always'` en
       `astro.config.mjs`). La guía pasó de 99 a 100 estable en móvil; LCP de
@@ -228,8 +307,15 @@ peticiones. Nada es urgente; se revisa con la página terminada, no antes.
       unitarios en la CI. (PR #7, 2026-10-06)
 - [x] `test:ui` en la CI: capas de los paneles y líneas de las tarjetas.
       (PR #8, 2026-10-07)
-- [ ] `test:devices` (iPhone con WebKit y Android con Chromium) en la CI.
-      Está en #9; entra con su merge.
+- [x] `test:devices` (iPhone con WebKit y Android con Chromium) en la CI.
+      Está en #9; entra con su merge. (PR #9, mergeado el 2026-10-15)
+- [x] Comprobación de tipos (`astro check`) en la CI. (PR #28, mergeado el
+      2026-10-16)
+- [ ] **(tuya)** TypeScript 7 (issue #41): `astro check` no lo admite. La
+      recomendación es seguir en `^6.0.3` y dejar la issue abierta hasta que
+      `@astrojs/check` admita la 7 o salga TS 7.1 estable.
+- [ ] Tests de teclado en los paneles y tope de tamaño del HTML
+      (`size:check`): están en #47, en borrador y en verde.
 - [ ] El job `devices` repite `npm ci` y `build` y usa `npx --yes wait-on`
       sin versión fija. Coste menor de CI (revisión de #9).
 - [ ] `scripts/ui-devices.ts` descarta en silencio los modelos que la versión
@@ -237,8 +323,9 @@ peticiones. Nada es urgente; se revisa con la página terminada, no antes.
       que sube Playwright a 1.64.
 - [ ] `scripts/ui-shared.ts`: el docblock de `dayCardLineIssues` quedó
       cortado.
-- [ ] **(tuya)** Mergear #10 (dependencias) y decidir sobre la issue #11
-      (`http-cache-semantics`, `sharp`).
+- [x] **(tuya)** Mergear #10 (dependencias) y decidir sobre la issue #11
+      (`http-cache-semantics`, `sharp`). (#10 mergeado el 2026-10-16; #40
+      deja 0 vulnerabilidades altas y cierra #11, 2026-10-19)
 - [ ] Las rutinas de caducidad (D8) y de estructurar guías, y el paso de
       "guía inválida" de la auditoría de dependencias, leen
       `src/content/guides/*.json` (esquema antiguo). La de caducidad no revisa
@@ -246,6 +333,9 @@ peticiones. Nada es urgente; se revisa con la página terminada, no antes.
 - [ ] El build avisa de unos 90 lugares con `verified_at` caducado (nota de
       #16). Las revisiones de #9 y #14 señalan además lugares con
       `verified_at: 2025-09-15` que aún no se han verificado.
+      (`content:validate` en `develop`, 2026-10-20: 87 lugares con datos
+      caducados y el precio de los 10 campings verificado hace más de 12
+      meses)
 
 ## Infraestructura
 
@@ -253,10 +343,17 @@ Paso a paso para desplegar, dominio, analítica y Search Console:
 [DESPLIEGUE.md](DESPLIEGUE.md).
 
 - [ ] Conectar Cloudflare Pages al repo y desplegar `develop` a un dominio de
-      pruebas.
+      pruebas. (Paso a paso en #48, `docs/DESPLIEGUE.md`, unos 31 min.
+      **(tuya)** Elegir la rama de producción; la recomendada es la A,
+      `develop` → `main` primero)
+- [ ] Cabeceras HTTP y CSP por página (#43, en borrador). Tiene una lista de
+      comprobaciones para el día del despliegue y HSTS se activa en el panel.
+      Chocará con #44 en `package.json` y `CLAUDE.md`.
 - [ ] **(tuya)** Registrar `solohazlamaleta.com`. `astro.config.mjs` ya lo da
       por hecho.
-- [ ] Analítica sin cookies (Umami o Plausible).
+- [ ] Analítica sin cookies (Umami o Plausible). (#48 recomienda Umami Cloud
+      gratis. Hay que permitirla en la CSP de #43 y contarla en
+      `/privacidad/`)
 - [ ] Alta en Search Console cuando haya dominio.
 
 ## Diseño
@@ -280,6 +377,11 @@ Paso a paso para desplegar, dominio, analítica y Search Console:
       decisiones viven ahora en `docs/BRIEF.md`.
 - [ ] **(tuya)** Decidir Islandia o Mallorca como laboratorio SEO (1.11 §10),
       con los datos de Keyword Planner de ambos destinos.
+- [ ] **(tuya)** Keyword Planner y Trends con los bloques de #25
+      (`docs/fuentes/seo-islandia-grupo.md` §5). Están listos para pegar en
+      [DEBERES.md](DEBERES.md).
+- [ ] **(tuya)** Verificar en island.is la tasa de 6,95 ISK/km (#25, #26).
+      Bloquea la satélite de Presupuesto.
 - [ ] Mallorca sigue siendo la mejor apuesta de posicionamiento: long tail,
       8 años de experiencia real, competencia desactualizada.
 
