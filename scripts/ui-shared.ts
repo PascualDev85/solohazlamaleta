@@ -127,3 +127,60 @@ export function scrollAnimationIssues() {
   }
   return bad
 }
+
+/**
+ * A stop's visit-time bubble (a <details> whose mark is .day-stop__hike), the
+ * one keyboard target that is not a popover. Its opener is the mark itself,
+ * its panel the <details> around it. The first one on screen is tested: the
+ * first in the page (day 3) sits in a folded stop, out of the tab order.
+ */
+export const DURATION_HINT = { name: 'bocadillo de duration_note', open: '.day-stop__hike', panel: '.day-stop__hint' } as const
+
+/**
+ * Where keyboard focus is, for a Tab walk. `closed` lists the panels that
+ * must never take focus while closed: popovers that are not open, and the
+ * bubble of a <details> hint that is shut. Returns a short label of the
+ * focused element (or null on <body>), whether it is the first match of
+ * `target` that is on screen (has boxes), whether it was seen before in this
+ * walk (the walk has wrapped) and, if it sits in a closed panel, which one.
+ */
+export function focusStep({ target, closed }: { target: string; closed: string[] }) {
+  const w = window as unknown as { __kbSeen?: WeakSet<Element> }
+  const seen = (w.__kbSeen ??= new WeakSet())
+  const el = document.activeElement
+  if (!el || el === document.body) return { label: null, isTarget: false, repeat: false, inClosed: null }
+  const label = `${el.tagName.toLowerCase()}${el.className ? '.' + String(el.className).trim().split(/\s+/).join('.') : ''}`
+  const repeat = seen.has(el)
+  seen.add(el)
+  let inClosed: string | null = null
+  for (const selector of closed) {
+    const panel = el.closest(selector)
+    if (!panel) continue
+    const shut = panel instanceof HTMLDetailsElement ? !panel.open : panel.hasAttribute('popover') && !panel.matches(':popover-open')
+    // A <details> keeps its <summary> in the tab order on purpose: only what
+    // the summary reveals counts as inside the closed panel.
+    const isSummary = panel instanceof HTMLDetailsElement && el.closest('summary')?.parentElement === panel
+    if (shut && !isSummary) {
+      inClosed = selector
+      break
+    }
+  }
+  const first = [...document.querySelectorAll(target)].find((t) => t.getClientRects().length > 0)
+  return { label, isTarget: el === first, repeat, inClosed }
+}
+
+/**
+ * The state of a keyboard target after a key press: whether its panel is
+ * open, whether focus is inside it, and whether focus is on the opener (the
+ * first match of `open` on screen). For the bubble, the panel is the
+ * <details> around the opener, so its mark counts as inside (the bubble holds
+ * no control of its own); for a popover, the first match of `panel`.
+ */
+export function panelState({ open, panel }: { open: string; panel: string }) {
+  const opener = [...document.querySelectorAll(open)].find((t) => t.getClientRects().length > 0)
+  const box = opener?.closest(panel) ?? document.querySelector<HTMLElement>(panel)
+  if (!box) return { found: false, isOpen: false, focusInside: false, focusOnOpener: false }
+  const isOpen = box instanceof HTMLDetailsElement ? box.open : box.matches(':popover-open')
+  const active = document.activeElement
+  return { found: true, isOpen, focusInside: !!active && box.contains(active), focusOnOpener: !!opener && active === opener }
+}
