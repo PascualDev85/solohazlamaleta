@@ -1,0 +1,29 @@
+# HTTP headers for Cloudflare Pages, copied to dist/_headers by the build.
+# Format: a path line, then indented "Name: value" lines. A request takes the
+# headers of every rule it matches, and a header set by two rules is joined
+# with a comma, so each header below is set by one rule only.
+# https://developers.cloudflare.com/pages/configuration/headers/
+#
+# The Content-Security-Policy is not here: it carries the hashes of each
+# page's inline scripts and styles, so scripts/write-headers.ts appends one
+# rule per page after `astro build`.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Cross-Origin-Opener-Policy: same-origin
+  Permissions-Policy: accelerometer=(), autoplay=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), usb=(), xr-spatial-tracking=()
+
+# Content-hashed file names: a new build means a new URL.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Font names carry no hash, so a replaced file keeps its URL: a month, not
+# "immutable" for a year.
+/fonts/*
+  Cache-Control: public, max-age=2592000
+
+# Affiliate redirects: never indexed (their pages also carry the meta tag).
+/ir/*
+  X-Robots-Tag: noindex, nofollow
