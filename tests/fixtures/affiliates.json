@@ -1,0 +1,15 @@
+{
+  "_comment": "Test-only affiliate registry for tests/pages/affiliate-route.test.ts. Never imported by the site: the test swaps it in for src/data/affiliates.json inside its own Vite server.",
+  "partners": {
+    "test-partner": {
+      "name": "Socio de prueba",
+      "active": true,
+      "links": { "camper": "https://example.com/camper?ref=test" }
+    },
+    "test-inactive": {
+      "name": "Socio inactivo",
+      "active": false,
+      "links": { "hotel": "https://example.com/hotel?ref=test" }
+    }
+  }
+}

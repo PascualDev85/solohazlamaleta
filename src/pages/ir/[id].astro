@@ -1,28 +1,17 @@
 ---
 import affiliates from '../../data/affiliates.json';
+import { affiliateRoutes } from '../../lib/affiliate-routes.ts';
 
 /**
  * Every affiliate link leaves the site through here, so the real URLs live in
  * one registry instead of being scattered across guides. Changing a partner
  * means editing affiliates.json, not every page that links to it.
  *
- * The id is `<partner>-<key>`, matching the `affiliate` references in guides.
+ * The id is `<partner>-<key>`, matching the `affiliate` references in guides
+ * (see affiliateRoutes, tested in tests/lib/affiliate-routes.test.ts).
  */
 export function getStaticPaths() {
-  const paths = [];
-
-  for (const [partnerId, partner] of Object.entries(affiliates.partners)) {
-    if (!partner.active) continue;
-
-    for (const [key, url] of Object.entries(partner.links)) {
-      paths.push({
-        params: { id: `${partnerId}-${key}` },
-        props: { url: String(url), partnerName: partner.name },
-      });
-    }
-  }
-
-  return paths;
+  return affiliateRoutes(affiliates);
 }
 
 interface Props {
