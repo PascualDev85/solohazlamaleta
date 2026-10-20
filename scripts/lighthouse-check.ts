@@ -38,9 +38,13 @@ if (!base || pages.length === 0) {
 
 const outDir = mkdtempSync(join(tmpdir(), 'lighthouse-'))
 
-/** Reads the built page from dist/ (run after `npm run build`), no network. */
+/**
+ * Reads the built page from dist/ (run after `npm run build`), no network.
+ * A page given as a file (/404.html) is read as is; a directory URL, from its index.html.
+ */
 function isNoindex(page: string): boolean {
-  const html = readFileSync(join('dist', page, 'index.html'), 'utf8')
+  const file = page.endsWith('.html') ? join('dist', page) : join('dist', page, 'index.html')
+  const html = readFileSync(file, 'utf8')
   return /<meta[^>]+name="robots"[^>]+noindex/i.test(html)
 }
 

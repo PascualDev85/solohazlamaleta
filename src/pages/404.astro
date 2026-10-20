@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { loadGuideList } from '../lib/load-guide-list.ts';
+import '../styles/not-found.scss';
+
+// Cloudflare Pages serves dist/404.html for any path that does not exist, so
+// every link here is absolute: relative ones would resolve against the
+// missing path. The guides come from the landing page's list, never by hand.
+const guides = await loadGuideList();
+---
+
+<BaseLayout
+  title="Página no encontrada — Solo Haz la Maleta"
+  description="Esta página no existe o ya no está."
+  noindex
+  canonical={false}
+  design="v2"
+>
+  <section class="not-found" aria-labelledby="not-found-title">
+    <h1 id="not-found-title">Te has salido del mapa</h1>
+    <p class="not-found__lede">Esta página no existe o ya no está.</p>
+
+    <p><a class="not-found__home" href="/">Volver a la portada</a></p>
+
+    {guides.length > 0 && (
+      <>
+        <h2 class="not-found__label" id="not-found-guides">O sigue por una guía</h2>
+        <ul class="not-found__guides" aria-labelledby="not-found-guides">
+          {guides.map((guide) => (
+            <li>
+              <a href={guide.url}>{guide.title}</a>
+              <span class="not-found__meta">
+                {guide.destination}{guide.days.length > 0 && ` · ${guide.days.join(' · ')} días`}{guide.draft && ' · borrador'}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+  </section>
+</BaseLayout>

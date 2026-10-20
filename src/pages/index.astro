@@ -1,22 +1,10 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/v1-components.scss';
-import { loadCompiledGuide } from '../lib/engine-guide.ts';
-import {
-  ENGINE_GUIDE_SOURCES, fromLegacyGuide, fromCompiledGuide, sortGuideList,
-} from '../lib/guide-list.ts';
-
-const legacyGuides = await getCollection('guides');
-const engineGuides = await Promise.all(
-  ENGINE_GUIDE_SOURCES.map((source) => loadCompiledGuide(source.guide, source.places)),
-);
+import { loadGuideList } from '../lib/load-guide-list.ts';
 
 /** Published guides first; drafts are listed but clearly marked. */
-const sorted = sortGuideList([
-  ...legacyGuides.map((guide) => fromLegacyGuide(guide.id, guide.data)),
-  ...engineGuides.map(fromCompiledGuide),
-]);
+const sorted = await loadGuideList();
 ---
 
 <BaseLayout

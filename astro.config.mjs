@@ -69,6 +69,11 @@ export function sitemapFilter(page) {
     return false;
   }
 
+  // The not-found page carries noindex; Cloudflare Pages serves it as 404.html.
+  if (path === '/404/' || path === '/404.html') {
+    return false;
+  }
+
   return !excludedPaths.includes(path);
 }
 
