@@ -206,10 +206,15 @@ peticiones. Nada es urgente; se revisa con la página terminada, no antes.
       Crece porque cada día lleva en el HTML todas sus paradas y su panel
       "Ver día completo". Con 13 días va bien; medir de nuevo con todos los
       días rellenos (fotos, "Lo mejor del día") y aligerar si hace falta.
-- [ ] **Fuentes**: 98 KB, casi el 60 % del peso. Recortarlas a los caracteres
-      usados (subsetting) ahorraría unos 40–50 KB. La guía v2 precarga
-      Literata, Fraunces y Nunito; con #13, Instrument Serif solo se carga en
-      la portada y en Alsacia.
+- [x] **Fuentes** (medido 2026-10-20, PR `perf/font-subsetting`): no se
+      recortan. Ya son el subconjunto latino de Google (≈ 200 caracteres:
+      Latin-1 y unas comillas y rayas), 118,5 KB las cuatro del v2. Con el
+      margen mínimo para el contenido futuro (Latin Extended-A, →, ≈…) pesan
+      ~146 KB (+23 %), y Literata y Fraunces no se reproducen idénticas desde
+      las fuentes originales (cambia el render). Recortar solo a los ~110
+      caracteres de hoy ahorraría ~40 KB, pero rompería con el primer nombre
+      nuevo. Queda `npm run fonts:check` en la CI para que ningún carácter
+      caiga en una fuente del sistema sin que se note. Detalle en el PR.
 - [x] **CSS que bloquea el primer pintado** (2026-10-06): todo el CSS va
       incrustado en el HTML (`build.inlineStylesheets: 'always'` en
       `astro.config.mjs`). La guía pasó de 99 a 100 estable en móvil; LCP de

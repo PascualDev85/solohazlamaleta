@@ -134,6 +134,7 @@ abrir ficheros de finanzas desde este proyecto.
 npm run dev        # servidor de desarrollo
 npm run build      # build de producción (falla si una guía es inválida)
 npm run preview    # previsualizar el build
+npm run fonts:check  # tras el build: falla si dist/ usa un carácter que ninguna fuente de public/fonts/ cubre (son subconjuntos)
 npm run test:devices  # iPhone (WebKit) y Android (Chromium) contra el preview; capturas en ui-devices/
 npm test           # tests unitarios (node --test)
 npm run typecheck  # tipos con astro check (src, engine, schemas, scripts, tests y .astro); también en la CI, antes del build

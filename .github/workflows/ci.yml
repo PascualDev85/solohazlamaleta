@@ -34,6 +34,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      # The fonts are subsets: a character no font covers would fall back to a
+      # system font without anyone noticing (scripts/font-coverage.ts).
+      - name: Every painted character is in a self-hosted font
+        run: npm run fonts:check
+
       - name: Assert an invalid guide fails the build
         run: |
           GUIDE=$(ls src/content/guides/*.json | head -1)
