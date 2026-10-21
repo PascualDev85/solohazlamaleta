@@ -97,6 +97,11 @@
     padding: 0;
   }
 
+  // 36px pills, 44px tap areas.
+  .crumbs a {
+    @include tap-area;
+  }
+
   .crumbs a,
   .crumbs span {
     display: inline-flex;

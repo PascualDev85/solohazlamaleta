@@ -176,6 +176,8 @@
     }
 
     > summary {
+      @include tap-area;
+
       display: flex;
       align-items: center;
       gap: 0.35rem;
@@ -382,7 +384,7 @@
       text-decoration-color: #fff;
     }
 
-    // An invisible layer makes the tap area 44px tall around a 19px line
+    // An invisible layer makes the tap area 44×44px around a 19px line
     // (WCAG 2.5.8 asks 24px; 44px is the recommended size). Same on the stop
     // marks (_day-stop.scss): the target grows, the drawing does not. The insets are in
     // % of the element itself, so the area is 46px (44 plus sub-pixel
@@ -391,7 +393,7 @@
     &::after {
       content: "";
       position: absolute;
-      inset: min(0px, calc(50% - 23px)) 0;
+      inset: min(0px, calc(50% - 23px));
     }
   }
 
@@ -423,6 +425,8 @@
   // the toggle; the stops it reveals sit above it (see the :has rule).
   .day-card__more {
     > summary {
+      @include tap-area;
+
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;

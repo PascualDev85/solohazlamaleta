@@ -183,6 +183,8 @@
     color: var(--color-text-muted);
 
     a {
+      @include tap-area;
+
       display: block;
       font-weight: 800;
     }

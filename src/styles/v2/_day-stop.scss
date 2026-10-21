@@ -14,6 +14,13 @@
     padding-block: 0.6rem;
   }
 
+  // A stop whose time mark ("i") sits right under the previous stop's "Mapa":
+  // both tap areas are 44px tall, and with 0.6rem between them they overlapped
+  // by 9px (the later one wins, so "Mapa" kept 37px). A little more room.
+  .day-stop + .day-stop:has(.day-stop__hike) {
+    padding-top: 1rem;
+  }
+
   .day-stop__n {
     font-family: var(--font-display);
     font-size: 0.8125em;
@@ -337,11 +344,15 @@
       height: 1.1em;
     }
 
-    // 17px line, 44px tall tap area.
+    // 14–17px line, 44×44 tap area. Shifted 4px up, over the description:
+    // below it come the next stop's "i" or "Ver N paradas más", whose own
+    // tap areas would cover the bottom of a centred one. On the narrowest
+    // phones the link is 40px wide; it grows to the left only, so nothing
+    // sticks out of the practical line (test:ui would see it overflow).
     &::after {
       content: "";
       position: absolute;
-      inset: min(0px, calc(50% - 23px)) 0;
+      inset: min(0px, calc(50% - 27px)) 0 min(0px, calc(50% - 19px)) min(0px, calc(100% - 46px));
     }
   }
 }
