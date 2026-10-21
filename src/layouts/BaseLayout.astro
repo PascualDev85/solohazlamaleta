@@ -1,6 +1,8 @@
 ---
 import '../styles/main.scss';
-import { inlineFits, menuDestinations, pagePathFromFile, siteLinks } from '../lib/site-menu.ts';
+import { getImage } from 'astro:assets';
+import { guideImage } from '../lib/guide-images.ts';
+import { headerRowLinks, inlineFits, menuDestinations, pagePathFromFile, siteLinks } from '../lib/site-menu.ts';
 import { loadMenuGuides } from '../lib/site-menu-guides.ts';
 
 interface Props {
@@ -65,6 +67,23 @@ const pagePaths = new Set(
 const destinations = menuDestinations(await loadMenuGuides(), { currentPath: pathname, pagePaths });
 const links = siteLinks(navLinks, destinations);
 const rowFits = inlineFits(links);
+// Search has its own button in the header, so the row leaves its text link out.
+const rowLinks = headerRowLinks(links);
+
+// A destination's thumbnail in the menu: a 36px square, two light files that
+// only load once the menu is open (a closed popover renders nothing). Where
+// some destination has one, the others get their tinted initial, to line up.
+const thumbs = new Map<string, { avif: string; webp: string }>();
+for (const destination of destinations) {
+  if (!destination.image) continue;
+  const image = guideImage(destination.image);
+  const [avif, webp] = await Promise.all(
+    (['avif', 'webp'] as const).map((format) =>
+      getImage({ src: image, width: 72, height: 72, fit: 'cover', format, quality: format === 'avif' ? 40 : 65 }),
+    ),
+  );
+  thumbs.set(destination.href, { avif: avif.src, webp: webp.src });
+}
 const signature = 'Nosotros hacemos el trabajo difícil. Tú solo haz la maleta.';
 ---
 
@@ -104,10 +123,15 @@ const signature = 'Nosotros hacemos el trabajo difícil. Tú solo haz la maleta.
       <a href="/" class="brand" aria-current={currentFor('/')}>Solo Haz la Maleta</a>
       <nav class="site-nav" aria-label="Principal" data-menu={rowFits ? undefined : 'always'}>
         <ul>
-          {links.flatMap((link) => [link, ...link.children]).map((link) => (
+          {rowLinks.map((link) => (
             <li><a href={link.href} aria-current={currentFor(link.href)}>{link.label}</a></li>
           ))}
         </ul>
+        {/* A link to /buscar/ on every page. On the home page its script
+            (components/home/HomeSearch.astro) opens the search window instead. */}
+        <a class="site-search" href="/buscar/" aria-label="Buscar" aria-current={currentFor('/buscar/')} data-search-open>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+        </a>
         {/* Native popover: opens, closes, Esc and a tap outside need no JavaScript. */}
         <button class="site-menu__open" type="button" popovertarget="site-menu" aria-label="Menú">
           <span class="site-menu__bars" aria-hidden="true"></span>
@@ -124,9 +148,24 @@ const signature = 'Nosotros hacemos el trabajo difícil. Tú solo haz la maleta.
               <a href={link.href} aria-current={currentFor(link.href)}>{link.label}</a>
               {link.children.length > 0 && (
                 <ul>
-                  {link.children.map((child) => (
-                    <li><a href={child.href} aria-current={currentFor(child.href)}>{child.label}</a></li>
-                  ))}
+                  {link.children.map((child) => {
+                    const thumb = thumbs.get(child.href);
+                    return (
+                      <li>
+                        <a href={child.href} aria-current={currentFor(child.href)}>
+                          {thumb ? (
+                            <picture class="site-menu__thumb">
+                              <source type="image/avif" srcset={thumb.avif} />
+                              <img src={thumb.webp} alt="" width="36" height="36" loading="lazy" decoding="async" />
+                            </picture>
+                          ) : thumbs.size > 0 && (
+                            <span class="site-menu__thumb site-menu__thumb--empty" aria-hidden="true">{child.label.charAt(0)}</span>
+                          )}
+                          {child.label}
+                        </a>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </li>

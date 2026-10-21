@@ -3,11 +3,12 @@
 // They guard what unit tests cannot see: the layers of the overlay panels,
 // the lines of the day cards on small phones, every page under the HTTP
 // headers it will ship with, and the panels by keyboard. Each check names
-// what broke. Run after `npm run build`: check 4 reads dist/_headers.
+// what broke. Run after `npm run build`: check 5 reads dist/_headers.
 import { readFileSync } from 'node:fs'
 import { chromium } from 'playwright'
-import { DURATION_HINT, PANELS, dayCardLineIssues, focusStep, headerOverlap, panelState, scrollAnimationIssues, siteHeaderIssues } from './ui-shared.ts'
-import { SITE_MENU, siteMenuIssues } from './ui-shared.ts'
+import {
+  DURATION_HINT, PANELS, SITE_MENU, dayCardLineIssues, focusStep, headerOverlap, panelState, scrollAnimationIssues, siteHeaderIssues, siteMenuIssues,
+} from './ui-shared.ts'
 import { headersFor, parseHeaders } from './security-headers.ts'
 
 const [base, page = '/'] = process.argv.slice(2)
@@ -51,8 +52,8 @@ for (const width of [350, 360, 375, 390, 414]) {
   await tab.close()
 }
 
-// 2b. The site header on desktop too (one row: links, or the menu button when
-//     they do not fit), and the open menu on a phone: inside the screen, 44px links.
+// 3. The site header on desktop too (one row: links, or the menu button when
+//    they do not fit), and the open menu on a phone: inside the screen, 44px links.
 for (const width of [768, 1280]) {
   const tab = await browser.newPage({ viewport: { width, height: 844 } })
   await tab.goto(url, { waitUntil: 'networkidle' })
@@ -69,7 +70,7 @@ for (const width of [350, 390]) {
   await tab.close()
 }
 
-// 3. Scroll-driven animations survive the minified build (see scrollAnimationIssues).
+// 4. Scroll-driven animations survive the minified build (see scrollAnimationIssues).
 {
   const tab = await browser.newPage({ viewport: { width: 390, height: 844 } })
   await tab.goto(url, { waitUntil: 'networkidle' })
@@ -77,7 +78,7 @@ for (const width of [350, 390]) {
   await tab.close()
 }
 
-// 4. Every built page under the headers Cloudflare Pages will send
+// 5. Every built page under the headers Cloudflare Pages will send
 //    (dist/_headers, Content-Security-Policy included). `astro preview` sends
 //    none, so they are added to each response here. Not one CSP or
 //    Permissions-Policy complaint in the console, and on the guide the
@@ -150,7 +151,7 @@ for (const width of [350, 390]) {
   }
 }
 
-// 5. The panels by keyboard alone, on a phone and on a desktop: Tab to the
+// 6. The panels by keyboard alone, on a phone and on a desktop: Tab to the
 //    opener, Enter opens it, focus goes inside, Esc closes it and puts focus
 //    back on the opener; and while closed, nothing inside it takes focus on
 //    the way through the page. Same for a visit-time bubble.
@@ -214,7 +215,7 @@ for (const width of [390, 1280]) {
   await tab.close()
 }
 
-// 6. The landing page's search window, by keyboard: Tab to the big field,
+// 7. The landing page's search window, by keyboard: Tab to the big field,
 //    Enter opens the window with focus in its input, typing filters the
 //    results, and one Escape closes it (even with text typed) and puts focus
 //    back on the field.
@@ -222,12 +223,12 @@ for (const width of [390, 1280]) {
   const home = new URL('/', base).href
   const tab = await browser.newPage({ viewport: { width: 390, height: 844 } })
   await tab.goto(home, { waitUntil: 'networkidle' })
-  const opener = tab.locator('[data-search-open]')
+  const opener = tab.locator('.home-search')
   if ((await opener.count()) > 0) {
     let reached = false
     for (let i = 0; i < 60 && !reached; i++) {
       await tab.keyboard.press('Tab')
-      reached = await tab.evaluate(() => document.activeElement?.matches('[data-search-open]') ?? false)
+      reached = await tab.evaluate(() => document.activeElement?.matches('.home-search') ?? false)
     }
     if (!reached) fail('home search: the field is not reachable with Tab')
     else {
@@ -246,11 +247,54 @@ for (const width of [390, 1280]) {
       await tab.waitForTimeout(200)
       const closed = await tab.evaluate(() => ({
         open: document.querySelector<HTMLDialogElement>('[data-search-dialog]')?.open,
-        onOpener: document.activeElement?.matches('[data-search-open]'),
+        onOpener: document.activeElement?.matches('.home-search'),
       }))
       if (closed.open || !closed.onOpener) fail(`home search: one Escape does not close it and return focus (${JSON.stringify(closed)})`)
     }
   }
+  await tab.close()
+}
+
+// 8. The header's search button on the home page, by keyboard, on a phone and
+//    on a desktop: the header passes its checks there too, Tab reaches the
+//    button, Enter opens the same search window with focus in its field, and
+//    Escape closes it and puts focus back on the button. Without the window
+//    (any other page) it is a plain link to /buscar/.
+for (const width of [390, 1280]) {
+  const home = new URL('/', base).href
+  const tab = await browser.newPage({ viewport: { width, height: 844 } })
+  await tab.goto(home, { waitUntil: 'networkidle' })
+  for (const b of await tab.evaluate(siteHeaderIssues)) fail(`home ${width}px: ${b}`)
+  let reached = false
+  for (let i = 0; i < 30 && !reached; i++) {
+    await tab.keyboard.press('Tab')
+    reached = await tab.evaluate(() => document.activeElement?.matches('.site-search') ?? false)
+  }
+  if (!reached) fail(`home ${width}px: the header search button is not reachable with Tab`)
+  else {
+    await tab.keyboard.press('Enter')
+    await tab.waitForTimeout(300)
+    const state = await tab.evaluate(() => ({
+      url: location.pathname,
+      open: document.querySelector<HTMLDialogElement>('[data-search-dialog]')?.open,
+      inInput: document.activeElement?.matches('[data-search-dialog] [data-search-input]'),
+    }))
+    if (!state.open || !state.inInput) fail(`home ${width}px: Enter on the header search button does not open the window with focus in its field (${JSON.stringify(state)})`)
+    await tab.keyboard.press('Escape')
+    await tab.waitForTimeout(200)
+    const closed = await tab.evaluate(() => ({
+      open: document.querySelector<HTMLDialogElement>('[data-search-dialog]')?.open,
+      onButton: document.activeElement?.matches('.site-search'),
+    }))
+    if (closed.open || !closed.onButton) fail(`home ${width}px: Escape does not close the window and return focus to the header button (${JSON.stringify(closed)})`)
+  }
+  await tab.close()
+}
+{
+  const tab = await browser.newPage({ viewport: { width: 390, height: 844 } })
+  await tab.goto(url, { waitUntil: 'networkidle' })
+  const href = await tab.locator('.site-search').getAttribute('href')
+  if (href !== '/buscar/') fail(`${new URL(url).pathname}: the header search button does not link to /buscar/ (${href})`)
   await tab.close()
 }
 

@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
-import { menuDestinations, pagePathFromFile, siteLinks, inlineFits } from '../../src/lib/site-menu.ts'
+import { headerRowLinks, menuDestinations, pagePathFromFile, siteLinks, inlineFits } from '../../src/lib/site-menu.ts'
 import type { MenuGuide } from '../../src/lib/site-menu.ts'
 
 const islandia: MenuGuide = { destination: 'islandia', url: '/islandia/islandia-en-camper-13-dias/', hub: '/islandia/', draft: false }
@@ -84,4 +84,25 @@ test('inlineFits counts every label, destinations included, against the one-row 
   const named = (labels: string[]) => labels.map((label) => ({ href: `/${label.toLowerCase()}/`, label }))
   assert.strictEqual(inlineFits(siteLinks(nav, named(['Islandia', 'Alsacia']))), true)
   assert.strictEqual(inlineFits(siteLinks(nav, named(['Islandia', 'Alsacia', 'Tailandia', 'Egipto', 'Marruecos']))), false)
+})
+
+test('a destination carries the cover of its first guide that has one, as the menu thumbnail', () => {
+  const second = { ...islandia, url: '/islandia/islandia-en-7-dias/', coverImage: 'islandia/gljufrafoss.jpg' }
+  assert.deepStrictEqual(menuDestinations([islandia, second], { currentPath: '/', pagePaths: NO_PAGES }), [
+    { href: islandia.url, label: 'Islandia', image: 'islandia/gljufrafoss.jpg' },
+  ])
+  assert.deepStrictEqual(menuDestinations([{ ...alsacia, coverImage: null }], { currentPath: '/', pagePaths: NO_PAGES }), [
+    { href: alsacia.url, label: 'Alsacia' },
+  ])
+})
+
+test('headerRowLinks lists the row in order, destinations after "Guías", without the search link (the header has its own button)', () => {
+  const nav = [{ href: '/#guias', label: 'Guías' }, { href: '/sobre-mi/', label: 'Sobre mí' }, { href: '/buscar/', label: 'Buscar' }]
+  const row = headerRowLinks(siteLinks(nav, [{ href: '/islandia/', label: 'Islandia', image: 'x.jpg' }]))
+  assert.deepStrictEqual(row, [
+    { href: '/#guias', label: 'Guías' },
+    { href: '/islandia/', label: 'Islandia' },
+    { href: '/sobre-mi/', label: 'Sobre mí' },
+  ])
+  assert.deepStrictEqual(headerRowLinks(siteLinks(nav.slice(0, 2), []), '/sobre-mi/'), [{ href: '/#guias', label: 'Guías' }])
 })

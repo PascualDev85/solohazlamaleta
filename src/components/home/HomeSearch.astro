@@ -2,8 +2,9 @@
 // The landing page's search: a big field under the title that opens a search
 // window with results as you type (the pattern of the travel blogs the author
 // pointed to). Without JavaScript the field is a link to /buscar/, which
-// lists everything. With it, the link opens a native <dialog>: Escape closes
-// it and focus goes back to the field, both by the browser.
+// lists everything. With it, the link opens a native <dialog>, and so does the
+// header's search button: Escape closes it and focus goes back to whichever
+// opened it.
 import SearchPanel from '../search/SearchPanel.astro';
 import SectionIcon from '../guide/SectionIcon.astro';
 import type { SearchGuide } from '../../lib/search.ts';
@@ -34,16 +35,25 @@ const { guides } = Astro.props;
 </dialog>
 
 <script>
-  const opener = document.querySelector<HTMLAnchorElement>('[data-search-open]');
+  // The big field and the header's search button (BaseLayout) open the same window.
+  const openers = document.querySelectorAll<HTMLAnchorElement>('[data-search-open]');
   const dialog = document.querySelector<HTMLDialogElement>('[data-search-dialog]');
 
-  if (opener && dialog && typeof dialog.showModal === 'function') {
+  if (dialog && typeof dialog.showModal === 'function') {
     const input = dialog.querySelector<HTMLInputElement>('[data-search-input]');
-    opener.addEventListener('click', (event) => {
-      event.preventDefault();
-      dialog.showModal();
-      input?.focus();
-    });
+    let opener: HTMLElement | null = null;
+    for (const link of openers) {
+      link.setAttribute('aria-haspopup', 'dialog');
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        opener = link;
+        dialog.showModal();
+        input?.focus();
+      });
+    }
+    // Back to the one that opened it: Safari does not focus a clicked link,
+    // so the browser alone would leave focus on the page.
+    dialog.addEventListener('close', () => opener?.focus());
     // Escape closes the window even with text in the field: a search input
     // would otherwise spend the first Escape clearing itself.
     dialog.addEventListener('keydown', (event) => {

@@ -85,8 +85,10 @@ export function dayCardLineIssues() {
  * src/lib/site-menu.ts), never both. All of it in one row, every link and the
  * button at least 44px tall (the button 44px wide too), nothing pushing the
  * page sideways, and not fixed or sticky (it would cover anchors and fight
- * the guide's floating index pill). The menu's own links live in a closed
- * popover and are checked by siteMenuIssues. Returns what broke.
+ * the guide's floating index pill). The search button shows on every width,
+ * 44×44 and named "Buscar", before the menu button and after the row's last
+ * link. The menu's own links live in a closed popover and are checked by
+ * siteMenuIssues. Returns what broke.
  */
 export function siteHeaderIssues() {
   const issues: string[] = []
@@ -98,7 +100,8 @@ export function siteHeaderIssues() {
   const menu = header.querySelector('.site-menu')
   const links = [...header.querySelectorAll<HTMLElement>('a')].filter((a) => shown(a) && !menu?.contains(a))
   const button = header.querySelector<HTMLElement>('.site-menu__open')
-  const rowLinks = links.filter((a) => a.closest('.site-nav'))
+  const search = header.querySelector<HTMLElement>('.site-search')
+  const rowLinks = links.filter((a) => a.closest('.site-nav') && a !== search)
   if (shown(button) && rowLinks.length) issues.push('site header shows both the link row and the menu button')
   if (!shown(button) && !rowLinks.length) issues.push('site header shows neither the link row nor the menu button')
   const targets = shown(button) ? [...links, button] : links
@@ -108,10 +111,18 @@ export function siteHeaderIssues() {
     const box = el.getBoundingClientRect()
     const name = el.getAttribute('aria-label') ?? el.textContent?.trim()
     if (box.height < 44) issues.push(`site header link "${name}" is ${Math.round(box.height)}px tall (< 44)`)
-    if (el === button && box.width < 44) issues.push(`menu button is ${Math.round(box.width)}px wide (< 44)`)
+    if ((el === button || el === search) && box.width < 44) issues.push(`${name} button is ${Math.round(box.width)}px wide (< 44)`)
     if (box.right > document.documentElement.clientWidth) issues.push(`site header link "${name}" overflows the viewport`)
   }
   if (button && button.getAttribute('aria-label') !== 'Menú') issues.push('menu button is not named "Menú"')
+  if (!shown(search)) issues.push('site header shows no search button')
+  else {
+    if (search.getAttribute('aria-label') !== 'Buscar') issues.push('search button is not named "Buscar"')
+    const left = search.getBoundingClientRect().left
+    if (shown(button) && left > button.getBoundingClientRect().left) issues.push('search button is not left of the menu button')
+    if (rowLinks.some((a) => a.getBoundingClientRect().left > left)) issues.push('search button is not at the end of the link row')
+    if (rowLinks.some((a) => a.getAttribute('href') === '/buscar/')) issues.push('the link row repeats "Buscar" next to the search button')
+  }
   if (!header.querySelector('nav[aria-label="Principal"]')) issues.push('main navigation landmark missing')
   return issues
 }
@@ -129,6 +140,7 @@ export function siteMenuIssues() {
   if (box.left < 0 || box.right > document.documentElement.clientWidth || box.top < 0) issues.push('site menu sticks out of the viewport')
   const links = [...menu.querySelectorAll<HTMLElement>('a')]
   if (!links.some((a) => a.textContent?.trim() === 'Guías')) issues.push('site menu has no "Guías" link')
+  if (!links.some((a) => a.textContent?.trim() === 'Buscar')) issues.push('site menu has no "Buscar" link')
   for (const a of links) {
     const h = a.getBoundingClientRect().height
     if (h < 44) issues.push(`site menu link "${a.textContent?.trim()}" is ${Math.round(h)}px tall (< 44)`)
