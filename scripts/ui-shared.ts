@@ -80,10 +80,13 @@ export function dayCardLineIssues() {
 }
 
 /**
- * The site header on a phone: brand and links in one row (no hamburger, so
- * nothing may wrap), every link at least 44px tall, nothing pushing the page
- * sideways, and not fixed or sticky (it would cover anchors and fight the
- * guide's floating index pill). Returns what broke.
+ * The site header: the brand, then the links in one row or the menu button
+ * (always on phones; on desktop when the links do not fit, see
+ * src/lib/site-menu.ts), never both. All of it in one row, every link and the
+ * button at least 44px tall (the button 44px wide too), nothing pushing the
+ * page sideways, and not fixed or sticky (it would cover anchors and fight
+ * the guide's floating index pill). The menu's own links live in a closed
+ * popover and are checked by siteMenuIssues. Returns what broke.
  */
 export function siteHeaderIssues() {
   const issues: string[] = []
@@ -91,17 +94,51 @@ export function siteHeaderIssues() {
   if (!header) return ['site header missing']
   const position = getComputedStyle(header).position
   if (position === 'fixed' || position === 'sticky') issues.push(`site header is ${position}`)
-  const links = [...header.querySelectorAll<HTMLElement>('a')]
-  const tops = new Set(links.map((a) => Math.round(a.getBoundingClientRect().top)))
+  const shown = (el: Element | null): el is HTMLElement => !!el && el.getClientRects().length > 0
+  const menu = header.querySelector('.site-menu')
+  const links = [...header.querySelectorAll<HTMLElement>('a')].filter((a) => shown(a) && !menu?.contains(a))
+  const button = header.querySelector<HTMLElement>('.site-menu__open')
+  const rowLinks = links.filter((a) => a.closest('.site-nav'))
+  if (shown(button) && rowLinks.length) issues.push('site header shows both the link row and the menu button')
+  if (!shown(button) && !rowLinks.length) issues.push('site header shows neither the link row nor the menu button')
+  const targets = shown(button) ? [...links, button] : links
+  const tops = new Set(targets.map((el) => Math.round(el.getBoundingClientRect().top)))
   if (tops.size > 1) issues.push('site header wraps onto a second row')
-  for (const a of links) {
-    const box = a.getBoundingClientRect()
-    if (box.height < 44) issues.push(`site header link "${a.textContent?.trim()}" is ${Math.round(box.height)}px tall (< 44)`)
-    if (box.right > document.documentElement.clientWidth) issues.push(`site header link "${a.textContent?.trim()}" overflows the viewport`)
+  for (const el of targets) {
+    const box = el.getBoundingClientRect()
+    const name = el.getAttribute('aria-label') ?? el.textContent?.trim()
+    if (box.height < 44) issues.push(`site header link "${name}" is ${Math.round(box.height)}px tall (< 44)`)
+    if (el === button && box.width < 44) issues.push(`menu button is ${Math.round(box.width)}px wide (< 44)`)
+    if (box.right > document.documentElement.clientWidth) issues.push(`site header link "${name}" overflows the viewport`)
   }
+  if (button && button.getAttribute('aria-label') !== 'Menú') issues.push('menu button is not named "Menú"')
   if (!header.querySelector('nav[aria-label="Principal"]')) issues.push('main navigation landmark missing')
   return issues
 }
+
+/**
+ * The open site menu: inside the viewport, every link at least 44px tall,
+ * a "Guías" link, and a close button. Run with the menu open.
+ */
+export function siteMenuIssues() {
+  const menu = document.querySelector<HTMLElement>('.site-menu')
+  if (!menu) return ['site menu missing']
+  if (!menu.matches(':popover-open')) return ['site menu is not open']
+  const issues: string[] = []
+  const box = menu.getBoundingClientRect()
+  if (box.left < 0 || box.right > document.documentElement.clientWidth || box.top < 0) issues.push('site menu sticks out of the viewport')
+  const links = [...menu.querySelectorAll<HTMLElement>('a')]
+  if (!links.some((a) => a.textContent?.trim() === 'Guías')) issues.push('site menu has no "Guías" link')
+  for (const a of links) {
+    const h = a.getBoundingClientRect().height
+    if (h < 44) issues.push(`site menu link "${a.textContent?.trim()}" is ${Math.round(h)}px tall (< 44)`)
+  }
+  if (!menu.querySelector('.site-menu__close')) issues.push('site menu has no close button')
+  return issues
+}
+
+/** The site menu as a keyboard target: its button opens the popover. */
+export const SITE_MENU = { name: 'menú del sitio', open: '.site-menu__open', panel: '.site-menu' } as const
 
 /**
  * The scroll-driven animations must survive the production build. The
