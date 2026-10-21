@@ -13,6 +13,7 @@ import {
   dayPhotoAltWarnings,
   driveDayRoutePlaces,
   overnightSequenceWarnings,
+  practicalUnverifiedWarnings,
 } from './quality-rules.ts'
 
 export interface ContentRuleResult {
@@ -110,6 +111,7 @@ export function validateContentRules(
   }
 
   warnings.push(...placeQualityWarnings(guide, places, now, warnedStalePlaces))
+  warnings.push(...practicalUnverifiedWarnings(guide.practical))
 
   if (guide.content_type === 'experience' && !guide.trip_done) {
     warnings.push('[WARNING] content_type: experience sin trip_done')

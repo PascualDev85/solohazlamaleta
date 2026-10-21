@@ -1,6 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
 import { validateGuide } from '../../engine/validate/index.ts'
+import { sensitiveDataKinds } from '../../engine/validate/quality-rules.ts'
 import { StopSourceSchema } from '../../schemas/guide.ts'
 import type { PlaceSource } from '../../schemas/index.ts'
 import type { PlaceRegistry, AffiliateRegistry } from '../../engine/types.ts'
@@ -236,4 +237,71 @@ test('a day without overnight that is not the last warns; null and the last day 
 test('the same overnight on consecutive days does not warn (control)', () => {
   const warnings = warningsFor({}, [day({ day: 1, overnight: 'camp' }), day({ day: 2, overnight: 'camp' }), day({ day: 3 })])
   assert.ok(!has(warnings, 'overnight'))
+})
+
+// 10. Sensitive data in `practical` without a check date
+
+test('sensitiveDataKinds detects explicit prices, hours and rules', () => {
+  const cases: [string, string[]][] = [
+    ['Tarjeta de crédito con margen para fianza del camper (puede ser 1.000-2.000 €)', ['precio']],
+    ['La entrada cuesta 3.500 ISK por persona', ['precio']],
+    ['Ducha: 500 kr', ['precio']],
+    ['Parking a 10 euros', ['precio']],
+    ['Abre de 9:00 a 18:00', ['horario']],
+    ['La recepción cierra a las 22 h', ['horario']],
+    ['Algún camping aislado pide solo efectivo', ['norma']],
+    ['Seguro obligatorio para el alquiler', ['norma']],
+    ['Las F-roads están prohibidas para campers de alquiler', ['norma']],
+    ['Acampar fuera de los campings tiene multa', ['norma']],
+    ['La carretera está cerrada en invierno', ['acceso']],
+    ['Solo efectivo: 1.500 ISK', ['precio', 'norma']],
+  ]
+  for (const [text, kinds] of cases) assert.deepStrictEqual(sensitiveDataKinds(text), kinds, text)
+})
+
+test('sensitiveDataKinds ignores text without explicit sensitive data (control)', () => {
+  for (const text of [
+    'Tipo F (igual que España). Sin adaptador.',
+    'Vedur (tiempo oficial)',
+    'Maps.me (offline: imprescindible sin cobertura)',
+    'Comer fuera en Islandia puede ser 3-4 veces más caro que en España.',
+    'Se puede rellenar la botella de agua gratis en casi cualquier parking',
+    'Velocidad máx. 90 km/h en carretera',
+    'Etapas de 300-400 km en el norte',
+    'Paramos 2 h en la cascada',
+  ]) {
+    assert.deepStrictEqual(sensitiveDataKinds(text), [], text)
+  }
+})
+
+function practicalWarnings(practical: Record<string, unknown>) {
+  const result = validateGuide({ ...guide([day()]), practical }, registry(basePlace), affiliates, NOW)
+  assert.deepStrictEqual(result.errors, [])
+  return result.warnings.filter((w) => w.includes('practical.'))
+}
+
+test('a sensitive practical entry warns with its place and text', () => {
+  const warnings = practicalWarnings({
+    documents: ['DNI o pasaporte', 'Tarjeta con margen para fianza (puede ser 1.000-2.000 €)'],
+    currency: { code: 'ISK', name: 'Corona islandesa', notes: 'Algún camping pide solo efectivo.' },
+  })
+  assert.deepStrictEqual(warnings, [
+    '[WARNING] practical.documents[1]: dato sensible (precio) sin fecha de verificación: "Tarjeta con margen para fianza (puede ser 1.000-2.000 €)"',
+    '[WARNING] practical.currency.notes: dato sensible (norma) sin fecha de verificación: "Algún camping pide solo efectivo."',
+  ])
+})
+
+test('every practical text field is checked: plugs, apps and tips', () => {
+  const warnings = practicalWarnings({
+    plugs: 'Adaptador obligatorio',
+    apps: ['App de pago: 5 €'],
+    tips: ['El súper abre a las 10 h'],
+  })
+  assert.deepStrictEqual(warnings.map((w) => w.split(':')[0]), [
+    '[WARNING] practical.plugs', '[WARNING] practical.apps[0]', '[WARNING] practical.tips[0]',
+  ])
+})
+
+test('practical without sensitive data does not warn (control)', () => {
+  assert.deepStrictEqual(practicalWarnings({ plugs: 'Tipo F', tips: ['Cocinar en la camper ahorra mucho.'] }), [])
 })
