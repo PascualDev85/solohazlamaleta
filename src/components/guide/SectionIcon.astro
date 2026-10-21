@@ -1,6 +1,8 @@
 ---
 // Line icons for guide sections. The drawings live in _section-icons.scss as
-// CSS masks, so they cost the HTML nothing and take the text colour.
+// CSS masks, so they cost the HTML nothing and take the text colour. The span
+// is empty and its pseudo-elements have no text, so assistive tech already
+// skips it: no aria-hidden, which the guide repeats some 300 times (1.13 §5).
 interface Props {
   name: string;
 }
@@ -8,4 +10,4 @@ interface Props {
 const { name } = Astro.props;
 ---
 
-<span class="section-icon" data-icon={name} aria-hidden="true"></span>
+<span class="section-icon" data-icon={name}></span>
