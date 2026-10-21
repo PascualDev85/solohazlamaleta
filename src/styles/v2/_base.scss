@@ -88,14 +88,15 @@
   }
 
   // Narrow phones: the bold brand and links need a size step down to keep the
-  // header in one row (see layout/_header.scss).
+  // header in one row (see layout/_header.scss), with room to spare for a
+  // classic 15px scrollbar (headless Chrome in CI draws one).
   @media (max-width: 24.99rem) {
     .site-header .brand {
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
     }
 
     .site-nav a {
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
     }
   }
 
