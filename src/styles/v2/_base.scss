@@ -87,6 +87,18 @@
     font-weight: 750;
   }
 
+  // Narrow phones: the bold brand and links need a size step down to keep the
+  // header in one row (see layout/_header.scss).
+  @media (max-width: 24.99rem) {
+    .site-header .brand {
+      font-size: 0.9375rem;
+    }
+
+    .site-nav a {
+      font-size: 0.875rem;
+    }
+  }
+
   // Full width on desktop; the reading column inside .guide stays centred.
   main.wrap {
     @include from("md") {
