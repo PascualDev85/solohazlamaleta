@@ -241,8 +241,11 @@ for (const width of [390, 1280]) {
       if (!state.open || !state.inInput) fail(`home search: Enter does not open the window with focus in its field (${JSON.stringify(state)})`)
       await tab.keyboard.type('gullfoss')
       await tab.waitForTimeout(200)
-      const shown = await tab.locator('[data-search-dialog] [data-search-place]:not([hidden])').count()
+      await tab.waitForTimeout(500)
+      const shown = await tab.locator('[data-search-dialog] [data-search-group="place"] [data-search-option]:not([hidden])').count()
       if (shown !== 1) fail(`home search: "gullfoss" shows ${shown} places, expected 1`)
+      const said = await tab.locator('[data-search-dialog] [data-search-status]').textContent()
+      if (said?.trim() !== '1 resultado: 1 lugar') fail(`home search: the status line says "${said?.trim()}", expected "1 resultado: 1 lugar"`)
       await tab.keyboard.press('Escape')
       await tab.waitForTimeout(200)
       const closed = await tab.evaluate(() => ({
@@ -251,6 +254,86 @@ for (const width of [390, 1280]) {
       }))
       if (closed.open || !closed.onOpener) fail(`home search: one Escape does not close it and return focus (${JSON.stringify(closed)})`)
     }
+  }
+  await tab.close()
+}
+
+// 7b. The search window as a combobox (ARIA 1.2): the field names its
+//     listbox, typos find their place (exact matches first), the arrows move
+//     the active option (aria-activedescendant) and Enter opens it.
+{
+  const home = new URL('/', base).href
+  const tab = await browser.newPage({ viewport: { width: 390, height: 844 } })
+  await tab.goto(home, { waitUntil: 'networkidle' })
+  if ((await tab.locator('.home-search').count()) > 0) {
+    await tab.locator('.home-search').click()
+    await tab.waitForTimeout(300)
+    const input = tab.locator('[data-search-dialog] [data-search-input]')
+    const combobox = await input.evaluate((el) => ({
+      role: el.getAttribute('role'),
+      listbox: document.getElementById(el.getAttribute('aria-controls') ?? '')?.getAttribute('role'),
+      expanded: el.getAttribute('aria-expanded'),
+      suggestions: document.querySelectorAll('[data-search-dialog] [data-search-suggest]:not([hidden]) [role="option"]').length,
+    }))
+    if (combobox.role !== 'combobox' || combobox.listbox !== 'listbox' || combobox.expanded !== 'true') {
+      fail(`home search: the field is not a combobox controlling a listbox (${JSON.stringify(combobox)})`)
+    }
+    if (combobox.suggestions < 3) fail(`home search: before typing it suggests ${combobox.suggestions} options, expected destinations and places`)
+
+    const firstPlace = async (query: string) => {
+      await input.fill(query)
+      await tab.waitForTimeout(100)
+      return (await tab.locator('[data-search-dialog] [data-search-group="place"] [data-search-name]:visible').first().textContent())?.trim()
+    }
+    for (const [query, expected] of [['gulfos', 'Gullfoss'], ['jokulsarlom', 'Jökulsárlón'], ['skogafos', 'Skógafoss']]) {
+      const found = await firstPlace(query)
+      if (found !== expected) fail(`home search: the typo "${query}" finds "${found}" first, expected "${expected}"`)
+    }
+    const marked = await tab.locator('[data-search-dialog] [data-search-group="place"] mark').first().textContent()
+    if (!marked) fail('home search: the matched letters are not marked')
+
+    await input.fill('presupuesto islandia')
+    await tab.waitForTimeout(100)
+    const budget = await tab.locator('[data-search-dialog] [data-search-group="section"] [role="option"]:visible').first().getAttribute('href')
+    if (!budget?.endsWith('#presupuesto')) fail(`home search: "presupuesto islandia" leads to ${budget}, expected the guide's #presupuesto`)
+
+    await input.fill('foss')
+    await tab.waitForTimeout(100)
+    const step = async (key: string) => {
+      await tab.keyboard.press(key)
+      return tab.evaluate(() => {
+        const field = document.querySelector('[data-search-dialog] [data-search-input]')!
+        const id = field.getAttribute('aria-activedescendant')
+        const option = id ? document.getElementById(id) : null
+        return { id, focusInField: document.activeElement === field, selected: option?.getAttribute('aria-selected'), href: option?.getAttribute('href') }
+      })
+    }
+    const down = await step('ArrowDown')
+    const second = await step('ArrowDown')
+    const up = await step('ArrowUp')
+    if (!down.id || down.selected !== 'true' || !down.focusInField) fail(`home search: ArrowDown does not activate the first result (${JSON.stringify(down)})`)
+    if (second.id === down.id) fail('home search: a second ArrowDown does not move to the next result')
+    if (up.id !== down.id) fail('home search: ArrowUp does not go back')
+    await step('ArrowDown')
+    const target = (await step('ArrowUp')).href
+    await Promise.all([tab.waitForURL((u) => u.href.includes('#dia-'), { timeout: 5000 }).catch(() => {}), tab.keyboard.press('Enter')])
+    const landed = new URL(tab.url())
+    if (`${landed.pathname}${landed.hash}` !== target) fail(`home search: Enter on the active result goes to ${landed.pathname}${landed.hash}, expected ${target}`)
+  }
+  await tab.close()
+}
+
+// 7c. /buscar/?q=… starts with the search done: a shared link or a bookmark.
+{
+  const tab = await browser.newPage({ viewport: { width: 390, height: 844 } })
+  await tab.goto(new URL('/buscar/?q=gullfoss', base).href, { waitUntil: 'networkidle' })
+  const state = await tab.evaluate(() => ({
+    value: document.querySelector<HTMLInputElement>('[data-search-input]')?.value,
+    places: [...document.querySelectorAll<HTMLElement>('[data-search-group="place"] [data-search-option]')].filter((el) => !el.hidden).map((el) => el.querySelector('[data-search-name]')?.textContent),
+    suggesting: document.querySelectorAll('[data-search-suggest]:not([hidden])').length,
+  }))
+  if (state.value !== 'gullfoss' || state.places.length !== 1 || state.places[0] !== 'Gullfoss' || state.suggesting) {
+    fail(`/buscar/?q=gullfoss does not start filtered to Gullfoss (${JSON.stringify(state)})`)
   }
   await tab.close()
 }
