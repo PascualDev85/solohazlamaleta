@@ -166,8 +166,9 @@
         position: absolute;
         inset: 0;
         background:
-          // 0.62 at the top: the white brand name stays AA over any photo.
-          linear-gradient(180deg, rgb(8 14 20 / 0.62) 0, transparent 6rem),
+          // 0.65 at the top: the white brand name (16px, normal text) stays
+          // at 4.5:1 over the photo down to 350px (0.62 gave 4.43:1 there).
+          linear-gradient(180deg, rgb(8 14 20 / 0.65) 0, transparent 6rem),
           linear-gradient(
             0deg,
             #11161a 0,
