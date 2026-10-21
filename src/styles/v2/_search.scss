@@ -1,6 +1,11 @@
+@use "../abstracts" as *;
+
 // The search panel (components/search/SearchPanel.astro), on /buscar/ and in
-// the landing page's search window. Results are rows: a guide with its
-// thumbnail, then its places, each a 44px row with the day on the right.
+// the landing page's search window. The field is the landing page's big
+// search, a pill with the accent edge. Results come in groups (destinations,
+// guides, places, sections), one 56px row each with its visual on the left:
+// a photo, the day's coin or the section's icon. Before typing: destination
+// chips and photo cards of the places in the authors' photos.
 
 [data-design="v2"] {
   .search {
@@ -8,48 +13,298 @@
     gap: var(--space-sm);
   }
 
-  .search__field {
+  // In the window: the field stays put and the results scroll under it.
+  .search--dialog {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .search__bar {
     display: grid;
     gap: var(--space-2xs);
   }
 
+  // On /buscar/ the field stays at the top of the screen as the page scrolls.
+  .search:not(.search--dialog) .search__bar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding-block: var(--space-xs);
+    background: var(--color-bg);
+  }
+
   .search__label {
-    font-family: var(--font-display);
-    font-weight: 700;
+    @include visually-hidden;
+  }
+
+  .search__box {
+    position: relative;
+    color: var(--color-text-muted);
+
+    svg {
+      position: absolute;
+      top: 50%;
+      left: var(--space-md);
+      translate: 0 -50%;
+      pointer-events: none;
+    }
   }
 
   .search__input {
-    min-height: 52px;
-    padding-inline: var(--space-md);
-    font: inherit;
-    font-size: 1.0625rem;
+    width: 100%;
+    min-height: 60px;
+    padding-inline: calc(var(--space-md) + 22px + var(--space-xs)) var(--space-md);
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 650;
     color: var(--color-text);
     background: var(--color-bg);
-    border: 1px solid var(--color-rule);
+    border: 2px solid var(--color-accent);
     border-radius: 999px;
-    box-shadow: var(--shadow-soft);
-  }
 
-  .search__input:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+    &::placeholder {
+      color: var(--color-text-muted);
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: 3px solid var(--color-accent-quiet);
+      outline-offset: 0;
+    }
   }
 
   .search__hint,
   .search__status,
-  .search__guide-meta,
-  .search__day {
+  .search__detail {
     margin: 0;
     font-family: var(--font-display);
     font-size: 0.875rem;
     color: var(--color-text-muted);
   }
 
+  .search__hint {
+    padding-inline: var(--space-md);
+  }
+
   .search__status {
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-size: 0.75rem;
+  }
+
+  .search__results {
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+
+  .search--dialog .search__results {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-block: var(--space-2xs) var(--space-lg);
+  }
+
+  .search__group {
+    display: grid;
+    gap: 2px;
+  }
+
+  .search__group-label {
+    margin: 0 0 var(--space-2xs);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 800;
+    // An h3/h2 here: not the small-caps label style of the guide's headings.
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--color-text-muted);
+  }
+
+  // Every result: the active one (arrows) and the hovered one share a look.
+  .search__option,
+  .search__chip,
+  .search__card,
+  .search__more {
+    color: inherit;
+    text-decoration: none;
+    border-radius: var(--radius);
+    scroll-margin-block: 6rem var(--space-md);
+
+    &:hover,
+    &[aria-selected="true"] {
+      background: var(--color-surface);
+    }
+
+    &[aria-selected="true"] {
+      outline: 2px solid var(--color-accent);
+      outline-offset: -2px;
+    }
+  }
+
+  .search__option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: 56px;
+    padding: var(--space-2xs) var(--space-xs);
+  }
+
+  .search__thumb,
+  .search__thumb img {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  .search__thumb--day,
+  .search__thumb--empty {
+    background: var(--color-pill-bg);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.125rem;
+    color: var(--color-pill-text);
+  }
+
+  // The day's coin: round, like the route's.
+  .search__thumb--day {
+    border-radius: 999px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .search__thumb--icon {
+    background: var(--color-surface);
+    color: var(--color-accent);
+  }
+
+  .search__text {
+    display: grid;
+    min-width: 0;
+  }
+
+  .search__name {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .search__detail {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    .pill {
+      flex: none;
+    }
+  }
+
+  .search__option .search__detail {
+    display: block;
+  }
+
+  .search__option .pill {
+    margin-left: var(--space-2xs);
+  }
+
+  mark {
+    padding: 0 1px;
+    border-radius: 3px;
+    background: var(--color-accent-quiet);
+    color: inherit;
+  }
+
+  .search__more {
+    justify-self: start;
+    min-height: 44px;
+    padding-inline: var(--space-xs);
+    border: 0;
+    background: none;
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    cursor: pointer;
+  }
+
+  // Before typing: the destinations as the landing page's chips…
+  .search__group--chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+
+    .search__group-label {
+      flex-basis: 100%;
+    }
+  }
+
+  .search__chip {
+    display: inline-grid;
+    place-items: center;
+    min-height: 44px;
+    padding-inline: var(--space-md);
+    border-radius: 999px;
+    background: var(--color-pill-bg);
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--color-pill-text);
+
+    &:hover,
+    &[aria-selected="true"] {
+      background: var(--color-accent-quiet);
+    }
+  }
+
+  // …and the places in the authors' photos as cards, photo above the text.
+  .search__group--featured {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm);
+
+    @include from("md") {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .search__group-label {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .search__card {
+    display: grid;
+    align-content: start;
+    gap: 2px;
+    padding: var(--space-2xs) var(--space-2xs) var(--space-xs);
+  }
+
+  .search__card-photo,
+  .search__card-photo img {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  .search__card-photo {
+    margin-bottom: var(--space-2xs);
+  }
+
+  .search__card-photo--empty {
+    background: var(--day-placeholder);
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    color: var(--color-pill-text);
   }
 
   .search__clear {
@@ -68,103 +323,6 @@
     display: inline-block;
     min-height: 44px;
     line-height: 44px;
-  }
-
-  .search__destination-name {
-    margin: var(--space-sm) 0 var(--space-2xs);
-    font-family: var(--font-headline);
-    font-size: 1.25rem;
-  }
-
-  .search__guide {
-    border-radius: var(--radius);
-    background: var(--color-surface);
-    padding: var(--space-xs);
-  }
-
-  .search__guide-link {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    min-height: 72px;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .search__thumb,
-  .search__thumb img {
-    display: block;
-    flex: none;
-    width: 72px;
-    height: 72px;
-    border-radius: calc(var(--radius) - 4px);
-    object-fit: cover;
-  }
-
-  .search__thumb--empty {
-    display: grid;
-    place-items: center;
-    background: var(--day-placeholder);
-    font-family: var(--font-headline);
-    font-size: 1.75rem;
-    color: var(--color-pill-text);
-  }
-
-  .search__guide-text {
-    display: grid;
-    gap: 4px;
-  }
-
-  .search__guide-title {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: 1.0625rem;
-    line-height: 1.3;
-    // An h4 inside the search window: not the small-caps label style of h4.
-    letter-spacing: normal;
-    text-transform: none;
-    color: inherit;
-  }
-
-  .search__guide-link:hover .search__guide-title {
-    color: var(--color-accent);
-  }
-
-  .search__guide-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-2xs);
-  }
-
-  .search__places {
-    list-style: none;
-    margin: var(--space-xs) 0 0;
-    padding: 0;
-  }
-
-  .search__places li + li {
-    border-top: 1px solid var(--color-border);
-  }
-
-  .search__places a {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-sm);
-    min-height: 44px;
-    padding-inline: var(--space-2xs);
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .search__places a:hover span:first-child {
-    color: var(--color-accent);
-    text-decoration: underline;
-  }
-
-  .search__day {
-    flex: none;
   }
 
   .search [hidden] {

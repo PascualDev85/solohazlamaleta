@@ -749,11 +749,17 @@
     height: 100%;
     max-height: none;
     margin: 0;
-    padding: var(--space-md) var(--edge) var(--space-xl);
+    padding: var(--space-md) var(--edge) 0;
     border: 0;
     background: var(--color-bg);
     color: var(--color-text);
     overscroll-behavior: contain;
+
+    // The head and the field stay put; only the results scroll (.search--dialog).
+    &[open] {
+      display: flex;
+      flex-direction: column;
+    }
 
     &::backdrop {
       background: rgb(20 23 22 / 0.55);
@@ -765,7 +771,7 @@
       height: min(48rem, 100% - 2 * var(--space-xl));
       max-height: none;
       margin: var(--space-xl) auto;
-      padding: var(--space-lg);
+      padding: var(--space-lg) var(--space-lg) 0;
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-soft);
     }
