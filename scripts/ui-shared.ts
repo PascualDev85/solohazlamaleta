@@ -48,7 +48,11 @@ export function headerOverlap({ panel, head }: { panel: string; head: string }) 
  * more), four from nine and six from twelve (the author set two/three/four on
  * 2026-10-08; widened 2026-10-14 for days 9 and 12, see below); facts, night,
  * each stop's name and its practical line in one. Opens "Ver N paradas más"
- * first, so every stop counts.
+ * first (and leaves them open), so every stop counts. Days with fewer than
+ * three facts have no drive data yet and are skipped, not reviewed. Runs in
+ * the page (pass it to `page.evaluate`) and returns one line per problem,
+ * prefixed with the day's heading id, e.g. "dia-3: route in 4 rows"; empty
+ * when everything fits.
  */
 export function dayCardLineIssues() {
   document.querySelectorAll<HTMLDetailsElement>('.day-card__more').forEach((d) => (d.open = true))
