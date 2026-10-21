@@ -139,7 +139,11 @@ const glanceId = `${id}-vistazo`;
   const markAtOpen = new WeakMap<HTMLDetailsElement, ScreenPoint>();
   const markPosition = (hint: HTMLDetailsElement): ScreenPoint => {
     const { top, left } = hint.querySelector('summary')!.getBoundingClientRect();
-    return { top, left };
+    // The page's offsets and those of every box around the mark that may
+    // scroll (the route rail, a day sheet).
+    const offsets = [scrollX, scrollY];
+    for (let el = hint.parentElement; el; el = el.parentElement) offsets.push(el.scrollLeft, el.scrollTop);
+    return { top, left, offsets };
   };
   document.addEventListener('click', (event) => {
     const hint = (event.target as Element).closest<HTMLDetailsElement>('.day-stop__hint');
