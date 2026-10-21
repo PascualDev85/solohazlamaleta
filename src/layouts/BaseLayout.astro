@@ -55,6 +55,11 @@ const navLinks = [
   { href: '/sobre-mi/', label: 'Sobre mí' },
   { href: '/buscar/', label: 'Buscar' },
 ];
+const legalLinks = [
+  { href: '/afiliacion/', label: 'Afiliación' },
+  { href: '/privacidad/', label: 'Privacidad' },
+  { href: '/aviso-legal/', label: 'Aviso legal' },
+];
 const ogImage = image ? new URL(image, Astro.site).href : undefined;
 
 // One list for the header row and the menu: navLinks, with the published
@@ -179,14 +184,32 @@ const signature = 'Nosotros hacemos el trabajo difícil. Tú solo haz la maleta.
       <slot />
     </main>
 
+    {/* Columns like the travel blogs' feet: the destinations from the same data
+        as the menu, the project's pages and the legal ones, then the claim. */}
     <footer class="wrap site-footer">
-      <nav aria-label="Enlaces legales">
-        <a href="/sobre-mi/">Sobre mí</a>
-        <a href="/afiliacion/">Afiliación</a>
-        <a href="/privacidad/">Privacidad</a>
-        <a href="/aviso-legal/">Aviso legal</a>
-      </nav>
-      <p class="site-footer__sign">{signature}</p>
+      <div class="site-footer__cols">
+        {destinations.length > 0 && (
+          <nav class="site-footer__col" aria-labelledby="pie-destinos">
+            <h2 class="site-footer__title" id="pie-destinos">Destinos</h2>
+            <ul>
+              {destinations.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+            </ul>
+          </nav>
+        )}
+        <nav class="site-footer__col" aria-labelledby="pie-proyecto">
+          <h2 class="site-footer__title" id="pie-proyecto">El proyecto</h2>
+          <ul>
+            {navLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+          </ul>
+        </nav>
+        <nav class="site-footer__col" aria-labelledby="pie-legal">
+          <h2 class="site-footer__title" id="pie-legal">Legal</h2>
+          <ul>
+            {legalLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+          </ul>
+        </nav>
+      </div>
+      <p class="site-footer__sign"><strong>Solo Haz la Maleta</strong> {signature}</p>
     </footer>
 
   </body>
