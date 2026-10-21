@@ -1,26 +1,30 @@
 @use "../abstracts" as *;
 
+// The landing page. One idea: the page is the first page of a guide. A big,
+// plain title and the search at the centre; then the guides, one real day of
+// a guide with notes in its margin, the destinations and the authors.
+// Elevation is declared once per surface: a border, never a border and a shadow.
 [data-design="v2"] {
   .home {
-    max-width: 64rem;
+    max-width: 72rem;
     margin-inline: auto;
   }
 
-  // Hero: on phones the photo first (3:2), then the title, the claim, the
-  // search and the destinations; from tablet up, text left and photo right.
-  // No text over the photo (1.10 §3.7): it stays legible on any image.
+  // Hero. Phones: the photo as a wide band, then the title, the claim, the
+  // lede, the search and the destinations. From tablet up: text left, photo
+  // right. No text over the photo (1.10 §3.7): it stays legible on any image.
   .home-hero {
     display: grid;
     // minmax(0, …): the search field's one-line text must not widen the page.
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-lg);
-    padding-block: var(--space-sm) var(--space-xl);
+    gap: var(--space-md);
+    padding-block: 0 var(--space-lg);
 
     @include from("md") {
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
       align-items: center;
       gap: var(--space-xl);
-      padding-block: var(--space-xl) var(--space-2xl);
+      padding-block: var(--space-lg) var(--space-xl);
     }
   }
 
@@ -36,9 +40,9 @@
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 16 / 10;
     object-fit: cover;
-    border-radius: var(--radius-lg);
+    border-radius: 16px;
     background: var(--color-surface);
 
     @include from("md") {
@@ -47,7 +51,7 @@
   }
 
   .home-hero__caption {
-    margin-top: var(--space-2xs);
+    margin-top: var(--space-xs);
     font-family: var(--font-display);
     font-size: 0.875rem;
     font-weight: 700;
@@ -56,17 +60,18 @@
 
   .home-hero__text {
     display: grid;
+    // The search's one-line placeholder would set the column's width otherwise.
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-sm);
   }
 
-  .home-hero__text .kicker a {
-    color: inherit;
-  }
-
+  // The one display size on the site, sized for a full sentence: 6rem at
+  // most, tracking no tighter than -0.03em.
   .home-hero__title {
     margin: 0;
-    font-size: clamp(2rem, 1.4rem + 3vw, 3.5rem);
-    line-height: 1.08;
+    font-size: clamp(2.5rem, 1.5rem + 3.4vw, 4.25rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
     text-wrap: balance;
   }
 
@@ -74,47 +79,64 @@
   .home-hero__claim {
     margin: 0;
     font-family: var(--font-headline);
-    font-size: clamp(1.25rem, 1.05rem + 1vw, 1.625rem);
+    font-size: clamp(1.25rem, 1rem + 1.1vw, 1.75rem);
     font-weight: 700;
-    line-height: 1.25;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
     color: var(--color-accent);
     text-wrap: balance;
   }
 
   .home-hero__lede {
-    max-width: 38rem;
+    max-width: 36rem;
     margin: 0;
-    font-size: 1.0625rem;
-    line-height: 1.65;
+    font-size: 1rem;
+    line-height: 1.6;
     color: var(--color-text-muted);
+
+    a {
+      color: var(--color-text);
+    }
 
     @include from("md") {
       font-size: 1.125rem;
     }
   }
 
-  // The big search field: a link to /buscar/ that opens the search window.
+  // The big search field, the centre of the hero: a link to /buscar/ that
+  // opens the search window. Its edge is the accent (5.7:1), not a shadow.
   .home-search {
     display: flex;
     align-items: center;
     gap: var(--space-xs);
-    min-height: 60px;
+    min-height: 64px;
     margin-top: var(--space-xs);
     padding: 6px 6px 6px var(--space-md);
-    border: 1px solid var(--color-rule);
+    border: 2px solid var(--color-accent);
     border-radius: 999px;
     background: var(--color-bg);
-    box-shadow: var(--shadow-soft);
     color: var(--color-text-muted);
     text-decoration: none;
 
+    > .section-icon {
+      flex: none;
+      width: 1.375rem;
+      height: 1.375rem;
+      color: var(--color-accent);
+    }
+
     &:hover {
-      border-color: var(--color-accent);
+      background: var(--color-pill-bg);
     }
 
     &:focus-visible {
       outline: 3px solid var(--color-accent);
       outline-offset: 3px;
+    }
+
+    @include from("md") {
+      min-height: 76px;
+      padding: 8px 8px 8px var(--space-lg);
     }
   }
 
@@ -124,8 +146,13 @@
     overflow: hidden;
     font-family: var(--font-display);
     font-size: 1rem;
+    font-weight: 650;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    @include from("md") {
+      font-size: 1.1875rem;
+    }
   }
 
   .home-search__go {
@@ -139,6 +166,12 @@
     font-family: var(--font-display);
     font-weight: 800;
     color: var(--color-bg);
+
+    @include from("md") {
+      min-height: 56px;
+      padding-inline: var(--space-lg);
+      font-size: 1.0625rem;
+    }
   }
 
   // Destinations under the search, as chips.
@@ -182,17 +215,16 @@
     }
   }
 
-  // Sections: a kicker over the title, and room between them.
+  // Sections: the title speaks alone, with more room above it than below.
   .home-section {
     margin-top: var(--space-2xl);
-
-    > .kicker {
-      margin-bottom: var(--space-2xs);
-    }
   }
 
   .home-section-title {
     margin: 0 0 var(--space-md);
+    font-size: clamp(1.75rem, 1.35rem + 1.7vw, 2.5rem);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
   }
 
   // Guide cards. The title's link covers the whole card (::after), so the card
@@ -205,17 +237,40 @@
     padding: 0;
   }
 
+  // Phones, more than one guide: a row swiped sideways, one card and the
+  // edge of the next in view, each snapping to the page's edge. Below "md"
+  // only: up-to("md") would also match 768px, where the desktop cards start.
+  @media (max-width: 47.99rem) {
+    .home-guides__list--rail {
+      display: flex;
+      gap: var(--space-sm);
+      margin-inline: calc(-1 * var(--gutter));
+      padding: 4px var(--gutter) var(--space-sm);
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--gutter);
+      scrollbar-width: thin;
+
+      > .home-card {
+        flex: 0 0 86%;
+        scroll-snap-align: start;
+      }
+    }
+  }
+
   .home-card {
     position: relative;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: 16px;
     background: var(--color-bg);
-    box-shadow: var(--shadow-soft);
-    transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+    transition: border-color 0.2s var(--ease-out);
 
     &:hover {
-      transform: translateY(-2px);
+      border-color: var(--color-accent);
     }
 
     &:focus-within {
@@ -223,21 +278,17 @@
       outline-offset: 3px;
     }
 
-    // Desktop: photo on the left, text on the right. A card without a photo
-    // is text only, at the same width: no empty frame where a photo would go.
+    // Desktop: photo on the left, the larger half, text on the right. A card
+    // without a photo is text only: no empty frame where a photo would go.
     @include from("md") {
       &--photo {
         display: grid;
-        grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
       transition: none;
-
-      &:hover {
-        transform: none;
-      }
     }
   }
 
@@ -246,7 +297,7 @@
   .home-card__media {
     @include from("md") {
       position: relative;
-      min-height: 17rem;
+      min-height: 22rem;
     }
   }
 
@@ -268,20 +319,23 @@
   }
 
   .home-card__body {
-    display: grid;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     gap: var(--space-sm);
-    align-content: start;
     padding: var(--space-md) var(--space-md) var(--space-lg);
 
     @include from("md") {
+      justify-content: center;
       padding: var(--space-lg) var(--space-xl);
     }
   }
 
   .home-card__title {
     margin: 0;
-    font-size: var(--step-1);
+    font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
     line-height: 1.2;
+    text-wrap: balance;
 
     a {
       color: var(--color-text);
@@ -308,90 +362,221 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    font-variant-numeric: tabular-nums;
+
+    // A touch taller than the guide's pills: these sit alone on a roomy card.
+    .pill {
+      padding: 0.375rem 0.75rem;
+    }
   }
 
   .home-card__desc,
   .home-card__note {
     margin: 0;
+    color: var(--color-text-muted);
   }
 
   .home-card__note {
     font-family: var(--font-display);
     font-size: 0.875rem;
     font-weight: 700;
-    color: var(--color-text-muted);
   }
 
+  // Pinned to the card's foot, so cards side by side line their links up.
   .home-card__go {
-    margin-top: var(--space-xs);
+    margin-top: auto;
+    padding-top: var(--space-xs);
     font-family: var(--font-display);
     font-weight: 800;
     color: var(--color-accent);
+    text-underline-offset: 0.2em;
   }
 
   .home-card:hover .home-card__go {
     text-decoration: underline;
   }
 
-  // What every guide brings: icon, title and one line; three columns on desktop.
-  .home-inside__list {
+  // "Dentro de cada guía": a real day of a guide, and notes in its margin.
+  .home-inside__lede {
+    max-width: 40rem;
+    margin: calc(-1 * var(--space-xs)) 0 var(--space-lg);
+    color: var(--color-text-muted);
+  }
+
+  .home-inside__layout {
+    display: grid;
+    gap: var(--space-lg);
+
+    @include from("md") {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      align-items: start;
+      gap: var(--space-xl);
+    }
+  }
+
+  .excerpt {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    background: var(--color-bg);
+  }
+
+  .excerpt__photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: var(--color-surface);
+
+    @include from("md") {
+      aspect-ratio: 2 / 1;
+    }
+  }
+
+  .excerpt__body {
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+
+    @include from("md") {
+      padding: var(--space-lg);
+    }
+  }
+
+  .excerpt__head {
+    display: grid;
+    gap: var(--space-xs);
+  }
+
+  .excerpt__title {
+    margin: 0;
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+    line-height: 1.2;
+  }
+
+  .excerpt__n {
+    color: var(--color-accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .excerpt__summary {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+  }
+
+  .excerpt__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-md);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .section-icon {
+      width: 1.1rem;
+      height: 1.1rem;
+      color: var(--color-accent);
+    }
+  }
+
+  .excerpt__stops {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-block: 1px solid var(--color-border);
+
+    .day-stop + .day-stop {
+      border-top: 1px solid var(--color-border);
+    }
+  }
+
+  // Where the day ends: "Noche → Camping Árnes", on the glacier tint.
+  .excerpt__night {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: 12px;
+    background: var(--color-pill-bg);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-pill-text);
+
+    .section-icon {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+
+  .excerpt__arrow {
+    font-weight: 800;
+  }
+
+  .excerpt__go {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: var(--space-xs);
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-underline-offset: 0.2em;
+
+    .section-icon {
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+  }
+
+  // The margin notes: a coral rule and a line each, the guide's own figure in bold.
+  .home-notes {
     display: grid;
     gap: var(--space-md);
     list-style: none;
     margin: 0;
     padding: 0;
 
-    @include from("sm") {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    @include from("lg") {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    @include from("md") {
+      gap: var(--space-lg);
+      padding-top: var(--space-lg);
     }
   }
 
-  // Phones: compact rows, the icon on the left of its title and line.
-  // From the small breakpoint up: cards, the icon on top.
-  .home-inside__item {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    column-gap: var(--space-sm);
-    row-gap: 2px;
-    align-content: start;
-    padding: var(--space-sm) var(--space-md);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface);
+  .home-note {
+    padding-left: var(--space-md);
+    border-left: 2px solid var(--color-label);
 
-    .section-icon {
-      grid-row: span 2;
-      width: 1.75rem;
-      height: 1.75rem;
-      color: var(--color-accent);
+    p {
+      margin: 0;
+      max-width: 34rem;
+      color: var(--color-text-muted);
     }
 
-    @include from("sm") {
-      grid-template-columns: minmax(0, 1fr);
-      row-gap: var(--space-2xs);
-      padding: var(--space-md);
-
-      .section-icon {
-        grid-row: auto;
-      }
+    strong {
+      color: var(--color-text);
     }
   }
 
-  .home-inside__title {
-    margin: 0;
+  .home-note__title {
+    margin: 0 0 var(--space-xs);
     font-size: 1.0625rem;
-
-    @include from("sm") {
-      margin-top: var(--space-2xs);
-      font-size: 1.125rem;
-    }
-  }
-
-  .home-inside__text {
-    margin: 0;
+    letter-spacing: -0.01em;
   }
 
   // Destinations: photo cards with the name and the count over a shade at
@@ -413,7 +598,7 @@
   .home-place {
     position: relative;
     overflow: hidden;
-    border-radius: var(--radius-lg);
+    border-radius: 16px;
     aspect-ratio: 4 / 5;
     background: var(--color-surface);
 
@@ -448,7 +633,6 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    gap: 2px;
     padding: var(--space-sm);
     // Dark enough at the bottom for white text on any photo (4.5:1 and up).
     background: linear-gradient(to top, rgb(20 23 22 / 0.78), rgb(20 23 22 / 0.35) 40%, transparent 70%);
@@ -458,6 +642,12 @@
     &:focus-visible {
       outline: none;
     }
+  }
+
+  // No photo yet: dark text on the light tint, no shade needed.
+  .home-place__photo--empty + .home-place__link {
+    background: none;
+    color: var(--color-pill-text);
   }
 
   .home-place__name {
@@ -472,16 +662,18 @@
     font-weight: 700;
   }
 
-  // The authors: intro and figures, then the promise behind every guide.
+  // The authors: who we are, the figures in a sentence, and the promise
+  // behind every guide as a ruled list beside it.
   .home-about {
     display: grid;
     gap: var(--space-lg);
     padding: var(--space-lg) var(--space-md);
-    border-radius: var(--radius-lg);
+    border-radius: 16px;
     background: var(--color-surface);
 
     @include from("md") {
       grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: var(--space-xl);
       padding: var(--space-xl);
     }
   }
@@ -497,6 +689,7 @@
   }
 
   .home-about__text {
+    max-width: 36rem;
     margin: 0;
     font-size: 1.0625rem;
     line-height: 1.65;
@@ -505,63 +698,46 @@
   .home-about__more {
     display: inline-flex;
     align-items: center;
+    justify-self: start;
     min-height: 44px;
     font-family: var(--font-display);
     font-weight: 800;
-  }
-
-  .home-stats {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-sm);
-    align-content: center;
-    margin: 0;
-  }
-
-  .home-stats__item {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 2px;
-    padding-left: var(--space-sm);
-    border-left: 2px solid var(--color-rule);
-
-    dd {
-      margin: 0;
-      font-family: var(--font-numeral);
-      font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
-      font-weight: 800;
-      line-height: 1.1;
-    }
-
-    dt {
-      font-family: var(--font-display);
-      font-size: 0.8125rem;
-      color: var(--color-text-muted);
-    }
+    text-underline-offset: 0.2em;
   }
 
   .home-promises {
-    display: grid;
-    gap: var(--space-md);
     list-style: none;
     margin: 0;
-    padding: var(--space-md) 0 0;
-    border-top: 1px solid var(--color-rule);
+    padding: 0;
 
     @include from("md") {
-      grid-column: 1 / -1;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--space-lg);
+      align-self: center;
+    }
+  }
+
+  .home-promises__item {
+    padding-block: var(--space-sm);
+    border-top: 1px solid var(--color-rule);
+
+    &:last-child {
+      border-bottom: 1px solid var(--color-rule);
     }
   }
 
   .home-promises__title {
-    margin: 0 0 var(--space-2xs);
+    margin: 0 0 var(--space-xs);
     font-size: 1.0625rem;
   }
 
+  // Muted on the surface: 6.1:1.
   .home-promises__text {
     margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  // Figures inside prose and notes line up and read as data.
+  .num {
+    font-variant-numeric: tabular-nums;
   }
 
   // The search window: full screen on phones, a large centred panel on

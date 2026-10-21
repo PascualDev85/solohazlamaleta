@@ -5,20 +5,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import GuidePhoto from '../components/guide/GuidePhoto.astro';
 import SectionIcon from '../components/guide/SectionIcon.astro';
 import HomeSearch from '../components/home/HomeSearch.astro';
+import DayStop from '../components/guide/DayStop.astro';
 import '../styles/home-v2.scss';
 import { loadCompiledGuide } from '../lib/engine-guide.ts';
 import { guideImage } from '../lib/guide-images.ts';
 import { formatWholePrice } from '../lib/formatPrice.ts';
 import { destinationCards, homeStats, hubPathsFromPages } from '../lib/home.ts';
+import { bookingNote, checkedParking, countLabel, showcaseDay } from '../lib/home-showcase.ts';
+import { dayAnchorId } from '../lib/anchors.ts';
+import { formatDate } from '../lib/formatDate.ts';
+import { formatMinutes } from '../lib/formatDuration.ts';
+import { nightLabel } from '../lib/nightLabel.ts';
 import { buildSearchIndex, destinationLabel, legacySearchGuide } from '../lib/search-index.ts';
 import {
   ENGINE_GUIDE_SOURCES, fromLegacyGuide, fromCompiledGuide, sortGuideList,
 } from '../lib/guide-list.ts';
 
 // The landing page, a hybrid of two travel blogs the author pointed to (see
-// replica/recon.md): a title with a big search, guides with photos, what is
-// inside every guide, destinations with their count, and the authors with
-// figures. Everything comes from the guides themselves; nothing is a fixed list.
+// replica/recon.md): a title with a big search, guides with photos, one real
+// day of a guide to show what is inside, destinations with their count, and
+// the authors. Everything comes from the guides themselves; nothing is a fixed list.
 
 const legacyGuides = await getCollection('guides');
 const engineGuides = await Promise.all(
@@ -57,16 +63,18 @@ const hero = heroGuide?.cover_image ? guideImage(heroGuide.cover_image) : null;
 const heroCaption = heroGuide ? destinationLabel(heroGuide.destination) : '';
 const ogImage = hero ? await getImage({ src: hero, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 70 }) : null;
 
-// What every guide brings, true of every guide listed today, Alsacia included.
+// "Dentro de cada guía": one real day of the first engine guide, rendered with
+// the guide's own stop component, and margin notes that quote that guide's
+// facts. The note titles and lines are the old six points, cut to four.
 // Text for the author to review.
-const inside = [
-  { icon: 'route', title: 'La ruta, día a día', text: 'Paradas, tiempos y kilómetros de cada día, en el orden en que los hicimos.' },
-  { icon: 'pin', title: 'Cada lugar, en el mapa', text: 'Un toque y lo tienes en Google Maps, con dónde aparcar cuando importa.' },
-  { icon: 'booking', title: 'Qué reservar y cuándo', text: 'Lo que se agota y con cuánta antelación, para que no te quedes sin sitio.' },
-  { icon: 'sleep', title: 'Dónde dormir', text: 'Los sitios en los que dormimos, por zonas y con lo que costaron.' },
-  { icon: 'budget', title: 'Lo que cuesta de verdad', text: 'El presupuesto que pagamos, sin maquillar. Si una cifra es una estimación, lo decimos.' },
-  { icon: 'check', title: 'Datos con fecha', text: 'Cada precio y cada horario dice cuándo lo comprobamos.' },
-];
+const showcaseGuide = engineGuides.find((guide) => guide.variants?.[0]?.days.length);
+const showcase = showcaseGuide ? showcaseDay(showcaseGuide.variants![0].days) : null;
+const showcaseItem = showcaseGuide ? fromCompiledGuide(showcaseGuide) : null;
+const showcaseUrl = showcase && showcaseItem ? `${showcaseItem.url}#${dayAnchorId(showcase.day)}` : null;
+const showcaseNight = nightLabel(showcase?.overnight);
+const booking = bookingNote(showcaseGuide?.booking_checklist);
+const parking = showcase ? checkedParking(showcase.route_stops) : null;
+const km = new Intl.NumberFormat('es-ES');
 
 // Claims backed by the brief (D, E): the promise behind every guide.
 const promises = [
@@ -75,7 +83,6 @@ const promises = [
   { title: 'Gratis y completas', text: 'La guía entera está en la web. Sin registro, sin pedirte el correo y sin banners.' },
 ];
 
-const plural = (n: number, one: string, many: string) => (n === 1 ? one : many);
 
 const siteUrl = new URL('/', Astro.site).href;
 const organization = {
@@ -132,21 +139,20 @@ const jsonLd = {
             class="home-hero__photo"
             image={hero}
             alt=""
-            sizes="(min-width: 64rem) 30rem, (min-width: 48rem) 45vw, 100vw"
+            sizes="(min-width: 64rem) 28rem, (min-width: 48rem) 40vw, calc(100vw - 30px)"
             priority
-            crop={{ media: '(max-width: 47.99rem)', ratio: 3 / 2, position: 'center' }}
+            crop={{ media: '(max-width: 47.99rem)', ratio: 16 / 10, position: 'center' }}
           />
           {heroCaption && <figcaption class="home-hero__caption">{heroCaption}</figcaption>}
         </figure>
       )}
 
       <div class="home-hero__text">
-        <p class="kicker">Por David y Natalia · <a href="/sobre-mi/">quiénes somos</a></p>
         <h1 id="home-title" class="home-hero__title">Guías de viaje ya planificadas, día a día</h1>
         <p class="home-hero__claim">Nosotros hacemos el trabajo difícil. Tú solo haz la maleta.</p>
         <p class="home-hero__lede">
-          Rutas de viajes que hemos hecho, con cada parada lista para abrir en Google Maps y qué reservar y cuándo.
-          Gratis y completas, sin pedirte el correo.
+          Por <a href="/sobre-mi/">David y Natalia</a>: rutas de viajes que hemos hecho, con cada parada lista para
+          abrir en Google Maps y qué reservar y cuándo. Gratis y completas, sin pedirte el correo.
         </p>
 
         <HomeSearch guides={searchIndex} />
@@ -165,14 +171,14 @@ const jsonLd = {
     </section>
 
     <section class="home-section home-guides" aria-labelledby="guias">
-      <p class="kicker">Probadas por nosotros</p>
       <h2 class="home-section-title" id="guias">Guías listas para usar</h2>
 
       {
         cards.length === 0 ? (
           <p>Todavía no hay guías publicadas.</p>
         ) : (
-          <ul class="home-guides__list">
+          // Phones: one card per screen, swiped sideways, when there is more than one.
+          <ul class:list={['home-guides__list', { 'home-guides__list--rail': cards.length > 1 }]}>
             {cards.map((guide) => (
               <li class:list={['home-card', { 'home-card--photo': guide.cover }]}>
                 {guide.cover && (
@@ -188,7 +194,6 @@ const jsonLd = {
                 )}
 
                 <div class="home-card__body">
-                  <p class="kicker">{guide.destination}</p>
                   <h3 class="home-card__title">
                     <a href={guide.url}>{guide.title}</a>
                   </h3>
@@ -204,7 +209,7 @@ const jsonLd = {
                     {guide.draft && <li class="pill pill--draft">Borrador</li>}
                   </ul>
 
-                  <p class="home-card__desc quiet">{guide.description}</p>
+                  <p class="home-card__desc">{guide.description}</p>
                   {guide.livedNote && <p class="home-card__note">{guide.livedNote}</p>}
 
                   <span class="home-card__go" aria-hidden="true">Ver la guía →</span>
@@ -216,22 +221,97 @@ const jsonLd = {
       }
     </section>
 
-    <section class="home-section home-inside" aria-labelledby="dentro">
-      <p class="kicker">Dentro de cada guía</p>
-      <h2 class="home-section-title" id="dentro">Todo lo que necesitas, en una sola página</h2>
-      <ul class="home-inside__list">
-        {inside.map((item) => (
-          <li class="home-inside__item">
-            <SectionIcon name={item.icon} />
-            <h3 class="home-inside__title">{item.title}</h3>
-            <p class="home-inside__text quiet">{item.text}</p>
-          </li>
-        ))}
-      </ul>
-    </section>
+    {showcase && showcaseGuide && showcaseUrl && (
+      <section class="home-section home-inside" aria-labelledby="dentro">
+        <h2 class="home-section-title" id="dentro">Todo lo que necesitas, en una sola página</h2>
+        <p class="home-inside__lede">
+          Así es un día de la guía de {destinationLabel(showcaseGuide.destination)}, tal cual está en la guía.
+        </p>
+
+        <div class="home-inside__layout">
+          {/* A real day of the guide: its stops through the guide's own component. */}
+          <article class="excerpt" aria-labelledby="excerpt-title">
+            {showcase.photo && (
+              <div class="excerpt__media">
+                <GuidePhoto
+                  class="excerpt__photo"
+                  image={guideImage(showcase.photo.src)}
+                  alt={showcase.photo.alt}
+                  sizes="(min-width: 64rem) 36rem, (min-width: 48rem) 55vw, calc(100vw - 30px)"
+                  crop={{ media: '(max-width: 47.99rem)', ratio: 16 / 9, position: 'center' }}
+                />
+              </div>
+            )}
+
+            <div class="excerpt__body">
+              <header class="excerpt__head">
+                <h3 class="excerpt__title" id="excerpt-title">
+                  <span class="excerpt__n">Día {showcase.day}</span> · {showcase.title}
+                </h3>
+                {showcase.summary && <p class="excerpt__summary">{showcase.summary}</p>}
+                <ul class="excerpt__facts">
+                  <li><SectionIcon name="pin" />{countLabel(showcase.n_route_stops, 'parada', 'paradas')}</li>
+                  {showcase.drive && (
+                    <>
+                      <li><SectionIcon name="road" />≈ {km.format(showcase.drive.km)} km</li>
+                      <li><SectionIcon name="wheel" />≈ {formatMinutes(showcase.drive.minutes)}<span class="visually-hidden"> de coche</span></li>
+                    </>
+                  )}
+                </ul>
+              </header>
+
+              <ol class="excerpt__stops">
+                {showcase.route_stops.map((stop, i) => <DayStop stop={stop} n={i + 1} day={showcase.day} />)}
+              </ol>
+
+              {showcaseNight && (
+                <p class="excerpt__night">
+                  <SectionIcon name="tent" />Noche<span class="excerpt__arrow" aria-hidden="true">→</span><span class="visually-hidden"> en </span><strong>{showcaseNight}</strong>
+                </p>
+              )}
+
+              <a class="excerpt__go" href={showcaseUrl}>
+                Ver el día {showcase.day} en la guía<SectionIcon name="arrow" />
+              </a>
+            </div>
+          </article>
+
+          {/* Margin notes: what the excerpt shows, with the guide's own figures. */}
+          <ul class="home-notes" aria-label="Qué trae cada guía">
+            <li class="home-note">
+              <h3 class="home-note__title">Cada parada, en el mapa</h3>
+              <p>Un toque en «Mapa» y la tienes en Google Maps, con dónde aparcar cuando importa.</p>
+            </li>
+            {booking && (
+              <li class="home-note">
+                <h3 class="home-note__title">Qué reservar y cuándo</h3>
+                <p>Lo que se agota y con cuánta antelación: <strong>{booking.label}</strong>, {booking.when.charAt(0).toLowerCase() + booking.when.slice(1)}.</p>
+              </li>
+            )}
+            {showcaseItem?.budgetPerPerson && (
+              <li class="home-note">
+                <h3 class="home-note__title">Lo que cuesta de verdad</h3>
+                <p>
+                  El presupuesto que pagamos, sin maquillar:{' '}
+                  <strong class="num">{formatWholePrice(showcaseItem.budgetPerPerson.amount, showcaseItem.budgetPerPerson.currency)}</strong> por persona.
+                </p>
+              </li>
+            )}
+            {parking && (
+              <li class="home-note">
+                <h3 class="home-note__title">Datos con fecha</h3>
+                <p>
+                  Cada precio dice cuándo lo comprobamos: el parking de {parking.place},{' '}
+                  <strong class="num">{formatWholePrice(parking.price, parking.currency)}</strong>, en {formatDate(parking.verifiedAt)}.
+                </p>
+              </li>
+            )}
+          </ul>
+        </div>
+      </section>
+    )}
 
     <section class="home-section home-places" aria-labelledby="destinos">
-      <p class="kicker">Por destino</p>
       <h2 class="home-section-title" id="destinos">Dónde hemos estado</h2>
       <ul class="home-places__list">
         {destinations.map((destination) => {
@@ -247,7 +327,7 @@ const jsonLd = {
               <a class="home-place__link" href={destination.url}>
                 <span class="home-place__name">{destination.name}</span>
                 <span class="home-place__count">
-                  {destination.guides} {plural(destination.guides, 'guía', 'guías')}{destination.draft && ' · en preparación'}
+                  {countLabel(destination.guides, 'guía', 'guías')}{destination.draft && ' · en preparación'}
                 </span>
               </a>
             </li>
@@ -258,35 +338,25 @@ const jsonLd = {
 
     <section class="home-section home-about" aria-labelledby="quienes">
       <div class="home-about__intro">
-        <p class="kicker">Quiénes somos</p>
         <h2 class="home-section-title" id="quienes">Hola, somos David y Natalia</h2>
         <p class="home-about__text">
           Viajamos, apuntamos todo lo que nos habría gustado saber antes de salir y lo convertimos en una guía que
           puedes seguir tal cual. Si no lo hemos hecho, no lo contamos como vivido.
         </p>
+        {/* The figures, counted from the guides, told in a sentence rather than as big numbers. */}
+        <p class="home-about__text">
+          Hasta hoy, <strong class="num">{countLabel(stats.days, 'día', 'días')}</strong> de ruta planificados y{' '}
+          <strong class="num">{countLabel(stats.places, 'lugar', 'lugares')}</strong>, cada uno con su día, en{' '}
+          <strong class="num">{countLabel(stats.destinations, 'destino', 'destinos')}</strong>.
+        </p>
         <a class="home-about__more" href="/sobre-mi/">Más sobre nosotros →</a>
       </div>
-
-      <dl class="home-stats">
-        <div class="home-stats__item">
-          <dt>{plural(stats.days, 'día', 'días')} de ruta planificados</dt>
-          <dd>{stats.days}</dd>
-        </div>
-        <div class="home-stats__item">
-          <dt>{plural(stats.places, 'lugar', 'lugares')}, cada uno con su día</dt>
-          <dd>{stats.places}</dd>
-        </div>
-        <div class="home-stats__item">
-          <dt>{plural(stats.destinations, 'destino', 'destinos')}</dt>
-          <dd>{stats.destinations}</dd>
-        </div>
-      </dl>
 
       <ul class="home-promises">
         {promises.map((promise) => (
           <li class="home-promises__item">
             <h3 class="home-promises__title">{promise.title}</h3>
-            <p class="home-promises__text quiet">{promise.text}</p>
+            <p class="home-promises__text">{promise.text}</p>
           </li>
         ))}
       </ul>
