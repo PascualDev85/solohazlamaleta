@@ -184,3 +184,161 @@ export function panelState({ open, panel }: { open: string; panel: string }) {
   const active = document.activeElement
   return { found: true, isOpen, focusInside: !!active && box.contains(active), focusOnOpener: !!opener && active === opener }
 }
+
+// --- Touch targets (WCAG 2.5.5 AAA: 44×44 px) ---------------------------------
+
+/** What a tap can land on: every link, button and <summary>. */
+export const TAP_TARGETS = 'a[href], button, summary'
+
+/** The smallest tap area, in CSS px (WCAG 2.5.5, Apple's and Android's guidance). */
+export const TAP_MIN = 44
+
+export type Box = { left: number; top: number; right: number; bottom: number }
+
+/**
+ * Small targets that stay small on purpose, matched against a target's label
+ * (its tag and classes, or its nearest classed ancestor's first class). Each one says why. Links inside running text are not
+ * listed: they are exempt by rule (WCAG 2.5.5 "inline"), see tapTargetIssue.
+ */
+//
+// Empty since 2026-10-21: every target on the guide reaches 44×44. Two stay out
+// of the check without being listed, because they are not on screen while it
+// runs (see tapTargetMeasure): the skip link, off screen until it takes
+// keyboard focus, and the index pill, which hides on a scroll down (its 48px
+// is checked by test:devices).
+export const TAP_EXCEPTIONS: { label: RegExp; why: string }[] = []
+
+/**
+ * One target as measured in the page (tapTargetMeasure): its own border box,
+ * its padding box (the containing block of its positioned ::before/::after),
+ * and the resolved insets of those pseudo-elements when they are absolutely
+ * positioned against it.
+ */
+export type TapMeasure = {
+  label: string
+  text: string
+  inText: boolean
+  box: Box
+  padding: Box
+  layers: { top: number; right: number; bottom: number; left: number }[]
+}
+
+/**
+ * The area a tap could reach, to hit-test: the element's box grown by any
+ * ::before/::after layer positioned against it (an invisible layer with
+ * negative insets is how the guide widens a tap area without moving the
+ * drawing), plus `slack` px on every side. A layer's box is its containing
+ * block (the padding box) minus its insets; Chromium's hit area can sit a
+ * border width off that (a 36px coin with a 1px border and -6px insets
+ * takes 48px, not 46), so the slack lets the hit-test find the real edge.
+ */
+export function tapCandidateBox(m: Pick<TapMeasure, 'box' | 'padding' | 'layers'>, slack = 4): Box {
+  const out = { ...m.box }
+  for (const l of m.layers) {
+    out.left = Math.min(out.left, m.padding.left + l.left)
+    out.top = Math.min(out.top, m.padding.top + l.top)
+    out.right = Math.max(out.right, m.padding.right - l.right)
+    out.bottom = Math.max(out.bottom, m.padding.bottom - l.bottom)
+  }
+  return { left: out.left - slack, top: out.top - slack, right: out.right + slack, bottom: out.bottom + slack }
+}
+
+/**
+ * The length of the unbroken run of hits around `from`, in samples. Hits come
+ * from hit-testing one line across the candidate box: whatever paints on top
+ * (a neighbour's layer, a clipping scroller, a sticky bar) cuts the run.
+ */
+export function hitRun(hits: boolean[], from: number): number {
+  if (!hits[from]) return 0
+  let a = from
+  let b = from
+  while (a > 0 && hits[a - 1]) a--
+  while (b < hits.length - 1 && hits[b + 1]) b++
+  return b - a + 1
+}
+
+/**
+ * The verdict for one target: null when it passes (at least `min` × `min` of
+ * effective area), when it is a link inside running text, or when it is in
+ * TAP_EXCEPTIONS; otherwise what is wrong.
+ */
+export function tapTargetIssue(t: { label: string; inText: boolean; width: number; height: number }, min = TAP_MIN, exceptions = TAP_EXCEPTIONS): string | null {
+  if (t.width >= min && t.height >= min) return null
+  if (t.inText) return null
+  if (exceptions.some((e) => e.label.test(t.label))) return null
+  return `${t.label}: ${Math.round(t.width)}×${Math.round(t.height)}px tap area (< ${min}×${min})`
+}
+
+/**
+ * In the page: the `index`-th TAP_TARGETS match, scrolled to the middle of the
+ * screen (and its carousel slide, inline), measured for tapCandidateBox.
+ * Null when it is not on screen (a closed panel or <details>).
+ */
+export function tapTargetMeasure({ selector, index }: { selector: string; index: number }) {
+  const el = document.querySelectorAll<HTMLElement>(selector)[index]
+  // checkVisibility also sees through a closed <details>, whose content keeps
+  // its boxes in Chromium (content-visibility: hidden).
+  if (!el || !el.checkVisibility({ visibilityProperty: true })) return null
+  if (el.closest('[popover]:not(:popover-open), [inert]')) return null
+  el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' })
+  const r = el.getBoundingClientRect()
+  if (r.width === 0 || r.height === 0) return null
+  // Still off screen after scrolling (see TAP_EXCEPTIONS).
+  if (r.bottom <= 0 || r.top >= innerHeight || r.right <= 0 || r.left >= innerWidth) return null
+  const s = getComputedStyle(el)
+  const px = (v: string) => parseFloat(v) || 0
+  const box = { left: r.left, top: r.top, right: r.right, bottom: r.bottom }
+  const padding = {
+    left: r.left + px(s.borderLeftWidth),
+    top: r.top + px(s.borderTopWidth),
+    right: r.right - px(s.borderRightWidth),
+    bottom: r.bottom - px(s.borderBottomWidth),
+  }
+  const layers: { top: number; right: number; bottom: number; left: number }[] = []
+  // A positioned pseudo-element only belongs to this element's area when the
+  // element is its containing block.
+  if (s.position !== 'static') {
+    for (const pseudo of ['::before', '::after']) {
+      const p = getComputedStyle(el, pseudo)
+      if (p.content === 'none' || p.content === 'normal' || p.position !== 'absolute' || p.pointerEvents === 'none' || p.display === 'none') continue
+      const inset = [p.top, p.right, p.bottom, p.left].map((v) => parseFloat(v))
+      if (inset.some((v) => Number.isNaN(v))) continue
+      layers.push({ top: inset[0], right: inset[1], bottom: inset[2], left: inset[3] })
+    }
+  }
+  // A link inside running text: inline, in a paragraph or list item that has
+  // more text than the link itself.
+  const block = el.closest('p, li, dd, td')
+  const inText = s.display === 'inline' && !!block && block.textContent!.trim() !== el.textContent!.trim()
+  // Its own classes, or the nearest classed ancestor's first one.
+  const tag = el.tagName.toLowerCase()
+  const owner = el.parentElement?.closest('[class]')
+  const label = el.classList.length ? `${tag}.${[...el.classList].join('.')}` : `${owner ? '.' + owner.classList[0] + ' ' : ''}${tag}`
+  const text = (el.textContent ?? '').replace(/\s+/g, ' ').trim().slice(0, 40)
+  return { label, text, inText, box, padding, layers }
+}
+
+/**
+ * In the page, right after tapTargetMeasure (nothing has scrolled since):
+ * hit-tests the two lines through the middle of the candidate box, one point
+ * per CSS px, and returns whether each point lands on the target (or inside
+ * it), plus where the target's own centre falls in each line.
+ */
+export function tapTargetHits({ selector, index, area }: { selector: string; index: number; area: Box }) {
+  const el = document.querySelectorAll<HTMLElement>(selector)[index]
+  const r = el.getBoundingClientRect()
+  const cx = (r.left + r.right) / 2
+  const cy = (r.top + r.bottom) / 2
+  const on = (x: number, y: number) => {
+    const hit = document.elementFromPoint(x, y)
+    return !!hit && (hit === el || el.contains(hit))
+  }
+  const row: boolean[] = []
+  const col: boolean[] = []
+  // One sample in the middle of every CSS px of the area, so a box n px long
+  // gives n samples wherever it starts.
+  for (let x = area.left + 0.5; x < area.right; x++) row.push(on(x, cy))
+  for (let y = area.top + 0.5; y < area.bottom; y++) col.push(on(cx, y))
+  const at = (centre: number, start: number, n: number) => Math.min(n - 1, Math.max(0, Math.floor(centre - start)))
+  return { row, col, rowFrom: at(cx, area.left, row.length), colFrom: at(cy, area.top, col.length) }
+}
