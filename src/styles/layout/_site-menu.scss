@@ -1,0 +1,228 @@
+@use "../abstracts" as *;
+
+// The site menu (BaseLayout). Phones: the brand and a 44px menu button that
+// opens a native popover with every link. Desktop: the links in the header
+// row, unless they do not fit (data-menu="always", decided at build time in
+// src/lib/site-menu.ts), then the same button. Same breakpoint as the v2
+// header's desktop layout. Icons are drawn in CSS: no icon font, no SVG.
+
+.site-nav ul {
+  display: none;
+}
+
+.site-menu__open {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  // The bars, not the tap area, line up with the page column.
+  margin-inline-end: -12px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-accent);
+  }
+}
+
+.site-menu__bars,
+.site-menu__bars::before,
+.site-menu__bars::after {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.site-menu__bars {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+  }
+
+  &::before {
+    top: -6px;
+  }
+
+  &::after {
+    top: 6px;
+  }
+}
+
+@include from("md") {
+  .site-nav:not([data-menu]) {
+    ul {
+      display: flex;
+    }
+
+    .site-menu__open {
+      display: none;
+    }
+  }
+}
+
+// Panel: a card hanging from the top right corner, under the button.
+.site-menu {
+  inset: 0 0 auto auto;
+  width: min(20rem, 100% - 1rem);
+  max-height: calc(100dvh - 1rem);
+  margin: var(--space-xs);
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg, 12px);
+  background: var(--color-bg);
+  color: var(--color-text);
+  box-shadow: 0 24px 60px rgb(10 15 20 / 0.28);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.2s var(--ease-out),
+    transform 0.2s var(--ease-out),
+    overlay 0.2s allow-discrete,
+    display 0.2s allow-discrete;
+
+  &:popover-open {
+    opacity: 1;
+    transform: none;
+
+    @starting-style {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  &::backdrop {
+    background: rgb(10 15 20 / 0.35);
+  }
+
+  :where(ul) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  // Outranks v2's blue links ([data-design="v2"] a): the menu reads like the header.
+  .site-header & a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    color: inherit;
+    font-weight: 750;
+    text-decoration: none;
+    text-underline-offset: 0.3em;
+  }
+
+  .site-header & a:hover,
+  .site-header & a[aria-current="page"] {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  .site-header & a:hover {
+    color: var(--color-accent);
+  }
+}
+
+.site-menu__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-menu__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 800;
+}
+
+.site-menu__close {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+.site-menu__links {
+  padding: var(--space-2xs) var(--space-md);
+
+  > li + li {
+    border-top: 1px solid var(--color-border);
+  }
+
+  > li > a {
+    font-size: var(--step-0);
+  }
+
+  // Destinations, under "Guías".
+  ul {
+    margin-block-end: var(--space-xs);
+    padding-inline-start: var(--space-md);
+    border-inline-start: 2px solid var(--color-border);
+  }
+}
+
+.site-menu__sign {
+  margin: 0;
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: var(--step--1);
+  line-height: 1.5;
+
+  strong {
+    display: block;
+    color: var(--color-text);
+    font-family: var(--font-display);
+  }
+}
+
+[data-design="v2"] {
+  // v2 puts the desktop links after the brand; the button stays at the right.
+  @include from("md") {
+    .site-header .site-nav[data-menu] {
+      margin-inline-start: auto;
+    }
+  }
+
+  // Over the guide's photo on mobile the header is white (v2/_hero.scss).
+  @include up-to("md") {
+    body:has(.guide-hero) .site-menu__open {
+      color: #fff;
+      filter: drop-shadow(0 1px 5px rgb(0 0 0 / 0.45));
+    }
+  }
+}

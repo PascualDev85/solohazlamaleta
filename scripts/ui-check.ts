@@ -7,6 +7,7 @@
 import { readFileSync } from 'node:fs'
 import { chromium } from 'playwright'
 import { DURATION_HINT, PANELS, dayCardLineIssues, focusStep, headerOverlap, panelState, scrollAnimationIssues, siteHeaderIssues } from './ui-shared.ts'
+import { SITE_MENU, siteMenuIssues } from './ui-shared.ts'
 import { headersFor, parseHeaders } from './security-headers.ts'
 
 const [base, page = '/'] = process.argv.slice(2)
@@ -47,6 +48,24 @@ for (const width of [350, 360, 375, 390, 414]) {
   await tab.goto(url, { waitUntil: 'networkidle' })
   const bad = [...(await tab.evaluate(dayCardLineIssues)), ...(await tab.evaluate(siteHeaderIssues))]
   for (const b of bad) fail(`${width}px: ${b}`)
+  await tab.close()
+}
+
+// 2b. The site header on desktop too (one row: links, or the menu button when
+//     they do not fit), and the open menu on a phone: inside the screen, 44px links.
+for (const width of [768, 1280]) {
+  const tab = await browser.newPage({ viewport: { width, height: 844 } })
+  await tab.goto(url, { waitUntil: 'networkidle' })
+  for (const b of await tab.evaluate(siteHeaderIssues)) fail(`${width}px: ${b}`)
+  await tab.close()
+}
+for (const width of [350, 390]) {
+  const tab = await browser.newPage({ viewport: { width, height: 844 } })
+  await tab.goto(url, { waitUntil: 'networkidle' })
+  await tab.locator(SITE_MENU.open).click()
+  await tab.waitForTimeout(300)
+  for (const b of await tab.evaluate(siteMenuIssues)) fail(`${width}px: ${b}`)
+  await tab.keyboard.press('Escape')
   await tab.close()
 }
 
@@ -152,9 +171,11 @@ for (const width of [390, 1280]) {
   }
   for (const s of strays) keyboardFail('página', width, 'a closed panel takes focus', s)
 
-  for (const { name, open, panel } of [...PANELS, DURATION_HINT]) {
+  for (const { name, open, panel } of [...PANELS, DURATION_HINT, SITE_MENU]) {
     await tab.goto(url, { waitUntil: 'networkidle' })
     if ((await tab.locator(open).count()) === 0) continue
+    // The menu button only shows where the header row does not fit.
+    if (open === SITE_MENU.open && !(await tab.locator(open).isVisible())) continue
     let reached = false
     for (let i = 0; i < MAX_TABS && !reached; i++) {
       await tab.keyboard.press('Tab')
