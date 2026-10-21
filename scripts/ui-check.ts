@@ -193,6 +193,46 @@ for (const width of [390, 1280]) {
   await tab.close()
 }
 
+// 6. The landing page's search window, by keyboard: Tab to the big field,
+//    Enter opens the window with focus in its input, typing filters the
+//    results, and one Escape closes it (even with text typed) and puts focus
+//    back on the field.
+{
+  const home = new URL('/', base).href
+  const tab = await browser.newPage({ viewport: { width: 390, height: 844 } })
+  await tab.goto(home, { waitUntil: 'networkidle' })
+  const opener = tab.locator('[data-search-open]')
+  if ((await opener.count()) > 0) {
+    let reached = false
+    for (let i = 0; i < 60 && !reached; i++) {
+      await tab.keyboard.press('Tab')
+      reached = await tab.evaluate(() => document.activeElement?.matches('[data-search-open]') ?? false)
+    }
+    if (!reached) fail('home search: the field is not reachable with Tab')
+    else {
+      await tab.keyboard.press('Enter')
+      await tab.waitForTimeout(300)
+      const state = await tab.evaluate(() => ({
+        open: document.querySelector<HTMLDialogElement>('[data-search-dialog]')?.open,
+        inInput: document.activeElement?.matches('[data-search-dialog] [data-search-input]'),
+      }))
+      if (!state.open || !state.inInput) fail(`home search: Enter does not open the window with focus in its field (${JSON.stringify(state)})`)
+      await tab.keyboard.type('gullfoss')
+      await tab.waitForTimeout(200)
+      const shown = await tab.locator('[data-search-dialog] [data-search-place]:not([hidden])').count()
+      if (shown !== 1) fail(`home search: "gullfoss" shows ${shown} places, expected 1`)
+      await tab.keyboard.press('Escape')
+      await tab.waitForTimeout(200)
+      const closed = await tab.evaluate(() => ({
+        open: document.querySelector<HTMLDialogElement>('[data-search-dialog]')?.open,
+        onOpener: document.activeElement?.matches('[data-search-open]'),
+      }))
+      if (closed.open || !closed.onOpener) fail(`home search: one Escape does not close it and return focus (${JSON.stringify(closed)})`)
+    }
+  }
+  await tab.close()
+}
+
 await browser.close()
 
 if (failures.length) {
