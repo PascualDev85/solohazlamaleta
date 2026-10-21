@@ -11,12 +11,16 @@ export interface SearchPlace {
   text: string
 }
 
-/** A published guide and the places on its route, in route order. */
+/** A guide and the places on its route, in route order. */
 export interface SearchGuide {
   title: string
   destination: string
   url: string
   days: number
+  /** Not published yet: listed with a "Borrador" pill, as on the landing page. */
+  draft: boolean
+  /** Cover photo, as a path under src/assets/guides/ (see guideImage), for the result's thumbnail. */
+  cover: string | null
   /** Title and destination, normalized: a match keeps all its places. */
   text: string
   places: SearchPlace[]
@@ -61,4 +65,13 @@ export function filterSearch<G extends { text: string; places: { text: string }[
     const places = guide.places.filter((place) => matches(place.text, terms))
     return places.length ? [{ ...guide, places }] : []
   })
+}
+
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`
+
+/** What the status line says about the results shown: "70 lugares en 2 guías", or "Sin resultados". */
+export function searchSummary(places: number, guides: number): string {
+  if (guides === 0) return 'Sin resultados'
+  if (places === 0) return plural(guides, 'guía', 'guías')
+  return `${plural(places, 'lugar', 'lugares')} en ${plural(guides, 'guía', 'guías')}`
 }

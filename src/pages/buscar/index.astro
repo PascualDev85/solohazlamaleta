@@ -1,258 +1,40 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import '../../styles/v1-components.scss';
+import SearchPanel from '../../components/search/SearchPanel.astro';
+import '../../styles/search-v2.scss';
 import { loadCompiledGuide } from '../../lib/engine-guide.ts';
-import { buildSearchIndex, destinationLabel } from '../../lib/search-index.ts';
+import { buildSearchIndex, legacySearchGuide } from '../../lib/search-index.ts';
 import { ENGINE_GUIDE_SOURCES } from '../../lib/guide-list.ts';
-import type { SearchGuide } from '../../lib/search.ts';
 
-// The whole index is the page itself: no fetch, nothing for the CSP to allow.
-// Without JavaScript it is a list; the script only hides what does not match.
-const guides = buildSearchIndex(
-  await Promise.all(ENGINE_GUIDE_SOURCES.map((source) => loadCompiledGuide(source.guide, source.places))),
-);
-
-const destinations = new Map<string, SearchGuide[]>();
-for (const guide of guides) destinations.set(guide.destination, [...(destinations.get(guide.destination) ?? []), guide]);
-
-const placeCount = guides.reduce((sum, guide) => sum + guide.places.length, 0);
-const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+// Every guide, engine and legacy, drafts marked as on the landing page.
+const guides = [
+  ...buildSearchIndex(
+    await Promise.all(ENGINE_GUIDE_SOURCES.map((source) => loadCompiledGuide(source.guide, source.places))),
+  ),
+  ...(await getCollection('guides')).map((guide) => legacySearchGuide(guide.id, guide.data)),
+];
 ---
 
 <BaseLayout
   title="Buscar — Solo Haz la Maleta"
   description="Busca un destino, una guía o un lugar y salta al día en que se visita."
+  design="v2"
   noindex
 >
-  <h1 class="search-title">Buscar</h1>
-
-  {
-    guides.length === 0 ? (
-      <p>
-        Todavía no hay guías publicadas que buscar. Mientras tanto, <a href="/#guias">mira las guías en preparación</a>.
-      </p>
-    ) : (
-      <>
-        <div class="search" data-search hidden>
-          <label class="search__label" for="search-input">Destino, guía o lugar</label>
-          <input
-            class="search__input"
-            id="search-input"
-            type="search"
-            autocomplete="off"
-            spellcheck="false"
-            enterkeyhint="search"
-            aria-describedby="search-hint"
-          />
-          <p class="search__hint" id="search-hint">Sin tildes también vale: «jokulsarlon», «thingvellir».</p>
-        </div>
-
-        <p class="search__status" role="status" aria-live="polite" data-search-status>
-          {plural(placeCount, 'lugar', 'lugares')} en {plural(guides.length, 'guía', 'guías')}
-        </p>
-
-        <div class="search__empty" data-search-empty hidden>
-          <p>Sin resultados para «<span data-search-query />».</p>
-          <p>
-            Prueba con otra palabra o <button class="search__clear" type="button" data-search-clear>borra la búsqueda</button>
-            para verlo todo. También puedes ver <a href="/#guias">todas las guías</a>.
-          </p>
-        </div>
-
-        {[...destinations].map(([destination, destinationGuides]) => (
-          <section class="search__destination" data-search-destination>
-            <h2 class="search__destination-name">{destinationLabel(destination)}</h2>
-            {destinationGuides.map((guide) => (
-              <article class="search__guide" data-search-guide data-search-text={guide.text}>
-                <h3 class="search__guide-title"><a href={guide.url}>{guide.title}</a></h3>
-                <p class="search__guide-meta">{guide.days} días · {plural(guide.places.length, 'lugar', 'lugares')}</p>
-                <ul class="search__places">
-                  {guide.places.map((place) => (
-                    <li data-search-place data-search-text={place.text}>
-                      <a href={place.url}>
-                        <span>{place.name}</span>
-                        <span class="search__day">Día {place.day}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </section>
-        ))}
-      </>
-    )
-  }
+  <div class="search-page">
+    <h1 class="search-page__title">Buscar</h1>
+    <SearchPanel guides={guides} id="search" level={2} />
+  </div>
 </BaseLayout>
 
-<script>
-  import { filterSearch } from '../../lib/search.ts';
-
-  const form = document.querySelector<HTMLElement>('[data-search]');
-  const input = document.querySelector<HTMLInputElement>('#search-input');
-  const status = document.querySelector<HTMLElement>('[data-search-status]');
-  const empty = document.querySelector<HTMLElement>('[data-search-empty]');
-  const queryEcho = document.querySelector<HTMLElement>('[data-search-query]');
-  const clear = document.querySelector<HTMLButtonElement>('[data-search-clear]');
-
-  if (form && input && status && empty && queryEcho && clear) {
-    const sections = [...document.querySelectorAll<HTMLElement>('[data-search-destination]')];
-    const guides = [...document.querySelectorAll<HTMLElement>('[data-search-guide]')].map((el) => ({
-      el,
-      text: el.dataset.searchText ?? '',
-      places: [...el.querySelectorAll<HTMLElement>('[data-search-place]')].map((place) => ({
-        el: place,
-        text: place.dataset.searchText ?? '',
-      })),
-    }));
-    const initialStatus = status.textContent?.trim() ?? '';
-    const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
-    let announce: number | undefined;
-
-    const update = () => {
-      const query = input.value.trim();
-      const found = filterSearch(guides, query);
-      const shownGuides = new Set(found.map((guide) => guide.el));
-      const shownPlaces = new Set(found.flatMap((guide) => guide.places.map((place) => place.el)));
-      for (const guide of guides) {
-        guide.el.hidden = !shownGuides.has(guide.el);
-        for (const place of guide.places) place.el.hidden = !shownPlaces.has(place.el);
-      }
-      for (const section of sections) section.hidden = !section.querySelector('[data-search-guide]:not([hidden])');
-
-      empty.hidden = found.length > 0;
-      queryEcho.textContent = query;
-      // Announced once typing pauses, not on every key.
-      clearTimeout(announce);
-      announce = window.setTimeout(() => {
-        status.textContent = !query
-          ? initialStatus
-          : found.length === 0
-            ? 'Sin resultados'
-            : `${plural(shownPlaces.size, 'lugar', 'lugares')} en ${plural(found.length, 'guía', 'guías')}`;
-      }, 400);
-    };
-
-    form.hidden = false;
-    input.addEventListener('input', update);
-    clear.addEventListener('click', () => {
-      input.value = '';
-      update();
-      input.focus();
-    });
-  }
-</script>
-
 <style>
-  .search-title {
-    margin-block-end: var(--space-md);
+  .search-page {
+    max-width: 44rem;
+    margin-inline: auto;
   }
 
-  .search {
-    display: grid;
-    gap: var(--space-2xs);
-    margin-block-end: var(--space-sm);
-  }
-
-  .search__label {
-    font-weight: 600;
-  }
-
-  .search__input {
-    min-height: 48px;
-    padding-inline: var(--space-sm);
-    font: inherit;
-    color: var(--color-text);
-    background: var(--color-surface);
-    border: 1px solid var(--color-rule);
-    border-radius: var(--radius);
-  }
-
-  .search__input:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-  }
-
-  .search__hint,
-  .search__status,
-  .search__guide-meta {
-    margin: 0;
-    font-size: var(--step--1);
-    color: var(--color-text-muted);
-  }
-
-  .search__status {
-    margin-block-end: var(--space-lg);
-  }
-
-  .search__empty {
-    margin-block-end: var(--space-lg);
-  }
-
-  .search__clear {
-    min-height: 44px;
-    padding: 0;
-    font: inherit;
-    color: var(--color-accent);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    background: none;
-    border: 0;
-    cursor: pointer;
-  }
-
-  .search__empty a {
-    display: inline-block;
-    min-height: 44px;
-    line-height: 44px;
-  }
-
-  .search__destination {
-    margin-block-end: var(--space-xl);
-  }
-
-  .search__destination-name {
-    margin-block-end: var(--space-sm);
-  }
-
-  .search__guide-title {
-    margin: 0;
-    font-size: var(--step-1);
-  }
-
-  .search__places {
-    list-style: none;
-    margin: var(--space-sm) 0 0;
-    padding: 0;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .search__places li {
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .search__places a {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-sm);
-    min-height: 44px;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .search__places a:hover span:first-child {
-    color: var(--color-accent);
-    text-decoration: underline;
-  }
-
-  .search__day {
-    flex: none;
-    font-size: var(--step--1);
-    color: var(--color-text-muted);
-  }
-
-  [hidden] {
-    display: none !important;
+  .search-page__title {
+    margin-block: var(--space-md);
   }
 </style>
