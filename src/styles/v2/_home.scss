@@ -6,41 +6,188 @@
     margin-inline: auto;
   }
 
-  // The claim, at size. Its second sentence carries the brand, so it gets the
-  // accent and its own line.
+  // Hero: on phones the photo first (3:2), then the title, the claim, the
+  // search and the destinations; from tablet up, text left and photo right.
+  // No text over the photo (1.10 §3.7): it stays legible on any image.
   .home-hero {
-    padding-block: var(--space-md) var(--space-lg);
+    display: grid;
+    // minmax(0, …): the search field's one-line text must not widen the page.
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-lg);
+    padding-block: var(--space-sm) var(--space-xl);
 
     @include from("md") {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: var(--space-xl);
       padding-block: var(--space-xl) var(--space-2xl);
     }
   }
 
-  .home-hero__title {
-    margin: 0 0 var(--space-md);
-    font-size: clamp(2rem, 1.4rem + 3vw, 3.75rem);
-    line-height: 1.08;
-    text-wrap: balance;
+  .home-hero__media {
+    margin: 0;
 
     @include from("md") {
-      max-width: 18ch;
+      order: 2;
     }
   }
 
-  .home-hero__claim {
+  .home-hero__photo {
     display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+
+    @include from("md") {
+      aspect-ratio: 4 / 5;
+    }
+  }
+
+  .home-hero__caption {
+    margin-top: var(--space-2xs);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+  }
+
+  .home-hero__text {
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .home-hero__text .kicker a {
+    color: inherit;
+  }
+
+  .home-hero__title {
+    margin: 0;
+    font-size: clamp(2rem, 1.4rem + 3vw, 3.5rem);
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  // The brand's claim, right under the title, in the accent.
+  .home-hero__claim {
+    margin: 0;
+    font-family: var(--font-headline);
+    font-size: clamp(1.25rem, 1.05rem + 1vw, 1.625rem);
+    font-weight: 700;
+    line-height: 1.25;
     color: var(--color-accent);
+    text-wrap: balance;
   }
 
   .home-hero__lede {
     max-width: 38rem;
     margin: 0;
-    font-size: 1.125rem;
+    font-size: 1.0625rem;
     line-height: 1.65;
     color: var(--color-text-muted);
 
     @include from("md") {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
+    }
+  }
+
+  // The big search field: a link to /buscar/ that opens the search window.
+  .home-search {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    min-height: 60px;
+    margin-top: var(--space-xs);
+    padding: 6px 6px 6px var(--space-md);
+    border: 1px solid var(--color-rule);
+    border-radius: 999px;
+    background: var(--color-bg);
+    box-shadow: var(--shadow-soft);
+    color: var(--color-text-muted);
+    text-decoration: none;
+
+    &:hover {
+      border-color: var(--color-accent);
+    }
+
+    &:focus-visible {
+      outline: 3px solid var(--color-accent);
+      outline-offset: 3px;
+    }
+  }
+
+  .home-search__placeholder {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .home-search__go {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    min-height: 48px;
+    padding-inline: var(--space-md);
+    border-radius: 999px;
+    background: var(--color-accent);
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--color-bg);
+  }
+
+  // Destinations under the search, as chips.
+  .home-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs);
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .home-chips__label {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+  }
+
+  .home-chip {
+    display: inline-grid;
+    place-items: center;
+    min-height: 44px;
+    padding-inline: var(--space-md);
+    border-radius: 999px;
+    background: var(--color-pill-bg);
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--color-pill-text);
+    text-decoration: none;
+
+    &:hover {
+      background: var(--color-accent-quiet);
+    }
+  }
+
+  // Sections: a kicker over the title, and room between them.
+  .home-section {
+    margin-top: var(--space-2xl);
+
+    > .kicker {
+      margin-bottom: var(--space-2xs);
     }
   }
 
@@ -163,19 +310,6 @@
     padding: 0;
   }
 
-  // "Lo hicimos" in the lived colour; "Borrador" outlined in the label coral,
-  // so a draft reads as a warning, not as one more fact.
-  .pill--lived {
-    background: var(--color-accent);
-    color: var(--color-bg);
-  }
-
-  .pill--draft {
-    background: transparent;
-    box-shadow: inset 0 0 0 1.5px var(--color-label);
-    color: var(--color-label);
-  }
-
   .home-card__desc,
   .home-card__note {
     margin: 0;
@@ -199,38 +333,299 @@
     text-decoration: underline;
   }
 
-  // Why these guides: a short list, two columns from tablet up.
-  .home-why {
-    margin-top: var(--space-2xl);
-    padding: var(--space-lg) var(--space-md);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface);
+  // What every guide brings: icon, title and one line; three columns on desktop.
+  .home-inside__list {
+    display: grid;
+    gap: var(--space-md);
+    list-style: none;
+    margin: 0;
+    padding: 0;
 
-    @include from("md") {
-      padding: var(--space-xl);
+    @include from("sm") {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include from("lg") {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 
-  .home-why__list {
+  // Phones: compact rows, the icon on the left of its title and line.
+  // From the small breakpoint up: cards, the icon on top.
+  .home-inside__item {
     display: grid;
-    gap: var(--space-lg);
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--space-sm);
+    row-gap: 2px;
+    align-content: start;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+
+    .section-icon {
+      grid-row: span 2;
+      width: 1.75rem;
+      height: 1.75rem;
+      color: var(--color-accent);
+    }
+
+    @include from("sm") {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-2xs);
+      padding: var(--space-md);
+
+      .section-icon {
+        grid-row: auto;
+      }
+    }
+  }
+
+  .home-inside__title {
+    margin: 0;
+    font-size: 1.0625rem;
+
+    @include from("sm") {
+      margin-top: var(--space-2xs);
+      font-size: 1.125rem;
+    }
+  }
+
+  .home-inside__text {
+    margin: 0;
+  }
+
+  // Destinations: photo cards with the name and the count over a shade at
+  // the bottom; two per row on phones. The link covers the whole card.
+  .home-places__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm);
     list-style: none;
     margin: 0;
     padding: 0;
 
     @include from("md") {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--space-lg) var(--space-xl);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-md);
     }
   }
 
-  .home-why__title {
-    margin: 0 0 var(--space-2xs);
-    font-size: 1.125rem;
+  .home-place {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    aspect-ratio: 4 / 5;
+    background: var(--color-surface);
+
+    &:focus-within {
+      outline: 3px solid var(--color-accent);
+      outline-offset: 3px;
+    }
   }
 
-  .home-why__text {
+  .home-place__photo,
+  .home-place__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // No photo yet: the initial sits in the upper part, clear of the name.
+  .home-place__photo--empty {
+    display: grid;
+    place-items: center;
+    padding-bottom: 40%;
+    background: var(--day-placeholder);
+    font-family: var(--font-headline);
+    font-size: 4rem;
+    color: var(--color-pill-text);
+  }
+
+  .home-place__link {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 2px;
+    padding: var(--space-sm);
+    // Dark enough at the bottom for white text on any photo (4.5:1 and up).
+    background: linear-gradient(to top, rgb(20 23 22 / 0.78), rgb(20 23 22 / 0.35) 40%, transparent 70%);
+    color: #fff;
+    text-decoration: none;
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  .home-place__name {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 800;
+  }
+
+  .home-place__count {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  // The authors: intro and figures, then the promise behind every guide.
+  .home-about {
+    display: grid;
+    gap: var(--space-lg);
+    padding: var(--space-lg) var(--space-md);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+
+    @include from("md") {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      padding: var(--space-xl);
+    }
+  }
+
+  .home-about__intro {
+    display: grid;
+    gap: var(--space-sm);
+    align-content: start;
+
+    .home-section-title {
+      margin: 0;
+    }
+  }
+
+  .home-about__text {
     margin: 0;
-    color: var(--color-text-muted);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .home-about__more {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+
+  .home-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-sm);
+    align-content: center;
+    margin: 0;
+  }
+
+  .home-stats__item {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 2px;
+    padding-left: var(--space-sm);
+    border-left: 2px solid var(--color-rule);
+
+    dd {
+      margin: 0;
+      font-family: var(--font-numeral);
+      font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    dt {
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      color: var(--color-text-muted);
+    }
+  }
+
+  .home-promises {
+    display: grid;
+    gap: var(--space-md);
+    list-style: none;
+    margin: 0;
+    padding: var(--space-md) 0 0;
+    border-top: 1px solid var(--color-rule);
+
+    @include from("md") {
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-lg);
+    }
+  }
+
+  .home-promises__title {
+    margin: 0 0 var(--space-2xs);
+    font-size: 1.0625rem;
+  }
+
+  .home-promises__text {
+    margin: 0;
+  }
+
+  // The search window: full screen on phones, a large centred panel on
+  // desktop. Native <dialog>: the browser handles Escape, the backdrop and
+  // the focus going back to the field.
+  .search-dialog {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: var(--space-md) var(--edge) var(--space-xl);
+    border: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    overscroll-behavior: contain;
+
+    &::backdrop {
+      background: rgb(20 23 22 / 0.55);
+    }
+
+    // Desktop: a fixed height, so the window does not jump as results filter.
+    @include from("md") {
+      width: min(46rem, 100% - 2 * var(--space-lg));
+      height: min(48rem, 100% - 2 * var(--space-xl));
+      max-height: none;
+      margin: var(--space-xl) auto;
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+    }
+  }
+
+  .search-dialog__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+
+    form {
+      margin: 0;
+    }
+  }
+
+  .search-dialog__title {
+    margin: 0;
+    font-size: 1.375rem;
+  }
+
+  .search-dialog__close {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 3px solid var(--color-accent);
+      outline-offset: 2px;
+    }
   }
 }
