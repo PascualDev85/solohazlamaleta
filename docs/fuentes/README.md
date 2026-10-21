@@ -43,6 +43,6 @@ siguen estándolo.
 |---|---|
 | Alsacia | ya volcado en `src/content/guides/ruta-pueblos-y-vinos.json` |
 | Egipto | `egipto-2025.md` |
-| Islandia | `mi-ruta-islandia.md` |
+| Islandia | `mi-ruta-islandia.md`, `verificacion-2026-10-21.md` (datos caducados de la guía, para confirmar) |
 | Macedonia del Norte | `macedonia-del-norte.md` |
 | Tailandia | `1-bangkok.md`, `2-chiang-mai.md`, `3-phi-phi.md`, `4-ao-nang.md`, `5-ko-lipe.md`, `alojamientos-recomendados-en-tailandia.md`, `rooftop-bangkok.md`, `que-hacer-en-bangkok.md`, `que-ver-en-chiang-mai.md`, `tips-para-viajar-a-tailandia.md`, `casas-de-cambio.md`, `expresiones-tailandesas.md`, `articulos-interesantes-en-el-7-11.md`, `aqui-tienes-algunos-secretos-y-consejos-poco-conocidos-del-aeropuerto-suvarnabhumi-de-bangkok-bkk.md` |
