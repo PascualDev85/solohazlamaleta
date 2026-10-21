@@ -1,8 +1,15 @@
 # Estado del proyecto
 
-Última actualización: 2026-10-20
+Última actualización: 2026-10-21
 
-**2026-10-20:** puesto al día con las PR mergeadas desde el 15 de octubre (#9,
+**2026-10-21:** puesto al día con lo que entró el 20 de octubre (#23 y la
+integración #51, con #43, #44, #46, #47, #48 y #49), las PR abiertas (#12,
+#25, #26, #31, #35, #45, #50 y #52), las hojas de decisiones y revisiones de
+la noche del 20 al 21 y la salida de `npm run day:status` y
+`npm run content:validate` en `develop` (`b288e69`). Lo que te toca, por
+orden, en [DEBERES.md](DEBERES.md).
+
+**2026-10-20 (histórico):** puesto al día con las PR mergeadas desde el 15 de octubre (#9,
 #10, #13 a #22, #24, #27 a #30, #32 a #34, #37 a #40 y #42), las PR abiertas
 (#12, #23, #25, #26, #31, #35 y #43 a #48), las issues #36 y #41 y la salida
 de `npm run day:status` y `npm run content:validate` en `develop` (`dc83129`).
@@ -20,8 +27,9 @@ va marcado **(a confirmar)**.
 - **Repo:** https://github.com/PascualDev85/solohazlamaleta
 - **Ramas:** `main` (producción) · `develop` (integración; último merge: PR #8,
   2026-10-07) · ramas `feature/checkpoint3-diseno-v6-*` con el trabajo en curso.
-  (A 2026-10-20: último merge en `develop`, PR #42, 2026-10-19. Las ramas
-  `…-v6-*` ya están mergeadas. `main` sigue casi vacía, según #48)
+  (A 2026-10-21: último merge en `develop`, PR #51, 2026-10-20. Las ramas
+  `…-v6-*` ya están mergeadas. `main` sigue casi vacía; producción será
+  `main` tras una PR `develop` → `main`, opción A de `docs/DESPLIEGUE.md`)
 - **Guía de Islandia (motor nuevo):**
   `content/guides/islandia/islandia-en-camper-13-dias.yaml` y
   `content/places/islandia.yaml`, validados por `schemas/` y compilados por
@@ -32,7 +40,8 @@ va marcado **(a confirmar)**.
   → `/islandia/`, en la PR #26, en borrador.
 - **Informes para el autor en `docs/fuentes/`:** `coordenadas-por-confirmar.md`
   (entró con #14) e `informe-paneles-y-nombres.md` (#30). El de SEO,
-  `seo-islandia-grupo.md`, está en la PR #25.
+  `seo-islandia-grupo.md`, está en la PR #25. El doc 1.13 entró con #23.
+- **Despliegue:** `docs/DESPLIEGUE.md` (#48), Cloudflare Pages paso a paso.
 - **Guía de Alsacia (sistema antiguo):** `src/content/guides/ruta-pueblos-y-vinos.json`,
   borrador. Lo que falta, en [PENDIENTE-ALSACIA.md](PENDIENTE-ALSACIA.md).
 - **Notas de viaje del autor:** `docs/fuentes/` (Islandia, Egipto, Tailandia,
@@ -43,9 +52,52 @@ va marcado **(a confirmar)**.
   `docs/1.10_checkpoint3_diseno.md`, `docs/1.11_islandia_estructura_contenidos.md`
   y `docs/1.12_direccion_guia_islandia.md`.
 
+### PR abiertas (a 2026-10-21)
+
+Todas tienen la base en `develop` salvo #35, que cuelga de #26. CI = build,
+lighthouse y devices en el head actual. Las hojas de decisiones son del 21 de
+octubre.
+
+| PR | Rama | Qué | Estado | CI |
+|---|---|---|---|---|
+| [#12](https://github.com/PascualDev85/solohazlamaleta/pull/12) | `feature/guia-egipto` | Guía de Egipto en el esquema antiguo | Lista para revisar; muy por detrás de `develop` | ✅ del 14 de octubre, sobre una base antigua |
+| [#25](https://github.com/PascualDev85/solohazlamaleta/pull/25) | `docs/seo-islandia-grupo` | Investigación SEO del grupo Islandia | Borrador; [hoja de decisiones](https://github.com/PascualDev85/solohazlamaleta/pull/25#issuecomment-6305016984), 3 preguntas | ✅ (ya apunta a `develop`) |
+| [#26](https://github.com/PascualDev85/solohazlamaleta/pull/26) | `feature/hub-islandia` | Hub `/islandia/`, v1; H1 "Islandia" ya aplicado | Borrador; [hoja](https://github.com/PascualDev85/solohazlamaleta/pull/26#issuecomment-6305017210), 8 preguntas y textos | ✅ |
+| [#31](https://github.com/PascualDev85/solohazlamaleta/pull/31) | `feature/landing-v2` | Portada en el diseño v2 | Borrador; [hoja](https://github.com/PascualDev85/solohazlamaleta/pull/31#issuecomment-6305017608), 2 preguntas y textos | ✅ |
+| [#35](https://github.com/PascualDev85/solohazlamaleta/pull/35) | `feature/guia-al-hub` | Lo práctico de la guía, al hub; enlace con `hubSectionHref` | Borrador, sobre #26; [hoja](https://github.com/PascualDev85/solohazlamaleta/pull/35#issuecomment-6305017425), 2 preguntas | sin CI (su base no es `develop`) |
+| [#45](https://github.com/PascualDev85/solohazlamaleta/pull/45) | `feature/404-v2` | Página 404 propia | Borrador; [hoja](https://github.com/PascualDev85/solohazlamaleta/pull/45#issuecomment-6305017813), 1 pregunta y textos; chocará con #26 y #31 | ✅ |
+| [#50](https://github.com/PascualDev85/solohazlamaleta/pull/50) | `content/coordenadas-2026-10-20` | Coordenadas y fichas de Maps de Grafarkirkja, Landbrotalaug y Stuðlagil | Lista; 2 preguntas (Stuðlagil y `drive` de los días 8 y 11) | ✅ |
+| [#52](https://github.com/PascualDev85/solohazlamaleta/pull/52) | `feature/site-search` | Buscador mínimo en `/buscar/` y "Buscar" en la cabecera | Borrador, de la noche del 20 al 21; pendiente de validar frente al BRIEF §P | ✅ |
+
+Orden de mezcla de las hojas: **#25 → #26 → #35 → #31 → #45.**
+
+Issues abiertas: [#36](https://github.com/PascualDev85/solohazlamaleta/issues/36)
+(parte del 16 de octubre, se puede cerrar) y
+[#41](https://github.com/PascualDev85/solohazlamaleta/issues/41) (TypeScript
+7; la recomendación es esperar).
+
+### Lo que dejó la noche del 20 al 21
+
+| Hora | Tarea | Resultado |
+|---|---|---|
+| 23:00 | CI y herramientas (`chore/ci-tools`) | Sin rama ni PR en el remoto. No se sabe si no se ejecutó o falló |
+| 23:30 | Repaso previo al despliegue (`docs/repaso-despliegue`) | Sin rama ni PR |
+| 00:00 | Áreas de toque de 44 px (`a11y/touch-targets`) | Sin rama ni PR |
+| 00:30 | Fecha en "Lo práctico" del hub (`feature/practical-verified-at`) | Sin rama ni PR |
+| 01:00 | Menú del sitio en móvil (`feature/site-menu`) | Sin rama ni PR (#52 confirma que no existía a las 03:47) |
+| 01:30 | Datos caducados de Islandia (`docs/verificacion-datos-islandia`) | Sin rama ni PR |
+| 02:30 | Hojas de decisiones | ✅ Comentarios en #25, #26, #35, #31 y #45, y un resumen en #26 |
+| 03:30 | Buscador sencillo (`feature/site-search`) | ✅ #52, borrador, CI en verde |
+
+Además, la revisión nocturna de PR comentó #25, #26, #31, #35, #45 y #50 (sin
+bloqueantes).
+
 ### PR abiertas (a 2026-10-20)
 
-Todas tienen la base en `develop` salvo #25, que cuelga de #23, y #35, que
+(Histórico. #23 se mezcló el 20 de octubre y #43, #44, #46, #47 y #48 entraron
+con la integración #51.)
+
+Todas tenían la base en `develop` salvo #25, que cuelga de #23, y #35, que
 cuelga de #26. CI = build, lighthouse y devices en el head actual.
 
 | PR | Rama | Qué | Estado | CI |
@@ -140,9 +192,12 @@ Issue abierta: [#11](https://github.com/PascualDev85/solohazlamaleta/issues/11)
 | Borrador de una sola fuente: `noindex` y sitemap derivados de `status` | ✅ PR #34, 2026-10-16 |
 | `DayCard` partido en `DaySheet` y SCSS en tres ficheros | ✅ PR #32, 2026-10-16 |
 | Dependencias al día, 0 vulnerabilidades altas | ✅ PR #10 (2026-10-16) y #40 (2026-10-19, cierra #11) |
-| Hub `/islandia/` | 🟡 en PR #26 (borrador), con #35 encima |
-| Doc 1.13 (guía, hub y satélites) e investigación SEO | 🟡 en PR #23 y #25 |
-| Cabeceras HTTP, prueba de `/ir/`, tests de teclado, guía de despliegue | ✅ mezclados el 2026-10-20 (#43, #46, #47, #48; la 404 sigue en PR #45) |
+| Hub `/islandia/` | 🟡 en PR #26 (borrador), con #35 encima; hojas de decisiones del 2026-10-21 |
+| Doc 1.13 (guía, hub y satélites) e investigación SEO | ✅ 1.13 mezclado el 2026-10-20 (#23); 🟡 SEO en PR #25 |
+| Cabeceras HTTP, prueba de `/ir/`, tests de teclado, guía de despliegue | ✅ mezclados el 2026-10-20 con la integración #51 (#43, #44, #46, #47, #48; la 404 sigue en PR #45) |
+| Fallo de teclado del bocadillo de duración | ✅ arreglado en #51, 2026-10-20 |
+| Buscador mínimo `/buscar/` | 🟡 en PR #52 (borrador), pendiente de validar frente al BRIEF §P |
+| Menú del sitio en móvil | ⬜ pedido el 2026-10-20; la rutina de la noche no dejó rama |
 | Páginas legales (pendientes de tus datos) | ✅ |
 | `/ir/[id]` y registro de afiliados | ✅ (sin partners activos; prueba en `tests/pages/affiliate-route.test.ts`) |
 | `robots.txt`, sitemap, canonical, Open Graph | ✅ |
@@ -177,7 +232,17 @@ Las enmiendas están documentadas en `docs/1.7.2_data_contract.md`:
 
 ### Verificado, no supuesto
 
-En `develop` (`dc83129`), el 2026-10-20, en la rutina de deberes:
+En `develop` (`b288e69`), el 2026-10-21, en la rutina de deberes:
+
+```
+npm ci                    exit 0
+npm run content:validate  pasa; 100 avisos, los mismos que el 2026-10-20
+npm run day:status        0 de 13 días cerrados; 74 lugares con coordenadas
+                          pendientes (71 cuando entre #50); foto y "lo mejor
+                          del día" faltan en 4–13
+```
+
+En `develop` (`dc83129`), el 2026-10-20 (histórico):
 
 ```
 npm ci                    exit 0
@@ -245,27 +310,31 @@ umbral de unos 43,8 KB comprimidos a partir del cual Lighthouse móvil baja a
 
 ---
 
-## Lo primero al volver (2026-10-20)
+## Lo primero al volver (2026-10-21)
 
 La lista completa, con tiempos, está en [DEBERES.md](DEBERES.md). En corto:
 
-1. **Revisar la cadena #23 → #25 → #26 → #35.** Es el doc 1.13, el SEO, el
-   hub y lo práctico al hub. La decisión que más desbloquea es el H1 y el
-   `<title>` del hub, que dejan abiertos a la vez #25 y #26.
-2. **Despliegue:** elegir la rama de producción (#48; la recomendada es la A,
-   `develop` → `main`) y después seguir `docs/DESPLIEGUE.md`. Las cabeceras de
-   #43 y la 404 de #45 conviene tenerlas antes.
-3. **Contenido de Islandia:** coordenadas (las 27 erróneas primero), fotos y
-   "lo mejor del día" de los días 4 a 13, las noches (`overnight_note`) y las
-   preguntas del informe de paneles (#30).
-4. **Datos de fuera:** Keyword Planner y Trends (bloques de #25), tasa por km
-   en island.is, Sky Lagoon y los precios de los campings.
-5. **Más pequeñas:** #31 (textos de portada), #45, → y ≈ de #44 y la issue
-   #41 (seguir en TS 6).
+1. **Contestar las hojas de decisiones y mezclar #25 → #26 → #35 → #31 →
+   #45** (70 min). Es lo que deja publicables el hub, la portada y la 404.
+   Si solo hay 15 minutos: #26 preguntas 1, 2 y 8, y #35 pregunta 1.
+2. **Despliegue:** la rama de producción ya está decidida (A). Falta abrir la
+   PR `develop` → `main` y seguir `docs/DESPLIEGUE.md` (~31 min).
+3. **Menú y buscador:** validar #52 frente al BRIEF §P y decidir si
+   `/buscar/` lista ya los borradores. El menú no tiene PR: la rutina no
+   dejó rama.
+4. **#50:** las dos preguntas (desde qué parking cuentan los 5 km de
+   Stuðlagil y los `drive` de los días 8 y 11) y mezclarla.
+5. **Contenido de Islandia:** las 24 coordenadas erróneas que quedan, fotos y
+   "lo mejor del día" de los días 4 a 13, las noches y los paneles.
 
-### Guía de Islandia: qué falta por día (2026-10-20)
+Seis de las ocho rutinas de la noche no dejaron rama ni PR (ver "Lo que dejó
+la noche del 20 al 21"). Recomendación pendiente: mover el repo local fuera
+del Escritorio, porque iCloud crea copias " 2" de los ficheros.
 
-Salida de `npm run day:status` en `develop`. Todos los días están en `develop`.
+### Guía de Islandia: qué falta por día (2026-10-21)
+
+Salida de `npm run day:status` en `develop` (`b288e69`), igual que el
+2026-10-20. Todos los días están en `develop`.
 "Paradas" cuenta las paradas con algo pendiente (parking, ficha de mapa o
 coordenadas) frente al total del día; ✅ quiere decir que no queda ninguna.
 "Pend." es el total de pendientes del día.
@@ -288,6 +357,31 @@ coordenadas) frente al total del día; ✅ quiere decir que no queda ninguna.
 
 Ningún día tiene texto en `overnight_note`. Según el informe de #30, los
 paneles de los días 3, 6, 8 y 9 pasan de 150 palabras.
+
+Cuando entre #50, el día 8 (Stuðlagil), el 11 (Grafarkirkja) y el 12
+(Landbrotalaug) pierden la coordenada pendiente, y el total baja a 71 lugares.
+
+## Lo primero al volver (2026-10-20)
+
+(Histórico. El 20 de octubre se mezclaron #23 y la integración #51, y se
+decidieron el H1 y el `<title>` del hub, Sky Lagoon, la gente en septiembre y
+la rama de producción.)
+
+La lista completa, con tiempos, está en [DEBERES.md](DEBERES.md). En corto:
+
+1. **Revisar la cadena #23 → #25 → #26 → #35.** Es el doc 1.13, el SEO, el
+   hub y lo práctico al hub. La decisión que más desbloquea es el H1 y el
+   `<title>` del hub, que dejan abiertos a la vez #25 y #26.
+2. **Despliegue:** elegir la rama de producción (#48; la recomendada es la A,
+   `develop` → `main`) y después seguir `docs/DESPLIEGUE.md`. Las cabeceras de
+   #43 y la 404 de #45 conviene tenerlas antes.
+3. **Contenido de Islandia:** coordenadas (las 27 erróneas primero), fotos y
+   "lo mejor del día" de los días 4 a 13, las noches (`overnight_note`) y las
+   preguntas del informe de paneles (#30).
+4. **Datos de fuera:** Keyword Planner y Trends (bloques de #25), tasa por km
+   en island.is, Sky Lagoon y los precios de los campings.
+5. **Más pequeñas:** #31 (textos de portada), #45, → y ≈ de #44 y la issue
+   #41 (seguir en TS 6).
 
 ## Lo primero al volver (2026-10-15)
 
@@ -438,7 +532,9 @@ rutina de caducidad no la revisa. Si eso es intencionado: **(a confirmar)**.
 ### Otros
 
 - [ ] Conectar Cloudflare Pages al repo y desplegar `develop` a un dominio de
-      pruebas. (Paso a paso en #48; falta elegir la rama de producción)
+      pruebas. (Paso a paso en `docs/DESPLIEGUE.md`, #48. Rama de producción
+      decidida el 2026-10-20: opción A, PR `develop` → `main` y se despliega
+      `main`)
 - [ ] Analítica sin cookies (Umami o Plausible). (#48 recomienda Umami Cloud
       gratis)
 - [ ] Dominio `solohazlamaleta.com`: `astro.config.mjs` ya lo da por hecho.

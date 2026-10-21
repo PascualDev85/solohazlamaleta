@@ -5,7 +5,7 @@ desbloquea antes. Marca la casilla al cerrarlas.
 
 Las que llevan **(tuya)** dependen de ti y nadie más puede hacerlas.
 
-Última revisión: 2026-10-20. El estado detallado está en [ESTADO.md](ESTADO.md).
+Última revisión: 2026-10-21. El estado detallado está en [ESTADO.md](ESTADO.md).
 Lo tuyo, junto y por orden, en [DEBERES.md](DEBERES.md).
 
 ---
@@ -67,27 +67,34 @@ Lo tuyo, junto y por orden, en [DEBERES.md](DEBERES.md).
 
 ### Hub, satélites y portada — PR abiertas (tuya)
 
-Salen de las PR #23, #25, #26, #31 y #35. El detalle, en
-[DEBERES.md](DEBERES.md).
+Salen de las PR #25, #26, #31, #35 y #45. Cada una tiene una hoja de
+decisiones del 2026-10-21. Orden de mezcla: #25 → #26 → #35 → #31 → #45. El
+detalle, en [DEBERES.md](DEBERES.md).
 
-- [ ] **(tuya)** Mergear #23 (doc 1.13). Está en verde. Antes conviene
-      corregir tres cosas: el texto del PR desfasado, "10" frente a "once"
-      PR en el §8 y "menos gente" en "Cuándo ir".
+- [x] **(tuya)** Mergear #23 (doc 1.13). (Mezclado el 2026-10-20)
+- [x] **(tuya)** H1 y `<title>` del hub. (Decidido el 2026-10-20: H1
+      "Islandia" y `<title>` "Viajar a Islandia: qué ver, cuándo ir y lo
+      práctico". Aplicado en #26; en #25, cambio mecánico pendiente)
+- [x] **(tuya)** "Menos gente en septiembre". (2026-10-20: mucha en el
+      Círculo Dorado y el sur, poca del este hacia el norte. Está en el hub,
+      #26, y en el 1.13)
 - [ ] **(tuya)** #25 (SEO): decidir "Ruta de 7 días", que choca con la regla
       de no duplicar por días. También el límite de la satélite "Costa sur" y
-      el orden de las satélites.
-- [ ] **(tuya)** #26 (hub): decidir el H1 y si el `<title>` lleva la marca,
-      las fotos 16:9 en móvil, la foto de portada, las enmiendas del modelo,
-      qué FAQ llevan `schema: true`, cómo sale el hub de borrador
-      (`HUB_SOURCES` o el estado de la guía) y el enlace "Islandia" en la
-      cabecera. Además, revisar sus textos.
+      el orden de las satélites. (En #25, hoja de decisiones)
+- [ ] **(tuya)** #26 (hub): las fotos 16:9 en móvil, la foto de portada, las
+      enmiendas del modelo, qué FAQ llevan `schema: true`, cómo sale el hub de
+      borrador y el enlace "Islandia" en la cabecera. Además, revisar sus
+      textos. (En #26, hoja de decisiones, 8 preguntas)
 - [ ] `practical` (fianza, "Mosskógar solo efectivo") sin `verified_at`, en el
-      hub y en `islandia.yaml` (#26, #35).
+      hub y en `islandia.yaml` (#26, #35). (Pregunta 1 de la hoja de #26. La
+      rutina `feature/practical-verified-at` del 2026-10-21 no dejó rama)
 - [ ] **(tuya)** #35: el texto del enlace al hub. Al mergear #26, reapuntarla a
-      `develop` para que pase la CI.
+      `develop` para que pase la CI. (En #35, hoja de decisiones)
 - [ ] #35: `href="/islandia/#practico"` escrito a mano; usar `guide.hub`.
+      (Hecho en #35, `hubSectionHref`, falta mezclar)
 - [ ] **(tuya)** #31 (portada v2): revisar los textos, la foto de cabecera en
-      escritorio y la alineación de la cabecera en escritorio.
+      escritorio y la alineación de la cabecera en escritorio. (En #31, hoja
+      de decisiones)
 - [ ] Antes de la tercera guía: `alt` de `cover_image` en el modelo y un nombre
       visible del destino con tildes (#31).
 
@@ -110,7 +117,8 @@ en cada uno, siempre al día: `npm run day:status`)
       cuenta 74 lugares):
       - 27 erróneas, 28 por revisar y 6 sin verificar;
       - las peores son Grafarkirkja (37,8 km), Stuðlagil (18,3 km),
-        Landbrotalaug, Lækjavík y Víðimýrarkirkja;
+        Landbrotalaug, Lækjavík y Víðimýrarkirkja; (Grafarkirkja,
+        Landbrotalaug y Stuðlagil, en #50; quedan 24 erróneas)
       - el informe se borra cuando estén confirmadas.
       Bloquea el mapa (C3.5) y publicar.
 - [ ] **(tuya)** Confirmar las duraciones de los días 5–13. Después, quitar
@@ -123,7 +131,7 @@ en cada uno, siempre al día: `npm run day:status`)
 - [ ] **(tuya)** Dudas de contenido de #14:
       - Djúpavogskörin (¿poza termal?);
       - el túnel de Vaðlaheiði (de peaje);
-      - Sky Lagoon;
+      - ~~Sky Lagoon~~ (no fueron, 2026-10-20);
       - si hubo paseo por Reikiavik el día 13;
       - Mígandifoss;
       - el trekking de Svínafellsjökull (5 h o 6 h, y Icelandia lo da por
@@ -134,8 +142,13 @@ en cada uno, siempre al día: `npm run day:status`)
         (≈ 15 min);
       - contestar las preguntas de los días 1, 2, 5, 7, 10, 11 y 13 (la
         noche, lo que haríamos distinto y el plan B).
-- [ ] **(tuya)** ¿Fuisteis a Sky Lagoon? Lo piden el panel del día 13 y la
-      satélite de baños termales (#25).
+- [x] **(tuya)** ¿Fuisteis a Sky Lagoon? Lo piden el panel del día 13 y la
+      satélite de baños termales (#25). (No: queda fuera, 2026-10-20; ya
+      reflejado en #25)
+- [ ] **(tuya)** #50: ¿la "ruta de unos 5 km, unos 45 minutos de ida" de
+      Stuðlagil cuenta desde el parking de la ficha o desde el del primer
+      puente? ¿Confirmas los `drive` de los días 8 y 11 (+12 y +27 km en línea
+      recta con las coordenadas buenas)? (En #50)
 - [ ] Aviso de `content:validate`: el día 1 tiene `drive` y la parada
       `reykjavik` sin `travel_to_next_min`.
 - [ ] **(tuya)** Dos avisos de estilo de `content:validate`: "una de las
@@ -200,7 +213,8 @@ Salen de las PR #9, #14 y #17.
 - [ ] **(tuya)** Soporte de 320 px (Galaxy S9+): por debajo de la escala de
       diseño de 350 px, las líneas de las tarjetas saltan de fila. Decidir si
       se amplía la escala o se queda como aviso.
-- [ ] Objetivos táctiles de menos de 44 px. #17 amplía a 44 px la "i", el
+- [ ] Objetivos táctiles de menos de 44 px. (La rutina `a11y/touch-targets`
+      del 2026-10-21 no dejó rama) #17 amplía a 44 px la "i", el
       enlace Mapa, el de la noche y "Gratis". Quedan:
       - los días de la tira (36×36);
       - "Ver N paradas más" (36);
@@ -249,7 +263,7 @@ Salen de las PR #9, #14 y #17.
       guías cuelgan de una ruta sin índice. Para Islandia, el 1.10 §6 la deja
       fuera del Checkpoint 3 y el 1.11 §8 la condiciona a validar antes las
       palabras clave. (El hub `/islandia/` está en #26, en borrador. Con el
-      1.13 (#23) entra en el Checkpoint 3)
+      1.13 (#23, mezclado el 2026-10-20) entra en el Checkpoint 3)
 - [ ] Enlazado interno automático hub ↔ guías ↔ relacionadas, generado desde
       el dato y no mantenido a mano.
 - [x] Datos estructurados `Article` y `BreadcrumbList` (§7). El `FAQPage` ya
@@ -269,7 +283,13 @@ Salen de las PR #9, #14 y #17.
       (`feature/landing-lists-engine-guides`). (PR #21, mergeado el
       2026-10-15. La portada v2 está en #31)
 - [ ] **(tuya)** Página 404 propia (#45, en borrador): revisar sus textos.
-      Sin ella, Cloudflare Pages sirve `/` en las rutas que no existen.
+      Sin ella, Cloudflare Pages sirve `/` en las rutas que no existen. (En
+      #45, hoja de decisiones; va la última de la cadena)
+- [ ] **(tuya)** Buscador sencillo en `/buscar/`, versión mínima (pedido el
+      2026-10-20). (En #52, borrador. Validarlo frente al BRIEF §P, que excluye
+      un buscador complejo en la V1, y decidir si lista ya los borradores)
+- [ ] Menú del sitio en móvil (hamburguesa), pedido el 2026-10-20. (La rutina
+      `feature/site-menu` del 2026-10-21 no dejó rama ni PR)
 
 ## Web — rendimiento (cuando la guía de Islandia esté completa)
 
@@ -282,7 +302,8 @@ peticiones. Nada es urgente; se revisa con la página terminada, no antes.
       99. Cualquier PR que añada marcado o CSS a la guía tiene que
       compensarlo. (Ya no aplica tal cual: desde #23/1.13 §5, decidido el
       2026-10-15, la CI acepta 99 en móvil solo para la guía de 13 días,
-      `4276f2b`. #47 propone un tope fijo con `npm run size:check`)
+      `4276f2b`. El tope fijo con `npm run size:check` entró con #47 el
+      2026-10-20)
 - [ ] **Tamaño del DOM**: 2.022 elementos (Lighthouse avisa hacia 1.500).
       Crece porque cada día lleva en el HTML todas sus paradas y su panel
       "Ver día completo". Con 13 días va bien; medir de nuevo con todos los
@@ -304,6 +325,9 @@ peticiones. Nada es urgente; se revisa con la página terminada, no antes.
       las páginas pequeñas 1,2 → 1,1 s.
 
 ## CI y herramientas
+
+La rutina `chore/ci-tools` del 2026-10-21 no dejó rama ni PR: lo de aquí
+sigue como estaba.
 
 - [x] Lighthouse 100 en móvil y escritorio como gate de la CI, y tests
       unitarios en la CI. (PR #7, 2026-10-06)
@@ -335,9 +359,10 @@ peticiones. Nada es urgente; se revisa con la página terminada, no antes.
 - [ ] El build avisa de unos 90 lugares con `verified_at` caducado (nota de
       #16). Las revisiones de #9 y #14 señalan además lugares con
       `verified_at: 2025-09-15` que aún no se han verificado.
-      (`content:validate` en `develop`, 2026-10-20: 87 lugares con datos
-      caducados y el precio de los 10 campings verificado hace más de 12
-      meses)
+      (`content:validate` en `develop`, 2026-10-20 y 2026-10-21: 87 lugares
+      con datos caducados y el precio de los 10 campings verificado hace más
+      de 12 meses. La rutina `docs/verificacion-datos-islandia` del
+      2026-10-21 no dejó rama)
 
 ## Infraestructura
 
@@ -345,12 +370,15 @@ Paso a paso para desplegar, dominio, analítica y Search Console:
 [DESPLIEGUE.md](DESPLIEGUE.md).
 
 - [ ] Conectar Cloudflare Pages al repo y desplegar `develop` a un dominio de
-      pruebas. (Paso a paso en #48, `docs/DESPLIEGUE.md`, unos 31 min.
-      **(tuya)** Elegir la rama de producción; la recomendada es la A,
-      `develop` → `main` primero)
-- [ ] Cabeceras HTTP y CSP por página (#43, en borrador). Tiene una lista de
+      pruebas. (Paso a paso en `docs/DESPLIEGUE.md`, unos 31 min. Rama de
+      producción decidida el 2026-10-20: opción A, PR `develop` → `main` y se
+      despliega `main`. La rutina `docs/repaso-despliegue` del 2026-10-21 no
+      dejó rama)
+- [x] Cabeceras HTTP y CSP por página (#43). Tiene una lista de
       comprobaciones para el día del despliegue y HSTS se activa en el panel.
-      Chocará con #44 en `package.json` y `CLAUDE.md`.
+      (Mezclado con la integración #51, 2026-10-20)
+- [ ] **(tuya)** Mover el repo local fuera del Escritorio: iCloud lo
+      sincroniza y crea copias " 2" de los ficheros (visto el 2026-10-20).
 - [ ] **(tuya)** Registrar `solohazlamaleta.com`. `astro.config.mjs` ya lo da
       por hecho.
 - [ ] Analítica sin cookies (Umami o Plausible). (#48 recomienda Umami Cloud
@@ -378,7 +406,8 @@ Paso a paso para desplegar, dominio, analítica y Search Console:
       conviene dejarlo escrito en vez de saltárselo en silencio. Las
       decisiones viven ahora en `docs/BRIEF.md`.
 - [ ] **(tuya)** Decidir Islandia o Mallorca como laboratorio SEO (1.11 §10),
-      con los datos de Keyword Planner de ambos destinos.
+      con los datos de Keyword Planner de ambos destinos. (2026-10-20:
+      Mallorca, todavía no)
 - [ ] **(tuya)** Keyword Planner y Trends con los bloques de #25
       (`docs/fuentes/seo-islandia-grupo.md` §5). Están listos para pegar en
       [DEBERES.md](DEBERES.md).
