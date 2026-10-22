@@ -60,7 +60,7 @@ const [cropAvif, cropWebp] = await Promise.all([croppedSrcset('avif', 30), cropp
     alt={alt}
     class={className}
     loading={priority ? 'eager' : 'lazy'}
-    fetchpriority={priority ? 'high' : 'auto'}
+    fetchpriority={priority ? 'high' : undefined}
     decoding="async"
   />
 </picture>
