@@ -40,7 +40,23 @@ coverage/
 # Playwright
 test-results/
 playwright-report/
+# Capturas de scripts/ui-devices.ts (artefacto de la CI)
+ui-devices/
 
 # Skills de terceros — reproducibles desde skills-lock.json con:
 #   npx -y skills experimental_install
 .claude/skills/
+
+# Astro
+.astro/
+
+# Scripts de depuración de un solo uso (Playwright necesita la raíz del proyecto)
+/qa-*.mjs
+/shot*.mjs
+/probe.mjs
+/contrast.mjs
+# Capturas de escritorio antes/después (diseño de las secciones)
+ui-desktop/
+
+# Reference screenshots of third-party sites (replica-recon): never committed, never shipped
+replica/screens/

@@ -1,0 +1,5 @@
+// Components of the first design, imported only by the pages built with it
+// (the home, the Alsacia guide and the search page). Pages on the redesign
+// (data-design="v2") do not load them.
+@use "base/fonts";
+@use "components";

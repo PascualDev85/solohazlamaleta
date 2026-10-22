@@ -1,0 +1,196 @@
+@use "../abstracts" as *;
+@use "sheet";
+
+[data-design="v2"] {
+  // Panel: a centred card on desktop, a sheet rising from the bottom on mobile.
+  .guide-index {
+    @include sheet.panel;
+
+    :where(ul, ol) {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  html:has(.guide-index:popover-open) {
+    overflow: hidden;
+  }
+
+  .guide-index__head {
+    @include sheet.head;
+  }
+
+  .guide-index__close {
+    @include sheet.close;
+  }
+
+  .guide-index__sections {
+    padding: var(--space-xs) var(--space-md) var(--space-lg);
+
+    > li + li {
+      border-top: 1px solid var(--color-border);
+    }
+  }
+
+  .guide-index__row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: 3.75rem;
+    padding: var(--space-xs) var(--space-xs);
+    border-radius: var(--radius);
+    font-weight: 800;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &:hover .guide-index__label {
+      color: var(--color-accent);
+    }
+  }
+
+  .guide-index__icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: var(--color-surface);
+    color: var(--color-text);
+
+    .section-icon {
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+  }
+
+  .guide-index__label {
+    flex: 1;
+    transition: color 0.2s var(--ease-out);
+  }
+
+  .guide-index__chevron {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--color-pill-bg);
+
+    &::before {
+      content: "";
+      width: 0.5rem;
+      height: 0.5rem;
+      border-right: 2px solid var(--color-pill-text);
+      border-bottom: 2px solid var(--color-pill-text);
+      transform: translateY(-20%) rotate(45deg);
+      transition: transform 0.2s var(--ease-out);
+    }
+  }
+
+  .guide-index__group[open] .guide-index__chevron::before {
+    transform: translateY(20%) rotate(-135deg);
+  }
+
+  .guide-index__days {
+    margin: var(--space-2xs) 0 var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-lg);
+    background: var(--color-pill-bg);
+    font-size: var(--step--1);
+
+    a {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6em;
+      padding-block: 0.45rem;
+      color: var(--color-pill-text);
+      font-weight: 750;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+  }
+
+  .guide-index__daynum {
+    flex: none;
+    min-width: 2.1em;
+    padding: 0.05em 0.45em;
+    border-radius: 999px;
+    background: var(--color-bg);
+    color: var(--color-accent);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  // The trigger: a pill fixed at the bottom of the screen. It slides away
+  // while the reader scrolls down and comes back while they scroll up, until
+  // the very top (the script flips data-away; the movement is CSS). Away it is
+  // only off screen: still in the tab order, and focusing it brings it back.
+  // Without JavaScript it simply stays.
+  .guide > .guide-index__dock {
+    position: fixed;
+    inset: auto 0 max(1rem, env(safe-area-inset-bottom));
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    width: max-content;
+    max-width: none;
+    min-height: 3rem;
+    margin-inline: auto;
+    padding: 0 var(--space-md) 0 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-bg);
+    box-shadow: 0 10px 30px rgb(10 15 20 / 0.18);
+    color: var(--color-text);
+    font: 800 0.9375rem / 1 var(--font-display);
+    cursor: pointer;
+    // translate, not transform: it moves on the compositor and shifts no layout.
+    transition: translate 0.3s var(--ease-out);
+
+    .section-icon {
+      width: 1.2rem;
+      height: 1.2rem;
+      color: var(--color-accent);
+    }
+
+    &:hover {
+      border-color: var(--color-accent);
+    }
+
+    &[data-away]:not(:focus-visible) {
+      translate: 0 calc(100% + 2rem + env(safe-area-inset-bottom));
+    }
+
+    @media (scripting: none) {
+      &[data-away] {
+        translate: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  // The page foot keeps clear of the pill.
+  body:has(.guide-index__dock) .site-footer {
+    margin-bottom: 5rem;
+  }
+}

@@ -1,0 +1,1108 @@
+slug: islandia-en-camper-13-dias
+destination: islandia
+hub: /islandia/
+type: itinerary
+content_type: experience
+status: reviewed
+trip_done: "2025-09"
+title: "Islandia en camper: ruta de 13 días por la Ring Road"
+description: "Ruta por Islandia en camper (13 días, antihoraria) con presupuesto real detallado, campings reales y lo que haríamos distinto."
+updated_at: 2026-10-04
+cover_image: islandia/islandia-gljufrafoss.jpg
+days: 13
+base_travelers: 2
+
+summary:
+  # Two lines (1.12 §4): the first is shown larger than the second.
+  tagline: "13 días. Una camper. Toda Islandia por delante.\nCascadas, glaciares, volcanes, fiordos y aguas termales que todavía recordamos."
+  best_season: "Junio a septiembre"
+  getting_around: "Camper sin 4x4 con **calefacción**"
+  base_area: "Un camping cada noche"
+  pace_default: intensivo
+
+budget:
+  currency: EUR
+  # 1.10 §3.5: the table already lists every item, so "includes" does not repeat them.
+  includes:
+    - "Todas las partidas de la tabla"
+  excludes:
+    - "Guardería de mascotas (gasto personal no del viaje)"
+    - "Gasolina y gastos en España hasta el aeropuerto"
+  notes: "Presupuesto real 2025. El camper y la gasolina son las partidas más grandes. Cocinar en el camper reduce mucho el gasto de comidas."
+  items:
+    - category: vuelos
+      label: "Vuelos MAD → KEF → MAD"
+      amount: 571.12
+      basis: per_group
+      type: real
+      verified_at: 2025-09
+    - category: transporte
+      label: "Alquiler camper 13 días"
+      amount: 1982.60
+      basis: per_group
+      type: real
+      verified_at: 2025-09
+      notes: "Incluía seguro básico."
+    - category: transporte
+      label: "Gasolina en Islandia"
+      amount: 361.94
+      basis: per_group
+      type: real
+      verified_at: 2025-09
+      notes: "La gasolina es cara. Llenar siempre en ciudades; hay tramos largos sin gasolineras."
+    - category: alojamiento
+      label: "Campings (13 noches)"
+      amount: 306.58
+      basis: per_group
+      type: real
+      verified_at: 2025-09
+      notes: "Media ~11,8 €/persona/noche."
+    - category: entradas
+      label: "Excursiones (trekking glaciar y otras)"
+      amount: 502.65
+      basis: per_group
+      type: real
+      verified_at: 2025-09
+      notes: "La excursión en glaciar es la más cara y la más impresionante. No la recortaríamos."
+    - category: comidas
+      label: "Supermercado en Islandia"
+      amount: 135.67
+      basis: per_group
+      type: real
+      verified_at: 2025-09
+      notes: "Comprar en Bonus (la cadena más barata). Cocinar en el camper = ahorro enorme."
+    - category: seguro
+      label: "Seguro de viaje"
+      amount: 66.89
+      basis: per_group
+      type: real
+      verified_at: 2025-09
+    - category: otro
+      label: "Extras, comidas fuera y parkings Islandia"
+      amount: 567.76
+      basis: per_group
+      type: real
+      verified_at: 2025-09
+
+variants:
+  - id: intensivo
+    name: "Ruta completa (como la hicimos)"
+    description: "Los 13 días tal como los planificamos. Días de hasta 340 km con muchas paradas. Hay que madrugar."
+    days:
+      - day: 1
+        title: "Llegada y Reikiavik"
+        summary: "Primer contacto con la isla: un paseo por Reikiavik y la primera cascada del viaje."
+        photo:
+          src: islandia/islandia-reikiavik-skolavordustigur.jpg
+          alt: "Calle Skólavörðustígur en Reikiavik, con el suelo pintado de arcoíris y la iglesia Hallgrímskirkja al fondo"
+          caption: "Reikiavik, septiembre de 2025"
+        highlight: "Nuestra primera cascada del viaje, donde paramos a comer y disfrutar del lugar."
+        # Parking de Bonus y Krónan → Reikiavik (45 km) → Þórufoss (35) → Camping Þingvellir (12). Confirmado por el autor.
+        drive:
+          km: 90
+          minutes: 90
+        overnight: camp_thingvellir
+        stops:
+          - place_id: reykjavik
+            order: 1
+            duration_min: 300
+            duration_max_min: 360
+            planning_status: required
+            visit_status: visited
+            variant_note: "La capital de Islandia, punto de partida y cierre de nuestra ruta, donde aprovechamos para dar un primer paseo antes de comenzar el recorrido por la Ring Road."
+          - place_id: thorufoss
+            order: 2
+            duration_min: 30
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Comimos en este entorno — fue la primera cascada del viaje y flipamos con el paisaje."
+        our_take: "Llegamos a la 1:30 de la madrugada y dormimos pocas horas en un parking de la ciudad antes de arrancar el día. Aun con poco sueño, mereció la pena hacer Reikiavik con calma este primer día en vez de dejarlo para el regreso. Aparcamos gratis en el parking de Perlan y recorrimos después la ciudad andando, dándonos una paliza: no lo repetiríamos. Aparcaríamos en alguna de las calles donde se puede o en un parking de pago del centro."
+
+      - day: 2
+        title: "Círculo Dorado"
+        summary: "El trío clásico para entrar en calor y un río termal para cerrar el día."
+        photo:
+          src: islandia/islandia-gullfoss.jpg
+          alt: "Cascada de Gullfoss en dos saltos, con nubes oscuras y gente en el mirador de la izquierda"
+          caption: "Gullfoss, septiembre de 2025"
+        highlight: "Acabar en el río termal de Reykjadalur, dándonos un baño y relajándonos en su entorno."
+        # Þingvellir → Geysir (60 km) → Gullfoss (10) → Reykjadalur (81) → Camping Árnes (≈ 60).
+        drive:
+          km: 215
+          minutes: 180
+        overnight: camp_arnes
+        physical_level:
+          hills: some
+        stops:
+          - place_id: thingvellir
+            order: 1
+            duration_min: 120
+            duration_max_min: 180
+            planning_status: required
+            visit_status: visited
+            start_time: "09:00"
+            travel_to_next_min: 50
+            travel_to_next_mode: "coche"
+            variant_note: "Parking P1, paseo por la grieta y el lago, sin perder tiempo."
+          - place_id: geysir
+            order: 2
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+            start_time: "11:50"
+            travel_to_next_min: 10
+            travel_to_next_mode: "coche"
+          - place_id: gullfoss
+            order: 3
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+            start_time: "13:00"
+            travel_to_next_min: 65
+            travel_to_next_mode: "coche"
+          - place_id: reykjadalur
+            order: 4
+            duration_min: 180
+            duration_max_min: 240
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Dicen que la subida son hasta 1h30, pero a nosotros nos costó unos 45 minutos. Nos bañamos entre 1 y 1h30 en un tramo que sentimos casi como una piscina para nosotros solos — la sensación fue increíble. Lo único malo: al salir del agua pasamos mucho frío mientras nos vestíamos."
+        our_take: "Si tuviéramos que quitar algo del Círculo Dorado, quitaríamos Þingvellir el primer día y lo dejaríamos para el último, con más calma. El Géiser y Gullfoss son más impactantes como primera impresión. Cambiamos Kerið por subir a Reykjadalur a bañarnos en el río termal al final del día: no nos arrepentimos, mereció la pena el cambio."
+        plan_b: "Si llueve: Gullfoss desde el mirador cubierto sigue mereciendo. El Géiser no depende del tiempo."
+
+      - day: 3
+        title: "Cascadas del sur"
+        summary: "De Þjórsárdalur a la costa sur, entre cascadas y cañones, hasta Skógafoss."
+        photo:
+          src: islandia/islandia-gljufrafoss-garganta.jpg
+          alt: "Cascada de Gljúfrafoss cayendo desde lo alto de una garganta de paredes cubiertas de musgo, con una persona agachada sobre una roca a sus pies"
+          caption: "Gljúfrafoss, septiembre de 2025"
+        overnight: camp_skogafoss
+        highlight: "Entrar en el cañón de Nauthúsagil y llegar hasta su cascada secreta fue uno de los momentos más especiales del día."
+        # Camping Árnes → Hjálparfoss (22 km, 30 min) → Háifoss por la pista (12, 1 h) → vuelta por la
+        # misma pista, con un intento fallido por el interior, y carretera hasta Nauthúsagil (≈ 85, 2 h) →
+        # DC-3 (15 min) → Seljalandsfoss → Gljúfrafoss (30 min) → Camping Skógafoss (30, 30 min).
+        # Tiempos confirmados por el autor (2026-10-07).
+        drive:
+          km: 175
+          minutes: 285
+        stops:
+          - place_id: hjalparfoss
+            order: 1
+            duration_min: 30
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 60
+            travel_to_next_mode: "coche"
+          - place_id: haifoss
+            order: 2
+            duration_min: 45
+            duration_max_min: 150
+            duration_note: "con la ruta hasta la base de la cascada"
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 120
+            travel_to_next_mode: "coche"
+            variant_note: "La vimos desde el mirador y no bajamos hasta la base: la ruta nos habría dejado sin tiempo para el resto del día. Llegar al parking ya cuesta: una pista de grava muy irregular en la que, con una camper sin 4x4, tardamos entre 45 minutos y una hora yendo con cuidado. Para salir, el GPS nos mandaba por el interior y tuvimos que dar la vuelta y bajar por la misma pista."
+          - place_id: nauthusagil
+            order: 3
+            duration_min: 90
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 15
+            travel_to_next_mode: "coche"
+            variant_note: "Recorrimos el cañón hasta la cascada escondida dentro de la montaña. Fue lo mejor del día."
+          - place_id: dc3_eyvindarholt
+            order: 4
+            duration_min: 20
+            duration_max_min: 30
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
+          - place_id: seljalandsfoss
+            order: 5
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 10
+            travel_to_next_mode: "a pie"
+          - place_id: gljufrafoss
+            order: 6
+            duration_min: 30
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 30
+            travel_to_next_mode: "coche"
+          # Left out for lack of time after the Háifoss detour (the author, 2026-10-07).
+          - place_id: keldur
+            order: 7
+            duration_min: 45
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Estaba en el plan, pero el desvío a Hjálparfoss y Háifoss se comió el tiempo que le tocaba. Si repitiéramos el día sin esas dos cascadas, Keldur entraría."
+          - place_id: gluggafoss
+            order: 8
+            duration_min: 30
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Queda de paso en la carretera 261, cerca de Nauthúsagil, pero llegamos sin tiempo. Es una de las paradas que haríamos a cambio de Háifoss."
+          - place_id: seljavallalaug
+            order: 9
+            duration_min: 60
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Entre el camino a pie y el baño son más de una hora, y ese día ya no la teníamos. Si se deja fuera el desvío a Háifoss, cabe antes de dormir en Skógafoss."
+        our_take: "Desviarse de la ruta del sur para ver Hjálparfoss y Háifoss solo tiene sentido con buen tiempo y sin lluvia: la pista hasta el parking de Háifoss es irregular, con una camper sin 4x4 hay que ir con cuidado y se pierde mucho tiempo en el acceso. Si solo se van a ver las dos cascadas, sin hacer la ruta hasta la base, quizá no merezca tanto la pena. Nosotros las cambiaríamos por lo que dejamos fuera ese día por falta de tiempo: Keldur, Gluggafoss y la piscina de Seljavallalaug. Seljalandsfoss se puede hacer con calma por la mañana. Dormir junto a Skógafoss deja la cascada lista para volver temprano, con luz y sin gente."
+        plan_b: "La lluvia mejora estas cascadas (más caudal). No es mal plan si llueve."
+
+      - day: 4
+        title: "Sur de Islandia"
+        summary: "De Skógafoss a Skaftafell, entre playas negras, cañones y lava, hasta el Camping Svínafell."
+        overnight: camp_svinafell
+        physical_level:
+          hills: some
+        # Camping Skógafoss → Skógafoss (≈ 0 km) → Kvernufoss, parking del Museo de Skógar (2, 5 min) →
+        # Dyrhólaey (30, 24 min) → Reynisfjara (15, 20 min) → Iglesia de Vík (10, 12 min) →
+        # Eldhraun, pasando por Gígjagjá y Laufskálavarða (62, 20 + 15 + 17 min) → Fjaðrárgljúfur (6, 8 min) →
+        # Foss á Síðu, pasando por Kirkjubæjarklaustur y Systrafoss (21, ≈ 10 + 20 min) →
+        # Camping Svínafell, pasando por Lómagnúpur (62, 27 + ≈ 25 min). Total ≈ 208 km → 210; 203 min → 205.
+        # Minutes from the author's notes; Fjaðrárgljúfur → Systrafoss and the last leg are estimates.
+        # Estimación pendiente de confirmar por el autor. Visit times confirmed by the author (2026-10-08).
+        drive:
+          km: 210
+          minutes: 210
+        stops:
+          - place_id: skogafoss
+            order: 1
+            duration_min: 30
+            duration_max_min: 150
+            duration_note: "con las escaleras, los miradores y el paseo río arriba hasta los saltos"
+            planning_status: required
+            visit_status: visited
+            start_time: "08:30"
+            travel_to_next_min: 5
+            travel_to_next_mode: "coche"
+            variant_note: "Subir las escaleras de la derecha para el mirador superior. Con la luz de la mañana y sin las multitudes del mediodía."
+          - place_id: kvernufoss
+            order: 2
+            duration_min: 45
+            duration_max_min: 60
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 24
+            travel_to_next_mode: "coche"
+          - place_id: dyrholaey
+            order: 3
+            duration_min: 60
+            duration_max_min: 120
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
+          - place_id: reynisfjara
+            order: 4
+            duration_min: 45
+            duration_max_min: 60
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 12
+            travel_to_next_mode: "coche"
+          - place_id: iglesia_vik
+            order: 5
+            duration_min: 15
+            duration_max_min: 20
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 3
+            travel_to_next_mode: "coche"
+          - place_id: skool_beans
+            order: 6
+            duration_min: 30
+            duration_max_min: 45
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
+            variant_note: "Parada para un café y un descanso antes de seguir hacia el este."
+          - place_id: playa_vik
+            order: 7
+            duration_min: 30
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "La playa de Vík, la otra cara de Reynisfjara, quedó fuera por tiempo."
+          - place_id: gigjagja
+            order: 8
+            duration_min: 20
+            planning_status: optional
+            visit_status: not_visited
+            travel_to_next_min: 15
+            travel_to_next_mode: "coche"
+            skip_reason: "Estaba en el plan, pero en un día con tantas paradas quedó fuera por tiempo."
+          - place_id: laufskalavarda
+            order: 9
+            duration_min: 10
+            planning_status: optional
+            visit_status: not_visited
+            travel_to_next_min: 17
+            travel_to_next_mode: "coche"
+            skip_reason: "Queda junto a la Ring Road, pero entre tantas paradas no nos dio tiempo a parar."
+          - place_id: eldhraun
+            order: 10
+            duration_min: 15
+            duration_max_min: 20
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 8
+            travel_to_next_mode: "coche"
+          - place_id: fjadrargljufur
+            order: 11
+            duration_min: 45
+            duration_max_min: 90
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 10
+            travel_to_next_mode: "coche"
+          - place_id: systrafoss
+            order: 12
+            duration_min: 30
+            planning_status: optional
+            visit_status: not_visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
+            skip_reason: "Estaba en el plan, pero quedó fuera por tiempo, en un día con muchas paradas."
+          - place_id: foss_a_sidu
+            order: 13
+            duration_min: 10
+            duration_note: "solo desde la carretera: la base es terreno privado"
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 27
+            travel_to_next_mode: "coche"
+            variant_note: "No paramos: la vimos desde el coche, y se ve bastante bien."
+          - place_id: lomagnupur
+            order: 14
+            duration_min: 10
+            planning_status: optional
+            visit_status: not_visited
+            travel_to_next_min: 25
+            travel_to_next_mode: "coche"
+            skip_reason: "Estaba en el plan como parada de paso antes del camping, pero quedó fuera por tiempo."
+        our_take: "Dormir justo al lado y volver a primera hora es la diferencia entre ver la cascada en foto de postal o entre autobuses de turistas."
+
+      - day: 5
+        title: "Trekking en el glaciar"
+        summary: "Día centrado en el trekking guiado sobre el glaciar Svínafellsjökull, con Svartifoss de propina antes de instalarse en el camping."
+        overnight: camp_skaftafell
+        # Camping Svínafell → base del trekking (≈ 5 km, ≈ 5 min) → Camping Skaftafell (≈ 5 km, ≈ 5 min);
+        # Hundafoss y Svartifoss se hacen a pie desde el camping por el sendero S2 (no suman km). Total ≈ 10 km;
+        # ≈ 10 min por tramos, 15 min según las notas del autor (Skaftafell ↔ Svínafell, 15 m) → 15. Estimación
+        # pendiente de confirmar por el autor.
+        drive:
+          km: 10
+          minutes: 15
+        # duraciones estimadas, pendiente de confirmar
+        stops:
+          - place_id: trekking_glaciar_svinafellsjokull
+            order: 1
+            duration_min: 360
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 25
+            travel_to_next_mode: "coche"
+            variant_note: "Excursión de 6 horas y dificultad moderada, con la base de operaciones muy bien situada, tranquila y rodeada de naturaleza, cerca del parque de Skaftafell. No nos tocó un día espectacular de tiempo, pero la experiencia de caminar sobre el glaciar fue impresionante igualmente. Por el precio, merece muchísimo la pena."
+          - place_id: hundafoss
+            order: 2
+            duration_min: 10
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 10
+            travel_to_next_mode: "a pie"
+          - place_id: svartifoss
+            order: 3
+            duration_min: 90
+            planning_status: required
+            visit_status: visited
+          - place_id: svinafellsjokull
+            order: 4
+            duration_min: 20
+            planning_status: optional
+            visit_status: not_visited
+            variant_note: "Se ve desde el aparcamiento sin necesidad de hacer la excursión guiada. Queda fuera del itinerario si el trekking ocupa toda la tarde."
+            skip_reason: "Ese mismo día habíamos hecho el trekking guiado sobre el glaciar, así que acercarnos al mirador de Svínafellsjökull habría sido repetir paisaje. Si no haces una excursión de glaciar, este mirador es una forma fácil y gratuita de ver una lengua glaciar de cerca; para nosotros, después del trekking, sobraba."
+        our_take: "El trekking en el glaciar es la excursión más cara del viaje (502 € entre los dos) y la más impresionante. No la recortaríamos."
+
+      - day: 6
+        title: "Jökulsárlón, Diamond Beach y Vestrahorn"
+        summary: "De Skaftafell a Djúpivogur, con parada en las dos lagunas glaciares y los paisajes del sureste."
+        # Night outside any campsite. The note is the author's to write.
+        overnight: null
+        overnight_note: ""
+        # Camping Skaftafell → Múlagljúfur (37 km, ≈ 40 min) → Fjallsárlón (7, 12 min) → Jökulsárlón y Diamond
+        # Beach (13, 12 min) → Vestrahorn (78, 72 min) → Eystrahorn (12, ≈ 10 min) → mirador de Rauðafell, pasando
+        # por la zona de renos, Lækjavík y Djúpavogskörin (74, ≈ 64 min). Total ≈ 221 km → 220; 210 min. Tiempos
+        # de las notas del autor salvo los marcados ≈. Noche fuera de camping: el día acaba en la última parada.
+        # Estimación pendiente de confirmar por el autor.
+        drive:
+          km: 220
+          minutes: 210
+        # duraciones estimadas, pendiente de confirmar
+        stops:
+          - place_id: mulagljufur
+            order: 1
+            duration_min: 110
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 12
+            travel_to_next_mode: "coche"
+            variant_note: "Una de las joyas de Islandia: pudimos disfrutar de todo el recorrido y de los miradores, en plena naturaleza. Nos encantó. Desde el parking al mirador son unos 45 minutos de ida y otros 45 de vuelta."
+          - place_id: fjallsarlon
+            order: 2
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 12
+            travel_to_next_mode: "coche"
+          - place_id: jokulsarlon
+            order: 3
+            duration_min: 90
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 72
+            travel_to_next_mode: "coche"
+            variant_note: "Diamond Beach es espectacular: llena de trozos de icebergs grandes y pequeños que parecen diamantes. Desde Jökulsárlón salen excursiones en barca para ver de cerca cómo caen los icebergs al mar — no las hicimos, pero es un espectáculo a la vez precioso y un poco triste de ver desde la orilla."
+          - place_id: vestrahorn
+            order: 4
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 10
+            travel_to_next_mode: "coche"
+            variant_note: "Para nosotros sí mereció la pena pagar por verlo: el recorrido es bastante amplio y el entorno, con las montañas y el poblado vikingo, es espectacular. Comimos en las mesas cerca del parking y pudimos usar también la zona de baño del camping."
+          - place_id: eystrahorn
+            order: 5
+            duration_min: 30
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 64
+            travel_to_next_mode: "coche"
+          - place_id: thjodvegur_renos
+            order: 6
+            duration_min: 15
+            planning_status: optional
+            visit_status: not_visited
+            variant_note: "Tramo donde suele haber renos, sin garantía de avistamiento."
+            skip_reason: "Pasamos por el tramo donde suele haber renos, pero no vimos ninguno. No es una parada en sí: es un tramo de carretera con posibilidad de avistamiento."
+          - place_id: laekjavik
+            order: 7
+            duration_min: 20
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Estaba en el plan como opción dudosa, solo si íbamos bien de tiempo, y quedó fuera."
+          - place_id: djupavogskorin
+            order: 8
+            duration_min: 15
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Estaba en el plan con la duda de si la poza estaría abierta, y quedó fuera."
+          - place_id: raudafell
+            order: 9
+            duration_min: 90
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Después de muchos kilómetros paramos aquí y empezamos a ver auroras boreales: de las mejores del viaje, de montaña a montaña y con todos los colores. Fue tan épico que nos quedamos a dormir en el mirador, y queremos ser claros: en Islandia está prohibido pernoctar en camper fuera de los campings y hay multas. No lo recomendamos. Si las auroras te pillan en ruta, disfrútalas y sigue después hasta el camping más cercano. Quedarse solo es legal con permiso del propietario del terreno, y en ese caso, con respeto absoluto por el entorno y bajo la responsabilidad de cada uno."
+        our_take: "Diamond Beach y Jökulsárlón son dos sitios distintos separados por la Ring Road: cruzar con cuidado entre ambos. No vimos ningún reno en el tramo donde suelen estar — no lo contaríamos como parada en sí, es solo un tramo de carretera con posibilidad de avistamiento."
+
+      - day: 7
+        title: "Fiordos del este"
+        summary: "Recorrido por los fiordos del este hasta Egilsstaðir, con parada en Seyðisfjörður y sus cascadas de acceso."
+        # Night outside any campsite. The note is the author's to write.
+        overnight: null
+        overnight_note: ""
+        # Breiðdalsvík (night before outside any campsite, no first leg) → Stöðvarfjörður (10 km, 15 min) →
+        # Reyðarfjörður (40, 40 min) → Fardagafoss (34, 55 min) → Gufufoss (23, 18 min) → Seyðisfjörður (2, 4 min)
+        # → Vök Baths (26, 30 min). Total ≈ 135 km; 162 min → 160. Minutes from the author's notes; km from
+        # coordinates (× 1.4 on the two fjord legs, × 1.25 elsewhere), probably short on the fjord roads. Night
+        # outside any campsite: the day ends at Vök Baths. Estimación pendiente de confirmar por el autor.
+        drive:
+          km: 135
+          minutes: 160
+        # duraciones estimadas, pendiente de confirmar
+        stops:
+          - place_id: breiddalsvik
+            order: 1
+            duration_min: 45
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 15
+            travel_to_next_mode: "coche"
+          - place_id: stodvarfjordur
+            order: 2
+            duration_min: 15
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 40
+            travel_to_next_mode: "coche"
+          - place_id: reydarfjordur
+            order: 3
+            duration_min: 40
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 55
+            travel_to_next_mode: "coche"
+          - place_id: fardagafoss
+            order: 4
+            duration_min: 70
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 18
+            travel_to_next_mode: "coche"
+          - place_id: gufufoss
+            order: 5
+            duration_min: 15
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 4
+            travel_to_next_mode: "coche"
+          - place_id: seydisfjordur
+            order: 6
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 30
+            travel_to_next_mode: "coche"
+          - place_id: vestdalsfossar
+            order: 7
+            duration_min: 60
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Estaba en el plan como opción dudosa, justo después de Seyðisfjörður, y quedó fuera. Según nuestras notas, la cascada y la vista al fiordo están a unos 5 minutos a pie del parking, por si quieres añadirla."
+          - place_id: borgarfjardarhofn
+            order: 8
+            duration_min: 30
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Buscábamos ver frailecillos y no era la época: no había ninguno cuando pasamos. Si vas en temporada de avistamiento, sí merece la pena acercarse."
+          - place_id: vok_baths
+            order: 9
+            duration_min: 90
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Nos encantaron estos baños: el entorno donde están es precioso. No fuimos a otros para comparar, pero esto solo ya mereció la pena. Nos tomamos una cerveza dentro del agua y un té al salir."
+        food:
+          - name: "Askur Pizzeria (Egilsstaðir)"
+            area: Egilsstaðir
+            price_level: medio
+            notes: "2 pizzas y un refresco de 2L, unos 7.200 ISK (unos 50 €) para 2 personas en 2025. Pizzas espectaculares."
+            verified_at: 2025-09-17
+        our_take: "Seyðisfjörður con la calle arcoíris merece parar aunque no se vaya a coger el ferry."
+
+      - day: 8
+        title: "Cañones y cascadas del este"
+        summary: "De Egilsstaðir hacia Mývatn, con los grandes cañones y cascadas del norte-este como protagonistas."
+        overnight: camp_laugar
+        # Rjúkandifoss (sin tramo inicial: la noche del día 7 fue fuera de camping) → Stuðlagil, lado este (41 km,
+        # 26 min) → Dettifoss y Selfoss, lado oeste (95, 110 min) → Grjótagjá (43, ≈ 37 min) → Camping Laugar (30,
+        # ≈ 26 min). Total ≈ 209 km → 210; 199 min → 200. Tiempos de las notas del autor salvo los marcados ≈.
+        # Estimación pendiente de confirmar por el autor.
+        drive:
+          km: 210
+          minutes: 200
+        # duraciones estimadas, pendiente de confirmar
+        stops:
+          - place_id: hengifoss
+            order: 1
+            duration_min: 150
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Estaba en el plan como opción dudosa, con una caminata de unas dos horas y media, y al final quedó fuera."
+          - place_id: rjukandifoss
+            order: 2
+            duration_min: 20
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 26
+            travel_to_next_mode: "coche"
+            variant_note: "Cascada a pie de carretera, muy fácil de ver. Después de tantas cascadas de la ruta, nos sorprendió gratamente."
+          - place_id: studlagil
+            order: 3
+            duration_min: 100
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 110
+            travel_to_next_mode: "coche"
+            variant_note: "Nos gustó mucho. El agua no estaba verde el día que fuimos — verla así es más suerte que otra cosa — pero las formaciones rocosas por la erosión del agua merecen la pena igual. Es un spot de 10 en Islandia."
+          - place_id: dettifoss_selfoss
+            order: 4
+            duration_min: 90
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 37
+            travel_to_next_mode: "coche"
+            variant_note: "Nos pilló una nevada fuerte justo al llegar: los copos caían con tanta fuerza que llegaban a hacer daño, no fue agradable, y no pudimos ver bien la cascada por lo nublado. Mala suerte de tiempo, no del lugar — volveremos a intentarlo. Creemos que el lado oeste es mejor, pero si tienes tiempo, merece la pena ver los dos lados."
+          - place_id: grjotagja
+            order: 5
+            duration_min: 20
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Estaba lleno de gente y, para nosotros, no mereció mucho la pena — quizás interesa más a quien sea fan de Juego de Tronos (aquí se rodó una escena de la serie), poco más."
+        food:
+          - name: "Fish and Chips Lake Mývatn"
+            area: Mývatn
+            price_level: medio
+            notes: "3.500 ISK por persona en 2025. El mejor fish and chips de Islandia — y de los mejores que hemos probado nunca. Lo recomendamos sin dudarlo."
+            verified_at: 2025-09-18
+        our_take: "Stuðlagil desde el lado este no cruza el río: cómodo, pero las fotos más espectaculares se ven desde el otro lado."
+
+      - day: 9
+        title: "Mývatn y Krafla"
+        summary: "Día dedicado a la zona volcánica y geotérmica de Mývatn y Krafla."
+        overnight: camp_systragil
+        # Camping Laugar → Krafla, cráter Víti (≈ 38 km, ≈ 33 min) → Hverir / Námafjall (11, 12 min) → Hverfjall
+        # (6, 20 min) → Dimmuborgir (4, 10 min) → Mirador del lago Mývatn (6, 8 min) → Jarðgangalaug, pasando por
+        # Goðafoss (63, ≈ 29 + 30 min) → Camping Systragil (≈ 11, ≈ 9 min). Total ≈ 138 km → 140; 151 min → 150.
+        # Tiempos de las notas del autor salvo los marcados ≈. Estimación pendiente de confirmar por el autor.
+        drive:
+          km: 140
+          minutes: 150
+        # duraciones estimadas, pendiente de confirmar
+        stops:
+          - place_id: leirhnjukur
+            order: 1
+            duration_min: 45
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Estaba en el plan como primera parada, justo antes del cráter Víti, pero quedó fuera."
+          - place_id: krafla_viti
+            order: 2
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 12
+            travel_to_next_mode: "coche"
+            variant_note: "Hizo tanto viento y frío que la verdad no mereció mucho la pena: estuvimos solo unos minutos fuera porque era imposible aguantar más. El entorno nevado fue épico, pero si volviéramos no iríamos de nuevo, y menos por lo que costaba el parking en 2025."
+            experience:
+              visited_at: "2025-09"
+              actual_price_paid:
+                amount: 800
+                currency: ISK
+                notes: "El parking subió a 1.200 ISK después de nuestro viaje."
+          - place_id: hverir_namafjall
+            order: 3
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
+            variant_note: "Toda la zona es un recorrido bastante largo con fumarolas, parece de otro planeta, como estar en Marte — es increíble. Lo que nos parece es que el precio del parking y el baño es abusivo."
+          - place_id: hverfjall
+            order: 4
+            duration_min: 30
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 10
+            travel_to_next_mode: "coche"
+            variant_note: "Solo hicimos la subida para verlo: 1,5 km entre ida y vuelta, unos 15 minutos, bastante empinada, pero el cráter es muy guapo y las vistas espectaculares."
+          - place_id: dimmuborgir
+            order: 5
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 8
+            travel_to_next_mode: "coche"
+            variant_note: "Hay varios senderos; hicimos el más largo, recorriendo casi toda la zona. Las formaciones de lava son curiosas, el paseo es muy agradable y lo recomendamos mucho — con niños les encantará."
+          - place_id: myvatn_viewpoint
+            order: 6
+            duration_min: 20
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 59
+            travel_to_next_mode: "coche"
+            variant_note: "Un spot bonito para disfrutar del lago con tranquilidad y hacer buenas fotos."
+          - place_id: skutustadagigar
+            order: 7
+            duration_min: 30
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "Estaba en el plan como opción dudosa, al final del recorrido por el lago, y quedó fuera."
+          - place_id: jardgangalaug
+            order: 8
+            duration_min: 40
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Nos bañamos junto a la cascada, donde el agua está más fresca que río arriba pero aun así calentita — estábamos a 0°C fuera y el contraste fue único. Solo se bañó uno de nosotros. Lo hicimos justo antes de dormir, de camino al camping Systragil."
+        our_take: "Hverir huele mal por el azufre pero es de los paisajes más marcianos del viaje. Merece la pena aunque sea rápido."
+
+      - day: 10
+        title: "Goðafoss, Akureyri y la costa de Tröllaskagi"
+        summary: "De la zona de Mývatn a la costa norte, con parada para avistamiento de ballenas y cruce por túneles hacia Siglufjörður."
+        overnight: camp_lambeyri
+        # Camping Systragil → Goðafoss (≈ 20 km, ≈ 17 min) → Akureyri (≈ 31, ≈ 26 min) → Hauganes (35, 30 min) →
+        # Mígandifoss (24, 22 min) → Siglufjörður (21, 26 min) → Camping Lambeyri, pasando por Hofsós (105, 55 +
+        # ≈ 51 min). Total ≈ 235 km; 227 min → 225. Minutes from the author's notes except those marked
+        # ≈ (estimates: the notes start at Laugar and end at Hólar/Hofsós). Estimación pendiente de confirmar por
+        # el autor.
+        drive:
+          km: 235
+          minutes: 225
+        # duraciones estimadas, pendiente de confirmar
+        stops:
+          - place_id: godafoss
+            order: 1
+            duration_min: 40
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 26
+            travel_to_next_mode: "coche"
+          - place_id: akureyri
+            order: 2
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 30
+            travel_to_next_mode: "coche"
+            variant_note: "Visitamos las zonas principales, la iglesia y el jardín botánico — una ciudad con mucho encanto. Aprovechamos para arreglar la calefacción del habitáculo delantero en un taller de la ciudad: un 10."
+          - place_id: hauganes
+            order: 3
+            duration_min: 180
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 22
+            travel_to_next_mode: "coche"
+            variant_note: "Espectacular: la primera vez que vimos ballenas y nos encantó. Fue respetuoso, vimos un montón, el capitán genial explicando todo el rato. Fuimos de los primeros ese día y repartieron café o chocolate con galletas de canela. Una experiencia preciosa."
+          - place_id: migandifoss
+            order: 4
+            duration_min: 30
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 26
+            travel_to_next_mode: "coche"
+          - place_id: siglufjordur
+            order: 5
+            duration_min: 15
+            planning_status: required
+            visit_status: visited
+            variant_note: "No bajamos al pueblo: estábamos cansados y queríamos seguir hasta el camping, así que lo vimos a través del coche. Parece un pueblo pesquero bonito, pero no lo recorrimos de verdad."
+
+      - day: 11
+        title: "Camino al oeste: iglesias de turba y Kolugljúfur"
+        summary: "Cruce de Skagafjörður hacia la península de Snæfellsnes, con paradas en iglesias de turba históricas y el cañón de Kolugljúfur."
+        overnight: camp_hellissandur
+        # Camping Lambeyri → Grafarkirkja (≈ 41 km, ≈ 35 min) → Glaumbær (29, 36 min) → Víðimýrarkirkja (17, ≈ 15
+        # min) → Kolugljúfur (73, 70 min) → Kolgrafarfjörður, pasando por Erpsstaðir (183, 80 + 85 min) → Camping
+        # Hellissandur (37, ≈ 32 min). Total ≈ 380 km; 353 min → 355. Tiempos de las notas del autor salvo los
+        # marcados ≈. Estimación pendiente de confirmar por el autor.
+        drive:
+          km: 380
+          minutes: 355
+        # duraciones estimadas, pendiente de confirmar
+        stops:
+          - place_id: grafarkirkja
+            order: 1
+            duration_min: 20
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 36
+            travel_to_next_mode: "coche"
+          - place_id: glaumbaer
+            order: 2
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 15
+            travel_to_next_mode: "coche"
+            variant_note: "Muy chula, aunque cuando llegamos no habían abierto. La vimos toda por fuera, que ya merece la pena, y aprovechamos para hacer fotos."
+          - place_id: vidimyrarkirkja
+            order: 3
+            duration_min: 20
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 70
+            travel_to_next_mode: "coche"
+          - place_id: kolugljufur
+            order: 4
+            duration_min: 60
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 165
+            travel_to_next_mode: "coche"
+            variant_note: "¡Pequeño pero impresionante! Nos alegramos mucho de haber parado aquí durante el viaje. Pasamos alrededor de una hora dando un breve paseo río arriba y río abajo, con vistas espectaculares."
+          - place_id: kolgrafarfjordur
+            order: 5
+            duration_min: 20
+            planning_status: required
+            visit_status: visited
+
+      - day: 12
+        title: "Snæfellsnes: Kirkjufell, Djúpalónssandur y Arnarstapi"
+        summary: "Día completo recorriendo la península de Snæfellsnes, de Kirkjufell hasta los acantilados del sur."
+        overnight: camp_mosskogar
+        # Camping Hellissandur → Kirkjufell (≈ 34 km, ≈ 29 min) → Ólafsvík (25, 20 min) → Faro de Svörtuloft, por
+        # pista (≈ 21, ≈ 25 min) → Djúpalónssandur (≈ 19, ≈ 23 min) → Lóndrangar (3, 8 min) → Hellnar (15, ≈ 13
+        # min) → Arnarstapi (3, ≈ 3 min) → Rauðfeldsgjá (3, ≈ 3 min) → Búðakirkja (14, 15 min) → Ytri Tunga (6,
+        # ≈ 5 min) → Landbrotalaug (28, ≈ 24 min) → Raudhals (36, ≈ 31 min) → Camping Mosskógar (99, ≈ 85 min).
+        # Total ≈ 305 km; 284 min → 285. Tiempos de las notas del autor salvo los marcados ≈. Estimación pendiente
+        # de confirmar por el autor.
+        drive:
+          km: 305
+          minutes: 285
+        # duraciones estimadas, pendiente de confirmar
+        stops:
+          - place_id: kirkjufell
+            order: 1
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 20
+            travel_to_next_mode: "coche"
+          - place_id: olafsvik
+            order: 2
+            duration_min: 30
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 25
+            travel_to_next_mode: "coche"
+            variant_note: "Dimos un paseo tranquilo por el pueblo."
+          - place_id: svortuloft
+            order: 3
+            duration_min: 30
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 23
+            travel_to_next_mode: "coche"
+            variant_note: "Nos encantó el faro: mirador espectacular con acantilados y muchas aves."
+          - place_id: djupalonssandur
+            order: 4
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 8
+            travel_to_next_mode: "coche"
+            variant_note: "Paseamos por la playa de Dritvik y Djúpalónssandur."
+          - place_id: londrangar
+            order: 5
+            duration_min: 30
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 13
+            travel_to_next_mode: "coche"
+          - place_id: hellnar
+            order: 6
+            duration_min: 30
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 3
+            travel_to_next_mode: "coche"
+            variant_note: "Espectacular. Aquí vimos nuestras primeras focas, pequeñitas — nos encantó."
+          - place_id: arnarstapi
+            order: 7
+            duration_min: 45
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 3
+            travel_to_next_mode: "coche"
+            variant_note: "Una zona muy chula: todo se recorre andando. Los acantilados están genial y el puente de piedra (Gatklettur) es una pasada. Muy recomendable."
+          - place_id: raudfeldsgja
+            order: 8
+            duration_min: 30
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 15
+            travel_to_next_mode: "coche"
+            variant_note: "Nos gustó mucho. La entrada hacia el interior de la montaña es muy fotogénica, con una pequeña cascada dentro, pero no pudimos ascender a través de ella."
+          - place_id: budakirkja
+            order: 9
+            duration_min: 20
+            planning_status: required
+            visit_status: visited
+            travel_to_next_min: 5
+            travel_to_next_mode: "coche"
+          - place_id: ytri_tunga
+            order: 10
+            duration_min: 45
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 24
+            travel_to_next_mode: "coche"
+            variant_note: "Lo bonito de aquí es la playa: uno de los sitios para ver focas de cerca, respetuosamente y sin molestarlas. Vimos muchas, fue mágico. Comimos en las mesas de picnic de la playa."
+          - place_id: landbrotalaug
+            order: 11
+            duration_min: 15
+            planning_status: optional
+            visit_status: visited
+            travel_to_next_min: 31
+            travel_to_next_mode: "coche"
+            variant_note: "Fuimos, pero estaba lleno de gente y el agua cubría poco. No nos metimos — no mereció la pena la parada."
+          - place_id: raudhals
+            order: 12
+            duration_min: 20
+            planning_status: optional
+            visit_status: visited
+            variant_note: "Llegar aquí fue como estar en otro planeta, muy espectacular y poco conocido."
+
+      - day: 13
+        title: "Regreso a Reikiavik"
+        summary: "Última etapa de la Ring Road, cierre del círculo en la capital."
+        # Camping Mosskógar → Reikiavik (≈ 20 km, ≈ 17 min) → Aeropuerto de Keflavík, entrega de la camper (≈ 46
+        # km, ≈ 40 min). Todo estimado: las notas del autor no dan tiempos para este día. Estimación pendiente de
+        # confirmar por el autor.
+        drive:
+          km: 65
+          minutes: 55
+        # duración estimada, pendiente de confirmar
+        stops:
+          - place_id: glymur
+            order: 1
+            duration_min: 150
+            planning_status: optional
+            visit_status: not_visited
+            skip_reason: "La subida a Glymur es una excursión de 2 a 3 horas ida y vuelta. Es una de las cascadas más altas de Islandia, pero el último día, con el vuelo de vuelta cerca y el camper que entregar, no quisimos arriesgarnos a ir con prisa. Si tienes la mañana libre y buen tiempo, merece la pena; si es tu día de cierre, mejor dejarla."
+          - place_id: reykjavik
+            order: 2
+            duration_min: 90
+            planning_status: required
+            visit_status: visited
+        our_take: "Después de este día no hicimos nada más: nos levantamos más tarde para descansar y fuimos directos a entregar la camper y dejarla limpia."
+
+accommodation:
+  notes: "En camper, el alojamiento son campings. Se elige según la posición al final de cada jornada."
+  zones:
+    - name: "Sur de Islandia"
+      description: "Campings más completos y mejor infraestructura."
+      pros: ["Duchas incluidas en muchos", "Bien ubicados cerca de los atractivos"]
+      cons: ["Más llenos en temporada alta"]
+      best_for: [couple, friends]
+      picks:
+        - place_id: camp_thingvellir
+          price_paid: { amount: 4400, currency: ISK, verified_at: 2025-09-13 }
+          opinion: "Cómodo para la primera noche: baño y ducha incluidos, y el Círculo Dorado empieza en la puerta."
+        - place_id: camp_arnes
+          price_paid: { amount: 4400, currency: ISK, verified_at: 2025-09-14 }
+          opinion: "El peor camping del viaje: amplio pero sucio y sin sala común."
+          notes: "Encontramos ropa interior tirada en el suelo. De las dos duchas, una estaba averiada. Los baños eran lo mejor, limpios."
+        - place_id: camp_skogafoss
+          price_paid: { amount: 4000, currency: ISK, verified_at: 2025-09-15 }
+          opinion: "Dormir al pie de la cascada compensa pagar la ducha."
+          notes: "Encontramos los baños y las duchas recién limpios al llegar y pudimos ducharnos los dos a la vez."
+        - place_id: camp_svinafell
+          price_paid: { amount: 5000, currency: ISK, verified_at: 2025-09-16 }
+          opinion: "Muy amplio y completo. Lo recomendamos sin dudarlo."
+          notes: "La lavandería estaba rota el día que fuimos."
+        - place_id: camp_skaftafell
+          price_paid: { amount: 5500, currency: ISK, verified_at: 2025-09-17 }
+          opinion: "De los más caros del viaje, pero la ubicación lo vale."
+          notes: "Muy concurrido: conviene llegar temprano, pueden faltar baños y duchas para la cantidad de gente."
+    - name: "Norte de Islandia"
+      description: "Campings más pequeños y tranquilos."
+      pros: ["Menos gente", "Más baratos"]
+      cons: ["Duchas no siempre incluidas"]
+      best_for: [couple, friends]
+      picks:
+        - place_id: camp_laugar
+          price_paid: { amount: 4800, currency: ISK, verified_at: 2025-09-20 }
+          opinion: "Por el precio, merece muchísimo la pena: como un polideportivo bien adaptado."
+          notes: "Fue nuestra alternativa cuando el Camping Mývatn estaba cerrado. Si llueve, cuidado dónde aparcas la camper por el barro. Lo recomendamos sin dudarlo."
+        - place_id: camp_systragil
+          price_paid: { amount: 4200, currency: ISK, verified_at: 2025-09-21 }
+          opinion: "Pequeño pero precioso, enclavado en la montaña. Lo recomendamos sin dudarlo."
+          notes: "Nos nevó por la noche y nos despertamos con todo blanco, fue mágico. Adaptado para familias."
+        - place_id: camp_lambeyri
+          price_paid: { amount: 5500, currency: ISK, verified_at: 2025-09-22 }
+          opinion: "Junto a un río, tranquilo y mágico: de los mejores campings del viaje."
+          notes: "No usamos la piscina. Lo recomendamos sin dudarlo."
+    - name: "Snæfellsnes (oeste)"
+      description: "Campings sencillos al cierre de la ruta, junto a los puntos clave de la península."
+      pros: ["Bien situados para Kirkjufell y los acantilados del sur de la península"]
+      cons: ["Oferta más limitada que en el sur"]
+      best_for: [couple, friends]
+      picks:
+        - place_id: camp_hellissandur
+          price_paid: { amount: 4000, currency: ISK, verified_at: 2025-09-23 }
+          opinion: "De los más baratos del viaje y en pleno campo de lava. Lo recomendamos sin dudarlo."
+          notes: "Muy concurrido, con gente empezando y terminando la ruta de Snæfellsjökull: conviene ir temprano."
+        - place_id: camp_mosskogar
+          price_paid: { amount: 5000, currency: ISK, verified_at: 2025-09-24 }
+          opinion: "Muy cuco y bien organizado; por su precio y lo que ofrece, lo recomendamos sin dudarlo."
+          notes: "El único camping del viaje que solo acepta efectivo: hay que llevar coronas encima. Tiene un sistema estupendo de productos que deja la gente que termina su viaje, disponibles para quien lo empieza. John, el dueño, muy amable y risueño."
+
+transport:
+  arrival:
+    - from_airport: MAD
+      description: "Vuelo a Reikiavik (KEF). El camper se recoge en el aeropuerto o en la ciudad. El aeropuerto está a 50 km de Reikiavik."
+      notes: "Llegamos a la 1:30 de la madrugada, recogimos la camper y dormimos directamente en un parking entre los supermercados Bonus y Kronan, en Reikiavik (63.97318428783835, -22.5445651829879)."
+      verified_at: 2025-09-11
+  local:
+    - mode: "Camper"
+      description: "Ring Road (Ruta 1) rodea toda la isla, asfaltada. Velocidad máx. 90 km/h en carretera, 30 km/h en pistas de grava. F-roads (pistas del interior): prohibidas para campers estándar."
+      notes: "App Gas Map Iceland para encontrar gasolineras baratas. Llenar siempre al pasar por una ciudad."
+      verified_at: 2025-09-15
+
+booking_checklist:
+  - label: "Alquiler del camper"
+    when: "3-6 meses antes"
+    priority: alta
+    notes: "Los buenos campers se agotan meses antes del verano."
+  - label: "Trekking en el glaciar"
+    when: "1-2 meses antes"
+    priority: alta
+    notes: "Las plazas se agotan en temporada alta. Es la excursión más cara del viaje y la más impresionante — no dejarla para el último momento."
+  - label: "Seguro de viaje"
+    when: "Antes de salir"
+    priority: media
+
+# "Nuestro criterio" (1.12 §13). Borrador pendiente de revisión del autor.
+how_we_choose:
+  - "Tiempo real, no tiempo de Google Maps: a cada parada le dimos lo que necesita, no lo que cabe en el plan."
+  - "Desvío frente a recompensa: si un sitio exigía más de una hora de ida y vuelta fuera de la Ring Road, tenía que compensar de verdad."
+  - "Sin F-roads: con una camper normal, el interior queda fuera, y preferimos no fingir que no."
+  - "La época manda: en septiembre hay menos luz y puede nevar, así que no apretamos los días del norte."
+  - "Mejor una parada bien vivida que tres con prisa: por eso dejamos fuera cosas que estaban en el plan."
+
+route_decisions:
+  - decision: "Sin Fiordos del Oeste"
+    reason: "Son dos o tres días más de carretera; en 13 días no cabían sin quitar tiempo al resto."
+  - decision: "Sin Highlands ni Landmannalaugar"
+    reason: "Solo se llega por F-roads, prohibidas para una camper sin 4x4."
+  - decision: "Mantuvimos el trekking en el glaciar aunque era lo más caro del viaje"
+    reason: "502 € entre los dos, y fue lo más impresionante: es lo último que recortaríamos."
+  - decision: "Ruta antihoraria, sur primero"
+    reason: "El sur tiene lo más impactante para empezar y el norte, con menos gente, para terminar."
+
+pitfalls:
+  - "No entrar en F-roads: el GPS de la empresa lo detecta y la penalización puede ser mayor que el deducible del seguro."
+  - "Llenar gasolina siempre al pasar por una ciudad. Los tramos remotos pueden tener 150 km sin gasolinera."
+  - "Las puertas del camper pueden dañarse con el viento. Posicionar siempre el vehículo como escudo antes de abrir."
+  - "En septiembre nos nevó varias noches y llegamos a estar a 0 °C: los campings sin ducha caliente ni sala común se hacen muy duros con ese frío."
+  - "Si la nevera de la camper funciona con la batería del vehículo sin estar enchufada a electricidad, apagarla por la noche: dejarla encendida puede agotar la batería y dejar la camper sin arrancar a la mañana siguiente."
+  - "La calefacción del habitáculo delantero puede averiarse; si pasa en pleno temporal de nieve o lluvia, puede dejarte mojado y sin calor de golpe. Llevar ropa de abrigo de repuesto a mano."
+  - "Casi todo en Islandia se paga con tarjeta, pero algún camping aislado puede pedir solo efectivo. Llevar algunas coronas encima por si acaso."
+
+terrain_tips:
+  - "Kvernufoss: el parking de la cascada cuesta 750 ISK, pero el del Museo de Skógar, justo al lado, es gratis, y el sendero sale por detrás del museo."
+  - "Dyrhólaey tiene dos zonas con parking propio, la baja (Lágey, junto a las playas negras) y la alta (Háey, con el faro): el mismo ticket vale para las dos: 750 ISK con un vehículo de hasta 5 plazas y 1.000 ISK de 6 a 9, válido 24 horas."
+  - "App Vedur (tiempo oficial islandés): el tiempo cambia en minutos."
+  - "App Gas Map Iceland para gasolineras más baratas."
+  - "Diamond Beach y Jökulsárlón están separadas por la Ring Road: son dos sitios distintos, cruzar con cuidado."
+  - "Gljúfrafoss está a 500 metros de Seljalandsfoss, poca gente llega."
+
+faq:
+  - q: "¿Cuánto cuesta viajar a Islandia en camper 13 días?"
+    a: "Depende del año y de los precios, así que el total y el precio por persona exactos están en la sección de presupuesto de esta guía, con el desglose completo: vuelos, camper, gasolina, campings, excursiones, supermercado y seguro. Son datos reales de nuestro viaje de 2025, en pareja."
+    schema: true
+  - q: "¿Qué ruta es mejor, horaria o antihoraria?"
+    a: "Nosotros hicimos la antihoraria (sur primero) y nos gustó: el sur tiene los atractivos más impactantes como aperitivo. El norte tiene menos turistas para el final."
+    schema: true
+
+adaptation_notes:
+  - id: parents_road_conditions
+    conditions:
+      group_type: [parents]
+    text: "Para viajar con personas mayores en camper por Islandia conviene reducir los días más largos de conducción (el norte tiene etapas de 300-400 km) partiéndolos en dos. Los campings con mejor infraestructura (duchas, aseos) son especialmente importantes."
+    target: both
+    priority: 1
+  - id: budget_ajustado_camper
+    conditions:
+      budget: [ajustado]
+    text: "Para reducir el presupuesto: cocinar en el camper casi siempre (ahorro estimado 40-70 €/persona), comprar exclusivamente en Bonus, elegir campings sin ducha cuando no sea imprescindible."
+    target: both
+    priority: 1

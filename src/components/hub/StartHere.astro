@@ -1,0 +1,50 @@
+---
+import type { ImageMetadata } from 'astro';
+import GuidePhoto from '../guide/GuidePhoto.astro';
+
+interface Props {
+  href: string;
+  title: string;
+  subtitle: string;
+  image: ImageMetadata;
+  alt: string;
+  /** Short facts under the title: "13 días", "2.248 €/pers.". */
+  facts: string[];
+  /** "Lo hicimos · septiembre de 2025": only for a route we travelled. */
+  lived?: string;
+}
+
+const { href, title, subtitle, image, alt, facts, lived } = Astro.props;
+---
+
+{/*
+  "Empieza aquí": the way into the route, one large card. Only the title is a
+  link; it stretches over the whole card, so the card is one tap target and
+  the link's name stays the guide's title.
+*/}
+<article class="start-here">
+  <div class="start-here__media">
+    {/*
+      Phones get a 16:9 crop, the shape the card shows there. This photo is
+      within the lazy-load margin at first paint, so Lighthouse counts its
+      bytes towards the hero's LCP: the smaller, the better.
+    */}
+    <GuidePhoto
+      class="start-here__photo"
+      image={image}
+      alt={alt}
+      sizes="(min-width: 48rem) 18rem, 100vw"
+      crop={{ media: '(max-width: 29.99rem)', ratio: 16 / 9, position: 'center' }}
+    />
+  </div>
+  <div class="start-here__body">
+    <p class="kicker">Empieza aquí</p>
+    <h3 class="start-here__title"><a href={href}>{title}</a></h3>
+    <p class="start-here__sub quiet">{subtitle}</p>
+    <ul class="start-here__facts">
+      {lived && <li class="pill start-here__lived">{lived}</li>}
+      {facts.map((fact) => <li class="pill">{fact}</li>)}
+    </ul>
+    <p class="start-here__cta" aria-hidden="true">Ver la ruta día a día →</p>
+  </div>
+</article>

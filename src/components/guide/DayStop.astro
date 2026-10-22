@@ -1,0 +1,100 @@
+---
+import type { CompiledStop } from '../../../engine/index.ts';
+import { placeMapLink } from '../../lib/maps.ts';
+import { dayAnchorId } from '../../lib/anchors.ts';
+import { formatDuration, formatMinutes } from '../../lib/formatDuration.ts';
+import { formatWholePrice } from '../../lib/formatPrice.ts';
+import { shortName } from '../../lib/placeName.ts';
+import SectionIcon from './SectionIcon.astro';
+
+interface Props {
+  stop: CompiledStop;
+  /** Position in the day's route, from 1. */
+  n: number;
+  /** The day this stop belongs to: makes the note's id unique across the route. */
+  day: number;
+}
+
+const { stop, n, day } = Astro.props;
+// The hike mark opens a speech bubble (native <details>, no script) saying
+// what the upper end of the visit time includes: "2 h 30 min con la ruta…".
+const hintId = `${dayAnchorId(day)}-parada-${n}-nota`;
+const hintTime = stop.duration_max_min != null ? formatMinutes(stop.duration_max_min) : formatMinutes(stop.duration_min);
+const { place } = stop;
+const { parking } = place;
+
+// The stop shows the place's full name; the short one is for the route line.
+
+// A car park shared with another place: the card says so instead of a price.
+const sharedWith = stop.parking_shared_with;
+const price = parking ? formatWholePrice(parking.price, parking.currency) : undefined;
+---
+
+<li class="day-stop">
+  <span class="day-stop__n" aria-hidden="true">{n}</span>
+  <div class="day-stop__body">
+    {/* A div, not a p: the hint is a <details>, which cannot live inside a paragraph. */}
+    <div class="day-stop__head">
+      <span class="day-stop__name">{place.name}</span>
+      <span class="day-stop__time">
+        <SectionIcon name="clock" />
+        <span>{formatDuration(stop.duration_min, stop.duration_max_min)}<span class="visually-hidden"> de visita</span></span>
+        {stop.duration_note && (
+          <details class="day-stop__hint">
+            <summary class="day-stop__hike" aria-label="Qué incluye el tiempo de visita">
+              <SectionIcon name="info" />
+            </summary>
+            <span class="day-stop__bubble" id={hintId} role="note">
+              <strong>{hintTime}</strong> {stop.duration_note}
+            </span>
+          </details>
+        )}
+      </span>
+    </div>
+    {place.description && <p class="day-stop__desc">{place.description}</p>}
+    {/*
+      Its own line, set apart from the description: the road-sign "P" with the
+      price (or "Gratis"), and the map link pushed to the right.
+    */}
+    {/* A div, not a p: the free-parking hint is a <details>, which would close a paragraph. */}
+    <div class="day-stop__practical">
+      {parking && (
+        <span class="day-stop__parking">
+          <span class="day-stop__p" aria-hidden="true"></span>
+          <span class="visually-hidden">Parking: </span>
+          {sharedWith ? (
+            <strong>Incluido con {shortName(sharedWith)}</strong>
+          ) : parking.price === 0 ? (
+            <strong class="day-stop__free">Gratis</strong>
+          ) : (
+            <strong>
+              {price}
+              {parking.period_hours && <span class="day-stop__period"> / {parking.period_hours} h</span>}
+            </strong>
+          )}
+          {parking.free_nearby && (
+            <details class="day-stop__hint day-stop__hint--start">
+              <summary class="day-stop__free-nearby" aria-label={`Parking gratis en ${parking.free_nearby.label}`}>
+                <span class="day-stop__free">Gratis</span><SectionIcon name="info" />
+              </summary>
+              {/* A note, like the visit-time bubble. "Mapa" only when the free car
+                  park has its own map card: falling back to the stop's own map
+                  would send the reader to the paid car park. */}
+              <span class="day-stop__bubble" role="note">
+                En {parking.free_nearby.label}
+                {parking.free_nearby.maps_url && (
+                  <a href={parking.free_nearby.maps_url} target="_blank" rel="noopener">
+                    Mapa<span class="visually-hidden"> del parking (se abre en una pestaña nueva)</span>
+                  </a>
+                )}
+              </span>
+            </details>
+          )}
+        </span>
+      )}
+      <a class="day-stop__map" href={placeMapLink(place)} target="_blank" rel="noopener">
+        <SectionIcon name="pin" />Mapa<span class="visually-hidden"> (se abre en una pestaña nueva)</span>
+      </a>
+    </div>
+  </div>
+</li>

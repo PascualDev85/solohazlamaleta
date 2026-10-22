@@ -1,0 +1,8 @@
+// Single entry point. Order matters: tokens define the variables everything
+// else reads, so they come first.
+@use "abstracts/tokens";
+@use "base";
+@use "layout";
+// The old components (notice, badge, guide) are imported by the
+// pages that use them (src/styles/v1-components.scss), not here: the redesigned
+// guide pages carry none of them.

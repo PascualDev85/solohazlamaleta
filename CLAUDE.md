@@ -1,13 +1,22 @@
 # Solo Haz la Maleta
 
-Web de guías de viaje ya planificadas. Promesa: *"Yo planifico el viaje.
-Tú solo haz la maleta."*
+Web de guías de viaje ya planificadas. Promesa: *"Nosotros hacemos el
+trabajo difícil. Tú solo haz la maleta."*
 
 ## Antes de trabajar, lee
 
-1. **`docs/BRIEF.md`** — el proyecto completo. Documento original, no editar.
-2. **`docs/DECISIONES.md`** — cambios acordados sobre el brief.
-   **Donde contradiga al brief, manda DECISIONES.md.**
+1. **`docs/BRIEF.md`** — el proyecto completo (documento maestro, versión 1.6).
+   Contrato estratégico y funcional. Documento original, no editar salvo
+   nueva validación.
+2. Para decisiones técnicas, además:
+   - `docs/1.5_producto_mi_viaje.md` — producto "Mi viaje"
+   - `docs/1.6_modelo_datos.md` — modelo de datos e invariantes
+   - `docs/1.6.4_json_islandia.md` — ejemplo JSON conceptual (Islandia)
+   - `docs/1.7_arquitectura.md` — principios de arquitectura
+   - `docs/1.7.1_repository_domain.md` — estructura del repo y límites de módulos
+   - `docs/1.7.2_data_contract.md` — tipos exactos, esquemas Zod y reglas de compilación
+   - `docs/1.13_guia_hub_satelites.md` — qué va en la guía, en el hub y en las satélites
+   - `docs/redes.md` — estrategia de redes sociales
 
 ## Idioma
 
@@ -32,10 +41,19 @@ Tú solo haz la maleta."*
 ## Fase actual
 
 **F1 — Web base mínima.** Sin PDF, sin selector de grupo, sin mapa
-(ver D1 en `docs/DECISIONES.md`).
+(ver Roadmap en `docs/BRIEF.md`, sección O).
 
 Criterio de cierre: una guía de ejemplo se renderiza desde su fichero de datos ·
 Lighthouse ≥ 95 · el build falla con una guía inválida.
+
+**Checkpoint en curso: Checkpoint 3 — diseño de la guía**, según
+`docs/1.10_checkpoint3_diseno.md` (sub-checkpoints C3.1–C3.5). Misma fase, alcance
+reducido: PDF, Mi viaje, pagos y adaptación siguen fuera. **Excepción al "sin
+mapa":** el mapa solo se permite en el sub-checkpoint C3.5, y únicamente cuando
+el autor haya confirmado las coordenadas. Hasta entonces sigue prohibido.
+**Desde el 15 de octubre, el hub `/islandia/` también entra**, con el reparto
+guía / hub / satélites de `docs/1.13_guia_hub_satelites.md`. Las satélites siguen
+fuera hasta que pasen la validación de su §7.
 
 ## Reglas duras — no hacer
 
@@ -50,6 +68,51 @@ Lighthouse ≥ 95 · el build falla con una guía inválida.
   `rel="sponsored nofollow"`.
 - Todo dato sensible (precio, horario, norma, acceso) lleva fecha de
   verificación.
+
+## Reglas duras de arquitectura — no hacer
+
+(De `docs/1.7_arquitectura.md` y `docs/1.7.1_repository_domain.md`.)
+
+1. No inventar decisiones de arquitectura no documentadas en los ficheros 1.6-1.7.2.
+2. No añadir dependencias sin justificación explícita en el mensaje del commit.
+3. No crear abstracciones antes de que las necesite código real.
+4. Si el código contradice una decisión de arquitectura ya cerrada, se corrige
+   el código — nunca se modifica el documento en silencio.
+5. P22 (integración Python ↔ TypeScript para FastAPI) sigue abierto — no decidirlo.
+6. No implementar Adaptación, Pago, PDF, Supabase ni n8n en la Fase 1.
+
+## Límites de módulos (motor/engine, fase posterior)
+
+Ver detalle en `docs/1.7.1_repository_domain.md`.
+
+| Módulo | Puede importar | No puede importar |
+|---|---|---|
+| `content/` | nada | nada |
+| `schemas/` | zod | cualquier otra cosa |
+| `engine/` | schemas, node built-ins | astro, vue, APIs de navegador, supabase |
+| `src/` (Astro/Vue) | engine | content directamente, supabase |
+| `scripts/` | engine, schemas | src, astro |
+| `tests/` | engine, schemas | src, astro |
+
+Los consumidores externos siempre importan desde `engine` (la API pública),
+nunca desde rutas internas como `engine/compile/algo`.
+
+## Reglas de datos
+
+- `content/` es la fuente de verdad editorial. No es una base de datos.
+- `CompiledGuide` es lo que consume la aplicación. `GuideSource` es lo que
+  escribe el autor. Nunca mezclarlos.
+- Los campos marcados `D` (Derivado) los calcula el compilador. Nunca se
+  escriben a mano en el YAML.
+- `place_id` desaparece en `CompiledStop` (se resuelve a `place: CompiledPlace`).
+- `affiliate_id` desaparece donde aparezca (se resuelve a `affiliate: CompiledAffiliate`).
+
+## Invariantes clave (de `docs/1.6_modelo_datos.md` — sin excepciones)
+
+- I5: `place_id` inexistente → ERROR de compilación.
+- I6: `affiliate_id` inexistente → ERROR de compilación.
+- I14: `experience{}` con `visit_status != visited` → ERROR de compilación.
+- I16: `actual_price_paid` (PARADA) ≠ `entry.price` (LUGAR) — coexisten de forma independiente.
 
 ## Seguridad — regla de oro
 
@@ -67,12 +130,21 @@ abrir ficheros de finanzas desde este proyecto.
 - URLs siempre con barra final.
 - `noindex` en `/print/`, `/ir/`, `/ofertas/`.
 - Secretos en `.env`, nunca en el repo.
-- Node ≥ 20.12 (el proyecto usa v24).
+- Node ≥ 22.18 (el build y los scripts ejecutan `.ts` directamente); el proyecto usa v24 y Cloudflare Pages necesita `NODE_VERSION = 24`.
 
 ## Comandos
 
 ```bash
 npm run dev        # servidor de desarrollo
-npm run build      # build de producción (falla si una guía es inválida)
+npm run build      # build de producción (falla si una guía es inválida); después escribe la CSP de cada página en dist/_headers (scripts/write-headers.ts)
 npm run preview    # previsualizar el build
+npm run fonts:check  # tras el build: falla si dist/ usa un carácter que ninguna fuente de public/fonts/ cubre (son subconjuntos)
+npm run test:devices  # iPhone (WebKit) y Android (Chromium) contra el preview; capturas en ui-devices/
+npm test           # tests unitarios (node --test)
+npm run typecheck  # tipos con astro check (src, engine, schemas, scripts, tests y .astro); también en la CI, antes del build
+npm run size:check # tras el build: HTML comprimido (gzip 6) de cada página bajo su tope (43,8 KB; la guía de 13 días, 95 KB; ver docs/1.13 §5), con lo que le queda a cada una
+npm run lighthouse # con el preview en marcha: exige 100 en móvil y escritorio (salvo la guía de Islandia en móvil: ≥ 99, ver docs/1.13 §5)
+npm run test:ui    # con el preview en marcha: capas de los paneles y líneas de las tarjetas en móviles de 350 a 414 px, cada página con las cabeceras de dist/_headers (CSP) sin errores, y paneles con teclado a 390 y 1280 px (Chromium)
+npm run photo -- <foto> <destino> [--name slug] [--caption lugar] [--day N]  # redimensiona, quita metadatos y la copia a src/assets/guides/; con --day la pone en ese día (alt vacío: el build falla hasta escribirlo)
+npm run day:status [-- N] [--json]  # qué le falta a cada día de Islandia para cerrarlo (foto, lo mejor, conducción, noche, duraciones, paradas) y resumen
 ```

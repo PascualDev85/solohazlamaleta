@@ -1,0 +1,3 @@
+// Forwarded so a consumer writes `@use "../abstracts" as *;` once.
+@forward "variables";
+@forward "mixins";

@@ -1,0 +1,366 @@
+// One stop of the day (DayStop.astro): number, name and time, the bubbles
+// behind its info marks, the description and the practical line (parking,
+// price, map). Split from _day-card.scss because the stop has a component
+// and a life of its own; loaded right after it by guide-v2.scss.
+[data-design="v2"] {
+  // A stop: name and time on one line, two lines of what it is, one of practice.
+  // Number, name and time share one baseline: the grid aligns the number to
+  // the body's first baseline (the name), whatever the sizes.
+  .day-stop {
+    display: grid;
+    grid-template-columns: 1.1em minmax(0, 1fr);
+    gap: var(--space-xs);
+    align-items: baseline;
+    padding-block: 0.6rem;
+  }
+
+  // A stop whose time mark ("i") sits right under the previous stop's "Mapa":
+  // both tap areas are 44px tall, and with 0.6rem between them they overlapped
+  // by 9px (the later one wins, so "Mapa" kept 37px). A little more room.
+  .day-stop + .day-stop:has(.day-stop__hike) {
+    padding-top: 1rem;
+  }
+
+  .day-stop__n {
+    font-family: var(--font-display);
+    font-size: 0.8125em;
+    font-weight: 800;
+    line-height: 1.4;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-muted);
+  }
+
+  .day-stop__body {
+    display: grid;
+    gap: 0.2rem;
+    min-width: 0;
+    font-family: var(--font-display);
+    line-height: 1.4;
+  }
+
+  // At a larger text size the time drops under the name when the name's
+  // longest word leaves it no room; at the default size it never does.
+  .day-stop__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.15rem var(--space-xs);
+    min-width: 0;
+  }
+
+  // The full name, wrapping onto a second line when it has to: a cut name
+  // ("Restos de avión DC-3…") tells the reader less than two lines. Never
+  // narrower than its longest word, so a word is not run under the time.
+  .day-stop__name {
+    flex: 1;
+    min-width: min-content;
+    overflow-wrap: break-word;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--color-text);
+  }
+
+  // Baseline-aligned so the head lines the time's text up with the name; the
+  // icon and the info mark have no baseline and centre on that line instead.
+  .day-stop__time {
+    flex: none;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    font-size: 0.8125em;
+    font-weight: 700;
+    color: var(--color-text-muted);
+
+    .section-icon {
+      align-self: center;
+      width: 1.1em;
+      height: 1.1em;
+      color: var(--color-accent);
+    }
+  }
+
+  // A speech bubble behind a small mark (native <details>: no script, keyboard
+  // ok). The time's info mark says what the upper end of the range includes;
+  // the free car park's mark says where it is. The bubble opens above the mark
+  // with a small tail at its foot: what is above has been read, what is below
+  // is still to read.
+  .day-stop__hint {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    line-height: 0;
+
+    > summary {
+      cursor: pointer;
+      list-style: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 1px;
+      }
+    }
+  }
+
+  .day-stop__hike {
+    display: inline-flex;
+    align-items: center;
+    // Padding is the tap target; the negative block margin keeps the line
+    // as tall as the text, so the time stays on the name's baseline.
+    position: relative;
+    margin: -0.2rem 0 -0.2rem 0.05rem;
+    padding: 0.2rem;
+    border-radius: 50%;
+    line-height: 0;
+
+    // 20px mark, 44×44 tap area.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: min(0px, calc(50% - 23px));
+    }
+  }
+
+  .day-stop__bubble {
+    position: absolute;
+    bottom: calc(100% + 0.6rem);
+    right: -0.15rem;
+    z-index: 3;
+    width: max-content;
+    max-width: 15rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.6rem;
+    background: rgb(10 20 30 / 0.92);
+    color: #fff;
+    font-size: 1em;
+    font-weight: 600;
+    line-height: 1.35;
+    white-space: normal;
+    text-align: left;
+    box-shadow: 0 10px 24px rgb(10 15 20 / 0.25);
+
+    strong {
+      font-weight: 800;
+      color: #fff;
+    }
+
+    a {
+      margin-left: 0.35em;
+      color: #fff;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: -0.3rem;
+      right: 0.65rem;
+      width: 0.65rem;
+      height: 0.65rem;
+      background: inherit;
+      transform: rotate(45deg);
+    }
+  }
+
+  // A mark on the left of its line (the free car park): the bubble hangs from
+  // its left edge instead, so it stays inside the card.
+  .day-stop__hint--start .day-stop__bubble {
+    right: auto;
+    left: -0.15rem;
+
+    &::before {
+      right: auto;
+      left: 0.65rem;
+    }
+  }
+
+  // Three lines; the full description stays in the HTML for search and readers.
+  .day-stop__desc {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    font-family: var(--font-body);
+    font-size: 0.8125em;
+    line-height: 1.45;
+    color: var(--color-text-muted);
+  }
+
+  // Its own line, set apart from the description: road-sign "P" and price on
+  // the left, the map link on the right. One line at the default text size
+  // (test:ui holds it); at a larger one the map link, then the price, wrap
+  // instead of running out of the card.
+  .day-stop__practical {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.15rem var(--space-sm);
+    margin-top: 0.2rem !important;
+    font-size: 0.8125em;
+  }
+
+  .day-stop__parking {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.15rem 0.4rem;
+    min-width: 0;
+    color: var(--color-text);
+
+    strong {
+      font-weight: 800;
+    }
+  }
+
+  // The type scale below sizes the card's lines (route, facts, night, body)
+  // as well as the stop's name. It stays here, between the stop's rules,
+  // because that is where it sat in the compiled CSS before the split:
+  // moving it to _day-card.scss would reorder the CSS. Nothing it sets is
+  // overridden by the stop rules after it, so it can move there in a change
+  // of its own.
+  // The day card is never wider than 23rem (--card-w in _route.scss), so the
+  // type of the lines that must not grow follows the viewport up to 414px and
+  // then holds: on wider phones and on desktop the card is as wide as at 414px
+  // and keeps the 414px sizes (it used to jump back to the larger base sizes,
+  // and the night line wrapped at 448-480px). Down to 350px it shrinks so each
+  // line keeps its shape: the route in two rows at most (three from seven
+  // route stops, four from nine), the facts, the night and each stop's name in
+  // one line. Measured on the real content (days 1 to 3) at 350, 360, 375, 390
+  // and 414px: each formula passes through the largest size that fits at every
+  // width.
+  // Each formula sits 6% under the largest size that fits on a Mac's headless
+  // Chromium at every width: Linux Chromium (the CI) and real phones render
+  // this face about 5% wider, and the CI check holds the lines to that.
+  // The sizes above are for the browser's default 16px text. A reader who
+  // sets a larger text size gets the same scale grown with it (WCAG 1.4.4):
+  // each line adds (1rem - 16px) times its 414px share of 16px, so at 414px
+  // and wider it grows exactly with the reader's setting, and at the default
+  // the term is zero and nothing moves. Larger, the lines may wrap onto more
+  // rows; nothing is cut (test:ui checks it at 150%).
+  .day-card__route {
+    font-size: calc(clamp(12.5px, 0.65px + 3.5vw, 14.3px) + (1rem - 16px) * 0.894);
+  }
+
+  .day-card__facts {
+    font-size: calc(clamp(11px, -5.05px + 4.6vw, 12.2px) + (1rem - 16px) * 0.7625);
+  }
+
+  .day-card__night {
+    font-size: calc(clamp(9.5px, -3.33px + 3.75vw, 12.2px) + (1rem - 16px) * 0.7625);
+  }
+
+  // The whole body follows the stop name's size: 16px at 414px, 12.3px at 350px.
+  // The clamp's top is 16px, not 1rem: the added term already scales it, and
+  // 1rem there would grow it twice.
+  .day-card__body {
+    font-size: calc(clamp(12px, -10.2px + 6.44vw, 16px) + (1rem - 16px));
+  }
+
+  // The road sign: a white P on blue. The P is drawn (a mask), not typed, so
+  // it sits dead centre in every browser whatever the font metrics.
+  .day-stop__p {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.4em;
+    height: 1.4em;
+    border-radius: 0.25rem;
+    background: #1f5fa8;
+    color: #fff;
+
+    &::before {
+      content: "";
+      width: 0.92em;
+      height: 0.92em;
+      background: currentColor;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 20V4h5a4.5 4.5 0 0 1 0 9H8'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+  }
+
+  // In forced colours the sign's blue and its masked P were painted over:
+  // keep the sign as it is, white on blue.
+  @media (forced-colors: active) {
+    .day-stop__p {
+      forced-color-adjust: none;
+    }
+
+    // The bubble's 92% dark ground became 92% Canvas with no edge: the text
+    // under it showed through. Opaque, with an outline, like a system popup.
+    .day-stop__bubble {
+      border: 1px solid CanvasText;
+      background: Canvas;
+    }
+  }
+
+  // "/ 5 h" after a time-based price: lighter, so the figure leads.
+  .day-stop__period {
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+
+  // "Gratis" in green: the only free thing worth shouting about.
+  .day-stop__free {
+    color: var(--color-positive);
+  }
+
+  // A free car park next door: a small green-edged pill after the price with
+  // a tiny info mark; tapping it opens the bubble saying where it is.
+  .day-stop__free-nearby {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.05em 0.45em 0.05em 0.55em;
+    border: 1px solid var(--color-positive);
+    border-radius: 999px;
+    font-weight: 700;
+    line-height: 1.4;
+
+    .section-icon {
+      width: 0.95em;
+      height: 0.95em;
+      color: var(--color-positive);
+    }
+
+    // 20px pill, 44px tall tap area.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: min(0px, calc(50% - 23px)) 0;
+    }
+  }
+
+  .day-stop__map {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin-left: auto;
+    font-weight: 800;
+    color: var(--color-accent);
+
+    .section-icon {
+      width: 1.1em;
+      height: 1.1em;
+    }
+
+    // 14–17px line, 44×44 tap area. Shifted 4px up, over the description:
+    // below it come the next stop's "i" or "Ver N paradas más", whose own
+    // tap areas would cover the bottom of a centred one. On the narrowest
+    // phones the link is 40px wide; it grows to the left only, so nothing
+    // sticks out of the practical line (test:ui would see it overflow).
+    &::after {
+      content: "";
+      position: absolute;
+      inset: min(0px, calc(50% - 27px)) 0 min(0px, calc(50% - 19px)) min(0px, calc(100% - 46px));
+    }
+  }
+}

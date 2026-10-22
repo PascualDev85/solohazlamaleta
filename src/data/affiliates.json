@@ -1,0 +1,12 @@
+{
+  "_comment": "Central affiliate registry. Guides reference partner + key; the id and URL live only here, so changing a partner never means editing guides. Every outbound link goes through /ir/{partner}-{key} with rel=sponsored nofollow.",
+  "partners": {
+    "booking": { "name": "Booking.com", "active": false, "links": {} },
+    "getyourguide": { "name": "GetYourGuide", "active": false, "links": {} },
+    "civitatis": { "name": "Civitatis", "active": false, "links": {} },
+    "iati": { "name": "IATI Seguros", "active": false, "links": {} },
+    "camper-rental": { "name": "Alquiler de camper", "active": false, "links": {} },
+    "car-rental": { "name": "Alquiler de coche", "active": false, "links": {} },
+    "travelpayouts": { "name": "Travelpayouts", "active": false, "links": {} }
+  }
+}

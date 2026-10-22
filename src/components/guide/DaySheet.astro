@@ -1,0 +1,100 @@
+---
+import type { CompiledDay } from '../../../engine/index.ts';
+import { twoDigitDay } from '../../lib/dayNumber.ts';
+import { shortName } from '../../lib/placeName.ts';
+import SectionIcon from './SectionIcon.astro';
+
+// The "Ver día completo" sheet: our own account of the day, in the popover
+// that DayCard's button opens. DayCard decides whether the day has one
+// (hasFullDay needs the same lists), so it filters them once and passes them
+// here instead of this component filtering them again.
+interface Props {
+  day: CompiledDay;
+  // The popover's id: DayCard's button targets it, and every heading id here
+  // is built from it.
+  sheetId: string;
+  // Route stops with our own note on them.
+  experiences: CompiledDay['route_stops'];
+  // What we left out that day, only the skips with a reason.
+  skipped: CompiledDay['skipped_stops'];
+  // The author's note on the night, trimmed; undefined when it has no text.
+  nightNote?: string;
+  // The night's label as DayCard shows it, so the card and the sheet agree.
+  nightText?: string;
+}
+
+const { day, sheetId, experiences, skipped, nightNote, nightText } = Astro.props;
+
+const num = twoDigitDay(day.day);
+---
+
+<div id={sheetId} class="day-sheet" popover role="dialog" aria-labelledby={`${sheetId}-eyebrow ${sheetId}-title`}>
+  <header class="day-sheet__head">
+    <div>
+      <p class="day-sheet__eyebrow" id={`${sheetId}-eyebrow`}>Día {num}</p>
+      <h2 class="day-sheet__title" id={`${sheetId}-title`}>{day.title}</h2>
+    </div>
+    <button
+      class="day-sheet__close"
+      type="button"
+      popovertarget={sheetId}
+      popovertargetaction="hide"
+      aria-label="Cerrar"
+      autofocus
+    >
+      <SectionIcon name="close" />
+    </button>
+  </header>
+
+  <div class="day-sheet__body">
+    {experiences.length > 0 && (
+      <section aria-labelledby={`${sheetId}-exp`}>
+        <h3 id={`${sheetId}-exp`}>Nuestra experiencia</h3>
+        <ul class="day-sheet__experiences">
+          {experiences.map((stop) => (
+            <li>
+              <p class="day-sheet__place">{shortName(stop.place)}</p>
+              <p>{stop.variant_note}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {nightNote && (
+      <section aria-labelledby={`${sheetId}-night`}>
+        <h3 id={`${sheetId}-night`}>La noche</h3>
+        {nightText && <p class="day-sheet__place">{nightText}</p>}
+        <p>{nightNote}</p>
+      </section>
+    )}
+
+    {skipped.length > 0 && (
+      <section aria-labelledby={`${sheetId}-skipped`}>
+        <h3 id={`${sheetId}-skipped`}>Lo que no hicimos ese día</h3>
+        <ul class="day-sheet__experiences day-sheet__experiences--skipped">
+          {skipped.map((stop) => (
+            <li>
+              <p class="day-sheet__place">{shortName(stop.place)}</p>
+              <p>{stop.skip_reason}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {day.our_take && (
+      <section class="day-sheet__block--take" aria-labelledby={`${sheetId}-take`}>
+        <h3 id={`${sheetId}-take`}>Lo que haríamos distinto</h3>
+        <p>{day.our_take}</p>
+      </section>
+    )}
+
+    {day.plan_b && (
+      <section class="day-sheet__block--planb" aria-labelledby={`${sheetId}-planb`}>
+        <h3 id={`${sheetId}-planb`}>Plan B</h3>
+        <p>{day.plan_b}</p>
+      </section>
+    )}
+  </div>
+</div>

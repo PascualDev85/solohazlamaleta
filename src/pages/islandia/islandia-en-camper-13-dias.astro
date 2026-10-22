@@ -1,0 +1,447 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadCompiledGuide } from '../../lib/engine-guide.ts';
+import { ENGINE_GUIDE_SOURCES, isPublished } from '../../../engine/index.ts';
+import { formatDate, formatLongDate } from '../../lib/formatDate.ts';
+import { formatPrice } from '../../lib/formatPrice.ts';
+import { shortName } from '../../lib/placeName.ts';
+import TrustBlock from '../../components/guide/TrustBlock.astro';
+import GuideIndex from '../../components/guide/GuideIndex.astro';
+import GuidePhoto from '../../components/guide/GuidePhoto.astro';
+import QuickFacts from '../../components/guide/QuickFacts.astro';
+import Breadcrumb from '../../components/guide/Breadcrumb.astro';
+import RouteDays from '../../components/guide/RouteDays.astro';
+import CampsiteCard from '../../components/guide/CampsiteCard.astro';
+import SectionTitle from '../../components/guide/SectionTitle.astro';
+import SectionIcon from '../../components/guide/SectionIcon.astro';
+import { budgetRows } from '../../lib/budgetRows.ts';
+import { nightsByPlace, nightCounts } from '../../lib/nightsByPlace.ts';
+import { guideImage } from '../../lib/guide-images.ts';
+import { engineGuideSections, engineSectionFlags } from '../../lib/guide-sections.ts';
+import { HUB_PRACTICAL_ID, hubSectionHref } from '../../lib/anchors.ts';
+import { guideClosing, hubSourcePath } from '../../lib/hubLinks.ts';
+import { getImage } from 'astro:assets';
+import '../../styles/guide-v2.scss';
+
+const guide = await loadCompiledGuide(
+  'content/guides/islandia/islandia-en-camper-13-dias.yaml',
+  'content/places/islandia.yaml',
+);
+
+const variant = guide.variants?.[0];
+
+// The hub and its other guides, for the closing "Si estás preparando…" (1.9 B.11).
+const hub = await loadCompiledGuide(hubSourcePath(guide.hub), 'content/places/islandia.yaml');
+const pages = await Promise.all(ENGINE_GUIDE_SOURCES.map((source) => loadCompiledGuide(source.guide, source.places)));
+const closing = guideClosing(guide, hub, pages);
+
+const destinationName = 'Islandia';
+
+// Who travelled this route. No model field for it: the names are only shown on this page.
+const travelerNames = 'David y Natalia';
+
+// The tagline has two lines (1.12 §4): the first is shown larger.
+const [taglineLead, ...taglineRest] = guide.summary.tagline.split('\n');
+const taglineMore = taglineRest.join(' ');
+
+// Stops we skipped with a reason, across the route: "Lo que dejamos fuera" (1.10 §3.6, 1.12 §13).
+const skippedStops = (variant?.days ?? []).flatMap((day) =>
+  day.skipped_stops.filter((stop) => stop.skip_reason).map((stop) => ({ day: day.day, stop })),
+);
+
+const cover = guideImage(guide.cover_image);
+// Temporary: the model has no alt for cover_image yet; it belongs with the photo amendment of 1.10 §3.7 (C3.4).
+const coverAlt =
+  'Cascada de Gljúfrafoss dentro de una grieta cubierta de musgo, con una persona agachada y los brazos abiertos frente al agua';
+const ogImage = await getImage({ src: cover, width: 1200, format: 'jpg', quality: 70 });
+const coverSizes = '(min-width: 48rem) 55vw, 100vw';
+
+// One source for "does this section render" (lib/guide-sections.ts): the
+// index, the sections below and the search read the same flags.
+const show = engineSectionFlags(guide);
+const showCriteria = show.criteria;
+const indexSections = engineGuideSections(guide);
+
+// The budget keeps the cents (the trip facts round to whole euros).
+const currency = guide.budget?.currency ?? 'EUR';
+const price = (amount: number) => formatPrice(amount, currency);
+
+// Budget rows (1.10 §3.5): concept, group total, the derived per-person figure and each row's share, for its bar.
+const travelers = guide.base_travelers ?? 1;
+const budgetTable = guide.budget ? budgetRows(guide.budget.items, travelers) : [];
+const percent = (share: number) => `${Math.round(share * 100)} %`;
+
+// Which nights were spent in which campsite, from the route: each campsite card links back to its days.
+const routeDays = variant?.days ?? [];
+const nights = nightsByPlace(routeDays);
+const nightTotals = nightCounts(routeDays);
+const zoneNights = (picks: { place: { place_id: string } }[]) =>
+  picks.reduce((sum, pick) => sum + (nights.get(pick.place.place_id)?.length ?? 0), 0);
+
+/** Only the FAQ items the author marked fit for rich results go into the JSON-LD — the visible FAQ section below shows every question regardless. */
+const faqForSchema = (guide.faq ?? []).filter((item) => item.schema === true);
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+
+// The destination crumb points at the hub (1.10 §3.8), here and in the visible breadcrumb.
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: destinationName, item: new URL(guide.hub, Astro.site).href },
+    { '@type': 'ListItem', position: 3, name: guide.title, item: pageUrl },
+  ],
+};
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: guide.title,
+  description: guide.description,
+  // The same 1200px cover file the Open Graph tags share, so no extra image is built.
+  image: new URL(ogImage.src, Astro.site).href,
+  dateModified: guide.updated_at,
+  inLanguage: 'es',
+  mainEntityOfPage: pageUrl,
+  // No datePublished or author yet: neither exists in the guide data, and both
+  // are the author's call (see the SEO audit PR).
+  publisher: { '@type': 'Organization', name: 'Solo Haz la Maleta', url: new URL('/', Astro.site).href },
+};
+
+const faqJsonLd =
+  faqForSchema.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqForSchema.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
+      }
+    : null;
+---
+
+<BaseLayout
+  title={guide.title}
+  description={guide.description}
+  image={ogImage.src}
+  imageWidth={ogImage.attributes.width}
+  imageHeight={ogImage.attributes.height}
+  imageAlt={coverAlt}
+  ogType="article"
+  design="v2"
+  noindex={!isPublished(guide)}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} slot="head" />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(articleJsonLd)} slot="head" />
+
+  <article class="guide">
+    <header class="guide-hero">
+      <div class="guide-hero__text">
+        <div class="guide-hero__title">
+          <Breadcrumb crumbs={[{ label: 'Inicio', href: '/' }, { label: destinationName, href: guide.hub }]} />
+          <h1>{guide.title}</h1>
+        </div>
+
+        <p class="guide-hero__intro">
+          <span class="guide-hero__lead">{taglineLead}</span>
+          {taglineMore && <span class="guide-hero__more">{taglineMore}</span>}
+        </p>
+
+      </div>
+
+      <div class="guide-hero__media">
+        <GuidePhoto
+          class="guide-hero__photo"
+          image={cover}
+          alt={coverAlt}
+          sizes={coverSizes}
+          priority
+          crop={{ media: '(max-width: 47.99rem)', ratio: 1, position: 'bottom' }}
+        />
+      </div>
+    </header>
+
+    <section class="guide-overview" aria-label="Resumen de la guía">
+      {guide.has_experience && guide.trip_done && variant ? (
+        <TrustBlock travelers={travelerNames} tripDone={guide.trip_done} updatedAt={guide.updated_at} />
+      ) : (
+        <p class="guide__dateline">Actualizado el {formatLongDate(guide.updated_at)}</p>
+      )}
+
+      <QuickFacts
+        currency={currency}
+        budgetPerPerson={guide.summary.budget_per_person}
+        budgetTotal={guide.budget?.total_reference}
+        budgetHref={show.budget ? '#presupuesto' : undefined}
+        pace={guide.summary.pace_default}
+        vehicle={guide.summary.getting_around}
+        baseArea={guide.summary.base_area}
+      />
+    </section>
+    <script is:inline>
+      (() => {
+        const overview = document.currentScript.previousElementSibling;
+        if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        overview.classList.add('reveal');
+        new IntersectionObserver(([e], o) => e.isIntersecting && (overview.classList.add('is-in'), o.disconnect()), { threshold: 0.15 }).observe(overview);
+      })();
+    </script>
+
+    {/* Outside the overview on purpose: its entrance transform would anchor the fixed pill. */}
+    <GuideIndex
+      sections={indexSections}
+      routeId="itinerario"
+      days={variant?.days.map((day) => ({ day: day.day, title: day.title }))}
+    />
+
+    {show.route && variant && <RouteDays days={variant.days} id="itinerario" />}
+
+    {show.sleep && guide.accommodation && (
+      <section class="sleep" aria-labelledby="dormir">
+        <SectionTitle id="dormir" icon="sleep">Dónde dormir</SectionTitle>
+        {(nightTotals.campsite > 0 || nightTotals.outside > 0) && (
+          <p class="sleep__tally">
+            <span class="pill"><strong>{nightTotals.campsite}</strong> noches en camping</span>
+            {nightTotals.outside > 0 && (
+              <span class="pill"><strong>{nightTotals.outside}</strong> fuera de camping</span>
+            )}
+          </p>
+        )}
+        {guide.accommodation.notes && <p class="sleep__intro quiet">{guide.accommodation.notes}</p>}
+        {guide.accommodation.zones.map((zone, i) => (
+          <div class="sleep__zone">
+            <p class="kicker">
+              Zona {i + 1}
+              {zoneNights(zone.picks) > 0 && <span> · {zoneNights(zone.picks)} {zoneNights(zone.picks) === 1 ? 'noche' : 'noches'}</span>}
+            </p>
+            <h3 class="sleep__zone-name">{zone.name}</h3>
+            {zone.description && <p class="sleep__zone-desc quiet">{zone.description}</p>}
+            {zone.picks.length > 0 && (
+              <ul class="sleep__list">
+                {zone.picks.map((pick) => <CampsiteCard pick={pick} nights={nights.get(pick.place.place_id)} />)}
+              </ul>
+            )}
+          </div>
+        ))}
+      </section>
+    )}
+
+    {show.transport && guide.transport && (
+      <section class="transport" aria-labelledby="llegar">
+        <SectionTitle id="llegar" icon="transport">Cómo llegamos y nos movimos</SectionTitle>
+        <ol class="transport__steps">
+          {guide.transport.arrival?.map((arrival) => (
+            <li class="transport__step">
+              <span class="transport__icon"><SectionIcon name="plane" /></span>
+              <div class="transport__body">
+                <p class="kicker">Llegada · desde {arrival.from_airport}</p>
+                <p class="transport__text">{arrival.description}</p>
+                {arrival.notes && <p class="quiet">{arrival.notes}</p>}
+                {arrival.verified_at && <p class="guide__verified">Comprobado {formatDate(arrival.verified_at)}</p>}
+              </div>
+            </li>
+          ))}
+          {guide.transport.local?.map((local) => (
+            <li class="transport__step">
+              <span class="transport__icon"><SectionIcon name="wheel" /></span>
+              <div class="transport__body">
+                <p class="kicker">En ruta · {local.mode}</p>
+                <p class="transport__text">{local.description}</p>
+                {local.notes && <p class="quiet">{local.notes}</p>}
+                {local.verified_at && <p class="guide__verified">Comprobado {formatDate(local.verified_at)}</p>}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+
+    {show.budget && guide.budget && (
+      <section class="budget" aria-labelledby="presupuesto">
+        <SectionTitle id="presupuesto" icon="budget">Presupuesto real</SectionTitle>
+        {/* Every figure here is derived: the per-person one from the group total and base_travelers (1.10 §3.5). */}
+        <div class="budget__hero">
+          <p class="budget__per-person">
+            <span class="budget__big">{price(guide.budget.total_reference / travelers)}</span>
+            <span class="budget__per-person-unit">por persona</span>
+          </p>
+          <p class="budget__head-rest">
+            {price(guide.budget.total_reference)} en total · {travelers} {travelers === 1 ? 'persona' : 'personas'}
+            {variant && ` · ${variant.days.length} días`}
+          </p>
+          <p class="guide__verified">Precios comprobados {formatDate(guide.budget.verified_at)}</p>
+        </div>
+        <ol class="budget__rows">
+          {budgetTable.map((row) => (
+            <li class="budget__row" style={`--share: ${row.share.toFixed(3)}`}>
+              <p class="budget__row-head">
+                <span class="budget__label">{row.label}</span>
+                <span class="budget__amount">
+                  {price(row.per_person)}<span class="budget__amount-unit"> /pers.</span>
+                </span>
+              </p>
+              <span class="budget__bar" aria-hidden="true"></span>
+              <p class="budget__row-meta">
+                {price(row.total)} en total · {percent(row.share)} del viaje
+              </p>
+              {row.notes && <p class="budget__row-note">{row.notes}</p>}
+            </li>
+          ))}
+        </ol>
+        {(guide.budget.includes.length > 0 || guide.budget.excludes.length > 0) && (
+          <dl class="budget__scope">
+            {guide.budget.includes.length > 0 && (
+              <div class="budget__scope-group">
+                <dt class="kicker">Incluye</dt>
+                {guide.budget.includes.map((item) => <dd class="pill">{item}</dd>)}
+              </div>
+            )}
+            {guide.budget.excludes.length > 0 && (
+              <div class="budget__scope-group">
+                <dt class="kicker">No incluye</dt>
+                {guide.budget.excludes.map((item) => <dd class="pill budget__chip--out">{item}</dd>)}
+              </div>
+            )}
+          </dl>
+        )}
+        {guide.budget.notes && <p class="budget__notes quiet">{guide.budget.notes}</p>}
+      </section>
+    )}
+
+    {show.booking && guide.booking_checklist && (
+      <section class="booking" aria-labelledby="reservar">
+        <SectionTitle id="reservar" icon="booking">Qué reservamos y cuándo</SectionTitle>
+        <ol class="booking__timeline">
+          {guide.booking_checklist.map((item) => (
+            <li class="booking__item" data-priority={item.priority}>
+              <p class="kicker">{item.when}</p>
+              <p class="booking__label">
+                {item.label}
+                {item.priority && <span class="pill">Prioridad {item.priority}</span>}
+              </p>
+              {item.notes && <p class="quiet">{item.notes}</p>}
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+
+    {showCriteria && (
+      <section class="criteria" aria-labelledby="criterio">
+        <SectionTitle id="criterio" icon="criteria">Nuestro criterio</SectionTitle>
+
+        {show.howWeChoose && guide.how_we_choose && (
+          <div class="criteria__part">
+            <h3 id="criterio-como">Cómo elegimos</h3>
+            <ol class="criteria__principles">
+              {guide.how_we_choose.map((item) => <li>{item}</li>)}
+            </ol>
+          </div>
+        )}
+
+        {show.leftOut && (
+          <div class="criteria__part">
+            <h3 id="criterio-fuera">Lo que dejamos fuera</h3>
+            <p class="criteria__lead quiet">
+              No todo lo que aparece en una ruta merece entrar en ella. Esto es lo que estaba sobre la mesa,
+              lo que dejamos fuera y por qué.
+            </p>
+            {guide.route_decisions && guide.route_decisions.length > 0 && (
+              <ul class="criteria__decisions">
+                {guide.route_decisions.map((item) => (
+                  <li>
+                    <p class="criteria__decision">{item.decision}</p>
+                    <p class="quiet">{item.reason}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {skippedStops.length > 0 && (
+              <>
+                <p class="kicker criteria__kicker">Paradas que descartamos sobre la marcha</p>
+                <ul class="criteria__skipped">
+                  {skippedStops.map(({ day, stop }) => (
+                    <li>
+                      <details class="skip">
+                        <summary class="skip__summary">
+                          <span class="skip__name">{shortName(stop.place)}</span>
+                          <span class="pill skip__day">Día {day}</span>
+                          <span class="fold-chevron" aria-hidden="true"></span>
+                        </summary>
+                        <div class="skip__more">
+                          {stop.place.description && <p class="quiet">{stop.place.description}</p>}
+                          <p class="skip__reason">{stop.skip_reason}</p>
+                        </div>
+                      </details>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        )}
+
+        {show.pitfalls && (
+          <div class="criteria__part">
+            <h3 id="errores">Errores y trampas</h3>
+            {guide.pitfalls && guide.pitfalls.length > 0 && (
+              <ul class="criteria__warnings">
+                {guide.pitfalls.map((item) => (
+                  <li><SectionIcon name="pitfalls" /><span>{item}</span></li>
+                ))}
+              </ul>
+            )}
+            {guide.terrain_tips && guide.terrain_tips.length > 0 && (
+              <>
+                <p class="kicker criteria__kicker">Trucos sobre el terreno</p>
+                <ul class="criteria__tricks">
+                  {guide.terrain_tips.map((item) => (
+                    <li><SectionIcon name="sparkles" /><span>{item}</span></li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        )}
+      </section>
+    )}
+
+    {/* "Lo práctico" is about the destination, so it lives only in the hub (1.13 §3): the guide points there. */}
+    <p class="guide__hub-link">
+      <SectionIcon name="practical" />
+      <a href={hubSectionHref(guide.hub, HUB_PRACTICAL_ID)}>Documentos, enchufes y apps: en la guía de Islandia →</a>
+    </p>
+
+    {show.faq && guide.faq && (
+      <section class="faq" aria-labelledby="faq">
+        <SectionTitle id="faq" icon="faq">Preguntas frecuentes</SectionTitle>
+        <div class="faq__list">
+          {guide.faq.map((item) => (
+            <details class="faq__item">
+              <summary class="faq__q">
+                <span>{item.q}</span>
+                <span class="fold-chevron" aria-hidden="true"></span>
+              </summary>
+              <p class="faq__a">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {/* After the visible FAQ on purpose: compression reuses the same text, so the schema costs almost nothing. */}
+    {faqJsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(faqJsonLd)} />}
+
+    {closing && (
+      <nav class="guide__next" aria-label={`Si estás preparando ${destinationName}`}>
+        <p class="kicker">Si estás preparando <a href={closing.hubHref}>{destinationName}</a></p>
+        <ul class="link-row">
+          {closing.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+        </ul>
+      </nav>
+    )}
+  </article>
+</BaseLayout>

@@ -1,0 +1,170 @@
+---
+import type { CompiledDay } from '../../../engine/index.ts';
+import { formatMinutes } from '../../lib/formatDuration.ts';
+import { minutesOnRoute, roundToHour } from '../../lib/dayTime.ts';
+import { campsiteAnchorId, dayAnchorId } from '../../lib/anchors.ts';
+import { guideImage } from '../../lib/guide-images.ts';
+import { nightLabel } from '../../lib/nightLabel.ts';
+import GuidePhoto from './GuidePhoto.astro';
+import SectionIcon from './SectionIcon.astro';
+import DayStop from './DayStop.astro';
+import DaySheet from './DaySheet.astro';
+
+interface Props {
+  day: CompiledDay;
+}
+
+const { day } = Astro.props;
+
+// Folded, the card shows its first stop; "Ver N paradas más" reveals the rest
+// in place (CSS :has(), no script).
+const moreCount = Math.max(0, day.route_stops.length - 1);
+
+const headingId = dayAnchorId(day.day);
+const sheetId = `${headingId}-completo`;
+
+const km = new Intl.NumberFormat('es-ES', { useGrouping: true });
+// Door to door, to the nearest hour: a planning figure, never a promise.
+const onRoute = minutesOnRoute(day);
+const onRouteLabel = onRoute == null ? undefined : formatMinutes(roundToHour(onRoute));
+const experiences = day.route_stops.filter((stop) => stop.variant_note);
+// What we left out that day, with the reason: a skip without one is not shown (1.10 §3.6).
+const skipped = day.skipped_stops.filter((stop) => stop.skip_reason);
+// The author's note on the night: panel only, and only when it has text.
+const nightNote = day.overnight_note?.trim() || undefined;
+const hasFullDay =
+  experiences.length > 0 || skipped.length > 0 || Boolean(nightNote) || Boolean(day.our_take) || Boolean(day.plan_b);
+// The night links to its campsite card in "Dónde dormir"; null is a night outside any campsite.
+const overnight = day.overnight;
+const nightText = nightLabel(overnight);
+const overnightHref = overnight ? `#${campsiteAnchorId(overnight.place_id)}` : undefined;
+---
+
+{/*
+  One slide of the route: the day's title and summary sit above the card, so
+  they travel with it when the row is swiped.
+*/}
+<article class="day" aria-labelledby={headingId}>
+  <header class="day__head">
+    <h3 class="day__title" id={headingId}>
+      <span class="day__n">Día {day.day}</span> · {day.title}
+    </h3>
+    {day.summary && <p class="day__summary">{day.summary}</p>}
+  </header>
+
+  <div class="day-card">
+    {/*
+      The photo carries the day's numbers: route, facts and the night sit on a
+      dark scrim at its foot, so the photo can take the whole top of the card,
+      and nothing else sits on it. Without a photo the same block sits on a
+      neutral band.
+    */}
+    <div class:list={['day-card__media', { 'day-card__media--empty': !day.photo }]}>
+      {day.photo && (
+        <figure class="day-card__figure">
+          <GuidePhoto
+            class="day-card__photo"
+            image={guideImage(day.photo.src)}
+            alt={day.photo.alt}
+            sizes="(min-width: 48rem) 23rem, calc(100vw - 3rem)"
+          />
+        </figure>
+      )}
+
+      <div class="day-card__overlay">
+        {day.route_line.length > 0 && (
+          <ol class="day-card__route" aria-label="Ruta del día">
+            {day.route_line.map((name) => <li>{name}</li>)}
+          </ol>
+        )}
+
+        <ul class="day-card__facts">
+          <li><SectionIcon name="pin" />{day.n_route_stops} {day.n_route_stops === 1 ? 'parada' : 'paradas'}</li>
+          {day.drive && (
+            <>
+              <li><SectionIcon name="road" />≈ {km.format(day.drive.km)} km</li>
+              <li><SectionIcon name="wheel" />≈ {formatMinutes(day.drive.minutes)}<span class="visually-hidden"> de coche</span></li>
+            </>
+          )}
+        </ul>
+
+        {/* Second line: the whole day door to door, then where it ends. */}
+        {(onRouteLabel || nightText) && (
+          <p class="day-card__night">
+            {onRouteLabel && (
+              <span class="day-card__fact">
+                <SectionIcon name="clock" />≈ {onRouteLabel} en ruta
+              </span>
+            )}
+            {nightText && (
+              <span class="day-card__fact day-card__fact--night">
+                <SectionIcon name="tent" />
+                {/* Read "Noche en Camping Árnes" (or "Noche: Fuera de camping"); the arrow is only drawn. */}
+                <span>Noche</span>
+                <span aria-hidden="true">→</span>
+                <span class="visually-hidden">{overnightHref ? ' en ' : ': '}</span>
+                {overnightHref ? (
+                  <a class="day-card__night-link" href={overnightHref}>{nightText}</a>
+                ) : (
+                  <strong>{nightText}</strong>
+                )}
+              </span>
+            )}
+          </p>
+        )}
+      </div>
+    </div>
+
+    <div class="day-card__body">
+      {day.route_stops.length > 0 && (
+        <ol class="day-card__stops">
+          {day.route_stops.map((stop, i) => <DayStop stop={stop} n={i + 1} day={day.day} />)}
+        </ol>
+      )}
+
+      {/* Folded, "Lo mejor del día" is a pill sharing the line with "Ver N paradas más"; open, it takes the full width. */}
+      {(day.highlight || moreCount > 0) && (
+        <div class="day-card__extras">
+          {day.highlight && (
+            <details class="day-card__highlight">
+              <summary>
+                <span class="day-card__highlight-icon"><SectionIcon name="sparkles" /></span>
+                <span class="day-card__highlight-label">Lo mejor del día</span>
+                <span class="day-card__highlight-toggle" aria-hidden="true"></span>
+              </summary>
+              <p>{day.highlight}</p>
+            </details>
+          )}
+
+          {moreCount > 0 && (
+            <details class="day-card__more">
+              <summary>
+                <span class="day-card__more-open">Ver {moreCount} {moreCount === 1 ? 'parada' : 'paradas'} más</span>
+                <span class="day-card__more-close">Ver menos</span>
+                <span class="day-card__chevron" aria-hidden="true"></span>
+              </summary>
+            </details>
+          )}
+        </div>
+      )}
+
+      {hasFullDay && (
+        <button class="day-card__full" type="button" popovertarget={sheetId}>
+          {/* The hidden day tells the 13 identical buttons apart in a screen reader's list of controls. */}
+          Ver día completo<span class="visually-hidden"> del día {day.day}</span><SectionIcon name="arrow" />
+        </button>
+      )}
+    </div>
+
+    {hasFullDay && (
+      <DaySheet
+        day={day}
+        sheetId={sheetId}
+        experiences={experiences}
+        skipped={skipped}
+        nightNote={nightNote}
+        nightText={nightText}
+      />
+    )}
+  </div>
+</article>
