@@ -13,6 +13,7 @@ import {
   dayPhotoAltWarnings,
   driveDayRoutePlaces,
   overnightSequenceWarnings,
+  practicalUnverifiedWarnings,
 } from './quality-rules.ts'
 
 export interface ContentRuleResult {
@@ -43,6 +44,11 @@ export function validateContentRules(
     } else {
       warnings.push('[WARNING] status: draft (bloqueará el build en producción)')
     }
+  }
+
+  // A hub is the destination's page, not a route (1.6 §2.1: variants N/A).
+  if (guide.type === 'hub' && guide.variants) {
+    errors.push('[ERROR] type: hub no admite variants: la ruta va en su propia guía')
   }
 
   if (guide.budget && guide.base_travelers == null) {
@@ -105,6 +111,7 @@ export function validateContentRules(
   }
 
   warnings.push(...placeQualityWarnings(guide, places, now, warnedStalePlaces))
+  warnings.push(...practicalUnverifiedWarnings(guide.practical, now))
 
   if (guide.content_type === 'experience' && !guide.trip_done) {
     warnings.push('[WARNING] content_type: experience sin trip_done')

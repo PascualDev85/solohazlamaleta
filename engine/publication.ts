@@ -5,7 +5,8 @@ import type { CompiledGuide } from './types.ts'
  * pipeline. Explicit while there is a single engine guide: a glob over
  * content/guides would be the first discovery mechanism, and it is not
  * needed yet. Lives in the engine so that both the landing page (src/) and
- * the sitemap (astro.config.mjs, which cannot import src/) read one list.
+ * the sitemap (astro.config.mjs, which cannot import src/) read one list;
+ * the hub finds its guides and satellites in it too (src/lib/hubLinks.ts).
  */
 export const ENGINE_GUIDE_SOURCES: { guide: string; places: string }[] = [
   {
@@ -33,4 +34,19 @@ export function guidePath(guide: Pick<CompiledGuide, 'destination' | 'slug'>): s
 /** URL paths of the guides that must carry noindex and stay out of the sitemap. */
 export function unpublishedGuidePaths(guides: Pick<CompiledGuide, 'status' | 'destination' | 'slug'>[]): string[] {
   return guides.filter((guide) => !isPublished(guide)).map(guidePath)
+}
+
+/**
+ * A hub is public once any guide under it (by its `hub` path) is published:
+ * 1.13 §6 keeps it noindex "mientras la guía sea borrador". One switch, the
+ * guides' own status, for both its page and the sitemap.
+ */
+export function isHubPublished(hub: string, guides: Pick<CompiledGuide, 'status' | 'hub'>[]): boolean {
+  return guides.some((guide) => guide.hub === hub && isPublished(guide))
+}
+
+/** The hubs none of whose guides is published yet: noindex, and out of the sitemap. */
+export function unpublishedHubPaths(guides: Pick<CompiledGuide, 'status' | 'hub'>[]): string[] {
+  const hubs = [...new Set(guides.map((guide) => guide.hub).filter(Boolean))]
+  return hubs.filter((hub) => !isHubPublished(hub, guides))
 }

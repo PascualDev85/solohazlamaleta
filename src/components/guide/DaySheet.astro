@@ -48,7 +48,7 @@ const num = twoDigitDay(day.day);
 
   <div class="day-sheet__body">
     {experiences.length > 0 && (
-      <section class="day-sheet__block" aria-labelledby={`${sheetId}-exp`}>
+      <section aria-labelledby={`${sheetId}-exp`}>
         <h3 id={`${sheetId}-exp`}>Nuestra experiencia</h3>
         <ul class="day-sheet__experiences">
           {experiences.map((stop) => (
@@ -62,7 +62,7 @@ const num = twoDigitDay(day.day);
     )}
 
     {nightNote && (
-      <section class="day-sheet__block" aria-labelledby={`${sheetId}-night`}>
+      <section aria-labelledby={`${sheetId}-night`}>
         <h3 id={`${sheetId}-night`}>La noche</h3>
         {nightText && <p class="day-sheet__place">{nightText}</p>}
         <p>{nightNote}</p>
@@ -70,7 +70,7 @@ const num = twoDigitDay(day.day);
     )}
 
     {skipped.length > 0 && (
-      <section class="day-sheet__block" aria-labelledby={`${sheetId}-skipped`}>
+      <section aria-labelledby={`${sheetId}-skipped`}>
         <h3 id={`${sheetId}-skipped`}>Lo que no hicimos ese día</h3>
         <ul class="day-sheet__experiences day-sheet__experiences--skipped">
           {skipped.map((stop) => (
@@ -84,14 +84,14 @@ const num = twoDigitDay(day.day);
     )}
 
     {day.our_take && (
-      <section class="day-sheet__block day-sheet__block--take" aria-labelledby={`${sheetId}-take`}>
+      <section class="day-sheet__block--take" aria-labelledby={`${sheetId}-take`}>
         <h3 id={`${sheetId}-take`}>Lo que haríamos distinto</h3>
         <p>{day.our_take}</p>
       </section>
     )}
 
     {day.plan_b && (
-      <section class="day-sheet__block day-sheet__block--planb" aria-labelledby={`${sheetId}-planb`}>
+      <section class="day-sheet__block--planb" aria-labelledby={`${sheetId}-planb`}>
         <h3 id={`${sheetId}-planb`}>Plan B</h3>
         <p>{day.plan_b}</p>
       </section>
