@@ -73,8 +73,75 @@ export function dayCardLineIssues() {
     if (rows(facts) > 1) out.push(`${id}: facts wrap`)
     const night = day.querySelector('.day-card__night')
     if (night && rows(night) > 1) out.push(`${id}: night wraps`)
-    for (const n of day.querySelectorAll<HTMLElement>('.day-stop__name')) if (n.scrollWidth > n.clientWidth + 0.5) out.push(`${id}: stop name overflows (${n.textContent?.trim()})`)
-    for (const p of day.querySelectorAll<HTMLElement>('.day-stop__practical')) if (p.scrollWidth > p.clientWidth + 0.5) out.push(`${id}: practical line overflows`)
+    // A name may wrap (at a larger text size it has to), so its one line is
+    // measured by height: more than one and a half lines tall is two.
+    for (const n of day.querySelectorAll<HTMLElement>('.day-stop__name')) {
+      if (n.offsetHeight > parseFloat(getComputedStyle(n).lineHeight) * 1.5) out.push(`${id}: stop name wraps (${n.textContent?.trim()})`)
+    }
+    // The practical line may wrap too (a larger text size needs it), so its
+    // text is counted in rows, not only checked for overflow.
+    for (const p of day.querySelectorAll<HTMLElement>('.day-stop__practical')) {
+      if (p.scrollWidth > p.clientWidth + 0.5) out.push(`${id}: practical line overflows`)
+      else {
+        const centres: number[] = []
+        const walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT)
+        for (let t = walker.nextNode(); t; t = walker.nextNode()) {
+          if (!t.textContent?.trim() || t.parentElement?.closest('.visually-hidden, .day-stop__bubble')) continue
+          const range = document.createRange()
+          range.selectNodeContents(t)
+          for (const b of range.getClientRects()) if (b.width > 0) centres.push((b.top + b.bottom) / 2)
+        }
+        centres.sort((a, b) => a - b)
+        if (centres.length && centres[centres.length - 1] - centres[0] > parseFloat(getComputedStyle(p).fontSize) / 2) out.push(`${id}: practical line wraps`)
+      }
+    }
+  }
+  return out
+}
+
+/**
+ * The day cards at a larger browser text size (test:ui sets 150%). The lines
+ * may take more rows than at the default size, as they should; what must not
+ * happen is text that is cut or that runs over other text. For every day, with
+ * every stop and "Lo mejor del día" open: nothing runs out of the card's sides
+ * (it clips), no line overflows its own box, the parts of a line never
+ * overlap, and the shade at the photo's foot is never taller than the photo
+ * (its first line would be cut off at the top).
+ */
+export function dayCardTextScaleIssues() {
+  document.querySelectorAll<HTMLDetailsElement>('.day-card__more, .day-card__highlight').forEach((d) => (d.open = true))
+  const out: string[] = []
+  const name = (el: Element) => `${el.className || el.tagName.toLowerCase()} "${(el.textContent ?? '').trim().slice(0, 40)}"`
+  const overlap = (a: DOMRect, b: DOMRect) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > 0.5 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 0.5
+  for (const day of document.querySelectorAll<HTMLElement>('.day')) {
+    const id = day.getAttribute('aria-labelledby')
+    const card = day.querySelector<HTMLElement>('.day-card')
+    if (!card) continue
+    const edge = card.getBoundingClientRect()
+    const seen = new Set<string>()
+    for (const el of card.querySelectorAll<HTMLElement>('*')) {
+      if (el.closest('.visually-hidden, .day-card__figure, .day-stop__bubble')) continue
+      const r = el.getBoundingClientRect()
+      if (r.width === 0 || (r.left >= edge.left - 0.5 && r.right <= edge.right + 0.5)) continue
+      const label = name(el)
+      if (!seen.has(label)) out.push(`${id}: runs out of the card (${label})`)
+      seen.add(label)
+    }
+    for (const el of card.querySelectorAll<HTMLElement>('.day-card__route, .day-card__facts, .day-card__night, .day-stop__name, .day-stop__practical')) {
+      if (el.scrollWidth > el.clientWidth + 0.5) out.push(`${id}: overflows its line (${name(el)})`)
+    }
+    const lines = '.day-card__route, .day-card__facts, .day-card__night, .day-card__extras, .day-stop__body, .day-stop__head, .day-stop__practical, .day-stop__parking'
+    for (const line of card.querySelectorAll<HTMLElement>(lines)) {
+      const parts = [...line.children].filter((c) => !c.classList.contains('visually-hidden')).map((c) => [c, c.getBoundingClientRect()] as const)
+      for (let i = 0; i < parts.length; i++) {
+        for (let j = i + 1; j < parts.length; j++) {
+          if (parts[i][1].width && parts[j][1].width && overlap(parts[i][1], parts[j][1])) out.push(`${id}: ${name(parts[i][0])} overlaps ${name(parts[j][0])}`)
+        }
+      }
+    }
+    const media = card.querySelector('.day-card__media')?.getBoundingClientRect()
+    const shade = card.querySelector('.day-card__overlay')?.getBoundingClientRect()
+    if (media && shade && shade.top < media.top - 0.5) out.push(`${id}: the photo's shade is taller than the photo (${Math.round(media.top - shade.top)}px cut)`)
   }
   return out
 }

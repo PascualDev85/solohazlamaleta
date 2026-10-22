@@ -1,12 +1,12 @@
 // UI checks in a real browser, against the built site:
 //   node scripts/ui-check.ts <base-url> <page>
 // They guard what unit tests cannot see: the layers of the overlay panels,
-// the lines of the day cards on small phones, every page under the HTTP
-// headers it will ship with, and the panels by keyboard. Each check names
+// the lines of the day cards on small phones and at 150% text, every page
+// under the HTTP headers it will ship with, and the panels by keyboard. Each check names
 // what broke. Run after `npm run build`: check 4 reads dist/_headers.
 import { readFileSync } from 'node:fs'
 import { chromium } from 'playwright'
-import { DURATION_HINT, PANELS, dayCardLineIssues, focusStep, headerOverlap, panelState, scrollAnimationIssues, siteHeaderIssues } from './ui-shared.ts'
+import { DURATION_HINT, PANELS, dayCardLineIssues, dayCardTextScaleIssues, focusStep, headerOverlap, panelState, scrollAnimationIssues, siteHeaderIssues } from './ui-shared.ts'
 import { headersFor, parseHeaders } from './security-headers.ts'
 
 const [base, page = '/'] = process.argv.slice(2)
@@ -48,6 +48,23 @@ for (const width of [350, 360, 375, 390, 414]) {
   const bad = [...(await tab.evaluate(dayCardLineIssues)), ...(await tab.evaluate(siteHeaderIssues))]
   for (const b of bad) fail(`${width}px: ${b}`)
   await tab.close()
+}
+
+// 2b. The same cards with the browser's text size at 150% (WCAG 1.4.4): the
+//     lines take more rows, as they should, but nothing is cut and nothing
+//     runs over other text (see dayCardTextScaleIssues). The size is set the
+//     way a reader sets it, as the browser's default font size, through CDP.
+//     Reduced motion, so the desktop carousel's 3D turn does not skew the boxes.
+for (const width of [350, 360, 375, 390, 414, 1280]) {
+  const context = await browser.newContext({ viewport: { width, height: 844 }, reducedMotion: 'reduce' })
+  const tab = await context.newPage()
+  const cdp = await context.newCDPSession(tab)
+  await cdp.send('Page.setFontSizes', { fontSizes: { standard: 24, fixed: 20 } })
+  await tab.goto(url, { waitUntil: 'networkidle' })
+  const root = await tab.evaluate(() => getComputedStyle(document.documentElement).fontSize)
+  if (root !== '24px') fail(`${width}px at 150% text: the text size did not apply (root ${root})`)
+  else for (const b of await tab.evaluate(dayCardTextScaleIssues)) fail(`${width}px at 150% text: ${b}`)
+  await context.close()
 }
 
 // 3. Scroll-driven animations survive the minified build (see scrollAnimationIssues).
