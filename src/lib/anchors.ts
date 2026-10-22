@@ -10,3 +10,12 @@ export function dayAnchorId(day: number): string {
 export function campsiteAnchorId(placeId: string): string {
   return `dormir-${placeId}`
 }
+
+/** The hub's "Lo práctico" section: the guides point there instead of repeating it (1.13 §3). */
+export const HUB_PRACTICAL_ID = 'practico'
+
+/** Link from a guide to a section of its hub, built from the guide's `hub` path ("/islandia/"). */
+export function hubSectionHref(hub: string, sectionId: string): string {
+  const path = hub.endsWith('/') ? hub : `${hub}/`
+  return `${path}#${sectionId}`
+}
