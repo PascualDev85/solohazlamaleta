@@ -54,8 +54,16 @@ async function unpublishedEngineGuidePaths() {
   return unpublishedGuidePaths(guides);
 }
 
+/**
+ * The Islandia hub: noindex while the 13-day guide is (docs/1.13 §6). It is
+ * not in ENGINE_GUIDE_SOURCES, which also feeds the landing page's guide
+ * list, so its status does not reach unpublishedEngineGuidePaths() and it is
+ * kept out here, next to the hard-coded `noindex` on its page.
+ */
+const HUB_PATHS = ['/islandia/'];
+
 /** Everything that carries `noindex`, so it must stay out of the sitemap too. */
-const excludedPaths = [...draftGuidePaths(), ...(await unpublishedEngineGuidePaths())];
+const excludedPaths = [...draftGuidePaths(), ...(await unpublishedEngineGuidePaths()), ...HUB_PATHS];
 
 /**
  * Which pages go in the sitemap. Exported for tests/config/sitemap.test.ts.

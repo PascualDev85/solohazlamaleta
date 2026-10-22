@@ -45,6 +45,11 @@ export function validateContentRules(
     }
   }
 
+  // A hub is the destination's page, not a route (1.6 §2.1: variants N/A).
+  if (guide.type === 'hub' && guide.variants) {
+    errors.push('[ERROR] type: hub no admite variants: la ruta va en su propia guía')
+  }
+
   if (guide.budget && guide.base_travelers == null) {
     warnings.push('[WARNING] budget presente sin base_travelers: se asumirá 1 viajero para total_reference')
   }

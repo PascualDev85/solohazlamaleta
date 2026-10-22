@@ -1,0 +1,98 @@
+# Hub /islandia/, version 1 (docs/1.13 §6). A guide of type hub: no variants.
+# "Qué ver", the route card and the budget per person are derived from the
+# guides in `related`; nothing of that is written here.
+#
+# Temporary duplication: `practical` and the 4x4 question are copied from the
+# 13-day guide. Step 5 of 1.13 §8 removes them from the guide.
+slug: islandia
+destination: islandia
+hub: /islandia/
+type: hub
+content_type: experience
+# Not "draft": a draft fails the production build. The page stays noindex and
+# out of the sitemap while the guide does (1.13 §6). The author has not
+# reviewed this file yet: see the PR.
+status: reviewed
+trip_done: "2025-09"
+# Title and description from docs/fuentes/seo-islandia-grupo.md §3 (the
+# description shortened to fit 155 characters). The H1 is "Islandia", the
+# author's choice of 2026-10-20 over the research's "Viajar a Islandia"; the
+# <title> keeps the search phrase.
+title: "Viajar a Islandia: qué ver, cuándo ir y lo práctico"
+description: "Lo que hay que saber antes de ir a Islandia, contado desde nuestra ruta de 13 días en camper: qué ver, cuándo ir, documentos, dinero y cómo moverse."
+updated_at: 2026-10-15
+cover_image: islandia/islandia-gullfoss.jpg
+
+summary:
+  # Borrador del implementador, pendiente del autor.
+  tagline: "Lo que aprendimos de Islandia en trece días de camper, en septiembre de 2025.\nQué ver, cuándo ir y lo práctico, contado desde lo que vivimos."
+  getting_around: "Camper **sin 4x4**"
+
+related:
+  - islandia-en-camper-13-dias
+
+# Cuándo ir: only what is already in the 13-day guide (pitfalls,
+# how_we_choose, accommodation notes, day 6). Borrador del implementador,
+# pendiente del autor.
+when_to_go:
+  - "Vimos auroras boreales la noche del día 6, desde el mirador de Rauðafell: de montaña a montaña y con todos los colores."
+  - "Nos nevó varias noches y llegamos a estar a 0 °C. En Systragil nos despertamos con todo blanco."
+  - "Hay menos luz que en verano y puede nevar: por eso no apretamos los días del norte."
+  - "Con ese frío, los campings sin ducha caliente ni sala común se hacen muy duros."
+  - "Aun así, algunos campings estaban muy concurridos, como Skaftafell y Hellissandur: conviene llegar temprano."
+  # From the author, 2026-10-20.
+  - "Había gente en las atracciones principales del Círculo Dorado y del sur. A partir del este, conforme subíamos hacia el norte, encontramos poca."
+
+# Cómo moverse: what the guide says about the camper and the Ring Road, and
+# what we did not try, said as such.
+transport:
+  local:
+    - mode: "Camper (lo que usamos)"
+      description: "La Ring Road (Ruta 1) rodea toda la isla y está asfaltada: se hace sin problema con una camper estándar, sin 4x4. Velocidad máx. 90 km/h en carretera, 30 km/h en pistas de grava. Las F-roads (pistas del interior) están prohibidas para las campers de alquiler estándar."
+      notes: "Llena el depósito siempre al pasar por una ciudad: hay tramos de 150 km sin gasolinera. La app Gas Map Iceland ayuda a encontrar las más baratas."
+      verified_at: 2025-09-15
+    - mode: "Coche, autobús o excursiones organizadas"
+      description: "No los probamos: hicimos todo el viaje en camper, así que no podemos contarte cómo funcionan."
+
+# Copied from the 13-day guide (temporary, see the top of this file).
+practical:
+  documents:
+    - "DNI o pasaporte (Islandia es espacio Schengen)"
+    - "Carnet de conducir (el español es válido)"
+    - "Tarjeta de crédito con margen para fianza del camper (puede ser 1.000-2.000 €)"
+  plugs: "Tipo F (igual que España). Sin adaptador."
+  apps:
+    - "Vedur (tiempo oficial)"
+    - "Gas Map Iceland (gasolineras baratas)"
+    - "Maps.me (offline: imprescindible sin cobertura)"
+    - "Safe Travel Iceland (alertas de seguridad vial)"
+  tips:
+    - "Cocinar en el camper es lo que hace viable el presupuesto. Comer fuera en Islandia puede ser 3-4 veces más caro que en España."
+    - "Se puede rellenar la botella de agua gratis en casi cualquier parking, gasolinera o restaurante — el agua del grifo es potable en toda Islandia."
+  currency:
+    code: ISK
+    name: "Corona islandesa"
+    notes: "Casi todo se paga con tarjeta, pero algún camping aislado pide solo efectivo (en nuestra ruta, Mosskógar): lleva algunas coronas encima."
+
+# Preguntas sobre Islandia: the guide's destination question, plus those
+# proposed by docs/fuentes/seo-islandia-grupo.md §3 whose answer is already in
+# the repo. Borrador del implementador, pendiente del autor; only the one the
+# author already marked in the guide goes into the JSON-LD.
+faq:
+  - q: "¿Hace falta 4x4 para la Ring Road?"
+    a: "No. La Ring Road está asfaltada y se hace sin problema con un camper estándar. El 4x4 solo es necesario para las F-roads, prohibidas para campers de alquiler estándar."
+    schema: true
+  - q: "¿Cuántos días hacen falta para ver Islandia?"
+    a: "Nosotros dimos la vuelta por la Ring Road y añadimos la península de Snæfellsnes en 13 días, a ritmo intensivo. Dejamos fuera los Fiordos del Oeste, que son dos o tres días más de carretera, y las Highlands, a las que solo se llega por F-roads."
+  - q: "¿Se puede dormir en la camper fuera de los campings?"
+    a: "No. En Islandia está prohibido pernoctar en camper fuera de los campings y hay multas. Quedarse solo es legal con permiso del propietario del terreno."
+  - q: "¿Es caro viajar a Islandia?"
+    a: "Sí. Comer fuera puede costar 3-4 veces más que en España y la gasolina es cara; cocinar en la camper y comprar en Bonus es lo que hizo viable nuestro presupuesto. Lo que gastamos, partida a partida, está en el presupuesto real de nuestra ruta de 13 días."
+  - q: "¿Cuándo se ven auroras boreales?"
+    a: "Nosotros las vimos en septiembre de 2025, la noche del día 6 de la ruta, desde el mirador de Rauðafell. No tenemos datos propios de otros meses."
+  - q: "¿Se paga con tarjeta o hace falta llevar coronas?"
+    a: "Casi todo se paga con tarjeta, pero algún camping aislado puede pedir solo efectivo: en nuestra ruta, Mosskógar. Lleva algunas coronas encima por si acaso."
+  - q: "¿Hace falta adaptador de enchufe?"
+    a: "No. Los enchufes son de tipo F, igual que en España."
+  - q: "¿Se puede beber agua del grifo?"
+    a: "Sí, el agua del grifo es potable en toda Islandia. Se puede rellenar la botella gratis en casi cualquier parking, gasolinera o restaurante."

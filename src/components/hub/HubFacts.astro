@@ -1,0 +1,52 @@
+---
+import SectionIcon from '../guide/SectionIcon.astro';
+
+interface Fact {
+  icon: string;
+  label: string;
+  /** "**word**" stresses one word, as in summary.getting_around. */
+  value: string;
+  /** A big figure with its unit, instead of a plain value: "2.248 €" + "/pers.". */
+  unit?: string;
+  note?: string;
+  /** Where the fact is told in full: a section of this page or of the guide. */
+  href: string;
+  linkLabel: string;
+}
+
+interface Props {
+  facts: Fact[];
+}
+
+const { facts } = Astro.props;
+
+// Same rule as the guide's quick facts: split into plain and strong pieces; Astro escapes both.
+const parts = (value: string) => value.split('**').map((text, i) => ({ text, strong: i % 2 === 1 }));
+---
+
+{/* The guide's quick-facts tiles (_overview.scss), each fact linking to where it is told in full. */}
+<div class="quick-facts hub-facts">
+  <h2 class="quick-facts__title" id="hub-facts-title">Islandia de un vistazo</h2>
+  <div class="quick-facts__rail" role="region" aria-labelledby="hub-facts-title" tabindex="0">
+    <ul class="quick-facts__list">
+      {facts.map((fact) => (
+        <li class="quick-facts__tile">
+          <p class="quick-facts__label"><SectionIcon name={fact.icon} />{fact.label}</p>
+          {fact.unit ? (
+            <p class="quick-facts__value">
+              <span class="quick-facts__big">{fact.value}</span><span class="quick-facts__unit">{fact.unit}</span>
+            </p>
+          ) : (
+            <p class="quick-facts__value quick-facts__value--plain">
+              {parts(fact.value).map((part) => (part.strong ? <strong>{part.text}</strong> : part.text))}
+            </p>
+          )}
+          <p class="quick-facts__note">
+            {fact.note}
+            <a href={fact.href}>{fact.linkLabel}</a>
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
