@@ -134,11 +134,16 @@
   border-radius: var(--radius);
   background: var(--color-bg);
 
+  // 45px tall (WCAG 2.5.5 asks 44) on a 43px card: the extra padding is cancelled
+  // by a negative margin over the card's border, so the card keeps its size.
+  // Not an ::after layer: a positioned summary inside this content-visibility
+  // section shows to axe (Lighthouse) as covering the FAQ's.
   &__summary {
     display: flex;
     align-items: center;
     gap: var(--space-xs);
-    padding: 0.6rem var(--space-md);
+    margin-block: -0.15rem;
+    padding: 0.75rem var(--space-md);
     cursor: pointer;
     list-style: none;
 

@@ -15,15 +15,20 @@ interface Props {
 
 const { image, alt, sizes, priority = false, crop, class: className } = Astro.props;
 
-// Per-format quality: AVIF at 30 still reads clean at display size on textured
-// photos, at a fraction of the bytes; <Picture> would force one quality on
+// Per-format quality. AVIF at 30 flattened the moss and water of the author's
+// photos into a plastic look (2026-10-22); 52 keeps their texture at about
+// twice the bytes. <Picture> would force one quality on
 // every format. 740w covers mid-range phones (412px at 1.75x needs 721px).
+// The page's LCP photo (priority) trades a little of that back: at 52 the
+// 13-day guide's cover cost its mobile score a point (98, under its 99 floor).
+const AVIF_QUALITY = priority ? 42 : 52;
+const WEBP_QUALITY = priority ? 72 : 78;
 const widths = [400, 640, 740, 800, 1024, 1280, 1600].filter((w) => w <= image.width);
 const [avif, webp, jpg] = await Promise.all([
-  getImage({ src: image, widths, format: 'avif', quality: 30 }),
-  getImage({ src: image, widths, format: 'webp', quality: 65 }),
+  getImage({ src: image, widths, format: 'avif', quality: AVIF_QUALITY }),
+  getImage({ src: image, widths, format: 'webp', quality: WEBP_QUALITY }),
   // Last-resort fallback for browsers with neither AVIF nor WebP: one size is enough.
-  getImage({ src: image, width: Math.min(800, image.width), format: 'jpg', quality: 70 }),
+  getImage({ src: image, width: Math.min(800, image.width), format: 'jpg', quality: 78 }),
 ]);
 
 async function croppedSrcset(format: 'avif' | 'webp', quality: number) {
@@ -45,7 +50,7 @@ async function croppedSrcset(format: 'avif' | 'webp', quality: number) {
   return files.map((file, i) => `${file.src} ${cropWidths[i]}w`).join(', ');
 }
 
-const [cropAvif, cropWebp] = await Promise.all([croppedSrcset('avif', 30), croppedSrcset('webp', 65)]);
+const [cropAvif, cropWebp] = await Promise.all([croppedSrcset('avif', AVIF_QUALITY), croppedSrcset('webp', WEBP_QUALITY)]);
 ---
 
 <picture>
@@ -60,7 +65,8 @@ const [cropAvif, cropWebp] = await Promise.all([croppedSrcset('avif', 30), cropp
     alt={alt}
     class={className}
     loading={priority ? 'eager' : 'lazy'}
-    fetchpriority={priority ? 'high' : 'auto'}
+    fetchpriority={priority ? 'high' : undefined}
     decoding="async"
+    data-source-width={image.width}
   />
 </picture>

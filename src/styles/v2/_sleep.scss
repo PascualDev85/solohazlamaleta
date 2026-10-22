@@ -70,6 +70,11 @@
   }
 
   &__night {
+    @include tap-area;
+
+    // Over the card's summary (positioned, and later in the page), so the
+    // chip's tap area reaches into its top padding.
+    z-index: 1;
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
@@ -178,6 +183,8 @@
     font-weight: 800;
 
     a {
+      @include tap-area;
+
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;

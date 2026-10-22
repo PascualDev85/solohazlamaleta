@@ -6,7 +6,7 @@ export const EntrySchema = z.object({
   currency: z.string(),
   booking_required: z.boolean().optional(),
   advance_notice: z.string().optional(),
-  url_booking: z.string().url().optional(),
+  url_booking: z.url().optional(),
   verified_at: z.string(),
   notes: z.string().optional(),
 }).strict()
@@ -21,7 +21,7 @@ export const HoursSchema = z.object({
 
 // The exact Google Maps place card for a stop (e.g. a named car park), when a
 // bare coordinate pin is not good enough. Google hosts only.
-const GoogleMapsUrl = z.string().url().refine(
+const GoogleMapsUrl = z.url().refine(
   (url) => /^https:\/\/(maps\.google\.com|www\.google\.com\/maps)\b/.test(url),
   { message: 'maps_url debe ser un enlace de Google Maps' },
 )
@@ -69,7 +69,7 @@ export const PlaceSourceSchema = z.object({
   type: PlaceType,
   verified_at: z.string(),
   review_interval: z.number().optional().default(12),
-  source_url: z.string().url().optional(),
+  source_url: z.url().optional(),
   entry: EntrySchema.optional(),
   hours: HoursSchema.optional(),
   parking: ParkingSchema.optional(),

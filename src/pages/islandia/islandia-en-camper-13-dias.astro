@@ -18,6 +18,7 @@ import { budgetRows } from '../../lib/budgetRows.ts';
 import { nightsByPlace, nightCounts } from '../../lib/nightsByPlace.ts';
 import { splitDetail } from '../../lib/splitDetail.ts';
 import { guideImage } from '../../lib/guide-images.ts';
+import { engineGuideSections, engineSectionFlags } from '../../lib/guide-sections.ts';
 import { getImage } from 'astro:assets';
 import '../../styles/guide-v2.scss';
 
@@ -49,33 +50,11 @@ const coverAlt =
 const ogImage = await getImage({ src: cover, width: 1200, format: 'jpg', quality: 70 });
 const coverSizes = '(min-width: 48rem) 55vw, 100vw';
 
-// One source for "does this section render": the index and the sections below
-// read the same flags, so the index can never link to a section that is absent.
-const show = {
-  route: Boolean(variant),
-  sleep: (guide.accommodation?.zones.length ?? 0) > 0,
-  transport: Boolean(guide.transport),
-  budget: Boolean(guide.budget),
-  booking: (guide.booking_checklist?.length ?? 0) > 0,
-  howWeChoose: (guide.how_we_choose?.length ?? 0) > 0,
-  leftOut: (guide.route_decisions?.length ?? 0) > 0 || skippedStops.length > 0,
-  pitfalls: (guide.pitfalls?.length ?? 0) > 0 || (guide.terrain_tips?.length ?? 0) > 0,
-  practical: Boolean(guide.practical),
-  faq: (guide.faq?.length ?? 0) > 0,
-};
-// "Nuestro criterio" holds three parts (1.12 §13); it shows when any of them has content.
-const showCriteria = show.howWeChoose || show.leftOut || show.pitfalls;
-
-const indexSections = [
-  { id: 'itinerario', label: 'La ruta', icon: 'route', visible: show.route },
-  { id: 'dormir', label: 'Dónde dormir', icon: 'sleep', visible: show.sleep },
-  { id: 'llegar', label: 'Cómo llegamos y nos movimos', icon: 'transport', visible: show.transport },
-  { id: 'presupuesto', label: 'Presupuesto real', icon: 'budget', visible: show.budget },
-  { id: 'reservar', label: 'Qué reservamos y cuándo', icon: 'booking', visible: show.booking },
-  { id: 'criterio', label: 'Nuestro criterio', icon: 'criteria', visible: showCriteria },
-  { id: 'practico', label: 'Lo práctico', icon: 'practical', visible: show.practical },
-  { id: 'faq', label: 'Preguntas frecuentes', icon: 'faq', visible: show.faq },
-].filter((section) => section.visible);
+// One source for "does this section render" (lib/guide-sections.ts): the
+// index, the sections below and the search read the same flags.
+const show = engineSectionFlags(guide);
+const showCriteria = show.criteria;
+const indexSections = engineGuideSections(guide);
 
 // The budget keeps the cents (the trip facts round to whole euros).
 const currency = guide.budget?.currency ?? 'EUR';

@@ -33,6 +33,19 @@
     color: var(--color-pill-text);
   }
 
+  // "Lo hicimos" in the lived colour; "Borrador" outlined in the label coral,
+  // so a draft reads as a warning, not as one more fact.
+  .pill--lived {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+
+  .pill--draft {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--color-label);
+    color: var(--color-label);
+  }
+
   // The chevron of a folding card's summary; it turns when the card opens.
   .fold-chevron {
     flex: none;

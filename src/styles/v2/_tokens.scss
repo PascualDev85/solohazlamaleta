@@ -32,6 +32,9 @@ html:root[data-design="v2"] {
   --color-border: #e7e1d8;
   --color-rule: #d6cec2;
 
+  // The paper of the hero's postcards, a touch warmer than the page.
+  --color-paper: #fffefb;
+
   // Soft blush for highlighted data tiles: a gradient between two tints.
   --color-blush-from: #fdf1ef;
   --color-blush-to: #fbe0dc;
@@ -75,6 +78,8 @@ html:root[data-design="v2"][data-theme="dark"] {
 
   --color-border: #2e3433;
   --color-rule: #3d4443;
+
+  --color-paper: #e9e5dd;
 
   --color-blush-from: #2a1f1f;
   --color-blush-to: #362424;
