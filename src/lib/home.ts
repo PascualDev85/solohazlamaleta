@@ -67,3 +67,17 @@ export function homeStats(items: GuideListItem[], index: { places: unknown[] }[]
     places: index.reduce((sum, guide) => sum + guide.places.length, 0),
   }
 }
+
+/**
+ * The postcards behind the hero's cover: the authors' other photos of the
+ * same destination (the cover's folder under src/assets/guides/), in a stable
+ * order, at most `max`. Only the authors' own photos live there, so nothing
+ * from a third party ends up in the stack.
+ */
+export function postcardPhotos(cover: string, paths: string[], max = 3): string[] {
+  const folder = cover.slice(0, cover.lastIndexOf('/') + 1)
+  return paths
+    .filter((path) => path !== cover && path.startsWith(folder) && !path.slice(folder.length).includes('/'))
+    .sort()
+    .slice(0, max)
+}

@@ -5,12 +5,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import GuidePhoto from '../components/guide/GuidePhoto.astro';
 import SectionIcon from '../components/guide/SectionIcon.astro';
 import HomeSearch from '../components/home/HomeSearch.astro';
+import HeroPostcards from '../components/home/HeroPostcards.astro';
 import DayStop from '../components/guide/DayStop.astro';
 import '../styles/home-v2.scss';
 import { loadCompiledGuide } from '../lib/engine-guide.ts';
-import { guideImage } from '../lib/guide-images.ts';
+import { guideImage, guideImagePaths } from '../lib/guide-images.ts';
 import { formatWholePrice } from '../lib/formatPrice.ts';
-import { destinationCards, homeStats, hubPathsFromPages } from '../lib/home.ts';
+import { destinationCards, homeStats, hubPathsFromPages, postcardPhotos } from '../lib/home.ts';
 import { bookingNote, checkedParking, countLabel, showcaseDay } from '../lib/home-showcase.ts';
 import { dayAnchorId } from '../lib/anchors.ts';
 import { formatDate } from '../lib/formatDate.ts';
@@ -56,11 +57,14 @@ const cards = sorted.map((guide) => ({
 const cardSizes = '(min-width: 48rem) 22rem, 100vw';
 
 // The hero: the cover of the first guide that has one, captioned with its
-// destination. Decorative (empty alt): the model has no alt for covers yet
-// (photo amendment, 1.10 §3.7), and the caption already names the place.
+// destination, on top of a pile of postcards (components/home/HeroPostcards.astro).
+// Decorative (empty alt): the model has no alt for covers yet (photo
+// amendment, 1.10 §3.7), and the caption already names the place.
 const heroGuide = engineGuides.find((guide) => guide.cover_image);
 const hero = heroGuide?.cover_image ? guideImage(heroGuide.cover_image) : null;
 const heroCaption = heroGuide ? destinationLabel(heroGuide.destination) : '';
+// The pile of postcards behind it: the authors' other photos of that destination.
+const postcards = heroGuide?.cover_image ? postcardPhotos(heroGuide.cover_image, guideImagePaths()).map(guideImage) : [];
 const ogImage = hero ? await getImage({ src: hero, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 70 }) : null;
 
 // "Dentro de cada guía": one real day of the first engine guide, rendered with
@@ -133,19 +137,7 @@ const jsonLd = {
 
   <div class="home">
     <section class="home-hero" aria-labelledby="home-title">
-      {hero && (
-        <figure class="home-hero__media">
-          <GuidePhoto
-            class="home-hero__photo"
-            image={hero}
-            alt=""
-            sizes="(min-width: 64rem) 28rem, (min-width: 48rem) 40vw, calc(100vw - 30px)"
-            priority
-            crop={{ media: '(max-width: 47.99rem)', ratio: 16 / 10, position: 'center' }}
-          />
-          {heroCaption && <figcaption class="home-hero__caption">{heroCaption}</figcaption>}
-        </figure>
-      )}
+      {hero && <HeroPostcards cover={hero} backs={postcards} caption={heroCaption} />}
 
       <div class="home-hero__text">
         <h1 id="home-title" class="home-hero__title">Guías de viaje ya planificadas, día a día</h1>

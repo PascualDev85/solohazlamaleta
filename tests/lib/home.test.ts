@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
-import { destinationCards, homeStats, hubPathsFromPages } from '../../src/lib/home.ts'
+import { destinationCards, homeStats, hubPathsFromPages, postcardPhotos } from '../../src/lib/home.ts'
 import type { GuideListItem } from '../../src/lib/guide-list.ts'
 
 // The landing page's blocks built from the guide list: which destinations to
@@ -58,4 +58,22 @@ test('homeStats counts guides, destinations, the longest version of each route a
   const guides = [item({ days: [13] }), item({ destination: 'alsacia', days: [2, 3, 4, 5] })]
   const index = [{ places: [{}, {}, {}] }, { places: [{}, {}] }]
   assert.deepStrictEqual(homeStats(guides, index), { guides: 2, destinations: 2, days: 18, places: 5 })
+})
+
+test('postcardPhotos takes the other photos of the cover\'s destination, in a stable order, at most three', () => {
+  const paths = [
+    'islandia/gullfoss.jpg',
+    'islandia/gljufrafoss.jpg',
+    'alsacia/colmar.jpg',
+    'islandia/reikiavik.jpg',
+    'islandia/dias/3/skogafoss.jpg',
+    'islandia/akureyri.jpg',
+    'islandia/vik.jpg',
+  ]
+  assert.deepStrictEqual(postcardPhotos('islandia/gljufrafoss.jpg', paths), [
+    'islandia/akureyri.jpg',
+    'islandia/gullfoss.jpg',
+    'islandia/reikiavik.jpg',
+  ])
+  assert.deepStrictEqual(postcardPhotos('alsacia/colmar.jpg', paths), [])
 })

@@ -1,0 +1,231 @@
+@use "../abstracts" as *;
+
+// The hero's pile of postcards (components/home/HeroPostcards.astro), the
+// landing page's one authored moment. CSS 3D: the figure gives the
+// perspective, the stack keeps its cards in 3D and turns as one, and each
+// card sits a step deeper than the one in front of it, its shadow shorter
+// and softer the deeper it lies. The fanned pile is the resting state, so
+// with no animation (or no script) it simply shows fanned.
+//
+//   On load        the cards behind fan out from under the front one, once.
+//   Desktop        the stack turns to face the pointer (--tilt-x/--tilt-y,
+//                  set by the script), and fans a little wider on hover.
+//   Phones         the pile tips back and fans wider as the hero scrolls away.
+//   Reduced motion the pile stays still; hover only deepens its shadow.
+//
+// Only transform, translate, rotate and opacity move. Longhands on purpose:
+// the minifier folds "animation" and "animation-timeline" into one invalid
+// shorthand (see scrollAnimationIssues in scripts/ui-shared.ts).
+
+$depth-step: -26px;
+
+[data-design="v2"] {
+  .postcards {
+    position: relative;
+    padding-top: var(--space-md);
+    perspective: 1100px;
+
+    // Phones: a rotated corner must not widen the page.
+    @media (max-width: 47.99rem) {
+      overflow-x: clip;
+    }
+
+    @include from("md") {
+      padding-top: 0;
+      perspective: 1400px;
+    }
+  }
+
+  .postcards__stack {
+    --tilt-x: 0;
+    --tilt-y: 0;
+
+    position: relative;
+    width: 84%;
+    margin-inline: auto;
+    transform-style: preserve-3d;
+    transform: rotateX(calc(var(--tilt-x) * 1deg)) rotateY(calc(var(--tilt-y) * 1deg));
+
+    &.is-tilting {
+      will-change: transform;
+    }
+
+    // The pile's shadow on the table: it slides against the turn, so the
+    // light seems to stay put while the cards move.
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 10% 2% -6%;
+      background: radial-gradient(closest-side, rgb(20 23 22 / 0.3), transparent);
+      transform:
+        translateZ(-90px)
+        translate(calc(var(--tilt-y) * -1.8px), calc(18px + var(--tilt-x) * 1.8px));
+      transition: opacity 0.15s var(--ease-out);
+      opacity: 0.8;
+    }
+
+    @include from("md") {
+      width: 78%;
+    }
+  }
+
+  // Every card: a photo on paper. The ones behind fill the front card's box.
+  .postcard {
+    // Where the card lies in the fan: depth, offset and turn (set per slot).
+    --depth: 0;
+    --dx: 0%;
+    --dy: 0%;
+    --rz: 0deg;
+    --spread: 1;
+
+    position: absolute;
+    inset: 0;
+    padding: 6px;
+    border-radius: 6px;
+    background: var(--color-paper);
+    box-shadow:
+      0 1px 2px rgb(20 23 22 / 0.12),
+      0 calc(18px - var(--depth) * 4px) calc(34px - var(--depth) * 6px) -14px rgb(20 23 22 / calc(0.5 - var(--depth) * 0.08));
+    transform:
+      translateZ(calc(var(--depth) * #{$depth-step}))
+      translate(calc(var(--dx) * var(--spread)), calc(var(--dy) * var(--spread)))
+      rotate(calc(var(--rz) * var(--spread)));
+    transition: transform 0.25s var(--ease-out);
+    backface-visibility: hidden;
+
+    picture {
+      display: block;
+    }
+
+    @include from("md") {
+      padding: 10px;
+    }
+  }
+
+  // A card behind, while its photo loads: the paper around a tinted frame.
+  .postcard:not(.postcard--front) {
+    background:
+      linear-gradient(var(--color-surface-deep), var(--color-surface-deep)) content-box,
+      var(--color-paper);
+  }
+
+  // The front card is in the flow: its photo sets the pile's size.
+  .postcard--front {
+    position: relative;
+    --rz: -1.5deg;
+  }
+
+  // The caption lines up with the pile, clear of its lowest corner.
+  .postcards .home-hero__caption {
+    width: 84%;
+    margin: var(--space-md) auto 0;
+
+    @include from("md") {
+      width: 78%;
+      margin-top: var(--space-lg);
+    }
+  }
+
+  .postcard__photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 3px;
+    background: var(--color-surface);
+
+    @include from("md") {
+      aspect-ratio: 4 / 5;
+    }
+  }
+
+  // The fan. Phones: wide cards peeking above and to the sides. From tablet
+  // up: portrait cards spread to both sides. --sx/--sy/--srz: how much wider
+  // each one fans as the hero scrolls away (phones only).
+  .postcard--1 { --depth: 1; --dx: -5%;  --dy: -12%; --rz: -4deg; --sx: -3%; --sy: -6%;  --srz: -4deg; }
+  .postcard--2 { --depth: 2; --dx: 7%;   --dy: -7%;  --rz: 6deg;  --sx: 4%;  --sy: -9%;  --srz: 6deg; }
+  .postcard--3 { --depth: 3; --dx: -6%;  --dy: 2%;   --rz: -8deg; --sx: -2%; --sy: -14%; --srz: -5deg; }
+
+  @include from("md") {
+    .postcard--1 { --dx: -5%;  --dy: -5%; --rz: -4deg; }
+    .postcard--2 { --dx: 14%;  --dy: 1%;  --rz: 7deg; }
+    .postcard--3 { --dx: -15%; --dy: 1%;  --rz: -10deg; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    // Once, on load: the cards behind slide out from under the front one,
+    // nearest first. 640 ms plus the stagger: the page's only long movement.
+    .postcard:not(.postcard--front) {
+      animation-name: postcard-fan;
+      animation-duration: 0.64s;
+      animation-timing-function: var(--ease-out);
+      animation-delay: calc(var(--depth) * 60ms - 60ms);
+      animation-fill-mode: backwards;
+    }
+
+    // Desktop: the pile opens a little wider under the pointer. It opens in
+    // 400 ms and closes in 250 (the card's own transition).
+    @media (hover: hover) and (pointer: fine) {
+      .postcards:hover .postcard {
+        --spread: 1.15;
+        transition-duration: 0.4s;
+      }
+    }
+
+    // Phones: as the hero leaves the screen the pile tips back and fans wider.
+    @supports (animation-timeline: view()) {
+      @media (max-width: 47.99rem) {
+        // Tipped about its foot, so the near edge never covers the caption.
+        .postcards__stack {
+          transform-origin: 50% 100%;
+          animation-name: postcards-tip;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: view();
+          animation-range: exit 0% exit 100%;
+        }
+
+        .postcard:not(.postcard--front) {
+          animation-name: postcard-fan, postcard-spread;
+          animation-duration: 0.64s, auto;
+          animation-timing-function: var(--ease-out), linear;
+          animation-delay: calc(var(--depth) * 60ms - 60ms), 0s;
+          animation-fill-mode: backwards, both;
+          animation-timeline: auto, view();
+          animation-range: normal, exit 0% exit 100%;
+        }
+      }
+    }
+  }
+
+  // Reduced motion: nothing moves, but the pile still answers the pointer.
+  @media (prefers-reduced-motion: reduce) {
+    .postcard {
+      transition: none;
+    }
+
+    .postcards:hover .postcards__stack::before {
+      opacity: 1;
+    }
+  }
+
+  @keyframes postcard-fan {
+    from {
+      transform: translateZ(calc(var(--depth) * #{$depth-step})) rotate(-1.5deg);
+    }
+  }
+
+  @keyframes postcard-spread {
+    to {
+      translate: var(--sx) var(--sy);
+      rotate: var(--srz);
+    }
+  }
+
+  @keyframes postcards-tip {
+    to {
+      rotate: x 24deg;
+    }
+  }
+}
