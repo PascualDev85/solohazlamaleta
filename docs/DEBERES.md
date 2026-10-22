@@ -1,313 +1,89 @@
 # Deberes del autor
 
-Lo que solo puedes hacer tú, junto en una lista. Generado el 2026-10-22
-desde la lista del 21 (#53), las PR abiertas (#12, #25, #26, #31, #35, #45,
-#50, #52 y #54 a #69), sus comentarios hasta las 05:30 del 22 y la salida de
-`npm run day:status` y `npm run content:validate` sobre `develop`
-(`b288e69`, sin cambios desde el 20).
+Lo que solo puedes hacer tú, junto en una lista. Puesta al día el 2026-10-22
+por la tarde, después de las mezclas del día: #69 (portada completa), #71
+(precios verificados), #45 (404), #73 (hub, con las decisiones recomendadas)
+y, si han terminado, #57 (repaso) y #74 (arreglos previos al despliegue).
 
-Los tiempos son estimaciones en minutos. Si una hoja de decisiones o una PR
-da su tiempo, se usa ese. Lo que no está claro si sigue pendiente va marcado
-**comprobar**.
-
-El orden: primero mirar la portada y decidir sus textos; después las hojas de
-decisiones del hub y la 404; después el despliegue, con el repaso previo
-(#57); al final el contenido y los datos caducados (#56).
+Los tiempos son estimaciones en minutos. Lo que no está claro si sigue
+pendiente va marcado **comprobar**.
 
 ---
 
-## Si solo tienes 30 minutos
+## Ahora mismo
 
-1. **Mirar la portada de #69 en el móvil** (15 min). Es la integración de
-   anoche y lleva la portada más avanzada (#68) con el menú, el buscador v2,
-   las áreas de toque y el texto al 150 %. Cómo verla, en el punto 1.1.
-2. **El H1 de la portada y "Hola, somos David y Natalia"** (5 min). Ver 1.2.
-3. **¿Mezclas #69 entera o PR a PR?** (2 min). Ver 1.6.
-4. **#26, preguntas 1, 2 y 8** (8 min). La fecha de "Lo práctico", cómo sale
-   el hub de `noindex` y la frase "Solo hemos ido en septiembre…".
-
-Las respuestas, en cada PR, con el formato "1A 2B…". Lo que no contestes
-con la opción recomendada no cambia nada.
-
----
-
-## 1. La portada (60 min)
-
-Anoche la portada avanzó en cadena, cada PR sobre la anterior:
-[#60](https://github.com/PascualDev85/solohazlamaleta/pull/60) (portada v3,
-con #52 y #31 dentro) →
-[#62](https://github.com/PascualDev85/solohazlamaleta/pull/62) (menú de #59 y
-lupa en la cabecera) →
-[#63](https://github.com/PascualDev85/solohazlamaleta/pull/63) (diseño) →
-[#66](https://github.com/PascualDev85/solohazlamaleta/pull/66) (buscador v2) →
-[#68](https://github.com/PascualDev85/solohazlamaleta/pull/68) (postales en 3D
-y transiciones). Después,
-[#69](https://github.com/PascualDev85/solohazlamaleta/pull/69) lo juntó todo
-con #58 (CI), #61 (áreas de toque), #67 (texto al 150 % y alto contraste) y
-#64 (bytes de la guía). **#69 es lo que hay que mirar:** CI en verde (build,
-lighthouse y devices). #62, #63, #66 y #68 no tienen CI porque su base no es
-`develop`.
-
-Ninguna PR de la cadena trae hoja de decisiones con opciones: las preguntas
-van en el cuerpo de cada una. La revisión automática de anoche comentó #60,
-#62, #63 y #66, sin bloqueantes.
-
-### 1.1. Mirarla en el móvil (20 min)
-
-En local, con el móvil en la misma wifi:
-`git fetch && git switch integration/2026-10-22 && npm install && npm run dev -- --host`,
-y abrir en el móvil la dirección "Network" que imprime.
-
-- [ ] **Las postales en 3D** (#68): salen en abanico al cargar y se inclinan
-      con el scroll. Con movimiento reducido no se mueven.
-- [ ] **El buscador** (#66): la lupa de la cabecera abre la misma ventana en
-      todas las páginas, y el foco vuelve a la lupa al cerrar (#62).
-- [ ] **El menú** (#59, #62): esquinas de 28 px, miniatura de Islandia y la
-      "A" tintada de Alsacia. Se cierra tocando fuera y con ×.
-- [ ] **La guía de Islandia**: la tira de días, las paradas y "Mapa" con las
-      áreas de 44 px (#61), y el hero algo más oscuro.
-- [ ] **Texto grande y alto contraste** (#67): cómo probarlo en el iPhone y
-      en Android, al final de su cuerpo. A 16 px y sin la preferencia, la
-      guía se ve igual que en `develop`.
-- [ ] **En un iPhone real**, sobre todo: WebKit no se probó en local en
-      ninguna de estas PR; solo lo pasa la CI.
-
-### 1.2. Textos de la portada (15 min)
-
-Todos en `src/pages/index.astro` de #69, salvo los del buscador.
-
-- [ ] **H1** (#60, pregunta 1): "Guías de viaje ya planificadas, día a día",
-      con el claim debajo. #60 lo recomienda por SEO; en #31 el H1 era el
-      claim.
-- [ ] **"Por David y Natalia: rutas de viajes que hemos hecho…"**, la línea
-      bajo el H1 (#63).
-- [ ] **"Hola, somos David y Natalia"** (#60): va en plural y `/sobre-mi/`
-      en singular. Decide cuál vale para las dos.
-- [ ] **"Dentro de cada guía"** es ahora el día 2 real de Islandia con notas
-      al margen (#63): "Así es un día de la guía de Islandia, tal cual está en
-      la guía." y sus cuatro coletillas ("Un toque en «Mapa» y la tienes…",
-      "Alquiler del camper, 3-6 meses antes", "2.248 € por persona" y "el
-      parking de Þingvellir, 1.000 ISK, en octubre de 2026"). La revisión
-      avisa de que la muestra sale de una guía en `noindex` sin marcarla como
-      borrador.
-- [ ] **La cifra:** "Hasta hoy, 18 días de ruta planificados y 82 lugares,
-      cada uno con su día, en 2 destinos." Cuenta también la guía de Alsacia,
-      que es borrador.
-- [ ] **Columnas del pie:** "Destinos", "El proyecto" y "Legal" (#63).
-
-### 1.3. El buscador (5 min)
-
-- [ ] **¿Cabe en la V1 frente al BRIEF §P?** Era la pregunta de #52. #66 lo
-      deja sin filtros ni comparadores; la decisión sigue siendo tuya.
-- [ ] **Borradores en los resultados:** #60 ya los lista marcados
-      "Borrador" (era la segunda pregunta de #52). Confírmalo.
-- [ ] **"Lugares destacados" o "En nuestras fotos"**, el nombre del grupo de
-      sugerencias (#66).
-- [ ] **El texto de ayuda** "Sin tildes y con alguna errata también vale:
-      «gulfos», «presupuesto islandia»" ocupa dos líneas en el móvil (#66).
-
-### 1.4. Diseño y detalles (8 min)
-
-- [ ] **El pie con filas de 44 px** (#69, commit `56d69ac`): se hizo para que
-      no se pisaran las áreas de toque y cambia un poco su aspecto. ¿Vale o
-      prefieres otra solución?
-- [ ] **El papel de las postales en modo oscuro** (#68): un hueso apagado. El
-      modo oscuro aún no tiene interruptor.
-- [ ] **Contraste de las áreas de toque** (#61): medido sobre la línea de
-      texto (su criterio) o sobre la caja de 44 px.
-- [ ] **¿Firma al pie del menú?** (#59).
-- [ ] **La hoja de #31** (foto en la cabecera de escritorio y su alineación)
-      es anterior a #60. **Comprobar** si sigue aplicando en #69.
-- [ ] Para saber: con las postales, la portada en móvil da 99 de rendimiento
-      (desktop 100). #68 añadió la portada a las excepciones de
-      `scripts/lighthouse-check.ts` (mínimo 99, solo móvil y rendimiento),
-      citando tu condición del 21: 3D solo con 99 o más.
-
-### 1.5. #64 · Bytes de la guía (5 min)
-
-Recorta 366 B pero **no llega a 100 en móvil**: la guía sigue en 99, con la
-excepción de siempre. Para bajar del umbral faltan unos 1,9 KB.
-
-- [ ] **¿Dejas en "Nuestro criterio" solo el nombre y el día de las paradas
-      descartadas?** Es la recomendación (−2,3 KB) y es un cambio editorial.
-      Si dices que sí, se mide en la CI y, si da 100, se quita la excepción.
-      La otra salida es aceptar 99.
-
-### 1.6. Mezclar #69 o PR a PR (5 min)
-
-- [ ] **Si mezclas #69**, GitHub dará por mezcladas #58, #61, #60, #52, #31,
-      #59, #62, #63, #66, #68, #67 y #64. Sácala de borrador y mezcla.
-- [ ] **Si prefieres revisarlas por separado**, cierra #69 sin mezclar. Ojo:
-      el commit de #69 que arregla `test:ui` ("UI check: measure the open site
-      menu once its animation ends") tiene que ir con #68, o su CI fallará.
-- [ ] Queda fuera y sin PR: en la guía, a 768 px, los enlaces de la cabecera
-      salen blanco sobre blanco (lo vio #59). ¿Se lanza un arreglo?
+1. **Mezclar #72 (`develop` → `main`) y desplegar** (5 min + `docs/DESPLIEGUE.md`).
+   Claude no puede mezclar en `main`: el modo automático lo trata como un
+   despliegue a producción. Antes, en Cloudflare: `NODE_VERSION = 24`,
+   preset Astro, `npm run build`, salida `dist`, rama de producción `main`.
+   Si un check de Lighthouse sale en rojo con `/buscar/` en 96, es ruido de
+   la máquina de la CI (en local da 100): relanza el job.
+2. **Tras el despliegue** (7 min): las comprobaciones de `DESPLIEGUE.md` §4,
+   con la 404 de §4.2 bis (`/no-existe/` dice «Te has salido del mapa»).
+3. **Repasar con calma los textos aprobados de forma provisional** (30 min),
+   antes de publicar la guía de Islandia: la portada y el hub. Están
+   marcados en el YAML del hub como «Approved provisionally by the author on
+   2026-10-22».
 
 ---
 
-## 2. Hub y 404: las hojas de decisiones (65 min)
+## 1-2. Portada y hub: hecho el 22 de octubre
 
-Las hojas de #25, #26, #35 y #45 (21 oct) siguen sin contestar y sin commits
-nuevos; todas en verde salvo #35, sin CI por su base. Cada hoja trae las
-preguntas cerradas, la opción recomendada en primer lugar, el cambio exacto
-y los textos citados tal cual. El resumen está en
-[#26](https://github.com/PascualDev85/solohazlamaleta/pull/26#issuecomment-6305020998).
-#31 ya no está en esta cadena: va dentro de la portada (punto 1).
+- **Portada, menú, buscador v2, postales 3D, fotos nítidas, áreas de toque y
+  texto al 150 %**: en `develop` con #69. Textos de la portada como estaban
+  (tu visto bueno del 22, «de momento»).
+- **Precios de campings y aparcamientos**: verificados en fuentes oficiales
+  desde tu ordenador y mezclados en #71. Detalle en
+  `docs/fuentes/verificacion-2026-10-22.md`.
+- **404 propia**: en `develop` con #45.
+- **Hub `/islandia/`**: en `develop` con #73, que une #25, #26, #35, #55 y #65
+  y aplica la opción recomendada de las 8 preguntas de la hoja de #26:
+  - «Lo práctico» lleva fecha de comprobación (`practical.verified_at`,
+    2025-09-15). **Avisa de caducado** hasta que vuelvas a mirar la fianza,
+    «Mosskógar solo efectivo» y la norma de pernoctar (5 min).
+  - El hub se publica a la vez que su guía (un solo interruptor).
+  - Las enmiendas del modelo constan como validadas en 1.7.2.
+  - El hub da 99 en móvil por la calidad de las fotos, como la portada y la
+    guía.
 
-**Orden de mezcla: #25 → #26 → #35 y #55 → #65 → #45.** #35 y #55 cuelgan de
-#26 y se reapuntan a `develop` al mezclarla; #65 cuelga de #35. #45 va la
-última porque choca con la portada (`src/pages/index.astro`) y con #26
-(`package.json`): una sesión de Claude la pone al día antes (~15 min de CI).
-**#45 tiene que entrar antes del despliegue** (punto 3).
+Pendiente de estas secciones:
 
-Ya decidido el 20 oct, no se vuelve a preguntar: el H1 del hub "Islandia" y
-el `<title>` "Viajar a Islandia: qué ver, cuándo ir y lo práctico" (aplicados
-en #26), Sky Lagoon fuera (aplicado en #25) y la línea de "gente" de "Cuándo
-ir" (aplicada en #26).
-
-### 2.1. #25 · Investigación SEO del grupo Islandia (10 min)
-
-[Hoja](https://github.com/PascualDev85/solohazlamaleta/pull/25#issuecomment-6305016984).
-Solo es un documento. Ya apunta a `develop`.
-
-- [ ] Cambio mecánico, sin decisión: el §3 aún propone el `<title>` con
-      "| Solo Haz la Maleta" y el H1 "Viajar a Islandia". Se alinea con lo
-      decidido el 20 oct.
-- [ ] **1. "Ruta de 7 días" como página propia.** Recomendada A: pasarla a
-      "no merece página" (regla dura de variantes de días y ruta no vivida).
-- [ ] **2. Límite de la satélite "Costa sur".** Recomendada A: días 3 y 4, y
-      los días 5 y 6 como bloque final.
-- [ ] **3. Orden de las satélites.** Recomendada A: aceptarlo como hipótesis
-      hasta tener Keyword Planner.
-- [ ] Cifra a unificar: "20+ lugares" → "23 lugares" (línea 22).
-
-Keyword Planner no bloquea la mezcla.
-
-### 2.2. #26 · Hub `/islandia/` (35 min)
-
-[Hoja](https://github.com/PascualDev85/solohazlamaleta/pull/26#issuecomment-6305017210).
-8 preguntas (8 min), los textos (20 min) y quitar el borrador y mezclar
-(7 min).
-
-- [ ] **1. Fecha de "Lo práctico"** (fianza, "Mosskógar solo efectivo",
-      pernoctar). Recomendada A: un `verified_at` en `practical` que se pinta
-      como "Comprobado …". Necesita la fecha en que lo comprobaste. El paso
-      previo ya está en [#55](https://github.com/PascualDev85/solohazlamaleta/pull/55)
-      (ver 2.4): un aviso en el build, no la fecha.
-- [ ] **2. Cómo sale el hub de `noindex`.** Recomendada A: atarlo al estado
-      de la guía principal (un solo interruptor).
-- [ ] **3. Fotos en móvil.** Recomendada A: recorte 16:9 y miniaturas (100).
-- [ ] **4. Foto de portada del hub.** Recomendada A: Gullfoss de momento.
-- [ ] **5. Las tres enmiendas del modelo.** Recomendada A: validarlas tal
-      cual.
-- [ ] **6. Qué preguntas van al FAQPage.** Recomendada A: solo la del 4x4.
-- [ ] **7. Enlace "Islandia" en la cabecera.** Recomendada A: todavía no.
-      Ojo: la hoja es anterior a la portada. En #69 la cabecera ya lleva la
-      lupa y el menú de #59, que lista los destinos desde el dato, y #62 quita
-      el encogimiento de #52 por debajo de 400 px.
-- [ ] **8. "Solo hemos ido en septiembre…".** Recomendada A: sacarla de
-      `tripMonth`.
-- [ ] Leer los textos de la hoja: cabecera, meta description, datos rápidos,
-      entradilla de "Qué ver", "Cuándo ir", "Cómo moverse", moneda y las 7
-      respuestas nuevas del FAQ.
-- [ ] Al acabar, borrar los avisos de borrador de `islandia.yaml` (líneas
-      13-14, 27, 35-36 y 79-80) y sacar la PR de borrador.
-
-### 2.3. #35 · Lo práctico de la guía, al hub (5 min)
-
-[Hoja](https://github.com/PascualDev85/solohazlamaleta/pull/35#issuecomment-6305017425).
-Sin CI hasta que se reapunte a `develop` tras mezclar #26.
-
-- [ ] **1. Texto del enlace.** Recomendada A: "Documentos, enchufes, apps y
-      moneda: en la página de Islandia →".
-- [ ] **2. FAQ del 4x4 y BreadcrumbList hacia una página `noindex`.**
-      Recomendada A: aceptarlo; las dos páginas se publican a la vez.
-- [ ] Reapuntar a `develop` (Edit, en la base de la PR) y mezclar con la CI
-      en verde.
-
-El enlace ya sale del dato (`hubSectionHref`), no hay que hacer nada más ahí.
-
-### 2.4. #55 · Aviso de datos sensibles sin fecha en "Lo práctico" (5 min)
-
-Borrador sobre #26 (sin CI hasta que se reapunte a `develop`). Solo avisa en
-el build, no lo hace fallar. Hoy avisan 3 entradas: la fianza del camper
-(1.000–2.000 €) en el hub y en la guía, y "solo efectivo" en Mosskógar.
-
-- [ ] **Validar la enmienda 1.7.2 que propone** (3 min): que
-      `practical.documents[]` y `tips[]` admitan `string | {text, verified_at}`,
-      y `verified_at` opcional en `practical.currency` y en `faq[]`. Hasta que
-      la valides, la fianza y Mosskógar no tienen dónde llevar fecha. Va con
-      la pregunta 1 de #26.
-- [ ] Reapuntar a `develop` tras mezclar #26 y mezclar con la CI en verde
-      (2 min).
-
-### 2.5. #65 · Enlaces hub ↔ guías desde el dato (5 min)
-
-Borrador sobre #35 (que va sobre #26): sin CI hasta llegar a `develop`. Añade
-además `npm run links:check` para el grupo Islandia.
-
-- [ ] **Leer tres textos** (2 min): "Si estás preparando Islandia", "Más
-      rutas por Islandia" y "Más sobre Islandia".
-- [ ] Va atado a la pregunta 2 de #26: si la guía se publica con el hub aún
-      en `noindex`, el cierre de la guía hacia el hub desaparece.
-- [ ] Reapuntar a `develop` cuando entre #35 y mezclar con la CI en verde
-      (3 min).
-
-### 2.6. #45 · Página 404 (5 min)
-
-[Hoja](https://github.com/PascualDev85/solohazlamaleta/pull/45#issuecomment-6305017813).
-
-- [ ] **1. El destino sale en minúsculas** ("islandia · 13 días").
-      Recomendada A: mayúscula inicial solo con CSS.
-- [ ] Leer los 7 textos cortos de la hoja.
-- [ ] Antes de mezclar, pedir a una sesión de Claude que la ponga al día con
-      `develop` (ya con #26 y la portada). Choca con la portada en
-      `src/pages/index.astro` y en `package.json`.
-- [ ] Opcional, de la revisión automática: fijar una convención para los
-      `<title>` (la 404 y la portada llevan "— Solo Haz la Maleta"; el hub,
-      no).
+- [ ] **#64**: ¿recorte editorial en «Nuestro criterio» para que la guía
+      llegue a 100 en móvil? (5 min). Hoy se queda en 99, dentro de su mínimo.
+- [ ] **¿Vuestra camper tenía 6 o más plazas registradas?** (1 min). En
+      varias zonas cambia el precio del aparcamiento (ver #71).
+- [ ] **Foto de Reikiavik** en más resolución (el original mide 659 px).
+- [ ] **Modo oscuro de las postales** (#68): comprobar cuando haya tema
+      oscuro.
 
 ---
 
 ## 3. Despliegue (50 min)
 
-La rama de producción ya está decidida: **opción A**, una PR `develop` →
-`main` y se despliega `main` (`docs/DESPLIEGUE.md`).
-[#57](https://github.com/PascualDev85/solohazlamaleta/pull/57) (borrador, CI
-en verde) es el repaso previo: `docs/fuentes/repaso-despliegue-2026-10-21.md`.
-No da minutos; los de abajo son estimaciones.
+Rama de producción: **opción A**, `develop` → `main`, y se despliega `main`.
+`main` solo tenía el primer commit (el del brief): **#72** la pone al día.
 
-- [ ] **Leer el repaso y mezclar #57** (10 min). Solo añade ese documento.
-- [ ] **Lo grave del repaso:** hoy `develop` no tiene `404.html`, así que
-      Cloudflare Pages sirve la portada con 200 en cualquier URL que no
-      exista. **#45 lo arregla y tiene que entrar antes de la PR `develop` →
-      `main`** (punto 2.6).
 - [ ] **`NODE_VERSION = 24`** en las variables del proyecto de Cloudflare,
       antes del primer build (2 min). Sin eso, el build falla en
-      `write-headers.ts`. Comprueba en el log que sale Node 24.
-- [ ] **Abrir y mezclar la PR `develop` → `main`** (3 min), con la portada,
-      el hub y la 404 ya dentro.
+      `write-headers.ts`.
+- [ ] **Mezclar #72** (3 min) cuando tenga la CI en verde.
 - [ ] **Seguir `docs/DESPLIEGUE.md`** (~31 min): conectar GitHub, configurar
-      el build, `pages.dev`, las comprobaciones y elegir la analítica.
-      Recomendado en el documento: Umami Cloud gratis; luego hay que
+      el build, `pages.dev`, las comprobaciones (§4, con la 404 en §4.2 bis)
+      y elegir la analítica. Recomendado: Umami Cloud gratis; luego hay que
       permitirla en la CSP y contarla en `/privacidad/`.
-- [ ] **Tras el primer despliegue** (1 min): abrir
-      `https://<proyecto>.pages.dev/no-existe/` y ver "Página no encontrada",
-      no la portada.
-- [ ] **¿Siguen los legales en el sitemap?** (1 min). Hoy `/aviso-legal/`,
-      `/privacidad/` y `/afiliacion/` están dentro; el repaso dice que vale
+- [ ] **¿Siguen los legales en el sitemap?** (1 min). El repaso dice que vale
       tal cual.
-- [ ] Opcional (2 min): `X-Robots-Tag` también en `/print/` y `/ofertas/`
-      (lo dejó abierto #43).
 - [ ] **El día del dominio**, más adelante: `solohazlamaleta.com` y `www` en
       Custom domains, redirección 301 de `www` (Redirect Rules), Always Use
       HTTPS, HSTS con `max-age` corto y sin `preload`, y avisar a Claude para
       la regla `noindex` de `pages.dev`.
 
-Lo que el repaso deja para Claude (actualizar `DESPLIEGUE.md`, `og:image`
-por defecto, `engines` de Node, etc.) está en el BACKLOG.
+Sin hacer del repaso (necesitan decisión o modelo nuevo): `og:image` por
+defecto (hace falta una imagen de marca) y `author`/`datePublished` en el
+`Article` de la guía (el modelo no tiene `published_at`).
 
 ---
+
 
 ## 4. Contenido y datos
 
@@ -379,46 +155,28 @@ Las erróneas (más de 2 km) que no están en #50, de la más desviada a la meno
 - [ ] Duraciones de los días 5 a 13: quita `# duraciones estimadas` y esos
       días de `estimatedDays`.
 
-### 4.4. Precios y datos de más de 12 meses (#56)
+### 4.4. Precios y datos de más de 12 meses
 
-`npm run content:validate` da 100 avisos (igual que ayer).
+Hecho el 22 (#71): 10 campings, 20 aparcamientos y entradas y el horario de
+Vestrahorn, contra webs oficiales. `content:validate` pasa de 97 a 89 avisos
+de caducidad, más uno nuevo: «Lo práctico» del hub (ver 1).
 
-[#56](https://github.com/PascualDev85/solohazlamaleta/pull/56) (borrador, CI
-en verde) deja la lista de comprobación en
-`docs/fuentes/verificacion-2026-10-21.md`: 98 datos de 97 lugares, por
-prioridad (10 campings, 20 entradas y parkings, 1 horario y 67 lugares más).
-**No verificó ninguno**: el proxy de la nube bloquea `thingvellir.is`,
-`vatnajokulsthjodgardur.is`, `island.is` y `parka.is`. Cada fila trae la URL
-oficial donde la encontró. No da minutos; los de abajo son estimaciones.
+- [ ] **Sin fuente oficial**, queda en tu mano (2 min cada uno): campings
+      Lambeyri y Mosskógar (no tienen web), Krafla/Víti, DC-3 de
+      Eyvindarholt, si Gljúfrafoss comparte ticket con Seljalandsfoss, baños
+      de Hverir (300 ISK) y la entrada de Vestrahorn (la web dice 1.200 y
+      1.100).
+- [ ] **Camping Skógafoss** (2 min): su web dice que ahora solo hay agua
+      fría y váteres; la ficha habla de duchas de pago.
+- [ ] **`entry.price` repetido del aparcamiento** en Krafla, Hverfjall y
+      Kirkjufell: ¿a 0, como ya se hizo con Ytri Tunga? (2 min)
+- [ ] **Entradas gratuitas sin confirmar** (Þingvellir, Geysir,
+      Seljalandsfoss…): las webs solo hablan del aparcamiento; su
+      `entry.verified_at` sigue caducado.
+- [ ] **El resto de lugares con `verified_at` caducado** (unos 67): solo la
+      fecha general del lugar. La lista, en `docs/fuentes/verificacion-2026-10-21.md`
+      (#56), prioridad 5.
 
-- [ ] **¿Abres esos dominios en *Allowed domains* del entorno de la nube?**
-      (5 min). Así una próxima ejecución puede comprobarlos sola. Si no, se
-      hacen a mano con la lista de #56.
-- [ ] **`entry.price` usado como precio del parking** en `krafla_viti`,
-      `hverfjall`, `kirkjufell` e `ytri_tunga`: ¿debería ser 0? (3 min)
-- [ ] Þingvellir: una copia indexada da 4.000 ISK frente a los 4.400 de la
-      guía. Compruébalo en la web oficial (2 min, va con el primer punto de
-      abajo).
-- [ ] 8 de los 10 campings no tienen `source_url`. Si lo tienes a mano,
-      añádelo al comprobar el precio.
-
-- [ ] **Precio de los 10 campings**, verificado hace más de 12 meses
-      (`entry.price`): Þingvellir, Árnes, Skógafoss, Svínafell, Skaftafell,
-      Laugar, Systragil, Lambeyri, Hellissandur y Mosskógar (2 min cada uno,
-      20 en total).
-- [ ] **87 lugares con `verified_at` caducado.** Empieza por los que tienen
-      precio de entrada (`entry.price`, 2 min cada uno): Múlagljúfur,
-      Fjallsárlón, Jökulsárlón, Vestrahorn (también el horario), Fardagafoss,
-      Gufufoss, Rjúkandifoss, Stuðlagil, Dettifoss, Grjótagjá, Krafla, Hverir,
-      Hverfjall, Dimmuborgir, el mirador de Mývatn, Goðafoss, Grafarkirkja,
-      Glaumbær, Víðimýrarkirkja, Kolugljúfur, Kirkjufell, Svörtuloft,
-      Djúpalónssandur, Hellnar, Arnarstapi, Rauðfeldsgjá, Búðakirkja, Ytri
-      Tunga y Landbrotalaug.
-- [ ] Dos avisos de estilo (2 min): "una de las cascadas más" en la
-      `description` de `gullfoss`, y "espectacular" en las `notes` de
-      `seljalandsfoss`, que va en la guía y no en el lugar.
-- [ ] Un aviso de estructura (2 min): el día 1 tiene `drive` y una parada de
-      ruta (`reykjavik`) sin `travel_to_next_min`.
 
 ### 4.5. Textos de la guía de Islandia, por día
 

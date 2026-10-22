@@ -384,7 +384,22 @@ umbral de unos 43,8 KB comprimidos a partir del cual Lighthouse móvil baja a
 
 ---
 
-## Lo primero al volver (2026-10-22)
+## Lo primero al volver (2026-10-22, tarde)
+
+En `develop` desde esta mañana: #69 (portada completa, CI, áreas de toque,
+texto al 150 %, bytes y calidad de fotos), #71 (precios verificados), #45
+(404), #73 (hub con las decisiones recomendadas) y, si terminaron, #57 y #74.
+Quedan abiertas las de contenido (#50, #54, #12), la lista de #56 y #72.
+
+1. **Mezclar #72 (`develop` → `main`) y desplegar** con `docs/DESPLIEGUE.md`.
+   Solo el autor: Claude no puede mezclar en `main`.
+2. **Comprobar tras el despliegue** (§4 de `DESPLIEGUE.md`, con la 404).
+3. **Repasar los textos aprobados de forma provisional** (portada y hub)
+   antes de publicar la guía de Islandia.
+4. **Contenido:** las dos preguntas de #50, las coordenadas pendientes, lo
+   que quedó sin fuente oficial en #71 y las fotos de los días 4 a 13.
+
+## Lo primero al volver (2026-10-22, mañana, histórico)
 
 La lista completa, con tiempos, está en [DEBERES.md](DEBERES.md). En corto:
 
