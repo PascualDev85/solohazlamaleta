@@ -19,6 +19,11 @@ interface Props {
   ogType?: 'website' | 'article';
   /** Opt-in to the redesign; scoped so pages without it render unchanged. */
   design?: 'v2';
+  /**
+   * The 404 page has no URL of its own (it is served for every missing path),
+   * so it sets this to false: no canonical and no og:url.
+   */
+  canonical?: boolean;
 }
 
 const {
@@ -31,6 +36,7 @@ const {
   imageAlt,
   ogType = 'website',
   design,
+  canonical: hasCanonical = true,
 } = Astro.props;
 
 const preloadFonts =
@@ -99,14 +105,14 @@ const signature = 'Nosotros hacemos el trabajo difícil. Tú solo haz la maleta.
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {hasCanonical && <link rel="canonical" href={canonical} />}
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Solo Haz la Maleta" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {hasCanonical && <meta property="og:url" content={canonical} />}
     <meta property="og:locale" content="es_ES" />
     {ogImage && <meta property="og:image" content={ogImage} />}
     {ogImage && imageWidth && <meta property="og:image:width" content={String(imageWidth)} />}
