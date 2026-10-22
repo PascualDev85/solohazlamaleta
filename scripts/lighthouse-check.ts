@@ -29,9 +29,15 @@ const THRESHOLD = 100
 // later (~1.96 s against ~1.88 s), with the three photos behind the front one
 // lazy and low priority. On 2026-10-21 the author asked for 3D on the home
 // page only if it keeps 99 or more on mobile and desktop; desktop stays at 100.
+//
+// Photo quality went up on 2026-10-22 (AVIF 52, the LCP photo 42; see
+// GuidePhoto): the author found the photos soft and chose sharpness. The
+// Islandia hub then gives 99 on mobile in every run (desktop 100); the
+// author kept the quality ("de momento lo dejamos así").
 const EXCEPTIONS: ThresholdException[] = [
   { page: '/islandia/islandia-en-camper-13-dias/', device: 'mobile', category: 'performance', threshold: 99 },
   { page: '/', device: 'mobile', category: 'performance', threshold: 99 },
+  { page: '/islandia/', device: 'mobile', category: 'performance', threshold: 99 },
 ]
 const RUNS = 3
 const CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo']

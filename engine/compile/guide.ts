@@ -35,6 +35,7 @@ export function compileGuide(
     pitfalls: source.pitfalls,
     terrain_tips: source.terrain_tips,
     practical: source.practical,
+    when_to_go: source.when_to_go,
     adaptation_notes: source.adaptation_notes,
     faq: source.faq,
     related: source.related,
