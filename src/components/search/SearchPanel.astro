@@ -196,7 +196,9 @@ const photos = await Promise.all(featured.map((place) => (place.photo ? picture(
 
     // The combobox's roles go on with the script: without it these are plain links.
     results.setAttribute('role', 'listbox');
+    // A listbox holds only groups and options: each group's heading becomes its plain label (aria-labelledby).
     for (const group of results.children) group.setAttribute('role', 'group');
+    for (const label of results.querySelectorAll('.search__group-label')) label.setAttribute('role', 'none');
     for (const [n, option] of root.querySelectorAll<HTMLElement>('[data-search-option], [data-search-more]').entries()) {
       option.id = `${id}-option-${n}`;
       option.setAttribute('role', 'option');
