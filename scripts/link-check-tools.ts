@@ -37,8 +37,15 @@ export function brokenLinks(pages: Map<string, string>, files: Set<string>, chec
       const url = new URL(href, BASE + page)
       if (url.origin !== BASE) continue
       const report = (reason: string) => broken.push(`${page} → ${href}: ${reason}`)
-      const path = decodeURIComponent(url.pathname)
-      const id = decodeURIComponent(url.hash.slice(1))
+      let path: string
+      let id: string
+      try {
+        path = decodeURIComponent(url.pathname)
+        id = decodeURIComponent(url.hash.slice(1))
+      } catch {
+        report('malformed escape')
+        continue
+      }
       const isFile = /\.[a-z0-9]+$/i.test(path)
 
       if (isFile) {

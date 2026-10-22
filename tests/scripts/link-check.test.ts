@@ -59,3 +59,11 @@ test('brokenLinks: only the pages asked for are checked', () => {
   const pages = new Map([...site, ['/otra/', '<a href="/nada/">x</a>']])
   assert.deepStrictEqual(brokenLinks(pages, files, ['/islandia/']), [])
 })
+
+test('brokenLinks: a malformed escape is reported as a broken link, not a crash', () => {
+  const pages = new Map([['/a/', '<a href="/islandia/100%/">x</a><a href="#dia-%E0">y</a>']])
+  assert.deepStrictEqual(brokenLinks(pages, files, ['/a/']), [
+    '/a/ → /islandia/100%/: malformed escape',
+    '/a/ → #dia-%E0: malformed escape',
+  ])
+})
