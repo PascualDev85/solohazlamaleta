@@ -38,18 +38,23 @@
     line-height: 1.4;
   }
 
+  // At a larger text size the time drops under the name when the name's
+  // longest word leaves it no room; at the default size it never does.
   .day-stop__head {
     display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
-    gap: var(--space-xs);
+    gap: 0.15rem var(--space-xs);
     min-width: 0;
   }
 
   // The full name, wrapping onto a second line when it has to: a cut name
-  // ("Restos de avión DC-3…") tells the reader less than two lines.
+  // ("Restos de avión DC-3…") tells the reader less than two lines. Never
+  // narrower than its longest word, so a word is not run under the time.
   .day-stop__name {
     flex: 1;
-    min-width: 0;
+    min-width: min-content;
+    overflow-wrap: break-word;
     font-weight: 800;
     line-height: 1.25;
     color: var(--color-text);
@@ -189,21 +194,25 @@
   }
 
   // Its own line, set apart from the description: road-sign "P" and price on
-  // the left, the map link on the right.
+  // the left, the map link on the right. One line at the default text size
+  // (test:ui holds it); at a larger one the map link, then the price, wrap
+  // instead of running out of the card.
   .day-stop__practical {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-sm);
+    gap: 0.15rem var(--space-sm);
     margin-top: 0.2rem !important;
     font-size: 0.8125em;
-    white-space: nowrap;
   }
 
   .day-stop__parking {
     display: inline-flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.15rem 0.4rem;
+    min-width: 0;
     color: var(--color-text);
 
     strong {
@@ -230,30 +239,29 @@
   // Each formula sits 6% under the largest size that fits on a Mac's headless
   // Chromium at every width: Linux Chromium (the CI) and real phones render
   // this face about 5% wider, and the CI check holds the lines to that.
+  // The sizes above are for the browser's default 16px text. A reader who
+  // sets a larger text size gets the same scale grown with it (WCAG 1.4.4):
+  // each line adds (1rem - 16px) times its 414px share of 16px, so at 414px
+  // and wider it grows exactly with the reader's setting, and at the default
+  // the term is zero and nothing moves. Larger, the lines may wrap onto more
+  // rows; nothing is cut (test:ui checks it at 150%).
   .day-card__route {
-    font-size: clamp(12.5px, 0.65px + 3.5vw, 14.3px);
+    font-size: calc(clamp(12.5px, 0.65px + 3.5vw, 14.3px) + (1rem - 16px) * 0.894);
   }
 
   .day-card__facts {
-    font-size: clamp(11px, -5.05px + 4.6vw, 12.2px);
+    font-size: calc(clamp(11px, -5.05px + 4.6vw, 12.2px) + (1rem - 16px) * 0.7625);
   }
 
   .day-card__night {
-    font-size: clamp(9.5px, -3.33px + 3.75vw, 12.2px);
+    font-size: calc(clamp(9.5px, -3.33px + 3.75vw, 12.2px) + (1rem - 16px) * 0.7625);
   }
 
   // The whole body follows the stop name's size: 16px at 414px, 12.3px at 350px.
+  // The clamp's top is 16px, not 1rem: the added term already scales it, and
+  // 1rem there would grow it twice.
   .day-card__body {
-    font-size: clamp(12px, -10.2px + 6.44vw, 1rem);
-  }
-
-  // Only on phones of 414px and under: there each name holds one line (the
-  // body type scales so the reviewed days' names fit). Wider, a long name
-  // wraps onto a second line, as everywhere else in the card.
-  @media (max-width: 414px) {
-    .day-stop__name {
-      white-space: nowrap;
-    }
+    font-size: calc(clamp(12px, -10.2px + 6.44vw, 16px) + (1rem - 16px));
   }
 
   // The road sign: a white P on blue. The P is drawn (a mask), not typed, so

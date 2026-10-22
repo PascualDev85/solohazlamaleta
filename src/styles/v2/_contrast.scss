@@ -1,0 +1,74 @@
+// For readers who ask the system for more contrast (prefers-contrast: more):
+// secondary text, links and labels at 7:1 or more (WCAG 1.4.6) on every
+// ground they sit on (paper, surface, pill and blush tints), borders and
+// thin marks at 3:1 or more (1.4.11), and the controls' borders twice as
+// thick. Without the preference nothing here applies. Loaded last, so each
+// rule outranks the one it replaces. Dark theme: not shipped yet, its own
+// tokens stand (the light block below is outranked by data-theme="dark").
+@use "../abstracts" as *;
+
+@media (prefers-contrast: more) {
+  // Ratios against --color-bg · the darkest ground the colour sits on.
+  html:root[data-design="v2"] {
+    --color-text-muted: #47433e; //   9.6 · 7.9 on surface-deep
+    --color-accent: #134a72; //   9.1 · 7.5 on blush
+    --color-label: #7f2d14; //   9.0 · 7.3 on blush
+    --color-label-on-blush: var(--color-label);
+    --color-positive: #145534; //   8.6 · 7.1 on blush
+    --color-border: #857b70; //   4.0 · 3.3 on surface-deep
+    --color-rule: var(--color-border);
+    --color-blush-edge: #b65a45; //   4.5 · 3.7 on blush
+  }
+
+  [data-design="v2"] {
+    // White on the photo: a darker shade behind it and no translucent type.
+    .day-card__overlay {
+      background: linear-gradient(180deg, transparent 0, rgb(8 14 20 / 0.8) 2rem, rgb(8 14 20 / 0.92) 100%);
+    }
+
+    .day-card__route li + li::before,
+    .day-card__facts,
+    .day-card__night {
+      color: #fff;
+    }
+
+    .day-card__media--empty :is(.day-card__facts, .day-card__night) {
+      color: var(--color-text-muted);
+    }
+
+    .day-card__night-link {
+      text-decoration-color: currentColor;
+      text-decoration-thickness: 2px;
+    }
+
+    // On a phone the header and the crumbs sit on the cover photo: a hard
+    // shadow under the header's white type, near-opaque glass pills.
+    @include up-to("md") {
+      body:has(.guide-hero) .site-header :is(.brand, .site-nav a) {
+        text-shadow: 0 0 2px #000, 0 0 6px #000, 0 1px 12px #000;
+      }
+
+      .guide-hero .crumbs :is(a, span) {
+        background: rgb(10 20 30 / 0.85);
+        border-color: #fff;
+      }
+    }
+
+    .route-glance__more-pill {
+      background: rgb(10 20 30 / 0.88);
+      border-color: #fff;
+    }
+
+    // Controls: a 2px edge.
+    .crumbs :is(a, span),
+    .route-glance__more-pill,
+    .route__arrow,
+    .route__days a,
+    .guide > .guide-index__dock,
+    .day-card__highlight,
+    .day-card__full,
+    .day-stop__free-nearby {
+      border-width: 2px;
+    }
+  }
+}
