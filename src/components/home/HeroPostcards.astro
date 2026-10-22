@@ -22,14 +22,27 @@ interface Props {
 
 const { cover, backs, caption } = Astro.props;
 
-// Two crops per card, like the front photo: a wide band on phones, portrait from tablet up.
-const WIDTH = 400;
+// Two crops per card, like the front photo: a wide band on phones, portrait
+// from tablet up. Each in three widths, offered with the front card's sizes,
+// so a 2x or 3x screen gets a sharp file (one 400px file was half of what a
+// retina phone draws, 2026-10-22). Quality as in GuidePhoto.
+const WIDTHS = [400, 640, 800];
+const QUALITY = 52;
+const SIZES = "(min-width: 64rem) 24rem, (min-width: 48rem) 32vw, calc(84vw - 40px)";
 const pile = await Promise.all(
   backs.slice(0, 3).map(async (image) => {
-    const crop = (ratio: number, format: 'avif' | 'jpg', quality: number) =>
-      getImage({ src: image, width: WIDTH, height: Math.round(WIDTH / ratio), fit: 'cover', position: 'center', format, quality });
-    const [wide, tall, fallback] = await Promise.all([crop(16 / 10, 'avif', 35), crop(4 / 5, 'avif', 35), crop(4 / 5, 'jpg', 60)]);
-    return { wide: wide.src, tall: tall.src, fallback: fallback.src };
+    const crop = (ratio: number, width: number, format: 'avif' | 'jpg', quality: number) =>
+      getImage({ src: image, width, height: Math.round(width / ratio), fit: 'cover', position: 'center', format, quality });
+    const srcset = async (ratio: number) => {
+      // An original narrower than the widest file adds its own full width, so it is served whole.
+      const fits = (w: number) => w <= image.width && w / ratio <= image.height;
+      const full = Math.min(image.width, Math.floor(image.height * ratio));
+      const widths = [...new Set([...WIDTHS.filter(fits), ...(full < WIDTHS.at(-1)! ? [full] : [])])].sort((a, b) => a - b);
+      const files = await Promise.all(widths.map((w) => crop(ratio, w, 'avif', QUALITY)));
+      return files.map((file, i) => `${file.src} ${widths[i]}w`).join(', ');
+    };
+    const [wide, tall, fallback] = await Promise.all([srcset(16 / 10), srcset(4 / 5), crop(4 / 5, 400, 'jpg', 75)]);
+    return { wide, tall, fallback: fallback.src, sourceWidth: image.width };
   }),
 );
 ---
@@ -40,17 +53,18 @@ const pile = await Promise.all(
     {pile.map((card, i) => (
       <div class:list={['postcard', `postcard--${pile.length - i}`]} aria-hidden="true">
         <picture>
-          <source type="image/avif" media="(max-width: 47.99rem)" srcset={card.wide} />
-          <source type="image/avif" srcset={card.tall} />
+          <source type="image/avif" media="(max-width: 47.99rem)" srcset={card.wide} sizes={SIZES} />
+          <source type="image/avif" srcset={card.tall} sizes={SIZES} />
           <img
             class="postcard__photo"
             src={card.fallback}
             alt=""
-            width={WIDTH}
-            height={WIDTH * 5 / 4}
+            width="400"
+            height="500"
             loading="lazy"
             fetchpriority="low"
             decoding="async"
+            data-source-width={card.sourceWidth}
           />
         </picture>
       </div>
@@ -60,7 +74,7 @@ const pile = await Promise.all(
         class="postcard__photo"
         image={cover}
         alt=""
-        sizes="(min-width: 64rem) 22rem, (min-width: 48rem) 32vw, calc(84vw - 40px)"
+        sizes={SIZES}
         priority
         crop={{ media: '(max-width: 47.99rem)', ratio: 16 / 10, position: 'center' }}
       />

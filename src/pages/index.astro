@@ -54,7 +54,8 @@ const cards = sorted.map((guide) => ({
   ...guide,
   cover: guide.coverImage ? guideImage(guide.coverImage) : null,
 }));
-const cardSizes = '(min-width: 48rem) 22rem, 100vw';
+// Measured on the built page at 360-1920px: the photo half of the card tops out at 615px.
+const cardSizes = '(min-width: 75rem) 39rem, (min-width: 48rem) 52vw, 80vw';
 
 // The hero: the cover of the first guide that has one, captioned with its
 // destination, on top of a pile of postcards (components/home/HeroPostcards.astro).
@@ -229,7 +230,7 @@ const jsonLd = {
                   class="excerpt__photo"
                   image={guideImage(showcase.photo.src)}
                   alt={showcase.photo.alt}
-                  sizes="(min-width: 64rem) 36rem, (min-width: 48rem) 55vw, calc(100vw - 30px)"
+                  sizes="(min-width: 80rem) 40rem, (min-width: 48rem) 53vw, calc(100vw - 42px)"
                   crop={{ media: '(max-width: 47.99rem)', ratio: 16 / 9, position: 'center' }}
                 />
               </div>
@@ -311,7 +312,7 @@ const jsonLd = {
           return (
             <li class="home-place">
               {cover ? (
-                <GuidePhoto class="home-place__photo" image={cover} alt="" sizes="(min-width: 48rem) 20rem, 50vw" />
+                <GuidePhoto class="home-place__photo" image={cover} alt="" sizes="(min-width: 80rem) 17rem, (min-width: 48rem) 22vw, 45vw" />
               ) : (
                 // No photo of this destination yet: a tinted card with its initial.
                 <span class="home-place__photo home-place__photo--empty" aria-hidden="true">{destination.name.charAt(0)}</span>
