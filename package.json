@@ -16,6 +16,7 @@
     "typecheck": "astro check",
     "lighthouse": "node scripts/lighthouse-check.ts http://localhost:4321 / /alsacia/ruta-pueblos-y-vinos/ /islandia/ /islandia/islandia-en-camper-13-dias/",
     "size:check": "node scripts/html-size-check.ts dist",
+    "links:check": "node scripts/link-check.ts dist /islandia/",
     "test:ui": "node scripts/ui-check.ts http://localhost:4321 /islandia/islandia-en-camper-13-dias/",
     "test:devices": "node scripts/ui-devices.ts http://localhost:4321 /islandia/islandia-en-camper-13-dias/",
     "photo": "node scripts/add-photo.ts",

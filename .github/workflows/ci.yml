@@ -43,6 +43,11 @@ jobs:
       # under the next window at ~102 KB (docs/1.13 §5). Prints what is left.
       - name: HTML size budget
         run: npm run size:check
+      # Every internal link of the Islandia group (hub, guide, satellites)
+      # reaches a built page and an id on it, with the trailing slash
+      # (scripts/link-check.ts).
+      - name: Internal links of the Islandia group
+        run: npm run links:check
 
       - name: Assert an invalid guide fails the build
         run: |
