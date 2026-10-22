@@ -99,7 +99,9 @@ for (const width of [350, 390]) {
   const tab = await browser.newPage({ viewport: { width, height: 844 } })
   await tab.goto(url, { waitUntil: 'networkidle' })
   await tab.locator(SITE_MENU.open).click()
-  await tab.waitForTimeout(300)
+  // The panel opens with a 300ms scale-up: measure its links once it has
+  // finished, not after a fixed wait that a slow runner can outrun.
+  await tab.evaluate(() => Promise.all(document.querySelector('.site-menu')!.getAnimations({ subtree: true }).map((a) => a.finished)))
   for (const b of await tab.evaluate(siteMenuIssues)) fail(`${width}px: ${b}`)
   await tab.keyboard.press('Escape')
   await tab.close()
