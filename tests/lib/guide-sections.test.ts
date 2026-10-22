@@ -11,7 +11,8 @@ test('engineGuideSections lists the sections the guide page renders, in page ord
   const guide = await loadCompiledGuide(ISLANDIA_GUIDE, ISLANDIA_PLACES)
   assert.deepStrictEqual(
     engineGuideSections(guide).map((section) => section.id),
-    ['itinerario', 'dormir', 'llegar', 'presupuesto', 'reservar', 'criterio', 'practico', 'faq'],
+    ['itinerario', 'dormir', 'llegar', 'presupuesto', 'reservar', 'criterio', 'faq'],
+    '"Lo práctico" is the destination\'s: it lives in the hub (1.13 §3), not in the guide',
   )
 })
 

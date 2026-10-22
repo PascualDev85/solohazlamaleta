@@ -170,7 +170,9 @@ test('buildSearchIndex lists the sections of the guide page, linked to their ids
   assert.strictEqual(budget?.url, '/islandia/islandia-en-camper-13-dias/#presupuesto')
   assert.strictEqual(budget?.label, 'Presupuesto real')
   assert.strictEqual(budget?.icon, 'budget')
-  for (const query of ['donde dormir', 'que reservar', 'practico', 'preguntas', 'faq']) {
+  // "Lo práctico" moved to the hub (1.13 §3): the guide page no longer has it.
+  assert.ok(!guide.sections.some((section) => section.id === 'practico'))
+  for (const query of ['donde dormir', 'que reservar', 'preguntas', 'faq']) {
     assert.ok(rankSearch(guide.sections, query).length, `"${query}" finds no section`)
   }
 })
