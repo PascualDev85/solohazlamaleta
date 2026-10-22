@@ -6,7 +6,9 @@ import { formatWholePrice } from '../../lib/formatPrice.ts';
 import { splitDetail } from '../../lib/splitDetail.ts';
 import { whatToSeeByDay } from '../../lib/whatToSee.ts';
 import { guideImage } from '../../lib/guide-images.ts';
-import { HUB_PRACTICAL_ID } from '../../lib/anchors.ts';
+import { HUB_FAQ_ID, HUB_GUIDES_ID, HUB_MOVING_ID, HUB_PRACTICAL_ID, HUB_SEE_ID, HUB_WHEN_ID } from '../../lib/anchors.ts';
+import { hubMembers, hubSections, isPagePublished } from '../../lib/hubLinks.ts';
+import { ENGINE_GUIDE_SOURCES } from '../../../engine/index.ts';
 import TrustBlock from '../../components/guide/TrustBlock.astro';
 import GuideIndex from '../../components/guide/GuideIndex.astro';
 import GuidePhoto from '../../components/guide/GuidePhoto.astro';
@@ -16,22 +18,22 @@ import SectionIcon from '../../components/guide/SectionIcon.astro';
 import HubFacts from '../../components/hub/HubFacts.astro';
 import StartHere from '../../components/hub/StartHere.astro';
 import WhatToSee from '../../components/hub/WhatToSee.astro';
+import HubLinkList from '../../components/hub/HubLinkList.astro';
 import { getImage } from 'astro:assets';
 import '../../styles/hub-v2.scss';
 
 const PLACES = 'content/places/islandia.yaml';
 
 // The destination hub (1.13 §6): a guide of type hub. Everything it shows of
-// a route (the card, "Qué ver", the budget) is derived from the guides it
-// lists in `related`, never written in the hub.
+// a route (the card, "Qué ver", the budget) is derived from the guides whose
+// `hub` is this hub, never written in the hub.
 const hub = await loadCompiledGuide('content/guides/islandia/islandia.yaml', PLACES);
-const guides = await Promise.all(
-  (hub.related ?? []).map((slug) => loadCompiledGuide(`content/guides/${hub.destination}/${slug}.yaml`, PLACES)),
-);
-// "Empieza aquí": the first related guide is the way in.
-const mainGuide = guides[0];
+const pages = await Promise.all(ENGINE_GUIDE_SOURCES.map((source) => loadCompiledGuide(source.guide, source.places)));
+const { guides, satellites } = hubMembers(hub, pages);
+// "Empieza aquí": the first guide is the way in; any other is listed under it.
+const [mainGuide, ...moreGuides] = guides;
 const mainVariant = mainGuide?.variants?.[0];
-const mainGuideUrl = mainGuide ? `/${mainGuide.destination}/${mainGuide.slug}/` : undefined;
+const mainGuideUrl = mainGuide?.url;
 
 // Who travelled the route. No model field for it, as on the guide page.
 const travelerNames = 'David y Natalia';
@@ -63,30 +65,23 @@ const currency = hub.practical?.currency;
 const localTransport = hub.transport?.local ?? [];
 
 // One source for "does this section render" (1.11 §9: no empty sections),
-// read by the index and by the sections below.
+// read by the index, by the sections below and by the guides' closing.
+const indexSections = hubSections(hub, { guides: Boolean(mainGuide), see: seeGroups.length > 0 });
+const has = (id: string) => indexSections.some((section) => section.id === id);
 const show = {
-  guide: Boolean(mainGuide && mainGuideUrl),
-  see: seeGroups.length > 0,
-  when: (hub.when_to_go?.length ?? 0) > 0,
-  practical: Boolean(hub.practical),
-  moving: localTransport.length > 0,
-  faq: (hub.faq?.length ?? 0) > 0,
+  guide: has(HUB_GUIDES_ID),
+  see: has(HUB_SEE_ID),
+  when: has(HUB_WHEN_ID),
+  practical: has(HUB_PRACTICAL_ID),
+  moving: has(HUB_MOVING_ID),
+  faq: has(HUB_FAQ_ID),
 };
-
-const indexSections = [
-  { id: 'nuestra-guia', label: 'Nuestra guía', icon: 'route', visible: show.guide },
-  { id: 'que-ver', label: 'Qué ver', icon: 'pin', visible: show.see },
-  { id: 'cuando-ir', label: 'Cuándo ir', icon: 'booking', visible: show.when },
-  { id: HUB_PRACTICAL_ID, label: 'Lo práctico', icon: 'practical', visible: show.practical },
-  { id: 'moverse', label: 'Cómo moverse', icon: 'transport', visible: show.moving },
-  { id: 'faq', label: 'Preguntas sobre Islandia', icon: 'faq', visible: show.faq },
-].filter((section) => section.visible);
 
 // Each quick fact links to where it is told in full.
 const facts = [
   tripMonth && show.when && {
     icon: 'booking', label: 'Cuándo fuimos', value: capitalized(tripMonth),
-    href: '#cuando-ir', linkLabel: 'Lo que encontramos',
+    href: `#${HUB_WHEN_ID}`, linkLabel: 'Lo que encontramos',
   },
   currency && show.practical && {
     icon: 'wallet', label: 'Moneda', value: currency.name, note: currency.code,
@@ -99,7 +94,7 @@ const facts = [
   },
   hub.summary.getting_around && show.moving && {
     icon: 'transport', label: 'Cómo moverse', value: hub.summary.getting_around,
-    href: '#moverse', linkLabel: 'Lo que sabemos',
+    href: `#${HUB_MOVING_ID}`, linkLabel: 'Lo que sabemos',
   },
 ].filter((fact) => Boolean(fact)) as {
   icon: string; label: string; value: string; unit?: string; note?: string; href: string; linkLabel: string;
@@ -142,7 +137,7 @@ const faqJsonLd =
     : null;
 ---
 
-{/* noindex while the 13-day guide is noindex (1.13 §6); astro.config.mjs keeps it out of the sitemap too. */}
+{/* noindex while the 13-day guide is noindex (1.13 §6), see isPagePublished; astro.config.mjs keeps it out of the sitemap too. */}
 <BaseLayout
   title={hub.title}
   description={hub.description}
@@ -151,7 +146,7 @@ const faqJsonLd =
   imageHeight={ogImage.attributes.height}
   imageAlt={coverAlt}
   design="v2"
-  noindex
+  noindex={!isPagePublished(hub)}
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} slot="head" />
 
@@ -191,8 +186,8 @@ const faqJsonLd =
     {indexSections.length > 4 && <GuideIndex sections={indexSections} title="En esta página" />}
 
     {show.guide && mainGuide && mainGuideUrl && (
-      <section class="hub-section" aria-labelledby="nuestra-guia">
-        <SectionTitle id="nuestra-guia" icon="route">Nuestra guía</SectionTitle>
+      <section class="hub-section" aria-labelledby={HUB_GUIDES_ID}>
+        <SectionTitle id={HUB_GUIDES_ID} icon="route">Nuestra guía</SectionTitle>
         <StartHere
           href={mainGuideUrl}
           title={mainGuide.title}
@@ -202,12 +197,20 @@ const faqJsonLd =
           facts={startFacts}
           lived={mainLived}
         />
+        {moreGuides.length > 0 && <HubLinkList title="Más rutas por Islandia" links={moreGuides} />}
+      </section>
+    )}
+
+    {/* Satellites appear only once they exist and may be linked (1.13 §6); none today. */}
+    {satellites.length > 0 && (
+      <section class="hub-section" aria-label="Más sobre Islandia">
+        <HubLinkList title="Más sobre Islandia" links={satellites} />
       </section>
     )}
 
     {show.see && (
-      <section class="hub-section hub-see" aria-labelledby="que-ver">
-        <SectionTitle id="que-ver" icon="pin">Qué ver</SectionTitle>
+      <section class="hub-section hub-see" aria-labelledby={HUB_SEE_ID}>
+        <SectionTitle id={HUB_SEE_ID} icon="pin">Qué ver</SectionTitle>
         <p class="hub-section__lead quiet">
           Los {seeCount} sitios que visitamos, en el orden de nuestra ruta. Cada uno lleva al día en que lo vimos,
           con lo que hicimos allí.
@@ -217,8 +220,8 @@ const faqJsonLd =
     )}
 
     {show.when && hub.when_to_go && (
-      <section class="hub-section hub-when" aria-labelledby="cuando-ir">
-        <SectionTitle id="cuando-ir" icon="booking">Cuándo ir</SectionTitle>
+      <section class="hub-section hub-when" aria-labelledby={HUB_WHEN_ID}>
+        <SectionTitle id={HUB_WHEN_ID} icon="booking">Cuándo ir</SectionTitle>
         {tripMonth && <p class="kicker hub-when__kicker">Lo que encontramos en {tripMonth}</p>}
         <ul class="hub-when__list">
           {hub.when_to_go.map((item) => (
@@ -282,8 +285,8 @@ const faqJsonLd =
     )}
 
     {show.moving && (
-      <section class="transport" aria-labelledby="moverse">
-        <SectionTitle id="moverse" icon="transport">Cómo moverse</SectionTitle>
+      <section class="transport" aria-labelledby={HUB_MOVING_ID}>
+        <SectionTitle id={HUB_MOVING_ID} icon="transport">Cómo moverse</SectionTitle>
         <ol class="transport__steps">
           {localTransport.map((local) => (
             <li class="transport__step">
@@ -302,8 +305,8 @@ const faqJsonLd =
     )}
 
     {show.faq && hub.faq && (
-      <section class="faq" aria-labelledby="faq">
-        <SectionTitle id="faq" icon="faq">Preguntas sobre Islandia</SectionTitle>
+      <section class="faq" aria-labelledby={HUB_FAQ_ID}>
+        <SectionTitle id={HUB_FAQ_ID} icon="faq">Preguntas sobre Islandia</SectionTitle>
         <div class="faq__list">
           {hub.faq.map((item) => (
             <details class="faq__item">

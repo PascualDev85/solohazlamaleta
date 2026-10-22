@@ -1,6 +1,7 @@
 # Hub /islandia/, version 1 (docs/1.13 §6). A guide of type hub: no variants.
 # "Qué ver", the route card and the budget per person are derived from the
-# guides in `related`; nothing of that is written here.
+# guides whose `hub` is /islandia/ (src/lib/hubLinks.ts); nothing of that is
+# written here.
 #
 # `practical` lives only here: step 5 of 1.13 §8 moved it out of the 13-day
 # guide, which links to it.

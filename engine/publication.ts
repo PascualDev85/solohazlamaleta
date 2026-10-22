@@ -5,7 +5,8 @@ import type { CompiledGuide } from './types.ts'
  * pipeline. Explicit while there is a single engine guide: a glob over
  * content/guides would be the first discovery mechanism, and it is not
  * needed yet. Lives in the engine so that both the landing page (src/) and
- * the sitemap (astro.config.mjs, which cannot import src/) read one list.
+ * the sitemap (astro.config.mjs, which cannot import src/) read one list;
+ * the hub finds its guides and satellites in it too (src/lib/hubLinks.ts).
  */
 export const ENGINE_GUIDE_SOURCES: { guide: string; places: string }[] = [
   {
