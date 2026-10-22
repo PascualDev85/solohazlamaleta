@@ -1,0 +1,41 @@
+---
+import type { WhatToSeeGroup } from '../../lib/whatToSee.ts';
+import { guideImage } from '../../lib/guide-images.ts';
+import GuidePhoto from '../guide/GuidePhoto.astro';
+
+interface Props {
+  groups: WhatToSeeGroup[];
+}
+
+const { groups } = Astro.props;
+---
+
+{/*
+  A card per day of the route: its own photo when the day has one, text only
+  when not. On phones the photo is a small square beside the text, so the
+  first one, near the fold, weighs little against the hero's LCP.
+*/}
+<ol class="hub-see__grid">
+  {groups.map((group) => (
+    <li class:list={['hub-see__card', { 'hub-see__card--photo': group.photo }]}>
+      {group.photo && (
+        <GuidePhoto
+          class="hub-see__photo"
+          image={guideImage(group.photo.src)}
+          alt={group.photo.alt}
+          sizes="(min-width: 48rem) 21rem, (min-width: 30rem) 45vw, 5.5rem"
+          crop={{ media: '(max-width: 29.99rem)', ratio: 1, position: 'center' }}
+        />
+      )}
+      <div class="hub-see__body">
+        <p class="kicker">Día {group.day}</p>
+        <h3 class="hub-see__title">{group.title}</h3>
+        <ul class="hub-see__places">
+          {group.places.map((place) => (
+            <li><a href={group.href}>{place.name}</a></li>
+          ))}
+        </ul>
+      </div>
+    </li>
+  ))}
+</ol>

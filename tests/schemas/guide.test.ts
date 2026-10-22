@@ -123,3 +123,26 @@ test('stop duration_max_min must be greater than duration_min', () => {
   assert.strictEqual(StopSourceSchema.safeParse({ ...base, duration_min: 120, duration_max_min: 120 }).success, false)
   assert.strictEqual(StopSourceSchema.safeParse({ ...base, duration_min: 120, duration_max_min: 60 }).success, false)
 })
+
+// Enmienda 1.13 (pending the author's validation): what the hub says about
+// the destination that no route derives (docs/1.7.2_data_contract.md).
+test('a hub with when_to_go and practical.currency parses', () => {
+  const result = GuideSourceSchema.safeParse(minimalGuide({
+    type: 'hub',
+    when_to_go: ['Nos nevó varias noches.'],
+    practical: { currency: { code: 'ISK', name: 'Corona islandesa', notes: 'Casi todo con tarjeta.' } },
+  }))
+  assert.strictEqual(result.success, true, JSON.stringify('error' in result ? result.error?.issues : []))
+})
+
+test('practical.currency needs a three-letter ISO code and a name', () => {
+  for (const currency of [{ code: 'isk', name: 'Corona islandesa' }, { code: 'ISKR', name: 'Corona' }, { code: 'ISK' }]) {
+    const result = GuideSourceSchema.safeParse(minimalGuide({ practical: { currency } }))
+    assert.strictEqual(result.success, false, JSON.stringify(currency))
+  }
+})
+
+test('when_to_go rejects an empty line', () => {
+  const result = GuideSourceSchema.safeParse(minimalGuide({ when_to_go: ['  '] }))
+  assert.strictEqual(result.success, false)
+})
