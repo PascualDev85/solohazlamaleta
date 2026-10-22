@@ -18,7 +18,7 @@
   parking:
     price: 1000
     currency: ISK
-    verified_at: 2026-10-04
+    verified_at: 2026-10-22
   description: "Parque Nacional declarado Patrimonio de la Humanidad por la UNESCO. Se puede caminar por la falla que marca el límite entre las placas euroasiática y norteamericana, y fue sede del primer parlamento vikingo (Alþingi), fundado en el año 930."
   notes: "Aparcamiento P1, con acceso a la grieta tectónica y el lago Þingvallavatn. Hay más aparcamientos en el parque, como el P3, algo más alejado. La grieta separa las placas euroasiática y norteamericana."
 
@@ -33,12 +33,13 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking de pago, 1.000 ISK. Hay baños."
+    notes: "Hay baños, incluidos en el aparcamiento."
     verified_at: 2025-09-12
   parking:
-    price: 1000
+    price: 1080
     currency: ISK
-    verified_at: 2026-10-04
+    period_hours: 8
+    verified_at: 2026-10-22
   description: "Área geotérmica del valle de Haukadalur que da nombre a la palabra \"géiser\" en todos los idiomas. El géiser activo hoy es el Strokkur, que erupciona cada pocos minutos."
   notes: "El Strokkur erupciona cada 5-10 minutos. No hace falta esperar más de 20 min para verlo."
 
@@ -76,12 +77,12 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking de pago, 1.000 ISK. Hay baños."
+    notes: "Hay baños, incluidos en el aparcamiento."
     verified_at: 2025-09-13
   parking:
-    price: 1000
+    price: 900
     currency: ISK
-    verified_at: 2026-10-04
+    verified_at: 2026-10-22
   description: "Sesenta metros de agua cayendo desde un antiguo acantilado marino, a los pies del Eyjafjallajökull, con un sendero que permite caminar por detrás de la cascada."
   notes: "Se puede rodear por detrás: espectacular pero te empapas. A 500 metros está Gljúfrafoss, escondida en una grieta de roca."
 
@@ -98,13 +99,13 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking de pago, 1.000 ISK por 8 horas. Hay baños."
+    notes: "Hay baños, incluidos en el aparcamiento."
     verified_at: 2025-09-13
   parking:
     price: 1000
     currency: ISK
-    period_hours: 8
-    verified_at: 2026-10-08
+    period_hours: 5
+    verified_at: 2026-10-22
   description: "Cascada de unos 60 metros de caída en el río Skógá, en el sur de Islandia."
   notes: "Subir por las escaleras de la derecha para el mirador superior."
 
@@ -118,12 +119,12 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Laguna y Diamond Beach: gratuito. Hay 3 aparcamientos en la zona; pagando uno (1.200 ISK) se puede usar cualquiera de los tres. Baños gratuitos y cafeterías cerca. Excursiones en barca/zódiac hasta el borde del glaciar: precio aparte."
-    verified_at: 2025-09-16
+    notes: "Laguna y Diamond Beach: gratuito. Hay 3 aparcamientos en la zona; pagando uno (1.110 ISK con un vehículo de hasta 5 plazas; la mitad si ese día ya se pagó en Skaftafell) se puede usar cualquiera de los tres, hasta medianoche. Baños gratuitos y cafeterías cerca. Excursiones en barca/zódiac hasta el borde del glaciar: precio aparte."
+    verified_at: 2026-10-22
   parking:
-    price: 1200
+    price: 1110
     currency: ISK
-    verified_at: 2026-10-04
+    verified_at: 2026-10-22
   description: "Laguna glaciar formada por el deshielo del glaciar Breiðamerkurjökull, con icebergs a la deriva hacia el mar. Al otro lado de la Ring Road, los fragmentos de hielo varan en la playa negra de Diamond Beach."
   notes: "Diamond Beach (playa negra con icebergs) está al otro lado de la Ring Road. Cruzar con cuidado."
 
@@ -141,9 +142,10 @@
     notes: "1.100 ISK/persona en 2025, en el recinto del Viking Café. Incluye acceso a la playa y al asentamiento vikingo."
     verified_at: 2025-09-16
   hours:
-    open: "08:00"
+    open: "07:30"
     close: "22:00"
-    verified_at: 2025-09-16
+    notes: "Horario del Viking Café y de la taquilla. De 22:00 a 07:30 hay taquilla de autoservicio, así que se puede entrar a cualquier hora."
+    verified_at: 2026-10-22
   description: "Macizo montañoso de picos afilados junto a la península de Stokksnes, en el sureste de Islandia. Un clásico de la fotografía de paisaje en Islandia, con dunas de arena negra, el reflejo de la montaña en el agua y, hacia el sur, una playa con el esqueleto de una ballena donde a veces se avistan focas."
   notes: "El asentamiento vikingo es de atrezo de película. Se entra por el recinto del Viking Café, donde se paga la entrada."
 
@@ -310,7 +312,7 @@
   parking:
     price: 1400
     currency: ISK
-    verified_at: 2026-10-04
+    verified_at: 2026-10-22
   description: "Montaña de forma cónica junto a la costa norte de Snæfellsnes, cerca de Grundarfjörður, con la cascada Kirkjufellsfoss a sus pies."
   notes: "Junto a la carretera 54, a la salida de Grundarfjörður hacia Ólafsvík. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -497,7 +499,8 @@
   parking:
     price: 1000
     currency: ISK
-    verified_at: 2026-10-04
+    period_hours: 4
+    verified_at: 2026-10-22
   description: "Cañón junto al glaciar Öræfajökull, con vistas al valle y a la lengua glaciar."
   notes: "Se recorre a pie desde el aparcamiento: hasta los miradores sobre el cañón son unos 45 minutos de ida y otros tantos de vuelta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -696,7 +699,7 @@
   parking:
     price: 1000
     currency: ISK
-    verified_at: 2026-10-04
+    verified_at: 2026-10-22
   description: "Cañón de columnas de basalto formado por el río Jökla. Quedó al descubierto y se hizo conocido después de que un embalse aguas arriba redujera el caudal del río."
   notes: "Cañón de columnas de basalto, acceso desde el lado este sin cruzar el río — es el único de los dos lados desde el que se puede bajar al cañón (con cuidado); el otro lado solo permite verlo desde arriba. Ruta de unos 5 km, unos 45 minutos de ida y otros 45 de vuelta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -785,7 +788,7 @@
   parking:
     price: 1400
     currency: ISK
-    verified_at: 2026-10-04
+    verified_at: 2026-10-22
   description: "Área geotérmica de fumarolas y pozas de barro hirviendo, junto a la montaña Námafjall, cerca del lago Mývatn."
   # Grouped place (one place_id for a single visit, like jokulsarlon): once the author confirms the
   # coordinates, use the car park / access point shared by Hverir and Námafjall, not one of the two, so
@@ -807,7 +810,7 @@
   parking:
     price: 1200
     currency: ISK
-    verified_at: 2026-10-04
+    verified_at: 2026-10-22
   description: "Cráter de un volcán de tipo anillo de toba, de casi un kilómetro de diámetro (unos 3 km de recorrido por el borde), junto al lago Mývatn."
   notes: "Cráter volcánico de casi 1 km de diámetro, se puede subir y rodear por el borde. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -894,7 +897,7 @@
     price: 1000
     currency: ISK
     period_hours: 5
-    verified_at: 2026-10-06
+    verified_at: 2026-10-22
   description: "Río termal de origen geotérmico en un valle junto a Hveragerði, en el suroeste de Islandia, con tramos habilitados para el baño al aire libre."
   notes: "Se sube caminando desde el aparcamiento de Reykjadalur, en Hveragerði. Entrada gratuita. Zona de cambio con paneles de madera parcial cerca de la parte alta del río. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -1077,14 +1080,14 @@
   type: park
   verified_at: 2025-09-22
   entry:
-    price: 1100
+    price: 0
     currency: ISK
-    notes: "Parking de pago, 1.100 ISK. Baño pequeño y sucio."
+    notes: "Baño pequeño y sucio."
     verified_at: 2025-09-22
   parking:
-    price: 1100
+    price: 900
     currency: ISK
-    verified_at: 2026-10-04
+    verified_at: 2026-10-22
   description: "Playa en la costa sur de Snæfellsnes, uno de los puntos habituales para ver focas de cerca sin molestarlas."
   notes: "Tiene mesas de picnic. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -1151,13 +1154,13 @@
   lat: 64.27953
   lng: -21.08649
   type: accommodation
-  verified_at: 2025-09-15
+  verified_at: 2026-10-22
   source_url: https://www.thingvellir.is/en/service/camping/
   entry:
-    price: 4400
+    price: 4000
     currency: ISK
-    verified_at: 2025-09-15
-    notes: "Precio de 2025 por noche para 2 personas y camper sin electricidad."
+    verified_at: 2026-10-22
+    notes: "Precio de 2026 por noche para 2 personas y camper sin electricidad: 1.800 ISK por adulto + 400 ISK de tasa de alojamiento por unidad."
   facilities:
     showers: included
     toilets: true
@@ -1171,12 +1174,13 @@
   lat: 64.042409
   lng: -20.251387
   type: accommodation
-  verified_at: 2025-09-15
+  source_url: https://reisa.is/arnes/
+  verified_at: 2026-10-22
   entry:
     price: 4400
     currency: ISK
-    verified_at: 2025-09-15
-    notes: "Precio de 2025 por noche para 2 personas y camper sin electricidad."
+    verified_at: 2026-10-22
+    notes: "Precio de 2026 por noche para 2 personas y camper sin electricidad: 4.400 ISK la primera noche (2.000 ISK por adulto + 400 ISK de tasa) y 4.000 ISK las siguientes (1.800 por adulto)."
   facilities:
     showers: included
     toilets: true
@@ -1192,12 +1196,13 @@
   lat: 63.527951
   lng: -19.512692
   type: accommodation
-  verified_at: 2025-09-15
+  source_url: https://skogafosscamping.is/
+  verified_at: 2026-10-22
   entry:
-    price: 4000
+    price: 4200
     currency: ISK
-    verified_at: 2025-09-15
-    notes: "Precio de 2025 por noche para 2 personas y camper sin electricidad."
+    verified_at: 2026-10-22
+    notes: "Precio publicado por el camping: 2.100 ISK por persona y noche. No dice si incluye la tasa de alojamiento (400 ISK por unidad)."
   facilities:
     showers: paid
     toilets: true
@@ -1211,12 +1216,13 @@
   lat: 63.979023
   lng: -16.853199
   type: accommodation
-  verified_at: 2025-09-15
+  source_url: https://svinafell.com/
+  verified_at: 2026-10-22
   entry:
     price: 5000
     currency: ISK
-    verified_at: 2025-09-15
-    notes: "Precio de 2025 por noche para 2 personas y camper sin electricidad."
+    verified_at: 2026-10-22
+    notes: "Verano de 2026 (1 de mayo-30 de septiembre): 2.300 ISK por persona y noche + 400 ISK de tasa de alojamiento por unidad. Sin electricidad para campers."
   facilities:
     showers: included
     toilets: true
@@ -1231,13 +1237,13 @@
   lat: 64.016287
   lng: -16.967528
   type: accommodation
-  verified_at: 2025-09-15
-  source_url: https://www.vatnajokulsthjodgardur.is/en/areas/skaftafell/tjaldsvaedid-i-skaftafelli
+  verified_at: 2026-10-22
+  source_url: https://www.vatnajokulsthjodgardur.is/en/communities--businesses/pricelist
   entry:
-    price: 5500
+    price: 5600
     currency: ISK
-    verified_at: 2025-09-15
-    notes: "Precio de 2025 por noche para 2 personas y camper sin electricidad."
+    verified_at: 2026-10-22
+    notes: "Tarifa del parque nacional: 2.800 ISK por persona y noche, tasa de alojamiento incluida. El aparcamiento de la zona se paga aparte."
   facilities:
     showers: included
     toilets: true
@@ -1252,12 +1258,13 @@
   lat: 65.72179
   lng: -17.3625
   type: accommodation
-  verified_at: 2025-09-15
+  source_url: https://reisa.is/laugar/
+  verified_at: 2026-10-22
   entry:
     price: 4800
     currency: ISK
-    verified_at: 2025-09-15
-    notes: "Precio de 2025 por noche para 2 personas y camper sin electricidad."
+    verified_at: 2026-10-22
+    notes: "Precio de 2026 por noche para 2 personas y camper sin electricidad: 2.200 ISK por adulto + 400 ISK de tasa de alojamiento por unidad. Abierto del 10 de mayo al 10 de octubre."
   facilities:
     showers: included
     toilets: true
@@ -1272,12 +1279,13 @@
   lat: 65.70654
   lng: -17.89615
   type: accommodation
-  verified_at: 2025-09-15
+  source_url: https://systragil.is/
+  verified_at: 2026-10-22
   entry:
-    price: 4200
+    price: 4400
     currency: ISK
-    verified_at: 2025-09-15
-    notes: "Precio de 2025 por noche para 2 personas y camper sin electricidad."
+    verified_at: 2026-10-22
+    notes: "Verano de 2026 (26 de mayo-30 de septiembre): 2.000 ISK por persona y noche + 400 ISK de tasa de alojamiento por unidad."
   facilities:
     showers: included
     toilets: true
@@ -1312,12 +1320,13 @@
   lat: 64.9125
   lng: -23.88916
   type: accommodation
-  verified_at: 2025-09-15
+  source_url: https://www.snb.is/static/files/gjaldskrar/2026/tjaldsvaedi-gjaldskra-2026-2026.pdf
+  verified_at: 2026-10-22
   entry:
-    price: 4000
+    price: 5000
     currency: ISK
-    verified_at: 2025-09-15
-    notes: "Precio de 2025 por noche para 2 personas y camper sin electricidad."
+    verified_at: 2026-10-22
+    notes: "Tarifa de 2026 del ayuntamiento de Snæfellsbær: 2.500 ISK por persona y noche, tasa de alojamiento incluida. Abierto del 1 de mayo al 30 de septiembre."
   facilities:
     showers: included
     toilets: true
@@ -1403,7 +1412,7 @@
       label: "el Museo de Skógar"
       # "Skógar Museum" place card: free car park next door, the trail starts behind the museum.
       maps_url: https://maps.google.com/?cid=3164367240279791881
-      verified_at: 2026-10-08
+      verified_at: 2026-10-22
     verified_at: 2026-10-08
   description: "Cascada de unos 30 metros escondida en un pequeño cañón junto a Skógar, a poca distancia al este de Skógafoss. El sendero permite pasar por detrás de la cortina de agua."
   notes: "El parking de la cascada es de pago (750 ISK); el del Museo de Skógar, justo al lado, es gratuito y el sendero sale por detrás del museo: unos 1,4 km ida y vuelta, con un tramo junto al arroyo."
@@ -1419,9 +1428,9 @@
   type: viewpoint
   verified_at: 2025-09-15
   parking:
-    price: 1000
+    price: 750
     currency: ISK
-    verified_at: 2026-10-08
+    verified_at: 2026-10-22
   description: "Promontorio de unos 120 metros sobre el mar al oeste de Vík, con un gran arco de roca natural y un faro en lo alto. Desde arriba se ven la playa de Reynisfjara y los farallones de Reynisdrangar."
   notes: "Se llega por la carretera 218 desde la Ring Road. Dos zonas con aparcamiento propio: la baja (Lágey, junto a las playas negras) y la alta (Háey, con el faro), a la que se sube por una pista empinada. El mismo ticket de 1.000 ISK cubre los dos aparcamientos durante el mismo día."
 
@@ -1438,7 +1447,8 @@
   parking:
     price: 1000
     currency: ISK
-    verified_at: 2026-10-08
+    period_hours: 4
+    verified_at: 2026-10-22
   description: "Playa de arena negra al pie del monte Reynisfjall, con paredes de columnas de basalto, la cueva Hálsanefshellir y, frente a la orilla, los farallones de Reynisdrangar."
   notes: "Se llega por la carretera 215 desde la Ring Road. Las olas son traicioneras (sneaker waves): no hay que acercarse a la orilla ni dar la espalda al mar, y hay paneles de aviso en la entrada. El mirador de lo alto del Reynisfjall se sube por una pista aparte desde Vík."
 
@@ -1511,7 +1521,7 @@
   parking:
     price: 1000
     currency: ISK
-    verified_at: 2026-10-08
+    verified_at: 2026-10-22
   description: "Cañón de unos 100 metros de profundidad y unos 2 kilómetros de largo excavado por el río Fjaðrá, cerca de Kirkjubæjarklaustur."
   notes: "Se llega por la carretera 206 desde la Ring Road. Un sendero recorre el borde del cañón con varios miradores. El terreno junto al borde es frágil: se camina solo por los senderos marcados."
 
