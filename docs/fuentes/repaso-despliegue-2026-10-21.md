@@ -20,9 +20,17 @@ Cómo se ha probado, además de leer `dist/`:
   (rama `production`), porque `developers.cloudflare.com` no resuelve desde la
   sesión. Lista de HSTS precargada de Chromium para `.dev`.
 
+**Actualización del 22 de octubre.** Desde este repaso, `develop` avanzó a
+`4bad0f1`: entró **#31** (portada, con la #69) y una página `/buscar/`, que
+lleva `noindex` y está fuera del sitemap (`astro.config.mjs`). **#26, #35 y #45
+siguen sin mezclar** y `develop` sigue sin `404.html`, así que lo grave de abajo
+sigue en pie. El conflicto de #45 ahora es con `develop` (`git merge-tree
+origin/develop origin/feature/404-v2` choca). El resto del documento describe
+`b288e69` y no se ha vuelto a probar.
+
 ---
 
-## ⚠️ Grave: arriba del todo
+## Grave: arriba del todo
 
 **Con `develop` tal cual, cualquier URL que no existe devuelve la portada con
 200.** No hay `dist/404.html`, y Cloudflare Pages, si no hay `404.html` en la
@@ -144,9 +152,10 @@ con las islas Vue de la guía de Islandia).
 1. **Mezclar #45 antes del PR `develop` → `main`.** Sin ella, toda URL inexistente
    da la portada con 200. Resolver al mezclar el conflicto con #31 en
    `src/pages/index.astro` y `package.json`.
-2. **Orden de mezcla sugerido:** #26 → cambiar la base de #35 a `develop` y
-   mezclarla → #31 → #45 (resolviendo el conflicto). Volver a pasar build,
-   tests y Lighthouse tras cada una.
+2. **Orden de mezcla sugerido**, el que propone la PR #53 en `docs/BACKLOG.md`: #25 (solo
+   documentación) → #26 → cambiar la base de #35 a `develop` y mezclarla →
+   #31 → #45 (resolviendo el conflicto). Volver a pasar build, tests y
+   Lighthouse tras cada una.
 3. **Actualizar `docs/DESPLIEGUE.md`**: §4.2 ya no está pendiente
    (`_headers` está en `develop`), añadir la comprobación de la 404 en §4 y la
    lista del sitemap con el hub fuera.
