@@ -159,7 +159,8 @@ export const SITE_MENU = { name: 'menú del sitio', open: '.site-menu__open', pa
  * and the effect silently disappears (the day cards' 3D turn and the glance's
  * "Hasta el día 13" fade did, until 2026-10-16; dev builds, unminified, still
  * showed them). Two checks: no shorthand in the page's own CSS carries a
- * timeline, and the elements that should animate really have an animation.
+ * timeline, and the elements that should animate really have an animation
+ * (the guide's day cards, the home page's postcards).
  */
 export function scrollAnimationIssues() {
   const bad: string[] = []
@@ -173,6 +174,11 @@ export function scrollAnimationIssues() {
   if (supported && !reduced) {
     const card = document.querySelector<HTMLElement>('.route__rail > .day')
     if (card && getComputedStyle(card).animationName === 'none') bad.push('day cards have no 3D turn animation')
+    // The home page's postcards, on phones: they tip back as the hero scrolls away.
+    const pile = document.querySelector<HTMLElement>('.postcards__stack')
+    if (pile && matchMedia('(max-width: 47.99rem)').matches && getComputedStyle(pile).animationName === 'none') {
+      bad.push('the hero postcards have no scroll animation')
+    }
   }
   return bad
 }

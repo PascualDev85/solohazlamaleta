@@ -70,11 +70,12 @@ for (const width of [350, 390]) {
   await tab.close()
 }
 
-// 4. Scroll-driven animations survive the minified build (see scrollAnimationIssues).
-{
+// 4. Scroll-driven animations survive the minified build (see scrollAnimationIssues),
+//    on the page under test and on the home page.
+for (const target of new Set([url, new URL('/', base).href])) {
   const tab = await browser.newPage({ viewport: { width: 390, height: 844 } })
-  await tab.goto(url, { waitUntil: 'networkidle' })
-  for (const b of await tab.evaluate(scrollAnimationIssues)) fail(b)
+  await tab.goto(target, { waitUntil: 'networkidle' })
+  for (const b of await tab.evaluate(scrollAnimationIssues)) fail(`${new URL(target).pathname}: ${b}`)
   await tab.close()
 }
 
