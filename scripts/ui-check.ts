@@ -2,11 +2,27 @@
 //   node scripts/ui-check.ts <base-url> <page>
 // They guard what unit tests cannot see: the layers of the overlay panels,
 // the lines of the day cards on small phones, every page under the HTTP
-// headers it will ship with, and the panels by keyboard. Each check names
+// headers it will ship with, the panels by keyboard and the tap areas. Each check names
 // what broke. Run after `npm run build`: check 4 reads dist/_headers.
 import { readFileSync } from 'node:fs'
 import { chromium } from 'playwright'
-import { DURATION_HINT, PANELS, dayCardLineIssues, focusStep, headerOverlap, panelState, scrollAnimationIssues, siteHeaderIssues } from './ui-shared.ts'
+import {
+  DURATION_HINT,
+  PANELS,
+  TAP_MIN,
+  TAP_TARGETS,
+  dayCardLineIssues,
+  focusStep,
+  headerOverlap,
+  hitRun,
+  panelState,
+  scrollAnimationIssues,
+  siteHeaderIssues,
+  tapCandidateBox,
+  tapTargetHits,
+  tapTargetIssue,
+  tapTargetMeasure,
+} from './ui-shared.ts'
 import { headersFor, parseHeaders } from './security-headers.ts'
 
 const [base, page = '/'] = process.argv.slice(2)
@@ -189,6 +205,39 @@ for (const width of [390, 1280]) {
     const closed = await tab.evaluate(panelState, { open, panel })
     if (closed.isOpen) keyboardFail(name, width, 'Escape does not close it', panel)
     else if (!closed.focusOnOpener) keyboardFail(name, width, 'focus does not return to the opener', open)
+  }
+  await tab.close()
+}
+
+// 6. Tap areas on a 390px phone: every link, button and <summary> on screen
+//    takes at least 44×44px of taps, counting the invisible ::before/::after
+//    layers that widen it and cutting what a neighbour or a clipping box
+//    covers (hit-tested point by point). Twice: as the page loads, and with
+//    every "Ver N paradas más" and campsite card open. Links in running text
+//    and the commented TAP_EXCEPTIONS pass (see tapTargetIssue). One line per
+//    kind of target, with its smallest size. Reduced motion keeps the day
+//    cards flat, so a box is the same wherever the carousel stands.
+{
+  const tab = await browser.newPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' })
+  await tab.goto(url, { waitUntil: 'networkidle' })
+  const small = new Map<string, { width: number; height: number; at: Set<number>; text: string }>()
+  for (const unfold of [false, true]) {
+    if (unfold) await tab.evaluate(() => document.querySelectorAll<HTMLDetailsElement>('.day-card__more, .camp__details').forEach((d) => (d.open = true)))
+    const count = await tab.locator(TAP_TARGETS).count()
+    for (let index = 0; index < count; index++) {
+      const m = await tab.evaluate(tapTargetMeasure, { selector: TAP_TARGETS, index })
+      if (!m) continue
+      const area = tapCandidateBox(m)
+      const hits = await tab.evaluate(tapTargetHits, { selector: TAP_TARGETS, index, area })
+      const width = hitRun(hits.row, hits.rowFrom)
+      const height = hitRun(hits.col, hits.colFrom)
+      if (!tapTargetIssue({ label: m.label, inText: m.inText, width, height })) continue
+      const seen = small.get(m.label) ?? { width, height, at: new Set<number>(), text: m.text }
+      small.set(m.label, { ...seen, width: Math.min(seen.width, width), height: Math.min(seen.height, height), at: seen.at.add(index) })
+    }
+  }
+  for (const [label, s] of small) {
+    fail(`390px tap area, ${tapTargetIssue({ label, inText: false, width: s.width, height: s.height }, TAP_MIN, [])} (${s.at.size}×, e.g. "${s.text}")`)
   }
   await tab.close()
 }
