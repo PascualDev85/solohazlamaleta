@@ -1,8 +1,15 @@
 # Estado del proyecto
 
-Última actualización: 2026-10-21
+Última actualización: 2026-10-22
 
-**2026-10-21:** puesto al día con lo que entró el 20 de octubre (#23 y la
+**2026-10-22:** puesto al día con lo que dejaron la tarde del 21 (las seis
+rutinas relanzadas, #55 a #59 y #61, la portada v3, #60, y Tailandia, #54) y
+la noche del 21 al 22 (#62 a #69), los comentarios de las PR hasta las 05:30
+del 22 y la salida de `npm run day:status` y `npm run content:validate` en
+`develop` (`b288e69`, sin cambios desde el 20: no se ha mezclado nada). Lo
+que te toca, por orden, en [DEBERES.md](DEBERES.md).
+
+**2026-10-21 (histórico):** puesto al día con lo que entró el 20 de octubre (#23 y la
 integración #51, con #43, #44, #46, #47, #48 y #49), las PR abiertas (#12,
 #25, #26, #31, #35, #45, #50 y #52), las hojas de decisiones y revisiones de
 la noche del 20 al 21 y la salida de `npm run day:status` y
@@ -29,7 +36,9 @@ va marcado **(a confirmar)**.
   2026-10-07) · ramas `feature/checkpoint3-diseno-v6-*` con el trabajo en curso.
   (A 2026-10-21: último merge en `develop`, PR #51, 2026-10-20. Las ramas
   `…-v6-*` ya están mergeadas. `main` sigue casi vacía; producción será
-  `main` tras una PR `develop` → `main`, opción A de `docs/DESPLIEGUE.md`)
+  `main` tras una PR `develop` → `main`, opción A de `docs/DESPLIEGUE.md`.
+  A 2026-10-22, igual: lo de la noche del 21 al 22 está junto en la
+  integración #69, en borrador)
 - **Guía de Islandia (motor nuevo):**
   `content/guides/islandia/islandia-en-camper-13-dias.yaml` y
   `content/places/islandia.yaml`, validados por `schemas/` y compilados por
@@ -52,7 +61,72 @@ va marcado **(a confirmar)**.
   `docs/1.10_checkpoint3_diseno.md`, `docs/1.11_islandia_estructura_contenidos.md`
   y `docs/1.12_direccion_guia_islandia.md`.
 
-### PR abiertas (a 2026-10-21)
+### PR abiertas (a 2026-10-22)
+
+CI = build, lighthouse y devices en el head actual. Las PR encadenadas no
+tienen CI porque su base no es `develop`. Ninguna PR tiene revisiones
+humanas; la revisión automática de la noche no puso bloqueantes.
+
+| PR | Rama | Qué | Estado | CI |
+|---|---|---|---|---|
+| [#12](https://github.com/PascualDev85/solohazlamaleta/pull/12) | `feature/guia-egipto` | Guía de Egipto en el esquema antiguo | Lista para revisar; por detrás de `develop` | ✅ build y lighthouse del 14 de octubre, sobre una base antigua |
+| [#25](https://github.com/PascualDev85/solohazlamaleta/pull/25) | `docs/seo-islandia-grupo` | Investigación SEO del grupo Islandia | Borrador; hoja del 21 sin contestar (3 preguntas) | ✅ |
+| [#26](https://github.com/PascualDev85/solohazlamaleta/pull/26) | `feature/hub-islandia` | Hub `/islandia/`, v1 | Borrador; hoja del 21 sin contestar (8 preguntas y textos) | ✅ |
+| [#31](https://github.com/PascualDev85/solohazlamaleta/pull/31) | `feature/landing-v2` | Portada v2 | Borrador; va dentro de #60 y de #69 | ✅ |
+| [#35](https://github.com/PascualDev85/solohazlamaleta/pull/35) | `feature/guia-al-hub` | Lo práctico de la guía, al hub | Borrador, sobre #26; hoja del 21 (2 preguntas) | sin CI (base #26) |
+| [#45](https://github.com/PascualDev85/solohazlamaleta/pull/45) | `feature/404-v2` | Página 404 propia | Borrador; hoja del 21 (1 pregunta y textos). Imprescindible antes del despliegue (#57); chocará con la portada y con #26 | ✅ |
+| [#50](https://github.com/PascualDev85/solohazlamaleta/pull/50) | `content/coordenadas-2026-10-20` | Coordenadas de Grafarkirkja, Landbrotalaug y Stuðlagil | Lista; 2 preguntas | ✅ |
+| [#52](https://github.com/PascualDev85/solohazlamaleta/pull/52) | `feature/site-search` | Buscador mínimo en `/buscar/` | Borrador; va dentro de #60 y de #69 | ✅ |
+| [#53](https://github.com/PascualDev85/solohazlamaleta/pull/53) | `docs/deberes-2026-10-21` | Deberes, ESTADO y BACKLOG del 21 | Borrador; la sustituye la PR de hoy | ✅ |
+| [#54](https://github.com/PascualDev85/solohazlamaleta/pull/54) | `feature/guia-tailandia` | Guía de Tailandia en el esquema antiguo (rutina semanal) | No es borrador; `draft: true` en el dato. Pregunta: ¿se adapta la rutina al motor? | ✅ |
+| [#55](https://github.com/PascualDev85/solohazlamaleta/pull/55) | `feature/practical-verified-at` | Aviso de datos sensibles sin fecha en `practical` | Borrador, sobre #26; pide validar la enmienda 1.7.2 | sin CI (base #26) |
+| [#56](https://github.com/PascualDev85/solohazlamaleta/pull/56) | `docs/verificacion-datos-islandia` | Lista de verificación de 98 datos caducados de Islandia | Borrador; 0 verificados: la red bloquea las webs oficiales | ✅ |
+| [#57](https://github.com/PascualDev85/solohazlamaleta/pull/57) | `docs/repaso-despliegue` | Repaso antes del despliegue | Borrador; lo grave: sin #45, toda URL inexistente da la portada con 200 | ✅ |
+| [#58](https://github.com/PascualDev85/solohazlamaleta/pull/58) | `chore/ci-tools` | CI: un solo build, dispositivos desconocidos fallan, 0 avisos de tipos | Borrador; dentro de #69 | ✅ |
+| [#59](https://github.com/PascualDev85/solohazlamaleta/pull/59) | `feature/site-menu` | Menú del sitio en móvil | Borrador; dentro de #62 y de #69 | ✅ |
+| [#60](https://github.com/PascualDev85/solohazlamaleta/pull/60) | `feature/landing-v3` | Portada v3 (Salt in our Hair + BucketListly), con #31 y #52 | Borrador; H1 y textos por decidir | ✅ |
+| [#61](https://github.com/PascualDev85/solohazlamaleta/pull/61) | `a11y/touch-targets` | Áreas de toque de 44 px y contraste del hero | Borrador; dentro de #69 | ✅ |
+| [#62](https://github.com/PascualDev85/solohazlamaleta/pull/62) | `feature/landing-menu` | Portada con menú y lupa en la cabecera | Borrador, sobre #60 | sin CI (base #60) |
+| [#63](https://github.com/PascualDev85/solohazlamaleta/pull/63) | `design/landing-craft` | Diseño de la portada y pie nuevo | Borrador, sobre #62; textos por revisar | sin CI (base #62) |
+| [#64](https://github.com/PascualDev85/solohazlamaleta/pull/64) | `perf/guide-bytes` | Bytes de la guía de 13 días | Borrador; −366 B, **no llega a 100** en móvil (sigue 99). Pregunta editorial | ✅ |
+| [#65](https://github.com/PascualDev85/solohazlamaleta/pull/65) | `feature/hub-links` | Enlaces hub ↔ guías desde el dato y `links:check` | Borrador, sobre #35; 3 textos | sin CI (base #35) |
+| [#66](https://github.com/PascualDev85/solohazlamaleta/pull/66) | `feature/landing-search-v2` | Buscador v2 (sin filtros) | Borrador, sobre #63; 2 textos | sin CI (base #63) |
+| [#67](https://github.com/PascualDev85/solohazlamaleta/pull/67) | `a11y/text-scale-contrast` | Texto que crece con la fuente (P3) y `prefers-contrast: more` (P4) | Borrador; dentro de #69 | ✅ |
+| [#68](https://github.com/PascualDev85/solohazlamaleta/pull/68) | `design/landing-motion` | Postales en 3D (CSS) y transiciones | Borrador, sobre #66; portada móvil a 99 con excepción nueva | sin CI (base #66) |
+| [#69](https://github.com/PascualDev85/solohazlamaleta/pull/69) | `integration/2026-10-22` | Integración: #58, #61, la cadena de la portada, #67 y #64 | Borrador; lo que hay que mirar primero | ✅ |
+
+Cadena de la portada: #60 → #62 → #63 → #66 → #68, y todo junto en #69. Si
+se mezcla #69, GitHub da por mezcladas #58, #61, #60, #52, #31, #59, #62,
+#63, #66, #68, #67 y #64.
+
+Cadena del hub: **#25 → #26 → #35 y #55 → #65 → #45.**
+
+Issues abiertas: #36 (se puede cerrar) y #41 (TypeScript 7; esperar). Sin
+comentarios nuevos.
+
+### Lo que dejaron la tarde del 21 y la noche del 21 al 22
+
+| Hora | Tarea | Resultado |
+|---|---|---|
+| tarde del 21 | CI y herramientas (`chore/ci-tools`) | ✅ [#58](https://github.com/PascualDev85/solohazlamaleta/pull/58), CI en verde |
+| tarde del 21 | Repaso previo al despliegue (`docs/repaso-despliegue`) | ✅ [#57](https://github.com/PascualDev85/solohazlamaleta/pull/57). Encuentra que sin #45 toda URL inexistente da la portada con 200 |
+| tarde del 21 | Áreas de toque (`a11y/touch-targets`) | ✅ [#61](https://github.com/PascualDev85/solohazlamaleta/pull/61), avisos de dispositivos de 11 a 0 |
+| tarde del 21 | Fecha en "Lo práctico" (`feature/practical-verified-at`, sobre #26) | ✅ [#55](https://github.com/PascualDev85/solohazlamaleta/pull/55): solo el aviso; la fecha espera a la enmienda 1.7.2 |
+| tarde del 21 | Menú hamburguesa (`feature/site-menu`) | ✅ [#59](https://github.com/PascualDev85/solohazlamaleta/pull/59) |
+| tarde del 21 | Datos caducados (`docs/verificacion-datos-islandia`) | ⚠️ [#56](https://github.com/PascualDev85/solohazlamaleta/pull/56): la lista está, pero **0 de 98 datos verificados** (la red bloquea las webs oficiales) |
+| tarde del 21 | Portada híbrida (`feature/landing-v3`) | ✅ [#60](https://github.com/PascualDev85/solohazlamaleta/pull/60), con #52 y #31 |
+| 22:00 | Menú y lupa en la portada (`feature/landing-menu`) | ✅ [#62](https://github.com/PascualDev85/solohazlamaleta/pull/62) |
+| 23:30 | Diseño de la portada (`design/landing-craft`) | ✅ [#63](https://github.com/PascualDev85/solohazlamaleta/pull/63). La skill impeccable no se pudo instalar (el proxy la bloquea): reglas aplicadas a mano |
+| 00:00 | Guía a 100 en móvil (`perf/guide-bytes`) | ⚠️ [#64](https://github.com/PascualDev85/solohazlamaleta/pull/64): **no llega**, se queda en 99 |
+| 01:00 | Texto al 150 % y contraste (`a11y/text-scale-contrast`) | ✅ [#67](https://github.com/PascualDev85/solohazlamaleta/pull/67) |
+| 01:30 | Buscador v2 (`feature/landing-search-v2`) | ✅ [#66](https://github.com/PascualDev85/solohazlamaleta/pull/66) |
+| 02:00 | Enlaces del hub (`feature/hub-links`, sobre #35) | ✅ [#65](https://github.com/PascualDev85/solohazlamaleta/pull/65) |
+| 03:30 | Animaciones y 3D (`design/landing-motion`) | ✅ [#68](https://github.com/PascualDev85/solohazlamaleta/pull/68): portada móvil a 99, con una excepción nueva en `lighthouse-check.ts`. Tenía una carrera en `test:ui` que se arregló en #69 |
+| 05:30 | Integración (`integration/2026-10-22`) | ✅ [#69](https://github.com/PascualDev85/solohazlamaleta/pull/69), CI en verde |
+
+Ninguna tarea falló por el límite de uso: todas dejaron rama y PR.
+
+### PR abiertas (a 2026-10-21, histórico)
 
 Todas tienen la base en `develop` salvo #35, que cuelga de #26. CI = build,
 lighthouse y devices en el head actual. Las hojas de decisiones son del 21 de
@@ -76,7 +150,7 @@ Issues abiertas: [#36](https://github.com/PascualDev85/solohazlamaleta/issues/36
 [#41](https://github.com/PascualDev85/solohazlamaleta/issues/41) (TypeScript
 7; la recomendación es esperar).
 
-### Lo que dejó la noche del 20 al 21
+### Lo que dejó la noche del 20 al 21 (histórico)
 
 | Hora | Tarea | Resultado |
 |---|---|---|
@@ -310,7 +384,52 @@ umbral de unos 43,8 KB comprimidos a partir del cual Lighthouse móvil baja a
 
 ---
 
-## Lo primero al volver (2026-10-21)
+## Lo primero al volver (2026-10-22)
+
+La lista completa, con tiempos, está en [DEBERES.md](DEBERES.md). En corto:
+
+1. **Mirar la portada de #69 en el móvil y decidir sus textos** (60 min):
+   el H1, "Hola, somos David y Natalia" frente a `/sobre-mi/` en singular,
+   el día de muestra, la cifra, el buscador y el pie. Y decidir si se mezcla
+   #69 entera o PR a PR.
+2. **Contestar las hojas de decisiones del hub y la 404 y mezclar #25 → #26
+   → #35 y #55 → #65 → #45** (65 min). #31 ya va dentro de la portada.
+3. **Despliegue con el repaso de #57** (50 min): #45 antes de `main`,
+   `NODE_VERSION = 24` en Cloudflare, la PR `develop` → `main` y
+   `docs/DESPLIEGUE.md`.
+4. **Contenido y datos:** #50, las coordenadas, los textos y fotos de los
+   días 4 a 13, y los 98 datos caducados de #56, que la rutina no pudo
+   comprobar porque la red de la nube bloquea las webs oficiales.
+5. **Tailandia (#54):** ¿se adapta la rutina semanal al formato del motor?
+
+Nada se ha mezclado desde el 20: `develop` sigue en `b288e69`.
+
+### Guía de Islandia: qué falta por día (2026-10-22)
+
+Salida de `npm run day:status` en `develop` (`b288e69`): igual que el 21,
+porque `develop` no ha cambiado. 74 lugares con coordenadas pendientes, 0 de
+13 días cerrados. `npm run content:validate` da los mismos 100 avisos.
+
+| Día | Foto | Lo mejor | Conducción | Noche | Duraciones | Paradas | Pend. |
+|---|---|---|---|---|---|---|---|
+| 1 | ✅ | ✅ | ✅ | camping | ✅ | ✅ (2) | 1 |
+| 2 | ✅ | ✅ | ✅ | camping | ✅ | 3 de 4 | 5 |
+| 3 | ✅ | ✅ | ✅ | camping | ✅ | 5 de 9 | 6 |
+| 4 | ❌ | ❌ | estimada | camping | ✅ | 5 de 14 | 9 |
+| 5 | ❌ | ❌ | ✅ | camping | estimadas | 4 de 4 | 14 |
+| 6 | ❌ | ❌ | estimada | fuera | estimadas | 9 de 9 | 21 |
+| 7 | ❌ | ❌ | estimada | fuera | estimadas | 9 de 9 | 26 |
+| 8 | ❌ | ❌ | estimada | camping | estimadas | 5 de 5 | 14 |
+| 9 | ❌ | ❌ | estimada | camping | estimadas | 8 de 8 | 19 |
+| 10 | ❌ | ❌ | estimada | camping | estimadas | 5 de 5 | 19 |
+| 11 | ❌ | ❌ | estimada | camping | estimadas | 5 de 5 | 17 |
+| 12 | ❌ | ❌ | ✅ | camping | estimadas | 12 de 12 | 29 |
+| 13 | ❌ | ❌ | ✅ | — | estimadas | 1 de 2 | 4 |
+
+Cuando entre #50, el día 8 (Stuðlagil), el 11 (Grafarkirkja) y el 12
+(Landbrotalaug) pierden la coordenada pendiente, y el total baja a 71 lugares.
+
+## Lo primero al volver (2026-10-21, histórico)
 
 La lista completa, con tiempos, está en [DEBERES.md](DEBERES.md). En corto:
 
@@ -331,7 +450,7 @@ Seis de las ocho rutinas de la noche no dejaron rama ni PR (ver "Lo que dejó
 la noche del 20 al 21"). Recomendación pendiente: mover el repo local fuera
 del Escritorio, porque iCloud crea copias " 2" de los ficheros.
 
-### Guía de Islandia: qué falta por día (2026-10-21)
+### Guía de Islandia: qué falta por día (2026-10-21, histórico)
 
 Salida de `npm run day:status` en `develop` (`b288e69`), igual que el
 2026-10-20. Todos los días están en `develop`.

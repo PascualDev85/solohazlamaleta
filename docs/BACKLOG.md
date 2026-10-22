@@ -5,7 +5,7 @@ desbloquea antes. Marca la casilla al cerrarlas.
 
 Las que llevan **(tuya)** dependen de ti y nadie más puede hacerlas.
 
-Última revisión: 2026-10-21. El estado detallado está en [ESTADO.md](ESTADO.md).
+Última revisión: 2026-10-22. El estado detallado está en [ESTADO.md](ESTADO.md).
 Lo tuyo, junto y por orden, en [DEBERES.md](DEBERES.md).
 
 ---
@@ -69,7 +69,9 @@ Lo tuyo, junto y por orden, en [DEBERES.md](DEBERES.md).
 
 Salen de las PR #25, #26, #31, #35 y #45. Cada una tiene una hoja de
 decisiones del 2026-10-21. Orden de mezcla: #25 → #26 → #35 → #31 → #45. El
-detalle, en [DEBERES.md](DEBERES.md).
+detalle, en [DEBERES.md](DEBERES.md). (2026-10-22: #31 va ahora dentro de la
+portada v3, #60, y de la integración #69. El orden del hub queda #25 → #26 →
+#35 y #55 → #65 → #45)
 
 - [x] **(tuya)** Mergear #23 (doc 1.13). (Mezclado el 2026-10-20)
 - [x] **(tuya)** H1 y `<title>` del hub. (Decidido el 2026-10-20: H1
@@ -86,15 +88,16 @@ detalle, en [DEBERES.md](DEBERES.md).
       borrador y el enlace "Islandia" en la cabecera. Además, revisar sus
       textos. (En #26, hoja de decisiones, 8 preguntas)
 - [ ] `practical` (fianza, "Mosskógar solo efectivo") sin `verified_at`, en el
-      hub y en `islandia.yaml` (#26, #35). (Pregunta 1 de la hoja de #26. La
-      rutina `feature/practical-verified-at` del 2026-10-21 no dejó rama)
+      hub y en `islandia.yaml` (#26, #35). (Pregunta 1 de la hoja de #26. En #55:
+      un aviso en el build; la fecha espera a que valides la enmienda 1.7.2)
 - [ ] **(tuya)** #35: el texto del enlace al hub. Al mergear #26, reapuntarla a
       `develop` para que pase la CI. (En #35, hoja de decisiones)
 - [ ] #35: `href="/islandia/#practico"` escrito a mano; usar `guide.hub`.
       (Hecho en #35, `hubSectionHref`, falta mezclar)
 - [ ] **(tuya)** #31 (portada v2): revisar los textos, la foto de cabecera en
       escritorio y la alineación de la cabecera en escritorio. (En #31, hoja
-      de decisiones)
+      de decisiones. La portada que sigue es la de #60, dentro de #69: sus
+      textos y su H1 en [DEBERES.md](DEBERES.md), punto 1)
 - [ ] Antes de la tercera guía: `alt` de `cover_image` en el modelo y un nombre
       visible del destino con tildes (#31).
 
@@ -213,8 +216,8 @@ Salen de las PR #9, #14 y #17.
 - [ ] **(tuya)** Soporte de 320 px (Galaxy S9+): por debajo de la escala de
       diseño de 350 px, las líneas de las tarjetas saltan de fila. Decidir si
       se amplía la escala o se queda como aviso.
-- [ ] Objetivos táctiles de menos de 44 px. (La rutina `a11y/touch-targets`
-      del 2026-10-21 no dejó rama) #17 amplía a 44 px la "i", el
+- [ ] Objetivos táctiles de menos de 44 px. (En #61, dentro de #69: los
+      avisos de dispositivos pasan de 11 a 0) #17 amplía a 44 px la "i", el
       enlace Mapa, el de la noche y "Gratis". Quedan:
       - los días de la tira (36×36);
       - "Ver N paradas más" (36);
@@ -238,10 +241,12 @@ Salen de las PR #9, #14 y #17.
       `closesHintOnScroll` en `src/lib/hint-scroll.ts`. La excepción
       `KNOWN_KEYBOARD_ISSUES` desapareció: `test:ui` lo exige)
 - [ ] La sombra de la marca del hero en móvil está a 4,33:1 (sugerencia
-      opcional de #33, en #36). Comprobar.
+      opcional de #33, en #36). Comprobar. (En #61: el degradado pasa de 0,62 a
+      0,65, de 4,43 a 4,69:1 a 350 px)
 - [ ] **(tuya)** Propuestas de #17 sin aplicar:
-      - texto de las tarjetas que no crece con la fuente del navegador (P3);
-      - `prefers-contrast: more` (P4);
+      - texto de las tarjetas que no crece con la fuente del navegador (P3,
+        en #67);
+      - `prefers-contrast: more` (P4, en #67);
       - cabecera en las tarjetas de camping (P6);
       - nombre del título de la ruta (P7).
 - [ ] **(tuya)** Probar en un iPhone real:
@@ -265,7 +270,8 @@ Salen de las PR #9, #14 y #17.
       palabras clave. (El hub `/islandia/` está en #26, en borrador. Con el
       1.13 (#23, mezclado el 2026-10-20) entra en el Checkpoint 3)
 - [ ] Enlazado interno automático hub ↔ guías ↔ relacionadas, generado desde
-      el dato y no mantenido a mano.
+      el dato y no mantenido a mano. (Hub ↔ guías del grupo Islandia en #65,
+      con `links:check`; sobre #35)
 - [x] Datos estructurados `Article` y `BreadcrumbList` (§7). El `FAQPage` ya
       está y sí corresponde a contenido visible. (Guía de Islandia,
       `64ca097`; #16 quita la miga a `/islandia/`, que da 404, y completa
@@ -287,9 +293,16 @@ Salen de las PR #9, #14 y #17.
       #45, hoja de decisiones; va la última de la cadena)
 - [ ] **(tuya)** Buscador sencillo en `/buscar/`, versión mínima (pedido el
       2026-10-20). (En #52, borrador. Validarlo frente al BRIEF §P, que excluye
-      un buscador complejo en la V1, y decidir si lista ya los borradores)
-- [ ] Menú del sitio en móvil (hamburguesa), pedido el 2026-10-20. (La rutina
-      `feature/site-menu` del 2026-10-21 no dejó rama ni PR)
+      un buscador complejo en la V1, y decidir si lista ya los borradores.
+      En #60 lista los borradores y #66 es el buscador v2, sin filtros; las
+      dos, dentro de #69)
+- [ ] Menú del sitio en móvil (hamburguesa), pedido el 2026-10-20. (En #59,
+      dentro de #62 y de #69)
+- [ ] **(tuya)** Portada v3, híbrido de Salt in our Hair y BucketListly
+      (pedida el 2026-10-21). (En #60 → #62 → #63 → #66 → #68, todo junto en
+      #69. Falta decidir el H1 y los textos)
+- [ ] En la guía, a 768 px, los enlaces de la cabecera salen blanco sobre
+      blanco (visto en #59, sin arreglar en #62 ni en #69). Sin PR.
 
 ## Web — rendimiento (cuando la guía de Islandia esté completa)
 
@@ -297,7 +310,9 @@ Medido el 2026-10-06 en la rama `feature/checkpoint3-diseno-v4`: Lighthouse
 móvil 100/100/100, LCP 1,9 s, CLS 0, 0 ms de bloqueo, 170 KB en 21
 peticiones. Nada es urgente; se revisa con la página terminada, no antes.
 
-- [ ] **Margen de bytes del HTML de la guía**: con #13 queda a ~100 bytes del
+- [ ] **Margen de bytes del HTML de la guía** (en #64, 2026-10-22: −366 B,
+      sigue en 99; para 100 propone un recorte editorial en "Nuestro
+      criterio", pregunta tuya): con #13 queda a ~100 bytes del
       umbral (~43,8 KB comprimidos) a partir del cual Lighthouse móvil baja a
       99. Cualquier PR que añada marcado o CSS a la guía tiene que
       compensarlo. (Ya no aplica tal cual: desde #23/1.13 §5, decidido el
@@ -326,8 +341,7 @@ peticiones. Nada es urgente; se revisa con la página terminada, no antes.
 
 ## CI y herramientas
 
-La rutina `chore/ci-tools` del 2026-10-21 no dejó rama ni PR: lo de aquí
-sigue como estaba.
+Lo de la rutina `chore/ci-tools` está en #58 (dentro de #69), sin mezclar.
 
 - [x] Lighthouse 100 en móvil y escritorio como gate de la CI, y tests
       unitarios en la CI. (PR #7, 2026-10-06)
@@ -343,12 +357,16 @@ sigue como estaba.
 - [x] Tests de teclado en los paneles y tope de tamaño del HTML
       (`size:check`): #47, mezclado el 2026-10-20.
 - [ ] El job `devices` repite `npm ci` y `build` y usa `npx --yes wait-on`
-      sin versión fija. Coste menor de CI (revisión de #9).
+      sin versión fija. Coste menor de CI (revisión de #9). (En #58: un solo
+      build compartido y sin `wait-on`)
 - [ ] `scripts/ui-devices.ts` descarta en silencio los modelos que la versión
       de Playwright no conoce; `homeIndicator` no se lee. Revisar tras #10,
-      que sube Playwright a 1.64.
+      que sube Playwright a 1.64. (En #58: un modelo desconocido hace fallar
+      `ui-devices`)
 - [ ] `scripts/ui-shared.ts`: el docblock de `dayCardLineIssues` quedó
-      cortado.
+      cortado. (En #58)
+- [ ] `z.url()` acepta `javascript:`: restringir a `https?:` en
+      `url_booking` y `source_url` (revisión de #58).
 - [x] **(tuya)** Mergear #10 (dependencias) y decidir sobre la issue #11
       (`http-cache-semantics`, `sharp`). (#10 mergeado el 2026-10-16; #40
       deja 0 vulnerabilidades altas y cierra #11, 2026-10-19)
@@ -356,13 +374,15 @@ sigue como estaba.
       "guía inválida" de la auditoría de dependencias, leen
       `src/content/guides/*.json` (esquema antiguo). La de caducidad no revisa
       la guía de Islandia (YAML del motor). Decidir si se adaptan.
+      (2026-10-21: la rutina de estructurar abrió Tailandia, #54, en el
+      esquema antiguo, como Egipto, #12)
 - [ ] El build avisa de unos 90 lugares con `verified_at` caducado (nota de
       #16). Las revisiones de #9 y #14 señalan además lugares con
       `verified_at: 2025-09-15` que aún no se han verificado.
       (`content:validate` en `develop`, 2026-10-20 y 2026-10-21: 87 lugares
       con datos caducados y el precio de los 10 campings verificado hace más
-      de 12 meses. La rutina `docs/verificacion-datos-islandia` del
-      2026-10-21 no dejó rama)
+      de 12 meses. Lista de comprobación en #56: 98 datos, 0 verificados
+      porque la red de la nube bloquea las webs oficiales)
 
 ## Infraestructura
 
@@ -372,8 +392,15 @@ Paso a paso para desplegar, dominio, analítica y Search Console:
 - [ ] Conectar Cloudflare Pages al repo y desplegar `develop` a un dominio de
       pruebas. (Paso a paso en `docs/DESPLIEGUE.md`, unos 31 min. Rama de
       producción decidida el 2026-10-20: opción A, PR `develop` → `main` y se
-      despliega `main`. La rutina `docs/repaso-despliegue` del 2026-10-21 no
-      dejó rama)
+      despliega `main`. Repaso previo en #57: sin #45, toda URL inexistente
+      da la portada con 200, y hace falta `NODE_VERSION = 24` en Cloudflare)
+- [ ] Lo que el repaso de #57 deja para Claude: actualizar
+      `docs/DESPLIEGUE.md` (§4.2 y la prueba de la 404), `og:image` por
+      defecto y versiones de 1200×630, marca en los títulos de los legales y
+      de "Sobre mí", `author` y `datePublished` en el `Article`, y `engines`
+      de Node a la versión que de verdad ejecuta el build (≥ 22.18). Más
+      adelante: una sola regla de CSP para `/ir/*`, el `noindex` del hub
+      derivado de su estado y la regla `noindex` de `pages.dev` con dominio.
 - [x] Cabeceras HTTP y CSP por página (#43). Tiene una lista de
       comprobaciones para el día del despliegue y HSTS se activa en el panel.
       (Mezclado con la integración #51, 2026-10-20)
