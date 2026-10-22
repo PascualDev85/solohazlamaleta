@@ -45,7 +45,7 @@ export function engineGuideSections(guide: CompiledGuide): GuideSection[] {
     { id: 'practico', label: 'Lo práctico', icon: 'practical', visible: show.practical },
     { id: 'faq', label: 'Preguntas frecuentes', icon: 'faq', visible: show.faq },
   ]
-  return sections.filter((section) => section.visible).map(({ visible, ...section }) => section)
+  return sections.filter((section) => section.visible).map(({ visible: _visible, ...section }) => section)
 }
 
 /** The sections of a legacy guide page (pages/[destino]/[slug].astro), with the headings it prints. */
@@ -59,5 +59,5 @@ export function legacyGuideSections(guide: Guide): GuideSection[] {
     { id: 'errores', label: 'Errores y trampas', icon: 'pitfalls', visible: guide.pitfalls.length > 0 },
     { id: 'faq', label: 'Preguntas frecuentes', icon: 'faq', visible: guide.faq.length > 0 },
   ]
-  return sections.filter((section) => section.visible).map(({ visible, ...section }) => section)
+  return sections.filter((section) => section.visible).map(({ visible: _visible, ...section }) => section)
 }

@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises'
 import type { CompiledGuide } from '../../engine/index.ts'
 import { loadCompiledGuide } from '../../src/lib/engine-guide.ts'
 import {
-  editDistance, findTerm, fuzzyWordMatch, highlightRanges, matchScore, matches, normalizeSearch, rankSearch,
+  editDistance, findTerm, fuzzyWordMatch, highlightRanges, matchScore, normalizeSearch, rankSearch,
   resultsSummary, searchTerms,
 } from '../../src/lib/search.ts'
 import { buildSearchIndex, destinationLabel, featuredPlaces, legacySearchGuide, photoPlaceIndex, searchEntries } from '../../src/lib/search-index.ts'
@@ -31,13 +31,12 @@ test('searchTerms splits the query into normalized words, ignoring extra spaces'
   assert.deepStrictEqual(searchTerms('   '), [])
 })
 
-test('matches needs every word somewhere in the text, in any order', () => {
-  const text = normalizeSearch('Laguna Glaciar Fjallsárlón')
-  assert.ok(matches(text, searchTerms('fjallsarlon')))
-  assert.ok(matches(text, searchTerms('glaciar laguna')))
-  assert.ok(matches(text, searchTerms('lagu')))
-  assert.ok(!matches(text, searchTerms('laguna azul')))
-  assert.ok(matches(text, []), 'an empty query matches everything')
+test('matchScore needs every word somewhere in the text, in any order', () => {
+  const lagoon = { text: normalizeSearch('Laguna Glaciar Fjallsárlón') }
+  assert.notStrictEqual(matchScore(lagoon, searchTerms('fjallsarlon')), null)
+  assert.notStrictEqual(matchScore(lagoon, searchTerms('glaciar laguna')), null)
+  assert.notStrictEqual(matchScore(lagoon, searchTerms('lagu')), null)
+  assert.strictEqual(matchScore(lagoon, searchTerms('laguna azul')), null)
 })
 
 // A place, section or guide as the panel's script sees it: its own words and
@@ -100,6 +99,9 @@ test('highlightRanges marks what matched in the original label, accents and Þ i
   assert.deepStrictEqual(highlightRanges('Laguna Glaciar Fjallsárlón', 'glaciar lag'), [[0, 3], [7, 14]])
   assert.deepStrictEqual(highlightRanges('Gullfoss', 'gullfoss islandia'), [[0, 8]], 'a word found only in the context is not marked')
   assert.deepStrictEqual(highlightRanges('Gullfoss', ''), [])
+  // A decomposed accent (NFD: "o" + U+0308) is two letters of the label, and the mark keeps both.
+  assert.deepStrictEqual(highlightRanges('Jo\u0308kulsa\u0301rlo\u0301n', 'jokul'), [[0, 6]])
+  assert.deepStrictEqual(highlightRanges('Jo\u0308kulsa\u0301rlo\u0301n', 'sarlon'), [[6, 14]])
 })
 
 test('resultsSummary counts the results by type, in Spanish, singular and plural', () => {
@@ -140,7 +142,7 @@ test('legacySearchGuide indexes a legacy guide and its stops, each linked to its
   const [hit] = rankSearch(guide.places, 'riquewihr')
   assert.strictEqual(hit?.day, 1, 'a stop of day 1 is found')
   assert.ok(guide.places.every((p) => p.url === `/alsacia/ruta-pueblos-y-vinos/#dia-${p.day}`))
-  assert.ok(matches(guide.text, searchTerms('alsacia')), 'the destination finds the guide')
+  assert.notStrictEqual(matchScore(guide, searchTerms('alsacia')), null, 'the destination finds the guide')
 })
 
 test('buildSearchIndex links each place of a published guide to the day it is visited', async () => {

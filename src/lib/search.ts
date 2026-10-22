@@ -69,11 +69,6 @@ export function searchTerms(query: string): string[] {
   return normalizeSearch(query).split(/\s+/).filter(Boolean)
 }
 
-/** Whether every word appears somewhere in the text, in any order. No words match everything. */
-export function matches(text: string, terms: string[]): boolean {
-  return terms.every((term) => text.includes(term))
-}
-
 /** Letters added, dropped, changed or two neighbours swapped to turn one word into the other. */
 export function editDistance(a: string, b: string): number {
   // Optimal string alignment: Levenshtein plus adjacent swaps, three rows.
