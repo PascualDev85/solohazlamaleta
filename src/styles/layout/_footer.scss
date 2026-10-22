@@ -52,8 +52,10 @@
     gap: var(--space-lg);
   }
 
-  li + li {
-    margin-top: var(--space-xs);
+  // Stacked links: each row is its own 44px tap area (WCAG 2.5.5), so the
+  // rows sit flush instead of being spaced by a margin.
+  a {
+    min-height: 44px;
   }
 }
 
