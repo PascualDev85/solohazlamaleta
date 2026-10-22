@@ -215,13 +215,23 @@ export function sensitiveDataKinds(text: string): string[] {
     .map(([kind]) => kind)
 }
 
+const PRACTICAL_REVIEW_MONTHS = 12
+const MS_PER_MONTH = 1000 * 60 * 60 * 24 * 30
+
 /**
- * Sensitive data in `practical` has no check date. Its entries are plain
- * strings with no verified_at (1.7.2), so every entry with explicit sensitive
- * data warns until the author decides how to date them.
+ * Sensitive data in `practical` needs a check date (CLAUDE.md). The section
+ * carries one, `practical.verified_at` (decision 1A of #26, 1.7.2): with it,
+ * the entries are dated and only the date can go stale, after 12 months as
+ * a place's. Without it, every entry with explicit sensitive data warns.
  */
-export function practicalUnverifiedWarnings(practical: GuideSource['practical']): string[] {
+export function practicalUnverifiedWarnings(practical: GuideSource['practical'], now: Date = new Date()): string[] {
   if (!practical) return []
+  if (practical.verified_at) {
+    const months = (now.getTime() - new Date(practical.verified_at).getTime()) / MS_PER_MONTH
+    return months > PRACTICAL_REVIEW_MONTHS
+      ? [`[WARNING] practical: datos sensibles comprobados el ${practical.verified_at}, hace más de 12 meses`]
+      : []
+  }
   const entries: [path: string, text: string | undefined][] = [
     ...(practical.documents ?? []).map((text, i) => [`documents[${i}]`, text] as [string, string]),
     ['plugs', practical.plugs],

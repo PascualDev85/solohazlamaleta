@@ -189,13 +189,16 @@ const PracticalSourceSchema = z.object({
   plugs: z.string().optional(),
   apps: z.array(z.string()).optional(),
   tips: z.array(z.string()).optional(),
-  // Enmienda 1.13 (pending the author's validation): the destination's
+  // Enmienda 1.13 (validated by the author on 2026-10-22): the destination's
   // currency, for the hub's quick facts and "Lo práctico".
   currency: z.object({
     code: z.string().regex(/^[A-Z]{3}$/),
     name: z.string().trim().min(1),
     notes: z.string().optional(),
   }).strict().optional(),
+  // When the author last checked the section's sensitive data (fees, rules,
+  // "solo efectivo"): shown as "Comprobado …" under it. Validated 2026-10-22.
+  verified_at: z.string().optional(),
 }).strict()
 
 const FaqItemSchema = z.object({
@@ -261,7 +264,7 @@ export const GuideSourceSchema = z.object({
   pitfalls: z.array(z.string()).optional(),
   terrain_tips: z.array(z.string()).optional(),
   practical: PracticalSourceSchema.optional(),
-  // Enmienda 1.13 (pending the author's validation): "Cuándo ir" on the hub,
+  // Enmienda 1.13 (validated by the author on 2026-10-22): "Cuándo ir" on the hub,
   // what we found in the month we travelled (trip_done). One line each.
   when_to_go: z.array(z.string().trim().min(1)).optional(),
   adaptation_notes: z.array(AdaptationNoteSourceSchema).optional(),

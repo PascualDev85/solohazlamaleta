@@ -111,7 +111,7 @@ export function validateContentRules(
   }
 
   warnings.push(...placeQualityWarnings(guide, places, now, warnedStalePlaces))
-  warnings.push(...practicalUnverifiedWarnings(guide.practical))
+  warnings.push(...practicalUnverifiedWarnings(guide.practical, now))
 
   if (guide.content_type === 'experience' && !guide.trip_done) {
     warnings.push('[WARNING] content_type: experience sin trip_done')

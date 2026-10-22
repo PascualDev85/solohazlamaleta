@@ -1,7 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
 import { validateGuide } from '../../engine/validate/index.ts'
-import { sensitiveDataKinds } from '../../engine/validate/quality-rules.ts'
+import { practicalUnverifiedWarnings, sensitiveDataKinds } from '../../engine/validate/quality-rules.ts'
 import { StopSourceSchema } from '../../schemas/guide.ts'
 import type { PlaceSource } from '../../schemas/index.ts'
 import type { PlaceRegistry, AffiliateRegistry } from '../../engine/types.ts'
@@ -304,4 +304,18 @@ test('every practical text field is checked: plugs, apps and tips', () => {
 
 test('practical without sensitive data does not warn (control)', () => {
   assert.deepStrictEqual(practicalWarnings({ plugs: 'Tipo F', tips: ['Cocinar en la camper ahorra mucho.'] }), [])
+})
+
+// With a check date for the section (practical.verified_at, decision 1A of
+// #26), sensitive entries no longer warn as undated; the date itself goes
+// stale after 12 months, like a place's.
+test('a dated practical section does not warn while its date is recent', () => {
+  const now = new Date('2026-10-22')
+  assert.deepStrictEqual(practicalUnverifiedWarnings({ documents: ['Fianza de 1.000-2.000 €'], verified_at: '2026-10-01' }, now), [])
+})
+
+test('a dated practical section warns once when its date is over 12 months old', () => {
+  const now = new Date('2026-10-22')
+  const warnings = practicalUnverifiedWarnings({ documents: ['Fianza de 1.000-2.000 €'], tips: ['Solo efectivo'], verified_at: '2025-09-15' }, now)
+  assert.deepStrictEqual(warnings, ['[WARNING] practical: datos sensibles comprobados el 2025-09-15, hace más de 12 meses'])
 })

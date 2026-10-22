@@ -11,8 +11,8 @@ hub: /islandia/
 type: hub
 content_type: experience
 # Not "draft": a draft fails the production build. The page stays noindex and
-# out of the sitemap while the guide does (1.13 §6). The author has not
-# reviewed this file yet: see the PR.
+# out of the sitemap until a guide under the hub is published (1.13 §6,
+# isHubPublished). Approved provisionally by the author on 2026-10-22 (general go-ahead, not a line-by-line read): review before publishing.
 status: reviewed
 trip_done: "2025-09"
 # Title and description from docs/fuentes/seo-islandia-grupo.md §3 (the
@@ -25,7 +25,7 @@ updated_at: 2026-10-15
 cover_image: islandia/islandia-gullfoss.jpg
 
 summary:
-  # Borrador del implementador, pendiente del autor.
+  # Implementer's draft. Approved provisionally by the author on 2026-10-22 (general go-ahead, not a line-by-line read): review before publishing.
   tagline: "Lo que aprendimos de Islandia en trece días de camper, en septiembre de 2025.\nQué ver, cuándo ir y lo práctico, contado desde lo que vivimos."
   getting_around: "Camper **sin 4x4**"
 
@@ -33,8 +33,8 @@ related:
   - islandia-en-camper-13-dias
 
 # Cuándo ir: only what is already in the 13-day guide (pitfalls,
-# how_we_choose, accommodation notes, day 6). Borrador del implementador,
-# pendiente del autor.
+# how_we_choose, accommodation notes, day 6), plus the author's own line on
+# crowds (2026-10-20). Approved provisionally by the author on 2026-10-22 (general go-ahead, not a line-by-line read): review before publishing.
 when_to_go:
   - "Vimos auroras boreales la noche del día 6, desde el mirador de Rauðafell: de montaña a montaña y con todos los colores."
   - "Nos nevó varias noches y llegamos a estar a 0 °C. En Systragil nos despertamos con todo blanco."
@@ -57,6 +57,9 @@ transport:
 
 # Moved here from the 13-day guide (1.13 §3); the guide links to #practico.
 practical:
+  # The fees, rules and "solo efectivo" below are what the authors found on the
+  # trip (September 2025): that is their check date.
+  verified_at: 2025-09-15
   documents:
     - "DNI o pasaporte (Islandia es espacio Schengen)"
     - "Carnet de conducir (el español es válido)"
@@ -78,7 +81,7 @@ practical:
 # Preguntas sobre Islandia: the destination question moved from the guide
 # (4x4, 1.13 §3; the guide keeps only questions about its route), plus those
 # proposed by docs/fuentes/seo-islandia-grupo.md §3 whose answer is already in
-# the repo. Borrador del implementador, pendiente del autor; only the one the
+# the repo. Approved provisionally by the author on 2026-10-22 (general go-ahead, not a line-by-line read): review before publishing. Only the one the
 # author already marked in the guide goes into the JSON-LD.
 faq:
   - q: "¿Hace falta 4x4 para la Ring Road?"
