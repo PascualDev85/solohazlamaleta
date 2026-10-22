@@ -25,8 +25,7 @@ import {
   tapCandidateBox,
   tapTargetHits,
   tapTargetIssue,
-  tapTargetMeasure,
-} from './ui-shared.ts'
+  tapTargetMeasure, photoMeasures, photoSharpnessIssue } from './ui-shared.ts'
 import { headersFor, parseHeaders } from './security-headers.ts'
 
 const [base, page = '/'] = process.argv.slice(2)
@@ -450,6 +449,32 @@ for (const width of [390, 1280]) {
     fail(`390px tap area, ${tapTargetIssue({ label, inText: false, width: s.width, height: s.height }, TAP_MIN, [])} (${s.at.size}×, e.g. "${s.text}")`)
     }
   await tab.close()
+}
+
+// 10. Photos as sharp as they are shown: on a 3x phone and a 2x desktop,
+//     every photo of the home page and the guide comes as a file at least
+//     90 % of its shown width × the pixel ratio, capped at 2x (see
+//     photoSharpnessIssue). A photo whose largest file is already served is
+//     only reported: it needs a bigger original.
+for (const path of ['/', new URL(url).pathname]) {
+  for (const [width, height, dpr] of [[390, 844, 3], [1440, 900, 2]]) {
+    const tab = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: dpr })
+    await tab.goto(new URL(path, base).href, { waitUntil: 'networkidle' })
+    await tab.evaluate(async () => {
+      for (let y = 0; y < document.body.scrollHeight; y += 600) {
+        scrollTo(0, y)
+        await new Promise((r) => setTimeout(r, 100))
+      }
+    })
+    await tab.waitForTimeout(500)
+    for (const measure of await tab.evaluate(photoMeasures)) {
+      const issue = photoSharpnessIssue(measure)
+      if (!issue) continue
+      if (issue.startsWith('warning: ')) console.warn(`${path} ${width}px@${dpr}x photo ${issue}`)
+      else fail(`${path} ${width}px@${dpr}x photo ${issue}`)
+    }
+    await tab.close()
+  }
 }
 
 await browser.close()

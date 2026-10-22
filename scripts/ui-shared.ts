@@ -468,3 +468,59 @@ export function tapTargetHits({ selector, index, area }: { selector: string; ind
   const at = (centre: number, start: number, n: number) => Math.min(n - 1, Math.max(0, Math.floor(centre - start)))
   return { row, col, rowFrom: at(cx, area.left, row.length), colFrom: at(cy, area.top, col.length) }
 }
+
+/** What the sharpness check knows of one photo on screen. */
+export interface PhotoMeasure {
+  label: string
+  /** CSS pixels it is drawn at. */
+  shownWidth: number
+  dpr: number
+  /** Pixel width of the file the browser picked. */
+  fileWidth: number
+  /** Pixel width of the original photo (data-source-width on the <img>). */
+  sourceWidth: number
+}
+
+/** Screens past 2x gain little a reader can see; the bar stops there, so phones are not sent 3x files. */
+export const PHOTO_MAX_DPR = 2
+/** A file this close to the needed width still reads sharp. */
+export const PHOTO_MIN_RATIO = 0.9
+
+/**
+ * Whether a photo is served softer than it is shown: its file narrower than
+ * 90 % of the width shown × the pixel ratio (capped at 2x). When the
+ * original itself is narrower than that and the file is about its full width,
+ * the limit is the photo, not the page: that comes back as a "warning: …"
+ * line instead. Null when sharp.
+ */
+export function photoSharpnessIssue(p: PhotoMeasure): string | null {
+  const ratio = Math.min(p.dpr, PHOTO_MAX_DPR)
+  const needs = Math.round(p.shownWidth * ratio * PHOTO_MIN_RATIO)
+  if (p.fileWidth >= needs) return null
+  const line = `${p.label}: ${p.fileWidth}px file shown at ${Math.round(p.shownWidth)}px × ${ratio} (needs ${needs}px)`
+  const sourceLimited = p.sourceWidth < needs && p.fileWidth >= p.sourceWidth * 0.95
+  return sourceLimited ? `warning: ${line}; the original is ${p.sourceWidth}px, a bigger original is needed` : line
+}
+
+/**
+ * In the page: every photo on screen in <main>, with the file the browser
+ * picked (decoded again without srcset to read its real width) and the
+ * original's width from data-source-width. Scroll first so lazy ones load.
+ * A photo without the attribute counts its file as the original.
+ */
+export async function photoMeasures(): Promise<PhotoMeasure[]> {
+  const imgs = [...document.querySelectorAll<HTMLImageElement>('main img')].filter((img) => img.currentSrc && img.getBoundingClientRect().width > 0)
+  return Promise.all(imgs.map(async (img) => {
+    const probe = new Image()
+    probe.src = img.currentSrc
+    await probe.decode().catch(() => {})
+    const label = `${img.className || img.parentElement?.className || 'img'} (${img.currentSrc.split('/').pop()?.split('.')[0]})`
+    return {
+      label,
+      shownWidth: img.getBoundingClientRect().width,
+      dpr: devicePixelRatio,
+      fileWidth: probe.naturalWidth,
+      sourceWidth: Number(img.dataset.sourceWidth) || probe.naturalWidth,
+    }
+  }))
+}
