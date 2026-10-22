@@ -251,6 +251,8 @@
   }
 
   // The whole body follows the stop name's size: 16px at 414px, 12.3px at 350px.
+  // The clamp's top is 16px, not 1rem: the added term already scales it, and
+  // 1rem there would grow it twice.
   .day-card__body {
     font-size: calc(clamp(12px, -10.2px + 6.44vw, 16px) + (1rem - 16px));
   }

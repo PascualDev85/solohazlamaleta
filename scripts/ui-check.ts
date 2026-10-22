@@ -2,8 +2,9 @@
 //   node scripts/ui-check.ts <base-url> <page>
 // They guard what unit tests cannot see: the layers of the overlay panels,
 // the lines of the day cards on small phones and at 150% text, every page
-// under the HTTP headers it will ship with, and the panels by keyboard. Each check names
-// what broke. Run after `npm run build`: check 4 reads dist/_headers.
+// under the HTTP headers it will ship with, and the panels by keyboard. Each
+// check names what broke. Run after `npm run build`: check 4 reads
+// dist/_headers.
 import { readFileSync } from 'node:fs'
 import { chromium } from 'playwright'
 import { DURATION_HINT, PANELS, dayCardLineIssues, dayCardTextScaleIssues, focusStep, headerOverlap, panelState, scrollAnimationIssues, siteHeaderIssues } from './ui-shared.ts'
