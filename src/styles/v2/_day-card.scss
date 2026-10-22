@@ -65,8 +65,13 @@
   // The top of the card: the photo, full-bleed and tall (4:5), with the day's
   // numbers on a dark band at its foot and nothing else on it: the day's
   // number is in the title above, the caption's place is the alt text.
+  // Photo and shade share one grid cell, the shade at its foot. When the
+  // shade grows taller than the photo (a large browser text size on a small
+  // phone), the cell, and the photo with it, grows to hold it, rather than
+  // cutting off its first line.
   .day-card__media {
     position: relative;
+    display: grid;
     // Clips the photo when it pans inside its frame (see _route.scss).
     overflow: hidden;
     color: #fff;
@@ -110,6 +115,8 @@
   // is the LCP. The figure carries the photo's ratio itself, so its height is
   // known while skipped and nothing moves when it renders.
   .day-card__figure {
+    grid-area: 1 / 1;
+    align-self: stretch;
     margin: 0;
     aspect-ratio: 4 / 5;
     content-visibility: auto;
@@ -118,7 +125,7 @@
   .day-card__photo {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
     object-position: 50% 50%;
@@ -130,9 +137,10 @@
   // the text for white type, and the rest of the photo stays clear. Its height
   // follows the text, so a day with fewer lines darkens less.
   .day-card__overlay {
-    position: absolute;
-    inset: auto 0 0;
+    position: relative;
     z-index: 2;
+    grid-area: 1 / 1;
+    align-self: end;
     display: grid;
     gap: 0.3rem;
     padding: 2rem var(--space-md) 0.85rem;
