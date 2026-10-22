@@ -1,5 +1,9 @@
 ---
 import '../styles/main.scss';
+import { getImage } from 'astro:assets';
+import { guideImage } from '../lib/guide-images.ts';
+import { headerRowLinks, inlineFits, menuDestinations, pagePathFromFile, siteLinks } from '../lib/site-menu.ts';
+import { loadMenuGuides } from '../lib/site-menu-guides.ts';
 
 interface Props {
   title: string;
@@ -49,8 +53,43 @@ const currentFor = (href: string) => (href === pathname ? 'page' : undefined);
 const navLinks = [
   { href: '/#guias', label: 'Guías' },
   { href: '/sobre-mi/', label: 'Sobre mí' },
+  { href: '/buscar/', label: 'Buscar' },
+];
+const legalLinks = [
+  { href: '/afiliacion/', label: 'Afiliación' },
+  { href: '/privacidad/', label: 'Privacidad' },
+  { href: '/aviso-legal/', label: 'Aviso legal' },
 ];
 const ogImage = image ? new URL(image, Astro.site).href : undefined;
+
+// One list for the header row and the menu: navLinks, with the published
+// destinations under "Guías" (src/lib/site-menu.ts). A link added to navLinks
+// shows in both. Phones get the menu button; desktop gets the row while it
+// fits, the button otherwise.
+const pagePaths = new Set(
+  Object.keys(import.meta.glob('../pages/**/*.astro')).flatMap((file) => pagePathFromFile(file) ?? []),
+);
+const destinations = menuDestinations(await loadMenuGuides(), { currentPath: pathname, pagePaths });
+const links = siteLinks(navLinks, destinations);
+const rowFits = inlineFits(links);
+// Search has its own button in the header, so the row leaves its text link out.
+const rowLinks = headerRowLinks(links);
+
+// A destination's thumbnail in the menu: a 36px square, two light files that
+// only load once the menu is open (a closed popover renders nothing). Where
+// some destination has one, the others get their tinted initial, to line up.
+const thumbs = new Map<string, { avif: string; webp: string }>();
+for (const destination of destinations) {
+  if (!destination.image) continue;
+  const image = guideImage(destination.image);
+  const [avif, webp] = await Promise.all(
+    (['avif', 'webp'] as const).map((format) =>
+      getImage({ src: image, width: 72, height: 72, fit: 'cover', format, quality: format === 'avif' ? 40 : 65 }),
+    ),
+  );
+  thumbs.set(destination.href, { avif: avif.src, webp: webp.src });
+}
+const signature = 'Nosotros hacemos el trabajo difícil. Tú solo haz la maleta.';
 ---
 
 <!doctype html>
@@ -87,27 +126,90 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
 
     <header class="wrap site-header">
       <a href="/" class="brand" aria-current={currentFor('/')}>Solo Haz la Maleta</a>
-      <nav class="site-nav" aria-label="Principal">
+      <nav class="site-nav" aria-label="Principal" data-menu={rowFits ? undefined : 'always'}>
         <ul>
-          {navLinks.map((link) => (
+          {rowLinks.map((link) => (
             <li><a href={link.href} aria-current={currentFor(link.href)}>{link.label}</a></li>
           ))}
         </ul>
+        {/* A link to /buscar/ on every page. On the home page its script
+            (components/home/HomeSearch.astro) opens the search window instead. */}
+        <a class="site-search" href="/buscar/" aria-label="Buscar" aria-current={currentFor('/buscar/')} data-search-open>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+        </a>
+        {/* Native popover: opens, closes, Esc and a tap outside need no JavaScript. */}
+        <button class="site-menu__open" type="button" popovertarget="site-menu" aria-label="Menú">
+          <span class="site-menu__bars" aria-hidden="true"></span>
+        </button>
       </nav>
+      <div id="site-menu" class="site-menu" popover role="dialog" aria-labelledby="site-menu-title">
+        <div class="site-menu__head">
+          <p id="site-menu-title" class="site-menu__title">Menú</p>
+          <button class="site-menu__close" type="button" popovertarget="site-menu" popovertargetaction="hide" aria-label="Cerrar" autofocus></button>
+        </div>
+        <ul class="site-menu__links">
+          {links.map((link) => (
+            <li>
+              <a href={link.href} aria-current={currentFor(link.href)}>{link.label}</a>
+              {link.children.length > 0 && (
+                <ul>
+                  {link.children.map((child) => {
+                    const thumb = thumbs.get(child.href);
+                    return (
+                      <li>
+                        <a href={child.href} aria-current={currentFor(child.href)}>
+                          {thumb ? (
+                            <picture class="site-menu__thumb">
+                              <source type="image/avif" srcset={thumb.avif} />
+                              <img src={thumb.webp} alt="" width="36" height="36" loading="lazy" decoding="async" />
+                            </picture>
+                          ) : thumbs.size > 0 && (
+                            <span class="site-menu__thumb site-menu__thumb--empty" aria-hidden="true">{child.label.charAt(0)}</span>
+                          )}
+                          {child.label}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+        <p class="site-menu__sign"><strong>Solo Haz la Maleta</strong> {signature}</p>
+      </div>
     </header>
 
     <main id="main" class="wrap">
       <slot />
     </main>
 
+    {/* Columns like the travel blogs' feet: the destinations from the same data
+        as the menu, the project's pages and the legal ones, then the claim. */}
     <footer class="wrap site-footer">
-      <nav aria-label="Enlaces legales">
-        <a href="/sobre-mi/">Sobre mí</a>
-        <a href="/afiliacion/">Afiliación</a>
-        <a href="/privacidad/">Privacidad</a>
-        <a href="/aviso-legal/">Aviso legal</a>
-      </nav>
-      <p class="site-footer__sign">Nosotros hacemos el trabajo difícil. Tú solo haz la maleta.</p>
+      <div class="site-footer__cols">
+        {destinations.length > 0 && (
+          <nav class="site-footer__col" aria-labelledby="pie-destinos">
+            <h2 class="site-footer__title" id="pie-destinos">Destinos</h2>
+            <ul>
+              {destinations.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+            </ul>
+          </nav>
+        )}
+        <nav class="site-footer__col" aria-labelledby="pie-proyecto">
+          <h2 class="site-footer__title" id="pie-proyecto">El proyecto</h2>
+          <ul>
+            {navLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+          </ul>
+        </nav>
+        <nav class="site-footer__col" aria-labelledby="pie-legal">
+          <h2 class="site-footer__title" id="pie-legal">Legal</h2>
+          <ul>
+            {legalLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+          </ul>
+        </nav>
+      </div>
+      <p class="site-footer__sign"><strong>Solo Haz la Maleta</strong> {signature}</p>
     </footer>
 
   </body>

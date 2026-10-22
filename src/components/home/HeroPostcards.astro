@@ -1,0 +1,134 @@
+---
+// The landing page's one authored moment: the hero photo is the top of a
+// small pile of postcards from trips we made, in CSS 3D. On load the pile
+// fans out once; on desktop it turns to face the pointer, on phones it fans
+// wider and tips back as the hero scrolls away (styles in v2/_home.scss).
+// Everything is visible without the script: the fan is the resting state and
+// the load animation only plays towards it.
+//
+// The front card is the hero's photo and the page's LCP: the only image with
+// priority. The ones behind are small AVIFs (400px wide), lazy and low
+// priority, so they never compete with it.
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import GuidePhoto from '../guide/GuidePhoto.astro';
+
+interface Props {
+  cover: ImageMetadata;
+  /** The other photos for the pile, deepest last. At most three are shown. */
+  backs: ImageMetadata[];
+  caption?: string;
+}
+
+const { cover, backs, caption } = Astro.props;
+
+// Two crops per card, like the front photo: a wide band on phones, portrait
+// from tablet up. Each in three widths, offered with the front card's sizes,
+// so a 2x or 3x screen gets a sharp file (one 400px file was half of what a
+// retina phone draws, 2026-10-22). Quality as in GuidePhoto.
+const WIDTHS = [400, 640, 800];
+const QUALITY = 52;
+const SIZES = "(min-width: 64rem) 24rem, (min-width: 48rem) 32vw, calc(84vw - 40px)";
+const pile = await Promise.all(
+  backs.slice(0, 3).map(async (image) => {
+    const crop = (ratio: number, width: number, format: 'avif' | 'jpg', quality: number) =>
+      getImage({ src: image, width, height: Math.round(width / ratio), fit: 'cover', position: 'center', format, quality });
+    const srcset = async (ratio: number) => {
+      // An original narrower than the widest file adds its own full width, so it is served whole.
+      const fits = (w: number) => w <= image.width && w / ratio <= image.height;
+      const full = Math.min(image.width, Math.floor(image.height * ratio));
+      const widths = [...new Set([...WIDTHS.filter(fits), ...(full < WIDTHS.at(-1)! ? [full] : [])])].sort((a, b) => a - b);
+      const files = await Promise.all(widths.map((w) => crop(ratio, w, 'avif', QUALITY)));
+      return files.map((file, i) => `${file.src} ${widths[i]}w`).join(', ');
+    };
+    const [wide, tall, fallback] = await Promise.all([srcset(16 / 10), srcset(4 / 5), crop(4 / 5, 400, 'jpg', 75)]);
+    return { wide, tall, fallback: fallback.src, sourceWidth: image.width };
+  }),
+);
+---
+
+<figure class="home-hero__media postcards" data-postcards>
+  <div class="postcards__stack" data-postcards-stack>
+    {/* Deepest first: without 3D, the paint order alone still piles them right. */}
+    {pile.map((card, i) => (
+      <div class:list={['postcard', `postcard--${pile.length - i}`]} aria-hidden="true">
+        <picture>
+          <source type="image/avif" media="(max-width: 47.99rem)" srcset={card.wide} sizes={SIZES} />
+          <source type="image/avif" srcset={card.tall} sizes={SIZES} />
+          <img
+            class="postcard__photo"
+            src={card.fallback}
+            alt=""
+            width="400"
+            height="500"
+            loading="lazy"
+            fetchpriority="low"
+            decoding="async"
+            data-source-width={card.sourceWidth}
+          />
+        </picture>
+      </div>
+    ))}
+    <div class="postcard postcard--front">
+      <GuidePhoto
+        class="postcard__photo"
+        image={cover}
+        alt=""
+        sizes={SIZES}
+        priority
+        crop={{ media: '(max-width: 47.99rem)', ratio: 16 / 10, position: 'center' }}
+      />
+    </div>
+  </div>
+  {caption && <figcaption class="home-hero__caption">{caption}</figcaption>}
+</figure>
+
+<script>
+  // Desktop: the pile turns to face the pointer anywhere over the hero. The
+  // turn is worked out in src/lib/postcard-tilt.ts; this only feeds it pointer
+  // positions and writes two custom properties once per frame. It follows
+  // softly and lets go faster than it follows. will-change is on only while
+  // the pile moves.
+  import { REST, approach, sameTilt, tiltFromPointer, type Tilt } from '../../lib/postcard-tilt.ts';
+
+  const MAX: Tilt = { x: 7, y: 11 };
+  const FOLLOW = 0.12;
+  const RELEASE = 0.2;
+
+  const figure = document.querySelector<HTMLElement>('[data-postcards]');
+  const stack = figure?.querySelector<HTMLElement>('[data-postcards-stack]');
+  const area = figure?.closest<HTMLElement>('.home-hero');
+  const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (figure && stack && area) {
+    let current: Tilt = REST;
+    let target: Tilt = REST;
+    let frame = 0;
+
+    const draw = () => {
+      current = approach(current, target, sameTilt(target, REST) ? RELEASE : FOLLOW);
+      stack.style.setProperty('--tilt-x', current.x.toFixed(2));
+      stack.style.setProperty('--tilt-y', current.y.toFixed(2));
+      if (sameTilt(current, target)) {
+        frame = 0;
+        if (sameTilt(current, REST)) stack.classList.remove('is-tilting');
+        return;
+      }
+      frame = requestAnimationFrame(draw);
+    };
+    const aim = (next: Tilt) => {
+      target = next;
+      if (!frame) frame = requestAnimationFrame(draw);
+    };
+
+    area.addEventListener('pointermove', (event) => {
+      if (event.pointerType !== 'mouse' || !finePointer.matches || reducedMotion.matches) return;
+      // The figure is not transformed, so its box is the pile's resting box.
+      stack.classList.add('is-tilting');
+      aim(tiltFromPointer(event.clientX, event.clientY, figure.getBoundingClientRect(), MAX));
+    });
+    area.addEventListener('pointerleave', () => aim(REST));
+    reducedMotion.addEventListener('change', () => aim(REST));
+  }
+</script>

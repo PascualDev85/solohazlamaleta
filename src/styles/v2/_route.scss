@@ -22,6 +22,8 @@
   // The heading is a button: it looks like the heading, with a small chevron
   // that says it opens the route at a glance.
   .route__title {
+    @include tap-area;
+
     display: inline-flex;
     align-items: center;
     gap: var(--space-sm);
@@ -86,7 +88,11 @@
     // scroller instead of escaping it and widening the page.
     position: relative;
     display: flex;
-    gap: 0.4rem;
+    // 0.6rem, not less: each coin's 46px tap area (below) overlaps the next
+    // one's, and the later coin wins the overlap; at this gap every coin still
+    // keeps 44px. The scroller clips the areas, so its block padding stays at
+    // least (46 - 36) / 2.
+    gap: 0.6rem;
     margin: 0 calc(-1 * var(--gutter));
     padding: 0.35rem var(--gutter);
     list-style: none;
@@ -100,12 +106,17 @@
       display: none;
     }
 
+    // Wide screens: the strip lines up with the column, and a little inline
+    // padding, cancelled by the margin, keeps the end coins' tap areas from
+    // being clipped by the scroller.
     @include from("md") {
-      margin-inline: 0;
-      padding-inline: 0;
+      margin-inline: -0.5rem;
+      padding-inline: 0.5rem;
     }
 
     a {
+      @include tap-area;
+
       display: grid;
       place-items: center;
       width: 2.25rem;
@@ -135,6 +146,12 @@
         background: var(--color-accent);
         color: var(--color-bg);
         transform: scale(1.1);
+
+        // The scale grows the tap area too, over the coin before it: 21px
+        // keeps it at ~46px on screen.
+        &::after {
+          inset: calc(50% - 21px);
+        }
       }
     }
   }
@@ -150,6 +167,8 @@
   }
 
   .route__arrow {
+    @include tap-area;
+
     display: grid;
     place-items: center;
     width: 2.5rem;

@@ -64,8 +64,8 @@ const excludedPaths = [...draftGuidePaths(), ...(await unpublishedEngineGuidePat
 export function sitemapFilter(page) {
   const path = new URL(page).pathname;
 
-  // Print views, affiliate redirects and offers are never indexed.
-  if (path.startsWith('/print/') || path.startsWith('/ir/') || path.startsWith('/ofertas/')) {
+  // Print views, affiliate redirects, offers and the search page are never indexed.
+  if (path.startsWith('/print/') || path.startsWith('/ir/') || path.startsWith('/ofertas/') || path === '/buscar/') {
     return false;
   }
 

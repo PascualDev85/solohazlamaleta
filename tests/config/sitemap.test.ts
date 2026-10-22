@@ -33,8 +33,9 @@ test('no legacy guide marked meta.draft reaches the sitemap', async () => {
   }
 })
 
-test('print views, affiliate redirects and offers stay out; ordinary pages go in', () => {
+test('print views, affiliate redirects, offers and the search page stay out; ordinary pages go in', () => {
   assert.strictEqual(sitemapFilter(`${SITE}/print/islandia/`), false)
+  assert.strictEqual(sitemapFilter(`${SITE}/buscar/`), false)
   assert.strictEqual(sitemapFilter(`${SITE}/ir/camper/`), false)
   assert.strictEqual(sitemapFilter(`${SITE}/ofertas/`), false)
   assert.strictEqual(sitemapFilter(`${SITE}/`), true)
