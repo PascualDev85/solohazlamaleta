@@ -57,3 +57,6 @@ ui-devices/
 /contrast.mjs
 # Capturas de escritorio antes/después (diseño de las secciones)
 ui-desktop/
+
+# Reference screenshots of third-party sites (replica-recon): never committed, never shipped
+replica/screens/

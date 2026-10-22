@@ -133,22 +133,17 @@ const glanceId = `${id}-vistazo`;
   document.addEventListener('pointerdown', (event) => {
     for (const hint of openHints()) if (!hint.contains(event.target as Node)) hint.open = false;
   }, { passive: true });
-  // A scroll closes a bubble only if it moved its mark (see
-  // closesHintOnScroll): how far the page and every box around the mark have
-  // scrolled is noted on the click that opens it, before the <details>
-  // toggles. Scroll offsets, not the mark's box on screen: the rail's 3D turn
-  // catches up with a scroll a frame late, so after a Tab brought its card
-  // into view the box still shifts once after Enter (2026-10-21).
+  // A scroll closes a bubble only if it moved its mark on screen (see
+  // closesHintOnScroll): where the mark was is noted on the click that opens
+  // it, before the <details> toggles.
   const markAtOpen = new WeakMap<HTMLDetailsElement, ScreenPoint>();
   const markPosition = (hint: HTMLDetailsElement): ScreenPoint => {
-    // The page's own scroll is the root element's.
-    let top = 0;
-    let left = 0;
-    for (let box = hint.parentElement; box; box = box.parentElement) {
-      top += box.scrollTop;
-      left += box.scrollLeft;
-    }
-    return { top, left };
+    const { top, left } = hint.querySelector('summary')!.getBoundingClientRect();
+    // The page's offsets and those of every box around the mark that may
+    // scroll (the route rail, a day sheet).
+    const offsets = [scrollX, scrollY];
+    for (let el = hint.parentElement; el; el = el.parentElement) offsets.push(el.scrollLeft, el.scrollTop);
+    return { top, left, offsets };
   };
   document.addEventListener('click', (event) => {
     const hint = (event.target as Element).closest<HTMLDetailsElement>('.day-stop__hint');
