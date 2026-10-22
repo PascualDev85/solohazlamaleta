@@ -1,4 +1,4 @@
-import type { DaySource, PlaceSource, VariantSource } from '../../schemas/index.ts'
+import type { DaySource, GuideSource, PlaceSource, VariantSource } from '../../schemas/index.ts'
 import type { PlaceRegistry } from '../types.ts'
 import { resolvePlace } from '../compile/place.ts'
 
@@ -47,6 +47,29 @@ const INTERNAL_INSTRUCTIONS: [label: string, pattern: RegExp][] = [
   ['"TODO"', /(?<!\p{L})TODO(?!\p{L})/u],
   ['"implementador"', word('implementador(?:es|a)?')],
   ['texto entre corchetes', /\[[^\]]*\]/],
+]
+
+// Explicit sensitive data (CLAUDE.md: price, hours, rule, access), in the
+// order they are reported. Only unambiguous markers: a bare figure ("3-4 veces
+// más caro", "90 km/h", "2 h") or "gratis" does not count, so the warning
+// stays rare enough to be read.
+const SENSITIVE_DATA: [kind: string, patterns: RegExp[]][] = [
+  ['precio', [
+    word('\\d[\\d.,]*(?:\\s*-\\s*\\d[\\d.,]*)?\\s*(?:€|eur(?:os?)?|isk|kr|coronas?)'),
+    /[€$]\s*\d/,
+  ]],
+  ['horario', [
+    /(?<!\d)(?:[01]?\d|2[0-3]):[0-5]\d(?!\d)/,
+    word('a las \\d{1,2}'),
+  ]],
+  ['norma', [
+    word('solo (?:en )?efectivo'),
+    word('obligatori[oa]s?'),
+    word('prohibid[oa]s?'),
+    word('multas?'),
+    word('no (?:está|se) permit\\p{L}*'),
+  ]],
+  ['acceso', [word('cerrad[oa]s?')]],
 ]
 
 const MIN_ALT_LENGTH = 20
@@ -183,4 +206,33 @@ export function overnightSequenceWarnings(variant: VariantSource): string[] {
     }
   }
   return warnings
+}
+
+/** Kinds of explicit sensitive data in a text, in SENSITIVE_DATA order. */
+export function sensitiveDataKinds(text: string): string[] {
+  return SENSITIVE_DATA
+    .filter(([, patterns]) => patterns.some((pattern) => pattern.test(text)))
+    .map(([kind]) => kind)
+}
+
+/**
+ * Sensitive data in `practical` has no check date. Its entries are plain
+ * strings with no verified_at (1.7.2), so every entry with explicit sensitive
+ * data warns until the author decides how to date them.
+ */
+export function practicalUnverifiedWarnings(practical: GuideSource['practical']): string[] {
+  if (!practical) return []
+  const entries: [path: string, text: string | undefined][] = [
+    ...(practical.documents ?? []).map((text, i) => [`documents[${i}]`, text] as [string, string]),
+    ['plugs', practical.plugs],
+    ...(practical.apps ?? []).map((text, i) => [`apps[${i}]`, text] as [string, string]),
+    ...(practical.tips ?? []).map((text, i) => [`tips[${i}]`, text] as [string, string]),
+    ['currency.notes', practical.currency?.notes],
+  ]
+  return entries.flatMap(([path, text]) => {
+    const kinds = text ? sensitiveDataKinds(text) : []
+    return kinds.length > 0
+      ? [`[WARNING] practical.${path}: dato sensible (${kinds.join(', ')}) sin fecha de verificación: "${text}"`]
+      : []
+  })
 }
