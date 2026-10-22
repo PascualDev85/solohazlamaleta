@@ -36,20 +36,6 @@
     }
   }
 
-  .home-hero__photo {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 10;
-    object-fit: cover;
-    border-radius: 16px;
-    background: var(--color-surface);
-
-    @include from("md") {
-      aspect-ratio: 4 / 5;
-    }
-  }
-
   .home-hero__caption {
     margin-top: var(--space-xs);
     font-family: var(--font-display);
@@ -125,8 +111,17 @@
       color: var(--color-accent);
     }
 
+    transition:
+      background-color 0.15s var(--ease-out),
+      transform 0.12s var(--ease-out);
+
     &:hover {
       background: var(--color-pill-bg);
+    }
+
+    // A press sinks it a touch.
+    &:active {
+      transform: scale(0.99);
     }
 
     &:focus-visible {
@@ -209,9 +204,16 @@
     font-weight: 800;
     color: var(--color-pill-text);
     text-decoration: none;
+    transition:
+      background-color 0.15s var(--ease-out),
+      transform 0.12s var(--ease-out);
 
     &:hover {
       background: var(--color-accent-quiet);
+    }
+
+    &:active {
+      transform: scale(0.96);
     }
   }
 
@@ -267,10 +269,25 @@
     border: 1px solid var(--color-border);
     border-radius: 16px;
     background: var(--color-bg);
-    transition: border-color 0.2s var(--ease-out);
+    transition:
+      border-color 0.2s var(--ease-out),
+      transform 0.2s var(--ease-out);
 
     &:hover {
       border-color: var(--color-accent);
+    }
+
+    // Depth, not a jump: under a mouse the card lifts 3px and its photo comes
+    // a little closer; a press settles it back.
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        transform: translateY(-3px);
+      }
+
+      &:active {
+        transform: translateY(-1px);
+        transition-duration: 0.1s;
+      }
     }
 
     &:focus-within {
@@ -308,6 +325,7 @@
     aspect-ratio: 3 / 2;
     object-fit: cover;
     background: var(--color-surface);
+    transition: scale 0.4s var(--ease-out);
 
     @include from("md") {
       position: absolute;
@@ -394,6 +412,13 @@
 
   .home-card:hover .home-card__go {
     text-decoration: underline;
+  }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .home-card:hover .home-card__photo,
+    .home-place:hover .home-place__photo {
+      scale: 1.03;
+    }
   }
 
   // "Dentro de cada guía": a real day of a guide, and notes in its margin.
@@ -608,6 +633,10 @@
     }
   }
 
+  .home-place__photo {
+    transition: scale 0.4s var(--ease-out);
+  }
+
   .home-place__photo,
   .home-place__photo img {
     display: block;
@@ -761,8 +790,55 @@
       flex-direction: column;
     }
 
+    // Opening: the window rises into place and the backdrop fades in (300 ms);
+    // closing is quicker (200 ms). display and overlay switch at the end of a
+    // close (allow-discrete), so the window stays in the top layer while it fades.
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.2s var(--ease-out),
+      transform 0.2s var(--ease-out),
+      overlay 0.2s allow-discrete,
+      display 0.2s allow-discrete;
+
+    &[open] {
+      opacity: 1;
+      transform: none;
+      transition-duration: 0.3s;
+
+      @starting-style {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+    }
+
     &::backdrop {
+      background: rgb(20 23 22 / 0);
+      transition:
+        background-color 0.2s var(--ease-out),
+        overlay 0.2s allow-discrete,
+        display 0.2s allow-discrete;
+    }
+
+    &[open]::backdrop {
       background: rgb(20 23 22 / 0.55);
+      transition-duration: 0.3s;
+
+      @starting-style {
+        background: rgb(20 23 22 / 0);
+      }
+    }
+
+    // Reduced motion: it only fades; the rise is dropped. The site's rule
+    // (base/_a11y) cuts every transition to nothing, so the fade's length is
+    // given back here.
+    @media (prefers-reduced-motion: reduce) {
+      transition-property: opacity, overlay, display;
+      transition-duration: 0.2s !important;
+
+      &::backdrop {
+        transition-duration: 0.2s !important;
+      }
     }
 
     // Desktop: a fixed height, so the window does not jump as results filter.

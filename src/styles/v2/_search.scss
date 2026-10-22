@@ -143,6 +143,21 @@
     }
   }
 
+  // In the window, a result that shows up fades in where it stands (150 ms):
+  // rows never slide, so the list does not jump as it filters. Hovering a
+  // row answers in 120 ms. Not on /buscar/, where the results are the page.
+  @media (prefers-reduced-motion: no-preference) {
+    .search--dialog :is(.search__option, .search__chip, .search__card) {
+      transition:
+        opacity 0.15s var(--ease-out),
+        background-color 0.12s var(--ease-out);
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+  }
+
   .search__option {
     display: flex;
     align-items: center;

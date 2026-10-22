@@ -128,8 +128,11 @@
   background: var(--color-bg);
   color: var(--color-text);
   box-shadow: var(--shadow-soft, 0 1px 2px rgb(42 40 38 / 0.04), 0 10px 30px rgb(42 40 38 / 0.06));
+  // It drops from the button and the backdrop fades in (300 ms); it goes
+  // back quicker (200 ms). Reduced motion: it only fades.
   opacity: 0;
-  transform: translateY(-8px);
+  transform: translateY(-8px) scale(0.98);
+  transform-origin: top right;
   transition:
     opacity 0.2s var(--ease-out),
     transform 0.2s var(--ease-out),
@@ -139,15 +142,40 @@
   &:popover-open {
     opacity: 1;
     transform: none;
+    transition-duration: 0.3s;
 
     @starting-style {
       opacity: 0;
-      transform: translateY(-8px);
+      transform: translateY(-8px) scale(0.98);
     }
   }
 
   &::backdrop {
+    background: rgb(20 23 22 / 0);
+    transition:
+      background-color 0.2s var(--ease-out),
+      overlay 0.2s allow-discrete,
+      display 0.2s allow-discrete;
+  }
+
+  &:popover-open::backdrop {
     background: rgb(20 23 22 / 0.55);
+    transition-duration: 0.3s;
+
+    @starting-style {
+      background: rgb(20 23 22 / 0);
+    }
+  }
+
+  // The site's rule (base/_a11y) cuts every transition to nothing: the fade's
+  // length is given back here.
+  @media (prefers-reduced-motion: reduce) {
+    transition-property: opacity, overlay, display;
+    transition-duration: 0.2s !important;
+
+    &::backdrop {
+      transition-duration: 0.2s !important;
+    }
   }
 
   :where(ul) {
