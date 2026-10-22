@@ -1,0 +1,25 @@
+feature,area,priority,original,clone,notes
+H1 descriptivo + entradilla de autores,hero,must,salt+bucket,no,H1 con "guías de viaje"; el claim de marca debajo
+Buscador grande en la portada,hero,must,salt,no,Sin JS es un formulario a /buscar/
+Chips de destinos bajo el buscador,hero,must,salt,no,Desde el dato; borradores marcados
+Insignia de autoría (quién y desde dónde),hero,should,bucket,no,"Por David y Natalia", enlace a Sobre mí
+Foto grande de cabecera,hero,must,salt,no,Sin texto encima (1.10 §3.7); foto del autor
+Carrusel de guías con foto,guías,must,salt,no,Desliza en móvil, rejilla en escritorio
+Tarjeta con días, presupuesto, "Lo hicimos" / "Borrador",guías,must,salt,no,Ya existe en #31
+Qué trae cada guía (lo que nos diferencia),producto,must,bucket,no,Sustituye a la tienda
+Bloque "Hola, somos…" con cifras,autores,must,salt+bucket,no,Cifras calculadas del dato
+Destinos con nº de guías,destinos,must,salt+bucket,no,Enlaza al hub si existe
+Encabezado de sección con antetítulo,diseño,must,salt,no,Ya existe .kicker en v2
+Panel de búsqueda con resultados al instante,buscador,must,salt,no,Índice en la página; sin fetch
+Resultados: guías y lugares con su día,buscador,must,salt,no,Reutiliza #52
+Contador de resultados y "sin resultados",buscador,must,salt,no,aria-live
+Cerrar con Escape y devolver el foco,buscador,must,salt,no,dialog nativo
+Filtros por región/mes/tipo/duración,buscador,skip,salt,no,BRIEF §P
+Pie con columnas (destinos / el proyecto / legal),pie,should,salt+bucket,no,Destinos desde el dato
+JSON-LD WebSite + Organization + autores + ItemList de guías,seo,must,salt,no,
+Selector "dónde ir en [mes]",estacional,could,salt,no,Sin dato de temporada todavía
+Mapa del mundo,estacional,skip,salt,no,Prohibido hasta C3.5
+Tienda,producto,skip,salt+bucket,no,Fase 5
+Newsletter con regalo,captación,skip,bucket,no,Fase 3 y regla de no pedir el correo
+Vídeos y "As featured on",confianza,skip,bucket,no,No hay contenido propio
+Banner de cookies,legal,skip,salt,no,No usamos cookies de terceros

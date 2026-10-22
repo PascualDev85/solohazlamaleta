@@ -23,8 +23,15 @@ const THRESHOLD = 100
 // window ends near 43.8 KB), which costs 1 point of mobile performance with
 // nothing else changed. The author accepted 99 for this page only on
 // 2026-10-15 rather than move the day panels out of the HTML (docs/1.13 §5).
+//
+// The home page's pile of postcards in CSS 3D (components/home/HeroPostcards.astro)
+// leaves its mobile performance at 99: the simulated LCP lands one round trip
+// later (~1.96 s against ~1.88 s), with the three photos behind the front one
+// lazy and low priority. On 2026-10-21 the author asked for 3D on the home
+// page only if it keeps 99 or more on mobile and desktop; desktop stays at 100.
 const EXCEPTIONS: ThresholdException[] = [
   { page: '/islandia/islandia-en-camper-13-dias/', device: 'mobile', category: 'performance', threshold: 99 },
+  { page: '/', device: 'mobile', category: 'performance', threshold: 99 },
 ]
 const RUNS = 3
 const CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo']

@@ -1,59 +1,358 @@
 ---
+import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import '../styles/v1-components.scss';
-import { loadGuideList } from '../lib/load-guide-list.ts';
+import GuidePhoto from '../components/guide/GuidePhoto.astro';
+import SectionIcon from '../components/guide/SectionIcon.astro';
+import HomeSearch from '../components/home/HomeSearch.astro';
+import HeroPostcards from '../components/home/HeroPostcards.astro';
+import DayStop from '../components/guide/DayStop.astro';
+import '../styles/home-v2.scss';
+import { loadCompiledGuide } from '../lib/engine-guide.ts';
+import { guideImage, guideImagePaths } from '../lib/guide-images.ts';
+import { formatWholePrice } from '../lib/formatPrice.ts';
+import { destinationCards, homeStats, hubPathsFromPages, postcardPhotos } from '../lib/home.ts';
+import { bookingNote, checkedParking, countLabel, showcaseDay } from '../lib/home-showcase.ts';
+import { dayAnchorId } from '../lib/anchors.ts';
+import { formatDate } from '../lib/formatDate.ts';
+import { formatMinutes } from '../lib/formatDuration.ts';
+import { nightLabel } from '../lib/nightLabel.ts';
+import { buildSearchIndex, destinationLabel, legacySearchGuide } from '../lib/search-index.ts';
+import {
+  ENGINE_GUIDE_SOURCES, fromLegacyGuide, fromCompiledGuide, sortGuideList,
+} from '../lib/guide-list.ts';
+
+// The landing page, a hybrid of two travel blogs the author pointed to (see
+// replica/recon.md): a title with a big search, guides with photos, one real
+// day of a guide to show what is inside, destinations with their count, and
+// the authors. Everything comes from the guides themselves; nothing is a fixed list.
+
+const legacyGuides = await getCollection('guides');
+const engineGuides = await Promise.all(
+  ENGINE_GUIDE_SOURCES.map((source) => loadCompiledGuide(source.guide, source.places)),
+);
 
 /** Published guides first; drafts are listed but clearly marked. */
-const sorted = await loadGuideList();
+const sorted = sortGuideList([
+  ...legacyGuides.map((guide) => fromLegacyGuide(guide.id, guide.data)),
+  ...engineGuides.map(fromCompiledGuide),
+]);
+
+const searchIndex = [
+  ...buildSearchIndex(engineGuides),
+  ...legacyGuides.map((guide) => legacySearchGuide(guide.id, guide.data)),
+];
+
+// A destination's card leads to its hub once the hub page exists.
+const pageKeys = Object.keys(import.meta.glob('/src/pages/*/index.astro'));
+const destinations = destinationCards(sorted, hubPathsFromPages(pageKeys, sorted.map((guide) => guide.destination)));
+const stats = homeStats(sorted, searchIndex);
+
+// Card photos illustrate what the title already says, so they stay decorative
+// (empty alt). The hero photo is the only one above the fold: it alone loads eagerly.
+const cards = sorted.map((guide) => ({
+  ...guide,
+  cover: guide.coverImage ? guideImage(guide.coverImage) : null,
+}));
+// Measured on the built page at 360-1920px: the photo half of the card tops out at 615px.
+const cardSizes = '(min-width: 75rem) 39rem, (min-width: 48rem) 52vw, 80vw';
+
+// The hero: the cover of the first guide that has one, captioned with its
+// destination, on top of a pile of postcards (components/home/HeroPostcards.astro).
+// Decorative (empty alt): the model has no alt for covers yet (photo
+// amendment, 1.10 §3.7), and the caption already names the place.
+const heroGuide = engineGuides.find((guide) => guide.cover_image);
+const hero = heroGuide?.cover_image ? guideImage(heroGuide.cover_image) : null;
+const heroCaption = heroGuide ? destinationLabel(heroGuide.destination) : '';
+// The pile of postcards behind it: the authors' other photos of that destination.
+const postcards = heroGuide?.cover_image ? postcardPhotos(heroGuide.cover_image, guideImagePaths()).map(guideImage) : [];
+const ogImage = hero ? await getImage({ src: hero, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 70 }) : null;
+
+// "Dentro de cada guía": one real day of the first engine guide, rendered with
+// the guide's own stop component, and margin notes that quote that guide's
+// facts. The note titles and lines are the old six points, cut to four.
+// Text for the author to review.
+const showcaseGuide = engineGuides.find((guide) => guide.variants?.[0]?.days.length);
+const showcase = showcaseGuide ? showcaseDay(showcaseGuide.variants![0].days) : null;
+const showcaseItem = showcaseGuide ? fromCompiledGuide(showcaseGuide) : null;
+const showcaseUrl = showcase && showcaseItem ? `${showcaseItem.url}#${dayAnchorId(showcase.day)}` : null;
+const showcaseNight = nightLabel(showcase?.overnight);
+const booking = bookingNote(showcaseGuide?.booking_checklist);
+const parking = showcase ? checkedParking(showcase.route_stops) : null;
+const km = new Intl.NumberFormat('es-ES');
+
+// Claims backed by the brief (D, E): the promise behind every guide.
+const promises = [
+  { title: 'Viajes hechos, no copiados', text: 'Cada ruta sale de un viaje que hicimos. Lo que no pisamos no se presenta como vivido.' },
+  { title: 'Con criterio, no un listado', text: 'No te contamos todo lo que se puede ver: elegimos lo que merece tus días y te decimos por qué.' },
+  { title: 'Gratis y completas', text: 'La guía entera está en la web. Sin registro, sin pedirte el correo y sin banners.' },
+];
+
+
+const siteUrl = new URL('/', Astro.site).href;
+const organization = {
+  '@type': 'Organization',
+  '@id': `${siteUrl}#organization`,
+  name: 'Solo Haz la Maleta',
+  url: siteUrl,
+  slogan: 'Nosotros hacemos el trabajo difícil. Tú solo haz la maleta.',
+  founder: [{ '@type': 'Person', name: 'David' }, { '@type': 'Person', name: 'Natalia' }],
+};
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    organization,
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}#website`,
+      name: 'Solo Haz la Maleta',
+      url: siteUrl,
+      inLanguage: 'es',
+      description: 'Guías de viaje ya planificadas, de viajes hechos.',
+      publisher: { '@id': `${siteUrl}#organization` },
+    },
+    {
+      '@type': 'ItemList',
+      name: 'Guías de viaje',
+      itemListElement: sorted.map((guide, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: new URL(guide.url, Astro.site).href,
+        name: guide.title,
+      })),
+    },
+  ],
+};
 ---
 
 <BaseLayout
-  title="Solo Haz la Maleta — Guías de viaje ya planificadas"
-  description="Itinerarios día a día con la ruta lista para Google Maps y qué reservar y cuándo. De viajes hechos, no copiados, y adaptados a cómo viajas."
+  title="Guías de viaje ya planificadas, día a día | Solo Haz la Maleta"
+  description="Rutas día a día de viajes que hemos hecho: cada parada en Google Maps, qué reservar y cuándo, y lo que cuesta de verdad. Gratis y sin registro."
+  design="v2"
+  image={ogImage?.src}
+  imageWidth={1200}
+  imageHeight={630}
+  imageAlt={heroGuide?.title}
 >
-  <section class="hero">
-    <h1 class="hero__title">Nosotros hacemos el trabajo difícil.<br /><em>Tú solo haz la maleta.</em></h1>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} slot="head" />
 
-    <p class="lede">
-      Itinerarios día a día, con la ruta lista para abrir en Google Maps y qué hay que
-      reservar y cuándo. De viajes hechos, no copiados.
-    </p>
+  <div class="home">
+    <section class="home-hero" aria-labelledby="home-title">
+      {hero && <HeroPostcards cover={hero} backs={postcards} caption={heroCaption} />}
 
-    <p>Gratis y completas. Sin pedirte el correo.</p>
-  </section>
+      <div class="home-hero__text">
+        <h1 id="home-title" class="home-hero__title">Guías de viaje ya planificadas, día a día</h1>
+        <p class="home-hero__claim">Nosotros hacemos el trabajo difícil. Tú solo haz la maleta.</p>
+        <p class="home-hero__lede">
+          Por <a href="/sobre-mi/">David y Natalia</a>: rutas de viajes que hemos hecho, con cada parada lista para
+          abrir en Google Maps y qué reservar y cuándo. Gratis y completas, sin pedirte el correo.
+        </p>
 
-  <h2 class="section-label" id="guias">Guías</h2>
+        <HomeSearch guides={searchIndex} />
 
-  {
-    sorted.length === 0 ? (
-      <p>Todavía no hay guías publicadas.</p>
-    ) : (
-      <ul class="guide-list" aria-labelledby="guias">
-        {sorted.map((guide) => (
-          <li>
-            <a class="guide-list__item" href={guide.url}>
-              <p class="guide-list__meta">
-                <span>{guide.destination}</span>
-                <span>·</span>
-                <span>{guide.days.join(' · ')} días</span>
-                {guide.lived && <span class="badge badge--lived">Lo hicimos</span>}
-                {guide.draft && <span class="badge badge--adapted">Borrador</span>}
-              </p>
+        {destinations.length > 0 && (
+          <nav class="home-chips" aria-label="Destinos">
+            <span class="home-chips__label">Destinos:</span>
+            <ul>
+              {destinations.map((destination) => (
+                <li><a class="home-chip" href={destination.url}>{destination.name}</a></li>
+              ))}
+            </ul>
+          </nav>
+        )}
+      </div>
+    </section>
 
-              <h3 class="guide-list__title">{guide.title}</h3>
-              <p class="guide-list__desc">{guide.description}</p>
+    <section class="home-section home-guides" aria-labelledby="guias">
+      <h2 class="home-section-title" id="guias">Guías listas para usar</h2>
 
-              {guide.livedNote && (
-                <p class="guide-list__desc">
-                  <small>{guide.livedNote}</small>
+      {
+        cards.length === 0 ? (
+          <p>Todavía no hay guías publicadas.</p>
+        ) : (
+          // Phones: one card per screen, swiped sideways, when there is more than one.
+          <ul class:list={['home-guides__list', { 'home-guides__list--rail': cards.length > 1 }]}>
+            {cards.map((guide) => (
+              <li class:list={['home-card', { 'home-card--photo': guide.cover }]}>
+                {guide.cover && (
+                  <div class="home-card__media">
+                    <GuidePhoto
+                      class="home-card__photo"
+                      image={guide.cover}
+                      alt=""
+                      sizes={cardSizes}
+                      crop={{ media: '(max-width: 47.99rem)', ratio: 3 / 2, position: 'center' }}
+                    />
+                  </div>
+                )}
+
+                <div class="home-card__body">
+                  <h3 class="home-card__title">
+                    <a href={guide.url}>{guide.title}</a>
+                  </h3>
+
+                  <ul class="home-card__facts" aria-label="Datos de la guía">
+                    {guide.days.length > 0 && <li class="pill">{guide.days.join(' · ')} días</li>}
+                    {guide.budgetPerPerson && (
+                      <li class="pill">
+                        {formatWholePrice(guide.budgetPerPerson.amount, guide.budgetPerPerson.currency)} por persona
+                      </li>
+                    )}
+                    {guide.lived && <li class="pill pill--lived">Lo hicimos</li>}
+                    {guide.draft && <li class="pill pill--draft">Borrador</li>}
+                  </ul>
+
+                  <p class="home-card__desc">{guide.description}</p>
+                  {guide.livedNote && <p class="home-card__note">{guide.livedNote}</p>}
+
+                  <span class="home-card__go" aria-hidden="true">Ver la guía →</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    {showcase && showcaseGuide && showcaseUrl && (
+      <section class="home-section home-inside" aria-labelledby="dentro">
+        <h2 class="home-section-title" id="dentro">Todo lo que necesitas, en una sola página</h2>
+        <p class="home-inside__lede">
+          Así es un día de la guía de {destinationLabel(showcaseGuide.destination)}, tal cual está en la guía.
+        </p>
+
+        <div class="home-inside__layout">
+          {/* A real day of the guide: its stops through the guide's own component. */}
+          <article class="excerpt" aria-labelledby="excerpt-title">
+            {showcase.photo && (
+              <div class="excerpt__media">
+                <GuidePhoto
+                  class="excerpt__photo"
+                  image={guideImage(showcase.photo.src)}
+                  alt={showcase.photo.alt}
+                  sizes="(min-width: 80rem) 40rem, (min-width: 48rem) 53vw, calc(100vw - 42px)"
+                  crop={{ media: '(max-width: 47.99rem)', ratio: 16 / 9, position: 'center' }}
+                />
+              </div>
+            )}
+
+            <div class="excerpt__body">
+              <header class="excerpt__head">
+                <h3 class="excerpt__title" id="excerpt-title">
+                  <span class="excerpt__n">Día {showcase.day}</span> · {showcase.title}
+                </h3>
+                {showcase.summary && <p class="excerpt__summary">{showcase.summary}</p>}
+                <ul class="excerpt__facts">
+                  <li><SectionIcon name="pin" />{countLabel(showcase.n_route_stops, 'parada', 'paradas')}</li>
+                  {showcase.drive && (
+                    <>
+                      <li><SectionIcon name="road" />≈ {km.format(showcase.drive.km)} km</li>
+                      <li><SectionIcon name="wheel" />≈ {formatMinutes(showcase.drive.minutes)}<span class="visually-hidden"> de coche</span></li>
+                    </>
+                  )}
+                </ul>
+              </header>
+
+              <ol class="excerpt__stops">
+                {showcase.route_stops.map((stop, i) => <DayStop stop={stop} n={i + 1} day={showcase.day} />)}
+              </ol>
+
+              {showcaseNight && (
+                <p class="excerpt__night">
+                  <SectionIcon name="tent" />Noche<span class="excerpt__arrow" aria-hidden="true">→</span><span class="visually-hidden"> en </span><strong>{showcaseNight}</strong>
                 </p>
               )}
 
-              <span class="guide-list__go">Ver la guía →</span>
-            </a>
+              <a class="excerpt__go" href={showcaseUrl}>
+                Ver el día {showcase.day} en la guía<SectionIcon name="arrow" />
+              </a>
+            </div>
+          </article>
+
+          {/* Margin notes: what the excerpt shows, with the guide's own figures. */}
+          <ul class="home-notes" aria-label="Qué trae cada guía">
+            <li class="home-note">
+              <h3 class="home-note__title">Cada parada, en el mapa</h3>
+              <p>Un toque en «Mapa» y la tienes en Google Maps, con dónde aparcar cuando importa.</p>
+            </li>
+            {booking && (
+              <li class="home-note">
+                <h3 class="home-note__title">Qué reservar y cuándo</h3>
+                <p>Lo que se agota y con cuánta antelación: <strong>{booking.label}</strong>, {booking.when.charAt(0).toLowerCase() + booking.when.slice(1)}.</p>
+              </li>
+            )}
+            {showcaseItem?.budgetPerPerson && (
+              <li class="home-note">
+                <h3 class="home-note__title">Lo que cuesta de verdad</h3>
+                <p>
+                  El presupuesto que pagamos, sin maquillar:{' '}
+                  <strong class="num">{formatWholePrice(showcaseItem.budgetPerPerson.amount, showcaseItem.budgetPerPerson.currency)}</strong> por persona.
+                </p>
+              </li>
+            )}
+            {parking && (
+              <li class="home-note">
+                <h3 class="home-note__title">Datos con fecha</h3>
+                <p>
+                  Cada precio dice cuándo lo comprobamos: el parking de {parking.place},{' '}
+                  <strong class="num">{formatWholePrice(parking.price, parking.currency)}</strong>, en {formatDate(parking.verifiedAt)}.
+                </p>
+              </li>
+            )}
+          </ul>
+        </div>
+      </section>
+    )}
+
+    <section class="home-section home-places" aria-labelledby="destinos">
+      <h2 class="home-section-title" id="destinos">Dónde hemos estado</h2>
+      <ul class="home-places__list">
+        {destinations.map((destination) => {
+          const cover = destination.cover ? guideImage(destination.cover) : null;
+          return (
+            <li class="home-place">
+              {cover ? (
+                <GuidePhoto class="home-place__photo" image={cover} alt="" sizes="(min-width: 80rem) 17rem, (min-width: 48rem) 22vw, 45vw" />
+              ) : (
+                // No photo of this destination yet: a tinted card with its initial.
+                <span class="home-place__photo home-place__photo--empty" aria-hidden="true">{destination.name.charAt(0)}</span>
+              )}
+              <a class="home-place__link" href={destination.url}>
+                <span class="home-place__name">{destination.name}</span>
+                <span class="home-place__count">
+                  {countLabel(destination.guides, 'guía', 'guías')}{destination.draft && ' · en preparación'}
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+
+    <section class="home-section home-about" aria-labelledby="quienes">
+      <div class="home-about__intro">
+        <h2 class="home-section-title" id="quienes">Hola, somos David y Natalia</h2>
+        <p class="home-about__text">
+          Viajamos, apuntamos todo lo que nos habría gustado saber antes de salir y lo convertimos en una guía que
+          puedes seguir tal cual. Si no lo hemos hecho, no lo contamos como vivido.
+        </p>
+        {/* The figures, counted from the guides, told in a sentence rather than as big numbers. */}
+        <p class="home-about__text">
+          Hasta hoy, <strong class="num">{countLabel(stats.days, 'día', 'días')}</strong> de ruta planificados y{' '}
+          <strong class="num">{countLabel(stats.places, 'lugar', 'lugares')}</strong>, cada uno con su día, en{' '}
+          <strong class="num">{countLabel(stats.destinations, 'destino', 'destinos')}</strong>.
+        </p>
+        <a class="home-about__more" href="/sobre-mi/">Más sobre nosotros →</a>
+      </div>
+
+      <ul class="home-promises">
+        {promises.map((promise) => (
+          <li class="home-promises__item">
+            <h3 class="home-promises__title">{promise.title}</h3>
+            <p class="home-promises__text">{promise.text}</p>
           </li>
         ))}
       </ul>
-    )
-  }
+    </section>
+  </div>
 </BaseLayout>
