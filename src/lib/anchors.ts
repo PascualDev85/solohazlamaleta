@@ -19,3 +19,10 @@ export function hubSectionHref(hub: string, sectionId: string): string {
   const path = hub.endsWith('/') ? hub : `${hub}/`
   return `${path}#${sectionId}`
 }
+
+/** The hub's other sections, linked from its index and from the guides' closing (1.9 B.11). */
+export const HUB_GUIDES_ID = 'nuestra-guia'
+export const HUB_SEE_ID = 'que-ver'
+export const HUB_WHEN_ID = 'cuando-ir'
+export const HUB_MOVING_ID = 'moverse'
+export const HUB_FAQ_ID = 'faq'
