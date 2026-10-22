@@ -35,3 +35,18 @@ export function guidePath(guide: Pick<CompiledGuide, 'destination' | 'slug'>): s
 export function unpublishedGuidePaths(guides: Pick<CompiledGuide, 'status' | 'destination' | 'slug'>[]): string[] {
   return guides.filter((guide) => !isPublished(guide)).map(guidePath)
 }
+
+/**
+ * A hub is public once any guide under it (by its `hub` path) is published:
+ * 1.13 §6 keeps it noindex "mientras la guía sea borrador". One switch, the
+ * guides' own status, for both its page and the sitemap.
+ */
+export function isHubPublished(hub: string, guides: Pick<CompiledGuide, 'status' | 'hub'>[]): boolean {
+  return guides.some((guide) => guide.hub === hub && isPublished(guide))
+}
+
+/** The hubs none of whose guides is published yet: noindex, and out of the sitemap. */
+export function unpublishedHubPaths(guides: Pick<CompiledGuide, 'status' | 'hub'>[]): string[] {
+  const hubs = [...new Set(guides.map((guide) => guide.hub).filter(Boolean))]
+  return hubs.filter((hub) => !isHubPublished(hub, guides))
+}

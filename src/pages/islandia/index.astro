@@ -7,8 +7,8 @@ import { splitDetail } from '../../lib/splitDetail.ts';
 import { whatToSeeByDay } from '../../lib/whatToSee.ts';
 import { guideImage } from '../../lib/guide-images.ts';
 import { HUB_FAQ_ID, HUB_GUIDES_ID, HUB_MOVING_ID, HUB_PRACTICAL_ID, HUB_SEE_ID, HUB_WHEN_ID } from '../../lib/anchors.ts';
-import { hubMembers, hubSections, isPagePublished } from '../../lib/hubLinks.ts';
-import { ENGINE_GUIDE_SOURCES } from '../../../engine/index.ts';
+import { hubMembers, hubSections } from '../../lib/hubLinks.ts';
+import { ENGINE_GUIDE_SOURCES, isHubPublished } from '../../../engine/index.ts';
 import TrustBlock from '../../components/guide/TrustBlock.astro';
 import GuideIndex from '../../components/guide/GuideIndex.astro';
 import GuidePhoto from '../../components/guide/GuidePhoto.astro';
@@ -137,7 +137,7 @@ const faqJsonLd =
     : null;
 ---
 
-{/* noindex while the 13-day guide is noindex (1.13 §6), see isPagePublished; astro.config.mjs keeps it out of the sitemap too. */}
+{/* noindex until a guide under this hub is published (1.13 §6), see isHubPublished; astro.config.mjs keeps it out of the sitemap with the same rule. */}
 <BaseLayout
   title={hub.title}
   description={hub.description}
@@ -146,7 +146,7 @@ const faqJsonLd =
   imageHeight={ogImage.attributes.height}
   imageAlt={coverAlt}
   design="v2"
-  noindex={!isPagePublished(hub)}
+  noindex={!isHubPublished(hub.hub, pages)}
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbJsonLd)} slot="head" />
 
@@ -228,7 +228,7 @@ const faqJsonLd =
             <li><SectionIcon name="sparkles" /><span>{item}</span></li>
           ))}
         </ul>
-        {tripMonth && <p class="hub-section__lead quiet">Solo hemos ido en septiembre: de los demás meses no tenemos datos propios.</p>}
+        {tripMonth && <p class="hub-section__lead quiet">Solo hemos ido en {tripMonth}: de los demás meses no tenemos datos propios.</p>}
       </section>
     )}
 
@@ -281,6 +281,7 @@ const faqJsonLd =
             </div>
           )}
         </div>
+        {hub.practical.verified_at && <p class="guide__verified">Comprobado {formatDate(hub.practical.verified_at)}</p>}
       </section>
     )}
 

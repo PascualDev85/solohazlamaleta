@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
-import { isPublished, guidePath, unpublishedGuidePaths } from '../../engine/index.ts'
+import { isPublished, guidePath, unpublishedGuidePaths, unpublishedHubPaths, isHubPublished } from '../../engine/index.ts'
 
 const guide = (status: 'draft' | 'reviewed' | 'published' | 'archived', slug = 'ruta') =>
   ({ status, destination: 'islandia', slug })
@@ -22,4 +22,20 @@ test('unpublishedGuidePaths lists every guide but the published ones, in order',
     ['/islandia/a/', '/islandia/c/', '/islandia/d/'],
   )
   assert.deepStrictEqual(unpublishedGuidePaths([guide('published')]), [])
+})
+
+// The hub is indexable once any guide under it is published (1.13 §6: noindex
+// "mientras la guía sea borrador"): one switch, the guides' own status.
+test('unpublishedHubPaths lists a hub while none of its guides is published', () => {
+  const draft = { status: 'reviewed' as const, hub: '/islandia/' }
+  const published = { status: 'published' as const, hub: '/islandia/' }
+  assert.deepStrictEqual(unpublishedHubPaths([draft]), ['/islandia/'])
+  assert.deepStrictEqual(unpublishedHubPaths([draft, published]), [])
+  assert.deepStrictEqual(unpublishedHubPaths([{ status: 'draft' as const, hub: '/mallorca/' }, published]), ['/mallorca/'])
+})
+
+test('isHubPublished follows the same rule for one hub', () => {
+  assert.strictEqual(isHubPublished('/islandia/', [{ status: 'reviewed', hub: '/islandia/' }]), false)
+  assert.strictEqual(isHubPublished('/islandia/', [{ status: 'published', hub: '/islandia/' }]), true)
+  assert.strictEqual(isHubPublished('/islandia/', [{ status: 'published', hub: '/mallorca/' }]), false)
 })

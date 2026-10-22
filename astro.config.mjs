@@ -7,7 +7,7 @@ import vue from '@astrojs/vue';
 import sitemap from '@astrojs/sitemap';
 
 import {
-  ENGINE_GUIDE_SOURCES, loadGuide, loadPlaces, buildPlaceRegistry, validateGuide, compileGuide, unpublishedGuidePaths,
+  ENGINE_GUIDE_SOURCES, loadGuide, loadPlaces, buildPlaceRegistry, validateGuide, compileGuide, unpublishedGuidePaths, unpublishedHubPaths,
 } from './engine/index.ts';
 
 const GUIDES_DIR = 'src/content/guides';
@@ -37,7 +37,7 @@ function draftGuidePaths() {
  * since a guide whose status cannot be read must not reach the sitemap.
  * No affiliate registry yet, as in src/lib/engine-guide.ts.
  */
-async function unpublishedEngineGuidePaths() {
+async function compiledEngineGuides() {
   const guides = [];
   for (const source of ENGINE_GUIDE_SOURCES) {
     const { registry: places, errors: placeErrors } = buildPlaceRegistry(
@@ -51,19 +51,15 @@ async function unpublishedEngineGuidePaths() {
     }
     guides.push(compileGuide(result.guide, places, affiliates));
   }
-  return unpublishedGuidePaths(guides);
+  return guides;
 }
 
-/**
- * The Islandia hub: noindex while the 13-day guide is (docs/1.13 §6). It is
- * not in ENGINE_GUIDE_SOURCES, which also feeds the landing page's guide
- * list, so its status does not reach unpublishedEngineGuidePaths() and it is
- * kept out here, next to the hard-coded `noindex` on its page.
- */
-const HUB_PATHS = ['/islandia/'];
+const engineGuides = await compiledEngineGuides();
 
 /** Everything that carries `noindex`, so it must stay out of the sitemap too. */
-const excludedPaths = [...draftGuidePaths(), ...(await unpublishedEngineGuidePaths()), ...HUB_PATHS];
+// Hubs (the Islandia one) are noindex until a guide under them is published
+// (1.13 §6): the same rule as their page, isHubPublished.
+const excludedPaths = [...draftGuidePaths(), ...unpublishedGuidePaths(engineGuides), ...unpublishedHubPaths(engineGuides)];
 
 /**
  * Which pages go in the sitemap. Exported for tests/config/sitemap.test.ts.
