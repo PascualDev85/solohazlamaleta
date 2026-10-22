@@ -130,7 +130,7 @@ abrir ficheros de finanzas desde este proyecto.
 - URLs siempre con barra final.
 - `noindex` en `/print/`, `/ir/`, `/ofertas/`.
 - Secretos en `.env`, nunca en el repo.
-- Node ≥ 20.12 (el proyecto usa v24).
+- Node ≥ 22.18 (el build y los scripts ejecutan `.ts` directamente); el proyecto usa v24 y Cloudflare Pages necesita `NODE_VERSION = 24`.
 
 ## Comandos
 
