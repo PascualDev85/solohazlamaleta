@@ -69,6 +69,17 @@ jobs:
       - name: Rebuild after the negative test
         run: npm run build
 
+      # The site that lighthouse and devices check, built once here.
+      # dist/_headers (scripts/write-headers.ts) travels with it: test:ui runs
+      # every page under those headers.
+      - name: Upload the build
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+          retention-days: 1
+
   lighthouse:
     runs-on: ubuntu-latest
     needs: build
@@ -82,7 +93,12 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm run build
+
+      - name: Download the build
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
       # Quality gate: every page in `npm run lighthouse` (package.json) must
       # score 100 in performance, accessibility, best practices and SEO, on
@@ -91,8 +107,10 @@ jobs:
       # for them (see scripts/lighthouse-check.ts).
       - name: Lighthouse 100, mobile and desktop
         run: |
-          npx --yes astro preview --port 4321 &
-          npx --yes wait-on http://localhost:4321/ --timeout 60000
+          npx astro preview --port 4321 &
+          # Up to 60 s for the preview to answer.
+          for _ in $(seq 60); do curl -fs -o /dev/null http://localhost:4321/ && break; sleep 1; done
+          curl -fsS -o /dev/null http://localhost:4321/
           npm run lighthouse
 
       # Browser checks of the guide (scripts/ui-check.ts): overlay panels keep
@@ -121,13 +139,21 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm run build
+
+      - name: Download the build
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
       - run: npx playwright install --with-deps webkit chromium
 
       - name: Device checks, iPhone and Android
         run: |
-          npx --yes astro preview --port 4321 &
-          npx --yes wait-on http://localhost:4321/ --timeout 60000
+          npx astro preview --port 4321 &
+          # Up to 60 s for the preview to answer.
+          for _ in $(seq 60); do curl -fs -o /dev/null http://localhost:4321/ && break; sleep 1; done
+          curl -fsS -o /dev/null http://localhost:4321/
           npm run test:devices
 
       - name: Upload device screenshots

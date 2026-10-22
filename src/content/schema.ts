@@ -15,7 +15,7 @@ const YEAR_MONTH = /^\d{4}-\d{2}$/;
 /** Where a fact came from, so it can be re-checked without redoing the research. */
 const source = z.object({
   label: z.string(),
-  url: z.string().url().optional(),
+  url: z.url().optional(),
   /** Absent means unverified. The page shows this date so readers can judge. */
   checkedAt: z.string().regex(ISO_DATE).optional(),
 });
@@ -198,7 +198,7 @@ export const guideSchema = z
 
       if (!variant) {
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: 'custom',
           path: ['variants', String(count)],
           message: `meta.days lists ${count} days but variants["${count}"] is missing.`,
         });
@@ -207,7 +207,7 @@ export const guideSchema = z
 
       if (variant.length !== count) {
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: 'custom',
           path: ['variants', String(count)],
           message: `variants["${count}"] has ${variant.length} days, expected ${count}.`,
         });
@@ -216,7 +216,7 @@ export const guideSchema = z
       for (const dayNumber of variant) {
         if (!dayNumbers.has(dayNumber)) {
           ctx.addIssue({
-            code: z.ZodIssueCode.custom,
+            code: 'custom',
             path: ['variants', String(count)],
             message: `variants["${count}"] references day ${dayNumber}, which is not defined in days[].`,
           });
@@ -227,7 +227,7 @@ export const guideSchema = z
     /** A guide claiming a real trip must say when it happened. */
     if (guide.meta.tripDone === null && !guide.meta.draft) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         path: ['meta', 'tripDone'],
         message:
           'A published guide needs meta.tripDone. Set meta.draft to true while the author has not made the trip.',
@@ -237,7 +237,7 @@ export const guideSchema = z
     /** The trip that was actually made has to be one of the days offered. */
     if (guide.meta.tripDone && !guide.meta.days.includes(guide.meta.tripDone.days)) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         path: ['meta', 'tripDone', 'days'],
         message: `The trip was made in ${guide.meta.tripDone.days} days, which meta.days does not offer (${guide.meta.days.join(', ')}). The lived version must be one readers can pick.`,
       });
@@ -246,7 +246,7 @@ export const guideSchema = z
     /** Likewise the group: readers must be able to see the version that was lived. */
     if (guide.meta.tripDone && !guide.groups.includes(guide.meta.tripDone.group)) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         path: ['meta', 'tripDone', 'group'],
         message: `The trip was made as "${guide.meta.tripDone.group}", which is not listed in groups. The lived version must be one readers can pick.`,
       });
