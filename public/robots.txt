@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /print/
+Disallow: /ir/
+Disallow: /ofertas/
+
+Sitemap: https://solohazlamaleta.com/sitemap-index.xml

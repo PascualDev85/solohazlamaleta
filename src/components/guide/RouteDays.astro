@@ -1,0 +1,225 @@
+---
+import type { CompiledDay } from '../../../engine/index.ts';
+import { dayAnchorId } from '../../lib/anchors.ts';
+import { twoDigitDay } from '../../lib/dayNumber.ts';
+import { nightLabel } from '../../lib/nightLabel.ts';
+import DayCard from './DayCard.astro';
+import SectionIcon from './SectionIcon.astro';
+
+interface Props {
+  days: CompiledDay[];
+  /** Anchor of the section, shared with the guide index. */
+  id: string;
+}
+
+const { days, id } = Astro.props;
+
+// "De un vistazo": the whole route in one panel, a day per row with its stops.
+const glanceId = `${id}-vistazo`;
+---
+
+{/*
+  The whole route as one swipeable row: every day is a card, the strip of day
+  numbers above says how many there are and where you are. Without JavaScript
+  it is a plain scroll-snap row and the numbers are anchor links; the script
+  (below, logic in src/lib/carousel.ts) only adds smooth jumps, the current
+  day and the desktop arrows. Each
+  slide carries its own title and summary, so they change with the swipe.
+*/}
+<section class="route" aria-labelledby={id}>
+  <div class="route__head">
+    {/* The heading opens the whole route at a glance: a native popover, so a tap anywhere else closes it and scrolling does not. */}
+    <h2 id={id}>
+      <button class="route__title" type="button" popovertarget={glanceId}>
+        La ruta <span class="route__count">{days.length} días</span>
+        <span class="route__peek" aria-hidden="true"></span>
+        <span class="visually-hidden">: ver toda la ruta de un vistazo</span>
+      </button>
+    </h2>
+    <div class="route__bar">
+      <nav class="route__nav" aria-label="Días de la ruta">
+        <ol class="route__days">
+          {days.map((day) => (
+            <li>
+              {/* The name includes the visible "02" (WCAG 2.5.3, label in name). */}
+              <a href={`#${dayAnchorId(day.day)}`} aria-label={`Día ${twoDigitDay(day.day)}: ${day.title}`}>
+                {twoDigitDay(day.day)}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <div class="route__arrows" hidden>
+        <button class="route__arrow" type="button" data-step="-1" aria-label="Día anterior">
+          <SectionIcon name="arrow-left" />
+        </button>
+        <button class="route__arrow" type="button" data-step="1" aria-label="Día siguiente">
+          <SectionIcon name="arrow" />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="route__rail">
+    {days.map((day) => <DayCard day={day} />)}
+  </div>
+
+  <div id={glanceId} class="route-glance" popover role="dialog" aria-labelledby={`${glanceId}-title`}>
+    <header class="route-glance__head">
+      <div>
+        <p class="route-glance__eyebrow">De un vistazo</p>
+        <h2 class="route-glance__title" id={`${glanceId}-title`}>Los {days.length} días de la ruta</h2>
+      </div>
+      <button
+        class="route-glance__close"
+        type="button"
+        popovertarget={glanceId}
+        popovertargetaction="hide"
+        aria-label="Cerrar"
+        autofocus
+      >
+        <SectionIcon name="close" />
+      </button>
+    </header>
+
+    {/* One row per day: the number on a rail, the title, then the stops in order and the night. Each row jumps to its card. */}
+    <ol class="route-glance__days">
+      {days.map((day, i) => (
+        // Only the last row carries an id: the "Hasta el día N" pill below links to it.
+        <li class="route-glance__day" id={i === days.length - 1 ? `${glanceId}-dia-${day.day}` : undefined}>
+          <a href={`#${dayAnchorId(day.day)}`}>
+            <span class="route-glance__n" aria-hidden="true">{twoDigitDay(day.day)}</span>
+            <span class="route-glance__body">
+              <span class="route-glance__name"><span class="visually-hidden">Día {day.day}: </span>{day.title}</span>
+              {day.route_line.length > 0 && (
+                <span class="route-glance__stops">
+                  {day.route_line.map((name) => <span>{name}</span>)}
+                </span>
+              )}
+              {nightLabel(day.overnight) && (
+                <span class="route-glance__night">
+                  <SectionIcon name="tent" />{nightLabel(day.overnight)}
+                </span>
+              )}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    {/*
+      "There is more below": a fade over the foot of the panel with a translucent
+      pill that fades out as the list reaches its end (scroll-driven animation,
+      no script). It is a link to the last day, so a tap scrolls there; the
+      closer script above ignores it (data-stay).
+    */}
+    <a class="route-glance__more" href={`#${glanceId}-dia-${days[days.length - 1].day}`} data-stay>
+      <span class="route-glance__more-pill">
+        Hasta el día {days[days.length - 1].day}
+        <span class="route-glance__more-chevron" aria-hidden="true"></span>
+      </span>
+    </a>
+  </div>
+</section>
+
+<script>
+  import { closestIndex, clampIndex } from '../../lib/carousel.ts';
+  import { closesHintOnScroll, type ScreenPoint } from '../../lib/hint-scroll.ts';
+
+  // The time's info bubble (a <details> on each stop) closes when the reader
+  // taps anywhere else or scrolls it away, which a <details> cannot do on its
+  // own. pointerdown, not click: iOS only fires click on elements it deems
+  // clickable, so a tap on plain text would leave the bubble open.
+  const openHints = () => document.querySelectorAll<HTMLDetailsElement>('.day-stop__hint[open]');
+  document.addEventListener('pointerdown', (event) => {
+    for (const hint of openHints()) if (!hint.contains(event.target as Node)) hint.open = false;
+  }, { passive: true });
+  // A scroll closes a bubble only if it moved its mark on screen (see
+  // closesHintOnScroll): where the mark was is noted on the click that opens
+  // it, before the <details> toggles.
+  const markAtOpen = new WeakMap<HTMLDetailsElement, ScreenPoint>();
+  const markPosition = (hint: HTMLDetailsElement): ScreenPoint => {
+    const { top, left } = hint.querySelector('summary')!.getBoundingClientRect();
+    // The page's offsets and those of every box around the mark that may
+    // scroll (the route rail, a day sheet).
+    const offsets = [scrollX, scrollY];
+    for (let el = hint.parentElement; el; el = el.parentElement) offsets.push(el.scrollLeft, el.scrollTop);
+    return { top, left, offsets };
+  };
+  document.addEventListener('click', (event) => {
+    const hint = (event.target as Element).closest<HTMLDetailsElement>('.day-stop__hint');
+    if (hint) markAtOpen.set(hint, markPosition(hint));
+  }, { capture: true, passive: true });
+  document.addEventListener('scroll', () => {
+    for (const hint of openHints()) {
+      const atOpen = markAtOpen.get(hint);
+      if (!atOpen || closesHintOnScroll(atOpen, markPosition(hint))) hint.open = false;
+    }
+  }, { capture: true, passive: true });
+  // Esc closes it too, and puts focus back on its mark if it was inside.
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    for (const hint of openHints()) {
+      const inside = hint.contains(document.activeElement);
+      hint.open = false;
+      if (inside) hint.querySelector('summary')?.focus();
+    }
+  });
+
+  // The glance panel closes itself once a day is chosen, so it never covers
+  // the card it just jumped to. Without this it still closes by hand.
+  for (const glance of document.querySelectorAll<HTMLElement>('.route-glance')) {
+    glance.addEventListener('click', (event) => {
+      const link = (event.target as Element).closest('a');
+      if (link && !link.hasAttribute('data-stay')) glance.hidePopover();
+    });
+  }
+
+  // Each route carousel on the page: smooth jumps from the day strip and the
+  // arrows, and the current day marked as the row scrolls. Without JavaScript
+  // the row still swipes and the strip still works as plain anchor links.
+  for (const root of document.querySelectorAll<HTMLElement>('.route')) {
+    const rail = root.querySelector<HTMLElement>('.route__rail')!;
+    const strip = root.querySelector<HTMLElement>('.route__days')!;
+    const links = [...strip.querySelectorAll<HTMLAnchorElement>('a')];
+    const slides = [...rail.children] as HTMLElement[];
+    const arrows = root.querySelector<HTMLElement>('.route__arrows')!;
+    const [prev, next] = arrows.querySelectorAll('button');
+    const behavior: ScrollBehavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+
+    // Where each slide starts, measured from the first one (the row's start).
+    const starts = () => slides.map((slide) => slide.offsetLeft - slides[0].offsetLeft);
+    let current = -1;
+
+    const go = (i: number) => rail.scrollTo({ left: starts()[clampIndex(i, slides.length)], behavior });
+
+    const mark = (i: number) => {
+      if (i === current) return;
+      links[current]?.removeAttribute('aria-current');
+      current = i;
+      links[i].setAttribute('aria-current', 'step');
+      const chip = links[i].parentElement!;
+      strip.scrollTo({ left: chip.offsetLeft - (strip.clientWidth - chip.offsetWidth) / 2, behavior });
+      prev.disabled = i === 0;
+      next.disabled = i === slides.length - 1;
+    };
+
+    links.forEach((link, i) => link.addEventListener('click', (event) => { event.preventDefault(); go(i); }));
+    arrows.addEventListener('click', (event) => {
+      const button = (event.target as Element).closest<HTMLButtonElement>('button');
+      if (button) go(current + Number(button.dataset.step));
+    });
+
+    let frame = 0;
+    rail.addEventListener('scroll', () => {
+      if (frame) return; // at most one update per frame
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        mark(closestIndex(starts(), rail.scrollLeft));
+      });
+    }, { passive: true });
+
+    mark(0);
+    arrows.hidden = false;
+  }
+</script>

@@ -1,0 +1,23 @@
+// Who travelled the route and when the guide was last updated, said once
+// instead of per stop. No figures (1.12 §5): they are in the quick facts.
+[data-design="v2"] .trip-facts {
+  padding-left: var(--space-md);
+  border-left: 3px solid var(--color-accent);
+
+  p {
+    margin: 0;
+  }
+
+  &__by {
+    font-size: var(--step-0);
+    font-weight: 800;
+    line-height: 1.4;
+    color: var(--color-text);
+  }
+
+  &__updated {
+    margin-top: var(--space-xs) !important;
+    font-size: var(--step--1);
+    color: var(--color-text-muted);
+  }
+}

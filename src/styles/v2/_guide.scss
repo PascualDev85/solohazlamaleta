@@ -1,0 +1,145 @@
+@use "../abstracts" as *;
+
+// Small shared pieces of the guide's sections.
+[data-design="v2"] {
+  // A short label in small caps above a block: "Zona 1 · 5 noches",
+  // "Llegada · desde MAD", "3-6 meses antes".
+  .kicker {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-label);
+  }
+
+  // Secondary text: a note, a reason, an introduction.
+  .quiet {
+    color: var(--color-text-muted);
+  }
+
+  // A small rounded label on the glacier tint: "Día 3", "Prioridad alta",
+  // "10 noches en camping".
+  .pill {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background: var(--color-pill-bg);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1.4;
+    color: var(--color-pill-text);
+  }
+
+  // "Lo hicimos" in the lived colour; "Borrador" outlined in the label coral,
+  // so a draft reads as a warning, not as one more fact.
+  .pill--lived {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+
+  .pill--draft {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--color-label);
+    color: var(--color-label);
+  }
+
+  // A few links in a row, dot-separated: the guide's closing and the hub's
+  // lists of guides and satellites. Padded to a 40px tap target.
+  .link-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-display);
+
+    li + li::before {
+      content: "·";
+      margin: 0 var(--space-xs);
+      color: var(--color-text-muted);
+    }
+
+    a {
+      display: inline-block;
+      padding: 0.5rem 0;
+    }
+  }
+
+  // The chevron of a folding card's summary; it turns when the card opens.
+  .fold-chevron {
+    flex: none;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 2px solid var(--color-accent);
+    border-bottom: 2px solid var(--color-accent);
+    transform: rotate(45deg);
+    transition: transform 0.2s var(--ease-out);
+  }
+
+  // Turned, the chevron's corner points up; it moves down a touch so its
+  // visual centre stays where the closed one was.
+  details[open] > summary .fold-chevron {
+    transform: translateY(0.3rem) rotate(-135deg);
+  }
+}
+
+[data-design="v2"] .guide {
+  // The sections after the route are well below the fold: their layout and
+  // paint wait until they come near the screen (content-visibility), so the
+  // first render, and with it the LCP, does not pay for them. The intrinsic
+  // size keeps the scrollbar honest while they are skipped. Anchor jumps
+  // (the index, "Noche → …") still land: the browser renders the target.
+  // Containment stops the heading's top margin from collapsing through the
+  // section, so the section carries the gap and the heading none.
+  > .sleep,
+  > .transport,
+  > .budget,
+  > .booking,
+  > .criteria,
+  > .practical,
+  > .faq {
+    margin-top: var(--space-2xl);
+    content-visibility: auto;
+    contain-intrinsic-size: auto 40rem;
+
+    > .section-title {
+      margin-top: 0;
+    }
+  }
+
+  &__dateline {
+    font-family: var(--font-display);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  // The one line that sends "Lo práctico" to the hub (1.13 §3): the section's
+  // icon, then the link. It sits between two sections and takes their gap.
+  &__hub-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: var(--space-2xl) 0 0;
+    font-family: var(--font-display);
+
+    .section-icon {
+      flex: none;
+      color: var(--color-accent);
+    }
+  }
+
+  // The page's end (1.9 B.11): where to go next while preparing the trip.
+  &__next {
+    margin: var(--space-2xl) 0 0;
+  }
+
+  &__verified {
+    font-size: var(--step--1);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-text-muted);
+  }
+}

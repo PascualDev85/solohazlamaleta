@@ -1,0 +1,11 @@
+// The home page on the redesign. Only the shared v2 pieces it uses, plus its
+// own layout: the guide's sections (hero, route, budget…) stay out.
+@use "v2/fonts";
+@use "v2/tokens";
+@use "v2/base";
+@use "v2/guide";
+@use "v2/day-stop";
+@use "v2/section-icons";
+@use "v2/search";
+@use "v2/home";
+@use "v2/postcards";

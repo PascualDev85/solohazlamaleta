@@ -1,0 +1,22 @@
+---
+import { formatDate, formatLongDate } from '../../lib/formatDate.ts';
+
+interface Props {
+  travelers: string;
+  tripDone: string;
+  updatedAt: string;
+}
+
+const { travelers, tripDone, updatedAt } = Astro.props;
+---
+
+{/*
+  No figures here (1.12 §5): the days are in the route and the budget in the
+  trip facts. The names will link to who is behind the route; no separate link.
+*/}
+<div class="trip-facts">
+  <p class="trip-facts__by">Ruta recorrida por {travelers} · {formatDate(tripDone)}</p>
+  <p class="trip-facts__updated">
+    Actualizado el <time datetime={updatedAt}>{formatLongDate(updatedAt)}</time>
+  </p>
+</div>

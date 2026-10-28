@@ -1,0 +1,327 @@
+---
+// The search, shared by /buscar/ and the landing page's search window. The
+// index is the markup itself: every destination, guide, place and section is
+// a link in the HTML, so there is no fetch and nothing for the page's CSP to
+// allow. Without JavaScript it is a plain list of links, grouped by type.
+// The script below turns it into a combobox (ARIA 1.2): the field drives a
+// listbox of grouped results, arrows move through them, Enter opens one.
+// Before anything is typed it suggests the destinations and the places in
+// the authors' photos. The matching lives in lib/search.ts.
+import { getImage } from 'astro:assets';
+import SectionIcon from '../guide/SectionIcon.astro';
+import { guideImage } from '../../lib/guide-images.ts';
+import { hubPathsFromPages } from '../../lib/home.ts';
+import { destinationLabel, featuredPlaces, searchEntries } from '../../lib/search-index.ts';
+import { SEARCH_KINDS, resultsSummary } from '../../lib/search.ts';
+import type { SearchGuide, SearchKind } from '../../lib/search.ts';
+
+interface Props {
+  guides: SearchGuide[];
+  /** Prefix for the ids, so two panels could share a page. */
+  id: string;
+  /** Heading level of the group names: 2 on its own page, 3 inside a titled window. */
+  level?: 2 | 3;
+  /** Inside the landing page's window: the field stays put and the results scroll under it. */
+  dialog?: boolean;
+}
+
+const { guides, id, level = 2, dialog = false } = Astro.props;
+const Heading = `h${level}` as 'h2' | 'h3';
+
+// A destination leads to its hub page once it exists, as on the landing page.
+const pageKeys = Object.keys(import.meta.glob('/src/pages/*/index.astro'));
+const groups = searchEntries(guides, hubPathsFromPages(pageKeys, guides.map((guide) => guide.destination)));
+const featured = featuredPlaces(guides, 6);
+
+const GROUPS: Record<SearchKind, { label: string; more: string }> = {
+  destination: { label: 'Destinos', more: 'los|destinos' },
+  guide: { label: 'Guías', more: 'las|guías' },
+  place: { label: 'Lugares', more: 'los|lugares' },
+  section: { label: 'Secciones de la guía', more: 'las|secciones' },
+};
+// Each group shows this many until "Ver todos".
+const CAPS: Record<SearchKind, number> = { destination: 4, guide: 4, place: 6, section: 4 };
+
+const counts = Object.fromEntries(SEARCH_KINDS.map((kind) => [kind, groups[kind].length])) as Record<SearchKind, number>;
+const suggestStatus = `Sugerencias: ${groups.destination.length} destinos y ${featured.length} lugares destacados`;
+
+// Small square thumbnails for destinations and guides, and 4:3 photos for the
+// suggested places: light files, loaded only when on screen (a closed window
+// renders nothing).
+async function picture(path: string, width: number, height: number) {
+  const [avif, webp] = await Promise.all(
+    (['avif', 'webp'] as const).map((format) =>
+      getImage({ src: guideImage(path), width, height, fit: 'cover', format, quality: format === 'avif' ? 40 : 65 }),
+    ),
+  );
+  return { avif: avif.src, webp: webp.src };
+}
+const thumbs = new Map<string, { avif: string; webp: string }>();
+for (const path of new Set([...groups.destination, ...groups.guide].flatMap((entry) => entry.image ?? []))) {
+  thumbs.set(path, await picture(path, 96, 96));
+}
+const photos = await Promise.all(featured.map((place) => (place.photo ? picture(place.photo, 360, 270) : null)));
+---
+
+<div class:list={['search', { 'search--dialog': dialog }]} data-search data-search-id={id} data-search-sync={dialog ? undefined : ''}>
+  {/* Marks the panel before its first paint, so CSS shows the script's starting
+      state from the start: no layout shift when the script runs (CLS was 0.12
+      on a slow phone). Without JavaScript the mark never lands: a plain list. */}
+  <script is:inline>document.currentScript.parentElement.classList.add('search--js')</script>
+  <div class="search__bar" data-search-field>
+    <label class="search__label" for={`${id}-input`}>Destino, guía, lugar o sección</label>
+    <div class="search__box">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5" /></svg>
+      <input
+        class="search__input"
+        id={`${id}-input`}
+        type="search"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded="false"
+        aria-controls={`${id}-results`}
+        aria-describedby={`${id}-hint`}
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        enterkeyhint="search"
+        placeholder="Islandia, Gullfoss, presupuesto…"
+        data-search-input
+      />
+    </div>
+    <p class="search__hint" id={`${id}-hint`}>Sin tildes y con alguna errata también vale: «gulfos», «presupuesto islandia».</p>
+  </div>
+
+  <p class="search__status" role="status" data-search-status data-search-suggest-status={suggestStatus}>
+    {/* Both texts in the HTML, so the line has its final height from the first
+        paint: the list's summary without JavaScript, the suggestions' with it.
+        The script replaces them with its own text once it runs. */}
+    <span class="search__status-list">{resultsSummary(counts)}</span>
+    <span class="search__status-suggest">{suggestStatus}</span>
+  </p>
+
+  <div class="search__results" id={`${id}-results`} aria-label="Resultados" data-search-results>
+    <div class="search__group search__group--chips" aria-labelledby={`${id}-s-destination`} data-search-suggest>
+      <Heading class="search__group-label" id={`${id}-s-destination`}>Destinos</Heading>
+      {groups.destination.map((entry) => <a class="search__chip" href={entry.url} data-search-option>{entry.label}</a>)}
+    </div>
+    {featured.length > 0 && (
+      <div class="search__group search__group--featured" aria-labelledby={`${id}-s-place`} data-search-suggest>
+        <Heading class="search__group-label" id={`${id}-s-place`}>Lugares destacados</Heading>
+        {featured.map((place, i) => {
+          const photo = photos[i];
+          return (
+            <a class="search__card" href={place.url} data-search-option>
+              {photo ? (
+                <picture class="search__card-photo">
+                  <source type="image/avif" srcset={photo.avif} />
+                  <img src={photo.webp} alt="" width="360" height="270" loading="lazy" decoding="async" />
+                </picture>
+              ) : (
+                <span class="search__card-photo search__card-photo--empty" aria-hidden="true">{place.name.charAt(0)}</span>
+              )}
+              <span class="search__name">{place.name}</span>
+              <span class="search__detail">Día {place.day} · {destinationLabel(place.guide.destination)}</span>
+            </a>
+          );
+        })}
+      </div>
+    )}
+
+    {SEARCH_KINDS.map((kind) => (
+      <div class="search__group" aria-labelledby={`${id}-${kind}`} data-search-group={kind} data-search-cap={CAPS[kind]}>
+        <Heading class="search__group-label" id={`${id}-${kind}`}>{GROUPS[kind].label}</Heading>
+        {groups[kind].map((entry) => {
+          const thumb = entry.image ? thumbs.get(entry.image) : undefined;
+          return (
+            <a class="search__option" href={entry.url} data-search-option data-search-text={entry.text} data-search-context={entry.context || undefined}>
+              {thumb ? (
+                <picture class="search__thumb">
+                  <source type="image/avif" srcset={thumb.avif} />
+                  <img src={thumb.webp} alt="" width="48" height="48" loading="lazy" decoding="async" />
+                </picture>
+              ) : entry.day ? (
+                <span class="search__thumb search__thumb--day" aria-hidden="true">{entry.day}</span>
+              ) : entry.icon ? (
+                <span class="search__thumb search__thumb--icon"><SectionIcon name={entry.icon} /></span>
+              ) : (
+                <span class="search__thumb search__thumb--empty" aria-hidden="true">{entry.label.charAt(0)}</span>
+              )}
+              <span class="search__text">
+                <span class="search__name" data-search-name>{entry.label}</span>
+                <span class="search__detail">
+                  {entry.day ? `Día ${entry.day} · ${entry.detail}` : entry.detail}
+                  {entry.draft && <span class="pill pill--draft">Borrador</span>}
+                </span>
+              </span>
+            </a>
+          );
+        })}
+        <button class="search__more" type="button" data-search-more={GROUPS[kind].more} hidden></button>
+      </div>
+    ))}
+  </div>
+
+  <div class="search__empty" data-search-empty hidden>
+    <p>Sin resultados para «<span data-search-query />».</p>
+    <p>
+      Prueba con otra palabra o <button class="search__clear" type="button" data-search-clear>borra la búsqueda</button>
+      para ver las sugerencias. También puedes ver <a href="/#guias">todas las guías</a>.
+    </p>
+  </div>
+</div>
+
+<script>
+  import { SEARCH_KINDS, highlightRanges, matchScore, resultsSummary, searchTerms } from '../../lib/search.ts';
+  import type { SearchKind } from '../../lib/search.ts';
+
+  // Every search panel on the page, each on its own.
+  for (const root of document.querySelectorAll<HTMLElement>('[data-search]')) {
+    const id = root.dataset.searchId;
+    const input = root.querySelector<HTMLInputElement>('[data-search-input]')!;
+    const status = root.querySelector<HTMLElement>('[data-search-status]')!;
+    const results = root.querySelector<HTMLElement>('[data-search-results]')!;
+    const empty = root.querySelector<HTMLElement>('[data-search-empty]')!;
+    const queryEcho = root.querySelector<HTMLElement>('[data-search-query]')!;
+    const suggestions = [...root.querySelectorAll<HTMLElement>('[data-search-suggest]')];
+    const groups = SEARCH_KINDS.map((kind) => {
+      const el = root.querySelector<HTMLElement>(`[data-search-group="${kind}"]`)!;
+      return {
+        kind,
+        el,
+        cap: Number(el.dataset.searchCap),
+        more: el.querySelector<HTMLButtonElement>('[data-search-more]')!,
+        entries: [...el.querySelectorAll<HTMLElement>('[data-search-text]')].map((option) => {
+          const name = option.querySelector<HTMLElement>('[data-search-name]')!;
+          return { el: option, name, label: name.textContent ?? '', text: option.dataset.searchText ?? '', context: option.dataset.searchContext };
+        }),
+      };
+    });
+    const expanded = new Set<SearchKind>();
+    let options: HTMLElement[] = [];
+    let active = -1;
+    let announce: number | undefined;
+
+    // The combobox's roles go on with the script: without it these are plain links.
+    results.setAttribute('role', 'listbox');
+    // A listbox holds only groups and options: each group's heading becomes its plain label (aria-labelledby).
+    for (const group of results.children) group.setAttribute('role', 'group');
+    for (const label of results.querySelectorAll('.search__group-label')) label.setAttribute('role', 'none');
+    for (const [n, option] of root.querySelectorAll<HTMLElement>('[data-search-option], [data-search-more]').entries()) {
+      option.id = `${id}-option-${n}`;
+      option.setAttribute('role', 'option');
+      option.setAttribute('aria-selected', 'false');
+      option.tabIndex = -1;
+    }
+
+    const setActive = (index: number) => {
+      options[active]?.setAttribute('aria-selected', 'false');
+      active = index;
+      const option = options[active];
+      if (option) {
+        option.setAttribute('aria-selected', 'true');
+        input.setAttribute('aria-activedescendant', option.id);
+        option.scrollIntoView({ block: 'nearest' });
+      } else input.removeAttribute('aria-activedescendant');
+    };
+
+    // The matched letters in <mark>, built as nodes: the query never becomes HTML.
+    const highlight = (name: HTMLElement, label: string, query: string) => {
+      const parts: (string | HTMLElement)[] = [];
+      let at = 0;
+      for (const [start, end] of highlightRanges(label, query)) {
+        const mark = document.createElement('mark');
+        mark.textContent = label.slice(start, end);
+        parts.push(label.slice(at, start), mark);
+        at = end;
+      }
+      parts.push(label.slice(at));
+      name.replaceChildren(...parts);
+    };
+
+    const update = (immediate = false) => {
+      const query = input.value.trim();
+      const terms = searchTerms(query);
+      const suggesting = terms.length === 0;
+      const counts = {} as Record<SearchKind, number>;
+      for (const el of suggestions) el.hidden = !suggesting;
+      for (const group of groups) {
+        const hits = suggesting
+          ? []
+          : group.entries
+              .map((entry, index) => ({ entry, index, score: matchScore(entry, terms) }))
+              .filter((hit) => hit.score !== null)
+              .sort((a, b) => a.score! - b.score! || a.index - b.index);
+        counts[group.kind] = hits.length;
+        for (const entry of group.entries) entry.el.hidden = true;
+        const all = expanded.has(group.kind);
+        hits.forEach(({ entry }, n) => {
+          group.el.insertBefore(entry.el, group.more);
+          entry.el.hidden = n >= group.cap && !all;
+          if (!entry.el.hidden) highlight(entry.name, entry.label, query);
+        });
+        const [article, noun] = group.more.dataset.searchMore!.split('|');
+        group.more.textContent = `Ver ${article} ${hits.length} ${noun}`;
+        group.more.hidden = all || hits.length <= group.cap;
+        group.el.hidden = hits.length === 0;
+      }
+      const total = SEARCH_KINDS.reduce((sum, kind) => sum + counts[kind], 0);
+      empty.hidden = suggesting || total > 0;
+      queryEcho.textContent = query;
+      options = [...results.querySelectorAll<HTMLElement>('[role="option"]')].filter((option) => !option.closest('[hidden]'));
+      active = -1;
+      setActive(-1);
+      input.setAttribute('aria-expanded', String(options.length > 0));
+      if (root.dataset.searchSync !== undefined) {
+        history.replaceState(history.state, '', query ? `?q=${encodeURIComponent(query)}` : location.pathname);
+      }
+      // Announced once typing pauses, not on every key.
+      clearTimeout(announce);
+      const say = () => (status.textContent = suggesting ? status.dataset.searchSuggestStatus! : resultsSummary(counts));
+      if (immediate) say();
+      else announce = window.setTimeout(say, 400);
+    };
+
+    input.addEventListener('input', () => {
+      expanded.clear();
+      update();
+    });
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (!options.length) return;
+        const step = event.key === 'ArrowDown' ? 1 : -1;
+        setActive(active < 0 && step < 0 ? options.length - 1 : (active + step + options.length) % options.length);
+      } else if (event.key === 'Enter') {
+        const option = options[active] ?? options[0];
+        if (!option) return;
+        event.preventDefault();
+        option.click();
+      } else if (event.key === 'Escape' && active >= 0 && root.dataset.searchSync !== undefined) {
+        // On the page, the first Escape leaves the results; the next clears the field.
+        event.preventDefault();
+        setActive(-1);
+      }
+    });
+    for (const group of groups) {
+      group.more.addEventListener('click', () => {
+        // The option that takes the button's place becomes the active one.
+        const index = options.indexOf(group.more);
+        expanded.add(group.kind);
+        update();
+        input.focus();
+        if (index >= 0) setActive(index);
+      });
+    }
+    root.querySelector('[data-search-clear]')!.addEventListener('click', () => {
+      input.value = '';
+      update();
+      input.focus();
+    });
+
+    // /buscar/?q=gullfoss starts with the search done: a shared link, or the header's button.
+    if (root.dataset.searchSync !== undefined) input.value = new URLSearchParams(location.search).get('q') ?? '';
+    update(true);
+    root.classList.add('search--ready');
+  }
+</script>

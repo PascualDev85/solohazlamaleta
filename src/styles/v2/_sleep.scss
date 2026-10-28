@@ -1,0 +1,210 @@
+@use "../abstracts" as *;
+
+// "Dónde dormir": one compact card per campsite. Folded it says the name, what
+// we paid, what it has and one line of opinion; open, the rest. Native
+// <details>, no script. Each card is the target of "Noche → …" on its day.
+[data-design="v2"] .sleep {
+  // How the nights went, in one line of pills under the heading.
+  &__tally {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  &__tally strong {
+    font-weight: 900;
+    color: var(--color-text);
+  }
+
+  &__intro {
+    margin: 0 0 var(--space-lg);
+  }
+
+  // Room between one zone's last card and the next zone's kicker. The second
+  // compound is written out: '&__zone + &__zone' would repeat the
+  // [data-design] parent and never match.
+  &__zone + .sleep__zone {
+    margin-top: var(--space-lg);
+  }
+
+  &__zone-name {
+    margin: var(--space-2xs) 0 var(--space-2xs);
+  }
+
+  &__zone-desc {
+    margin: 0 0 var(--space-sm);
+  }
+
+  &__list {
+    display: grid;
+    gap: var(--space-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    // Desktop: two cards a row per zone. Cards in a row share its height,
+    // so folded ones line up; an open card makes its row taller.
+    @include from("md") {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+[data-design="v2"] .camp {
+  // Anchor jumps from a day card land with the card in view, under the header.
+  scroll-margin-top: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-soft);
+
+  // The nights spent here, as small chips at the top of the card, each a
+  // link back to its day.
+  &__nights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin: 0;
+    padding: var(--space-sm) var(--space-md) 0;
+  }
+
+  &__night {
+    @include tap-area;
+
+    // Over the card's summary (positioned, and later in the page), so the
+    // chip's tap area reaches into its top padding.
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.1rem 0.6rem 0.1rem 0.45rem;
+    border-radius: 999px;
+    background: linear-gradient(145deg, var(--color-blush-from), var(--color-blush-to));
+    border: 1px solid var(--color-blush-edge);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--color-label-on-blush);
+
+    .section-icon {
+      width: 0.85rem;
+      height: 0.85rem;
+    }
+  }
+
+  &__summary {
+    position: relative;
+    display: grid;
+    gap: var(--space-2xs);
+    padding: var(--space-md) var(--space-md);
+    padding-right: 2.5rem;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  // Name, then what we paid on its own line: the same shape on every card,
+  // whatever the length of the name.
+  &__head {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  &__name {
+    font-family: var(--font-display);
+    font-size: var(--step-0);
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  &__price {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--color-accent);
+  }
+
+  &__price-unit {
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+
+  // What it has, as small pills: duchas, baños, sala común, electricidad.
+  &__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  &__fact {
+    padding: 0.1rem 0.55rem;
+    border-radius: 999px;
+    background: var(--color-pill-bg);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  &__opinion {
+    margin-top: var(--space-2xs);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  // The chevron (.fold-chevron) sits at the right of the first line.
+  &__chevron {
+    position: absolute;
+    top: calc(var(--space-md) + 0.45rem);
+    right: var(--space-md);
+  }
+
+  &__more {
+    display: grid;
+    gap: var(--space-xs);
+    padding: 0 var(--space-md) var(--space-md);
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__links {
+    display: flex;
+    gap: var(--space-md);
+    font-family: var(--font-display);
+    font-weight: 800;
+
+    a {
+      @include tap-area;
+
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .section-icon {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  @include from("sm") {
+    &__summary,
+    &__more,
+    &__nights {
+      padding-inline: var(--space-lg);
+    }
+
+    &__chevron {
+      right: var(--space-lg);
+    }
+  }
+}

@@ -1,0 +1,70 @@
+---
+import { formatWholePrice } from '../../lib/formatPrice.ts';
+import SectionIcon from './SectionIcon.astro';
+
+interface Props {
+  currency: string;
+  budgetPerPerson?: number;
+  budgetTotal?: number;
+  budgetHref?: string;
+  pace?: 'intensivo' | 'equilibrado' | 'tranquilo';
+  vehicle?: string;
+  baseArea?: string;
+}
+
+const { currency, budgetPerPerson, budgetTotal, budgetHref, pace, vehicle, baseArea } = Astro.props;
+
+const paceLabel = { intensivo: 'Intensivo', equilibrado: 'Equilibrado', tranquilo: 'Tranquilo' };
+
+// "**word**" marks the one word to stress (1.7.2, summary.getting_around).
+// Split into plain and strong pieces; Astro escapes both, so no HTML gets in.
+const vehicleParts = (vehicle ?? '').split('**').map((text, i) => ({ text, strong: i % 2 === 1 }));
+---
+
+<div class="quick-facts">
+  <h2 class="quick-facts__title" id="quick-facts-title">Datos de este viaje</h2>
+  {/*
+    A named, focusable region so the row can be reached and scrolled from the
+    keyboard. The fade at its right edge says "there is more" and clears as
+    the row reaches its end (pure CSS, see _overview.scss); nothing is ever
+    hidden from screen readers.
+  */}
+  <div class="quick-facts__rail" role="region" aria-labelledby="quick-facts-title" tabindex="0">
+  <ul class="quick-facts__list">
+    {budgetPerPerson != null && (
+      <li class="quick-facts__tile quick-facts__tile--wide">
+        <p class="quick-facts__label"><SectionIcon name="wallet" />Presupuesto</p>
+        <p class="quick-facts__value">
+          <span class="quick-facts__big">{formatWholePrice(budgetPerPerson, currency)}</span><span class="quick-facts__unit">/pers.</span>
+        </p>
+        {budgetTotal != null && (
+          <p class="quick-facts__note">
+            {formatWholePrice(budgetTotal, currency)} en total
+            {budgetHref && <a href={budgetHref}>Ver desglose</a>}
+          </p>
+        )}
+      </li>
+    )}
+    {vehicle && (
+      <li class="quick-facts__tile">
+        <p class="quick-facts__label"><SectionIcon name="transport" />Vehículo</p>
+        <p class="quick-facts__value quick-facts__value--plain">
+          {vehicleParts.map((part) => (part.strong ? <strong>{part.text}</strong> : part.text))}
+        </p>
+      </li>
+    )}
+    {baseArea && (
+      <li class="quick-facts__tile">
+        <p class="quick-facts__label"><SectionIcon name="tent" />Dónde dormir</p>
+        <p class="quick-facts__value">{baseArea}</p>
+      </li>
+    )}
+    {pace && (
+      <li class="quick-facts__tile">
+        <p class="quick-facts__label"><SectionIcon name="pace" />Ritmo</p>
+        <p class="quick-facts__value">{paceLabel[pace]}</p>
+      </li>
+    )}
+  </ul>
+  </div>
+</div>

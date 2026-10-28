@@ -1,0 +1,16 @@
+---
+interface Props {
+  title: string;
+  /** Pages of the hub, from hubMembers: each links to its URL by its title. */
+  links: { url: string; title: string }[];
+}
+
+const { title, links } = Astro.props;
+---
+
+<div class="hub-links">
+  <p class="kicker">{title}</p>
+  <ul class="link-row">
+    {links.map((link) => <li><a href={link.url}>{link.title}</a></li>)}
+  </ul>
+</div>

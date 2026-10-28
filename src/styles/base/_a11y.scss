@@ -1,0 +1,43 @@
+@use "../abstracts" as *;
+
+// Visible focus is a requirement, never a style preference.
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+// Hidden with the same clip as .visually-hidden until it takes focus, not
+// moved 9999px off screen: audit tools flagged that as content outside the
+// viewport, and the clip keeps it in reading order all the same.
+.skip-link {
+  position: absolute;
+
+  &:not(:focus) {
+    @include visually-hidden;
+  }
+
+  &:focus {
+    left: var(--space-sm);
+    top: var(--space-sm);
+    z-index: 10;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-bg);
+    border: 2px solid var(--color-accent);
+    border-radius: var(--radius);
+  }
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

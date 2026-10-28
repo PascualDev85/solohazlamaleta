@@ -1,0 +1,504 @@
+@use "../abstracts" as *;
+
+// One slide per day: the day's title and summary above, then the card. The
+// photo opens the card, clean, with the day's numbers at its foot, then the
+// way through the day and its first stop. The rest of the stops unfold in place and the full
+// story opens in a sheet.
+// This partial paints the slide and the card's own frame: title, photo and
+// overlay, "Lo mejor del día", "Ver N paradas más" and "Ver día completo".
+// Each stop's line lives in _day-stop.scss and the full-day sheet in
+// _day-sheet.scss: each has a component of its own (DayStop, DaySheet) and
+// grows with it. guide-v2.scss loads the three in this order, which is the
+// order the rules had when they were one file.
+[data-design="v2"] {
+  .day {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    // Anchor jumps from the index land with room above the slide.
+    scroll-margin-top: var(--space-lg);
+  }
+
+  .day__head {
+    padding-inline: 0.25rem;
+  }
+
+  .day__title {
+    margin: 0;
+    font-family: var(--font-headline);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+  }
+
+  .day__n {
+    color: var(--color-label);
+  }
+
+  // In full: the summary is the day's own line, never cut.
+  .day__summary {
+    margin: var(--space-2xs) 0 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  .day-card {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg);
+    box-shadow: var(--shadow-soft);
+
+    p {
+      margin: 0;
+    }
+
+    :where(ol, ul) {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  }
+
+  // The top of the card: the photo, full-bleed and tall (4:5), with the day's
+  // numbers on a dark band at its foot and nothing else on it: the day's
+  // number is in the title above, the caption's place is the alt text.
+  // Photo and shade share one grid cell, the shade at its foot. When the
+  // shade grows taller than the photo (a large browser text size on a small
+  // phone), the cell, and the photo with it, grows to hold it, rather than
+  // cutting off its first line.
+  .day-card__media {
+    position: relative;
+    display: grid;
+    // Clips the photo when it pans inside its frame (see _route.scss).
+    overflow: hidden;
+    color: #fff;
+  }
+
+  // No photo: the same block on a light, neutral ground (--day-placeholder,
+  // set in _tokens.scss for light and dark), in normal flow and in the page's
+  // own text colours, so it reads as a designed panel, not a missing image.
+  .day-card__media--empty {
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--day-placeholder);
+    color: var(--color-text);
+
+    .day-card__route {
+      color: var(--color-text);
+      text-shadow: none;
+
+      li + li::before {
+        color: var(--color-text-muted);
+      }
+    }
+
+    .day-card__facts,
+    .day-card__night {
+      color: var(--color-text-muted);
+
+      .section-icon {
+        color: var(--color-accent);
+      }
+
+      strong {
+        color: var(--color-text);
+      }
+    }
+  }
+
+  // Off screen, the photo is neither laid out nor fetched (content-visibility),
+  // so the first cards' photos do not share bandwidth with the cover while it
+  // is the LCP. The figure carries the photo's ratio itself, so its height is
+  // known while skipped and nothing moves when it renders.
+  .day-card__figure {
+    grid-area: 1 / 1;
+    align-self: stretch;
+    margin: 0;
+    aspect-ratio: 4 / 5;
+    content-visibility: auto;
+  }
+
+  .day-card__photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 50%;
+    background: var(--color-surface);
+  }
+
+  // Route, facts and night at the photo's foot. The dark shade lives on this
+  // block only: a short fade just above the first line, solid enough behind
+  // the text for white type, and the rest of the photo stays clear. Its height
+  // follows the text, so a day with fewer lines darkens less.
+  .day-card__overlay {
+    position: relative;
+    z-index: 2;
+    grid-area: 1 / 1;
+    align-self: end;
+    display: grid;
+    gap: 0.3rem;
+    padding: 2rem var(--space-md) 0.85rem;
+    background: linear-gradient(
+      180deg,
+      transparent 0,
+      rgb(8 14 20 / 0.62) 2rem,
+      rgb(8 14 20 / 0.82) 100%
+    );
+  }
+
+  .day-card__media--empty .day-card__overlay {
+    position: static;
+    padding: 0;
+    background: none;
+  }
+
+  // Everything in the body is sized in em from this one value, so on small
+  // phones (the type scale in _day-stop.scss) the whole body scales with the stop's name.
+  .day-card__body {
+    display: grid;
+    gap: var(--space-xs);
+    padding: 0.5rem var(--space-md) var(--space-md);
+    font-size: 1rem;
+
+    @include from("sm") {
+      padding-inline: var(--space-lg);
+    }
+  }
+
+  // "Lo mejor del día": a slim coral strip after the visible stops. Folded it is one line with a "+"; open, the line slides out inside
+  // the same strip and the "+" turns into a "×". Native <details>, no script.
+  // Upright type: the italic face is never loaded.
+  .day-card__highlight {
+    border: 1px solid var(--color-blush-edge);
+    border-radius: 0 1.1rem 1.1rem 0;
+    background: linear-gradient(135deg, var(--color-blush-from), var(--color-blush-to));
+
+    &[open] {
+      flex-basis: 100%;
+    }
+
+    > summary {
+      @include tap-area;
+
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+    }
+
+    > summary:focus-visible {
+      outline: 2px solid var(--color-label);
+      outline-offset: 2px;
+      border-radius: inherit;
+    }
+
+    p {
+      padding: 0.1rem 0.85rem 0.6rem calc(0.25rem + 1.5rem + 0.4rem);
+      font-family: var(--font-body);
+      font-size: 0.8125em;
+      line-height: 1.5;
+      color: var(--color-text);
+    }
+
+    // Smooth unfold where the browser can animate to "auto" height.
+    @supports (interpolate-size: allow-keywords) {
+      interpolate-size: allow-keywords;
+
+      &::details-content {
+        block-size: 0;
+        overflow: clip;
+        transition:
+          block-size 0.3s var(--ease-out),
+          content-visibility 0.3s allow-discrete;
+      }
+
+      &[open]::details-content {
+        block-size: auto;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        &::details-content {
+          transition: none;
+        }
+      }
+    }
+  }
+
+  .day-card__highlight-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    background: var(--color-bg);
+    color: var(--color-label);
+    transition: transform 0.4s var(--ease-out);
+
+    .section-icon {
+      width: 0.85em;
+      height: 0.85em;
+    }
+  }
+
+  .day-card__highlight[open] .day-card__highlight-icon {
+    transform: rotate(72deg);
+  }
+
+  .day-card__highlight-label {
+    flex: 1;
+    font-family: var(--font-display);
+    font-size: 0.625em;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-label-on-blush);
+  }
+
+  // A "+" drawn with two bars; open, it turns a quarter and a half into "×".
+  .day-card__highlight-toggle {
+    position: relative;
+    flex: none;
+    width: 0.625rem;
+    height: 0.625rem;
+    color: var(--color-label);
+    transition: transform 0.3s var(--ease-out);
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 50% 0 auto;
+      height: 2px;
+      margin-top: -1px;
+      border-radius: 2px;
+      background: currentColor;
+    }
+
+    &::after {
+      transform: rotate(90deg);
+    }
+  }
+
+  .day-card__highlight[open] .day-card__highlight-toggle {
+    transform: rotate(135deg);
+  }
+
+  .day-card__chevron {
+    width: 0.45rem;
+    height: 0.45rem;
+    margin: 0 0.15rem 0.2rem 0.1rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.2s var(--ease-out);
+  }
+
+  details[open] > summary .day-card__chevron {
+    margin-bottom: -0.15rem;
+    transform: rotate(-135deg);
+  }
+
+  // The way through the day: the stops in order, in a line that wraps onto a
+  // second one when it has to (a third from seven route stops, a fourth from
+  // nine), never scrolls.
+  .day-card__route {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 0.15rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: #fff;
+    text-shadow: 0 1px 8px rgb(0 0 0 / 0.35);
+
+    li {
+      flex: none;
+    }
+
+    // The arrow is drawn, not read: its alternative text is empty, so a
+    // screen reader says "Kvernufoss", not "flecha Kvernufoss". Browsers
+    // without the "/ alt" syntax keep the first declaration.
+    li + li::before {
+      content: "→";
+      content: "→" / "";
+      margin-inline: 0.25em;
+      font-weight: 600;
+      color: rgb(255 255 255 / 0.7);
+    }
+  }
+
+  // One line each: the numbers of the day, then where it ends. From 350px
+  // the type scale (in _day-stop.scss) keeps each on one line; narrower, a line may wrap,
+  // but nothing is ever cut off.
+  // Gaps and icons in em: when the type shrinks on a small phone (type scale
+  // in _day-stop.scss), the whole line shrinks with it.
+  .day-card__facts,
+  .day-card__night {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.15rem 1em;
+    white-space: nowrap;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: rgb(255 255 255 / 0.9);
+
+    .section-icon {
+      flex: none;
+      width: 1.25em;
+      height: 1.25em;
+      color: #a9d0ea;
+    }
+  }
+
+  .day-card__facts li,
+  .day-card__fact {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+  }
+
+  // "Noche → Camping Árnes": label, arrow and name sit closer together.
+  .day-card__fact--night {
+    gap: 0.4em;
+  }
+
+  // The night's campsite: a link to its card in "Dónde dormir", white like the
+  // rest of the line, underlined so it reads as a link on the photo.
+  .day-card__night-link {
+    position: relative;
+    font-weight: 800;
+    color: #fff;
+    text-decoration-color: rgb(255 255 255 / 0.55);
+    text-underline-offset: 0.15em;
+
+    &:hover {
+      text-decoration-color: #fff;
+    }
+
+    // An invisible layer makes the tap area 44×44px around a 19px line
+    // (WCAG 2.5.8 asks 24px; 44px is the recommended size). Same on the stop
+    // marks (_day-stop.scss): the target grows, the drawing does not. The insets are in
+    // % of the element itself, so the area is 46px (44 plus sub-pixel
+    // headroom) whatever the card's type scale, and never smaller than the
+    // element.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: min(0px, calc(50% - 23px));
+    }
+  }
+
+  .day-card__media--empty .day-card__night-link {
+    color: var(--color-text);
+    text-decoration-color: var(--color-accent);
+  }
+
+  .day-card__stops {
+    margin-top: calc(-1 * var(--space-2xs)) !important;
+  }
+
+  // Folded: "Lo mejor del día" and "Ver N paradas más" share one line.
+  .day-card__extras {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xs);
+  }
+
+  // Folded, only the first stop shows; "Ver N paradas más" reveals the rest in
+  // place, above "Lo mejor del día", and turns into "Ver menos" below it.
+  .day-card:has(.day-card__more:not([open])) .day-stop:nth-child(n + 2) {
+    display: none;
+  }
+
+  // "Ver N paradas más": a text link, not a button. The <details> only holds
+  // the toggle; the stops it reveals sit above it (see the :has rule).
+  .day-card__more {
+    > summary {
+      @include tap-area;
+
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      min-height: 2.25rem;
+      color: var(--color-accent);
+      font-family: var(--font-display);
+      font-size: 0.8125em;
+      font-weight: 800;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+      }
+    }
+
+  }
+
+  .day-card__more-close,
+  .day-card__more[open] .day-card__more-open {
+    display: none;
+  }
+
+  .day-card__more[open] .day-card__more-close {
+    display: inline;
+  }
+
+  // "Ver día completo": same family as the index bar, centred.
+  .day-card__full {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    width: 100%;
+    min-height: 2.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: 800 0.9375em / 1 var(--font-display);
+    cursor: pointer;
+    transition:
+      border-color 0.2s var(--ease-out),
+      background 0.2s var(--ease-out);
+
+    .section-icon {
+      width: 1.2em;
+      height: 1.2em;
+      color: var(--color-accent);
+      transition: transform 0.2s var(--ease-out);
+    }
+
+    &:hover {
+      border-color: var(--color-accent);
+
+      .section-icon {
+        transform: translateX(3px);
+      }
+    }
+  }
+}
