@@ -27,6 +27,33 @@ pendiente va marcado **comprobar**.
 
 ---
 
+## Hecho el 28 de octubre
+
+- **#75**: dependencias de la semana (Astro 7.4.1 y tres más; una vulnerabilidad moderada menos).
+- **#50**: coordenadas y fichas de Maps de Grafarkirkja, Landbrotalaug y Stuðlagil, mezcladas tal
+  cual. Sus dos preguntas siguen abiertas (4.1).
+- **#56**: la lista de comprobación del 21, como histórico.
+- **#77**: los 67 lugares con la fecha general caducada, verificados en fuentes oficiales
+  (`docs/fuentes/verificacion-lugares-2026-10-28.md`). Lo que más cambia en la guía:
+  - **Gullfoss** cobra el aparcamiento: 1.080 ISK cada 4 h.
+  - **Aparcamientos de pago** en Gluggafoss, Hengifoss, Hafnarhólmi, Skaftafell (Svartifoss) y
+    Djúpalónssandur. Este último paga la tarifa nueva del Parque Nacional de Snæfellsjökull.
+  - **Glaumbær** cobra entrada (2.200 ISK) y **Víðimýrarkirkja** abre por dentro en verano.
+  - **Keldur** cierra en septiembre y la **cueva de Fardagafoss** se ha derrumbado.
+  - Los avisos de datos caducados pasan de 90 a 75.
+
+Pendiente de esto:
+
+- [ ] **Tasa nueva en proyecto** (vigilar, 0 min hoy): cobro a los no residentes en Geysir,
+      Gullfoss y Þingvellir desde mayo de 2027, de 3.000 a 4.500 ISK. Si se aprueba, cambia el
+      día 2 y el presupuesto.
+- [ ] **Duraciones que no cuadran con la oficial** (5 min): Leirhnjúkur 45 min frente a 1-3 h.
+      Hengifoss y Glymur ya llevan el dato oficial en sus notas.
+- [ ] **35 lugares sin fuente oficial**: siguen avisando de caducados. La lista está en el documento
+      del 28. Se cierran a mano o en el próximo viaje.
+- [ ] **#76, Macedonia del Norte**: otra guía de la rutina semanal en el formato antiguo, como #54 y
+      #12. No se ha tocado, y va con la misma pregunta: ¿se adapta la rutina al formato del motor?
+
 ## 1-2. Portada y hub: hecho el 22 de octubre
 
 - **Portada, menú, buscador v2, postales 3D, fotos nítidas, áreas de toque y
@@ -89,8 +116,7 @@ defecto (hace falta una imagen de marca) y `author`/`datePublished` en el
 
 ### 4.1. #50 · Coordenadas de Grafarkirkja, Landbrotalaug y Stuðlagil (5 min)
 
-No es borrador, CI en verde, sin conflictos. Trae las coordenadas y fichas de
-Maps de tus enlaces del 20 oct.
+Mezclada el 28 de octubre. Siguen abiertas sus dos preguntas:
 
 - [ ] **Stuðlagil:** la nota dice "ruta de unos 5 km, unos 45 minutos de
       ida". ¿Cuenta desde el parking de la ficha (lado este, tras cruzar el
