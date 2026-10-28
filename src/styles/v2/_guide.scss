@@ -33,6 +33,41 @@
     color: var(--color-pill-text);
   }
 
+  // "Lo hicimos" in the lived colour; "Borrador" outlined in the label coral,
+  // so a draft reads as a warning, not as one more fact.
+  .pill--lived {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+
+  .pill--draft {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--color-label);
+    color: var(--color-label);
+  }
+
+  // A few links in a row, dot-separated: the guide's closing and the hub's
+  // lists of guides and satellites. Padded to a 40px tap target.
+  .link-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-display);
+
+    li + li::before {
+      content: "·";
+      margin: 0 var(--space-xs);
+      color: var(--color-text-muted);
+    }
+
+    a {
+      display: inline-block;
+      padding: 0.5rem 0;
+    }
+  }
+
   // The chevron of a folding card's summary; it turns when the card opens.
   .fold-chevron {
     flex: none;
@@ -79,6 +114,26 @@
     font-family: var(--font-display);
     font-style: normal;
     font-weight: 700;
+  }
+
+  // The one line that sends "Lo práctico" to the hub (1.13 §3): the section's
+  // icon, then the link. It sits between two sections and takes their gap.
+  &__hub-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: var(--space-2xl) 0 0;
+    font-family: var(--font-display);
+
+    .section-icon {
+      flex: none;
+      color: var(--color-accent);
+    }
+  }
+
+  // The page's end (1.9 B.11): where to go next while preparing the trip.
+  &__next {
+    margin: var(--space-2xl) 0 0;
   }
 
   &__verified {

@@ -1,4 +1,4 @@
-import type { DaySource, PlaceSource, VariantSource } from '../../schemas/index.ts'
+import type { DaySource, GuideSource, PlaceSource, VariantSource } from '../../schemas/index.ts'
 import type { PlaceRegistry } from '../types.ts'
 import { resolvePlace } from '../compile/place.ts'
 
@@ -47,6 +47,29 @@ const INTERNAL_INSTRUCTIONS: [label: string, pattern: RegExp][] = [
   ['"TODO"', /(?<!\p{L})TODO(?!\p{L})/u],
   ['"implementador"', word('implementador(?:es|a)?')],
   ['texto entre corchetes', /\[[^\]]*\]/],
+]
+
+// Explicit sensitive data (CLAUDE.md: price, hours, rule, access), in the
+// order they are reported. Only unambiguous markers: a bare figure ("3-4 veces
+// más caro", "90 km/h", "2 h") or "gratis" does not count, so the warning
+// stays rare enough to be read.
+const SENSITIVE_DATA: [kind: string, patterns: RegExp[]][] = [
+  ['precio', [
+    word('\\d[\\d.,]*(?:\\s*-\\s*\\d[\\d.,]*)?\\s*(?:€|eur(?:os?)?|isk|kr|coronas?)'),
+    /[€$]\s*\d/,
+  ]],
+  ['horario', [
+    /(?<!\d)(?:[01]?\d|2[0-3]):[0-5]\d(?!\d)/,
+    word('a las \\d{1,2}'),
+  ]],
+  ['norma', [
+    word('solo (?:en )?efectivo'),
+    word('obligatori[oa]s?'),
+    word('prohibid[oa]s?'),
+    word('multas?'),
+    word('no (?:está|se) permit\\p{L}*'),
+  ]],
+  ['acceso', [word('cerrad[oa]s?')]],
 ]
 
 const MIN_ALT_LENGTH = 20
@@ -183,4 +206,43 @@ export function overnightSequenceWarnings(variant: VariantSource): string[] {
     }
   }
   return warnings
+}
+
+/** Kinds of explicit sensitive data in a text, in SENSITIVE_DATA order. */
+export function sensitiveDataKinds(text: string): string[] {
+  return SENSITIVE_DATA
+    .filter(([, patterns]) => patterns.some((pattern) => pattern.test(text)))
+    .map(([kind]) => kind)
+}
+
+const PRACTICAL_REVIEW_MONTHS = 12
+const MS_PER_MONTH = 1000 * 60 * 60 * 24 * 30
+
+/**
+ * Sensitive data in `practical` needs a check date (CLAUDE.md). The section
+ * carries one, `practical.verified_at` (decision 1A of #26, 1.7.2): with it,
+ * the entries are dated and only the date can go stale, after 12 months as
+ * a place's. Without it, every entry with explicit sensitive data warns.
+ */
+export function practicalUnverifiedWarnings(practical: GuideSource['practical'], now: Date = new Date()): string[] {
+  if (!practical) return []
+  if (practical.verified_at) {
+    const months = (now.getTime() - new Date(practical.verified_at).getTime()) / MS_PER_MONTH
+    return months > PRACTICAL_REVIEW_MONTHS
+      ? [`[WARNING] practical: datos sensibles comprobados el ${practical.verified_at}, hace más de 12 meses`]
+      : []
+  }
+  const entries: [path: string, text: string | undefined][] = [
+    ...(practical.documents ?? []).map((text, i) => [`documents[${i}]`, text] as [string, string]),
+    ['plugs', practical.plugs],
+    ...(practical.apps ?? []).map((text, i) => [`apps[${i}]`, text] as [string, string]),
+    ...(practical.tips ?? []).map((text, i) => [`tips[${i}]`, text] as [string, string]),
+    ['currency.notes', practical.currency?.notes],
+  ]
+  return entries.flatMap(([path, text]) => {
+    const kinds = text ? sensitiveDataKinds(text) : []
+    return kinds.length > 0
+      ? [`[WARNING] practical.${path}: dato sensible (${kinds.join(', ')}) sin fecha de verificación: "${text}"`]
+      : []
+  })
 }

@@ -3,6 +3,6 @@
 @use "abstracts/tokens";
 @use "base";
 @use "layout";
-// The old components (notice, badge, guide list, guide) are imported by the
+// The old components (notice, badge, guide) are imported by the
 // pages that use them (src/styles/v1-components.scss), not here: the redesigned
 // guide pages carry none of them.

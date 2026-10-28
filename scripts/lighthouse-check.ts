@@ -23,8 +23,21 @@ const THRESHOLD = 100
 // window ends near 43.8 KB), which costs 1 point of mobile performance with
 // nothing else changed. The author accepted 99 for this page only on
 // 2026-10-15 rather than move the day panels out of the HTML (docs/1.13 §5).
+//
+// The home page's pile of postcards in CSS 3D (components/home/HeroPostcards.astro)
+// leaves its mobile performance at 99: the simulated LCP lands one round trip
+// later (~1.96 s against ~1.88 s), with the three photos behind the front one
+// lazy and low priority. On 2026-10-21 the author asked for 3D on the home
+// page only if it keeps 99 or more on mobile and desktop; desktop stays at 100.
+//
+// Photo quality went up on 2026-10-22 (AVIF 52, the LCP photo 42; see
+// GuidePhoto): the author found the photos soft and chose sharpness. The
+// Islandia hub then gives 99 on mobile in every run (desktop 100); the
+// author kept the quality ("de momento lo dejamos así").
 const EXCEPTIONS: ThresholdException[] = [
   { page: '/islandia/islandia-en-camper-13-dias/', device: 'mobile', category: 'performance', threshold: 99 },
+  { page: '/', device: 'mobile', category: 'performance', threshold: 99 },
+  { page: '/islandia/', device: 'mobile', category: 'performance', threshold: 99 },
 ]
 const RUNS = 3
 const CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo']
@@ -38,9 +51,13 @@ if (!base || pages.length === 0) {
 
 const outDir = mkdtempSync(join(tmpdir(), 'lighthouse-'))
 
-/** Reads the built page from dist/ (run after `npm run build`), no network. */
+/**
+ * Reads the built page from dist/ (run after `npm run build`), no network.
+ * A page given as a file (/404.html) is read as is; a directory URL, from its index.html.
+ */
 function isNoindex(page: string): boolean {
-  const html = readFileSync(join('dist', page, 'index.html'), 'utf8')
+  const file = page.endsWith('.html') ? join('dist', page) : join('dist', page, 'index.html')
+  const html = readFileSync(file, 'utf8')
   return /<meta[^>]+name="robots"[^>]+noindex/i.test(html)
 }
 

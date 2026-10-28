@@ -175,6 +175,7 @@ export interface CompiledGuide {
   pitfalls?: string[]
   terrain_tips?: string[]
   practical?: CompiledPractical
+  when_to_go?: string[]
   adaptation_notes?: AdaptationNoteSource[]
   faq?: FaqItem[]
   related?: string[]

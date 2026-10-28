@@ -38,7 +38,7 @@ const price = parking ? formatWholePrice(parking.price, parking.currency) : unde
       <span class="day-stop__name">{place.name}</span>
       <span class="day-stop__time">
         <SectionIcon name="clock" />
-        <span class="day-stop__time-text">{formatDuration(stop.duration_min, stop.duration_max_min)}<span class="visually-hidden"> de visita</span></span>
+        <span>{formatDuration(stop.duration_min, stop.duration_max_min)}<span class="visually-hidden"> de visita</span></span>
         {stop.duration_note && (
           <details class="day-stop__hint">
             <summary class="day-stop__hike" aria-label="Qué incluye el tiempo de visita">

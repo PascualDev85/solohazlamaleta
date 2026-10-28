@@ -208,26 +208,30 @@ Hazlo contra la URL real (`pages.dev` o el dominio).
 
 ### 4.1. Borradores con `noindex` y fuera del sitemap (2 min)
 
-Hoy hay dos guías sin publicar:
+Hoy (2026-10-22) hay dos guías sin publicar, y el hub va con su guía:
 
 - `/alsacia/ruta-pueblos-y-vinos/` (borrador)
 - `/islandia/islandia-en-camper-13-dias/` (estado `reviewed`, aún no
   `published`)
+- `/islandia/`, el hub: `noindex` mientras ninguna guía suya esté publicada
+  (`isHubPublished`)
+- `/buscar/` y la 404 llevan `noindex` siempre
 
 1. Abre cada una. Clic derecho → **Ver código fuente**. Busca (Ctrl+F)
    `noindex`. Debe aparecer `<meta name="robots" content="noindex, nofollow">`.
 2. Abre `/sitemap-0.xml`. Deben salir solo: portada, `/afiliacion/`,
-   `/aviso-legal/`, `/privacidad/` y `/sobre-mi/`. **Ninguna guía.** (Es lo que
-   sale hoy en el build local.)
+   `/aviso-legal/`, `/privacidad/` y `/sobre-mi/`. **Ninguna guía, ni el hub,
+   ni `/buscar/`.** (Es lo que sale hoy en el build local.)
 3. Abre `/robots.txt`. Debe bloquear `/print/`, `/ir/` y `/ofertas/`.
 
 Si una guía en borrador aparece en el sitemap o sin `noindex`: no sigas,
 vuelve a la versión anterior (paso 7) y avisa.
 
-### 4.2. Cabeceras de `public/_headers` (3 min)
+### 4.2. Cabeceras de `_headers` (3 min)
 
-Hoy `public/_headers` **no está en `develop`**: está en la rama
-`feature/http-headers`, sin mergear. Haz esta comprobación cuando llegue.
+`public/_headers` está en `develop` desde el 20 de octubre (#43). El build le
+añade la CSP de cada página (`scripts/write-headers.ts`, por eso hace falta
+`NODE_VERSION = 24`).
 
 1. Abre la web en Chrome. Pulsa F12 → pestaña **Network** (Red).
 2. Recarga la página (F5). Pulsa en la primera fila (el documento HTML).
@@ -240,6 +244,13 @@ Hoy `public/_headers` **no está en `develop`**: está en la rama
    `cache-control: public, max-age=31536000, immutable`.
 5. Pestaña **Console**: no debe haber errores rojos de
    «Content Security Policy». Si los hay, algo de la página está bloqueado.
+
+### 4.2 bis. La 404 (1 min)
+
+Abre `/no-existe/`. Tiene que salir **«Te has salido del mapa»**, no la
+portada. Si sale la portada, `404.html` no está en el despliegue y Cloudflare
+ha entrado en modo SPA: cualquier URL inventada devolvería la portada con un
+200. Prueba también `/ir/no-existe/`.
 
 ### 4.3. Lighthouse contra la URL real (2 min)
 

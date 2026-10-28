@@ -42,3 +42,18 @@
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
+
+/// A tap area of at least 44×44px (WCAG 2.5.5) around a smaller control,
+/// without moving its drawing: an invisible layer centred on it. The insets
+/// are in % of the element itself, so the layer is 46px (44 plus sub-pixel
+/// headroom) whatever its size, and never smaller than the element. Takes
+/// ::after: the element must leave it free. test:ui hit-tests the result.
+@mixin tap-area {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: min(0px, calc(50% - 23px));
+  }
+}

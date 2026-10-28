@@ -13,3 +13,8 @@ export function guideImage(path: string): ImageMetadata {
   }
   return mod.default;
 }
+
+/** Every guide image, as paths relative to src/assets/guides/ ("islandia/gullfoss.jpg"). */
+export function guideImagePaths(): string[] {
+  return Object.keys(images).map((key) => key.slice('/src/assets/guides/'.length))
+}

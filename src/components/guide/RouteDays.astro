@@ -84,8 +84,9 @@ const glanceId = `${id}-vistazo`;
 
     {/* One row per day: the number on a rail, the title, then the stops in order and the night. Each row jumps to its card. */}
     <ol class="route-glance__days">
-      {days.map((day) => (
-        <li class="route-glance__day" id={`${glanceId}-dia-${day.day}`}>
+      {days.map((day, i) => (
+        // Only the last row carries an id: the "Hasta el día N" pill below links to it.
+        <li class="route-glance__day" id={i === days.length - 1 ? `${glanceId}-dia-${day.day}` : undefined}>
           <a href={`#${dayAnchorId(day.day)}`}>
             <span class="route-glance__n" aria-hidden="true">{twoDigitDay(day.day)}</span>
             <span class="route-glance__body">
@@ -139,7 +140,11 @@ const glanceId = `${id}-vistazo`;
   const markAtOpen = new WeakMap<HTMLDetailsElement, ScreenPoint>();
   const markPosition = (hint: HTMLDetailsElement): ScreenPoint => {
     const { top, left } = hint.querySelector('summary')!.getBoundingClientRect();
-    return { top, left };
+    // The page's offsets and those of every box around the mark that may
+    // scroll (the route rail, a day sheet).
+    const offsets = [scrollX, scrollY];
+    for (let el = hint.parentElement; el; el = el.parentElement) offsets.push(el.scrollLeft, el.scrollTop);
+    return { top, left, offsets };
   };
   document.addEventListener('click', (event) => {
     const hint = (event.target as Element).closest<HTMLDetailsElement>('.day-stop__hint');
