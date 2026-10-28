@@ -1,7 +1,7 @@
 {
   "meta": {
     "lang": "es",
-    "destination": "macedonia del norte",
+    "destination": "macedonia-del-norte",
     "title": "Macedonia del Norte en coche en 8 días: de Ohrid a Mavrovo entrando por Tirana",
     "description": "Ruta real en coche de 8 días por Macedonia del Norte entrando y saliendo por Tirana: Ohrid, Bitola, Prilep, Skopie, Matka y Mavrovo. Guía en borrador.",
     "type": "itinerary",
@@ -127,8 +127,8 @@
     },
     {
       "day": 3,
-      "title": "Bitola, el monumento de Ilinden en Kruševo y noche en Prilep",
-      "summary": "De Ohrid a Prilep parando en Bitola y en el monumento de Ilinden, en Kruševo. Trayecto total aprox. 3 h (160 km).",
+      "title": "Bitola, el monumento de Ilinden en Krusevo y noche en Prilep",
+      "summary": "De Ohrid a Prilep parando en Bitola y en el monumento de Ilinden, en Krusevo. Trayecto total aprox. 3 h (160 km).",
       "physicalLevel": {
         "walkingKm": 4,
         "hills": "some"
@@ -147,13 +147,13 @@
           }
         },
         {
-          "name": "Monumento de Ilinden (Kruševo)",
+          "name": "Monumento de Ilinden (Krusevo)",
           "lat": 41.3719,
           "lng": 21.2489,
           "kind": "sight",
           "durationMin": 60,
           "travelToNextMin": 40,
-          "notes": "El Makedonium, monumento a la revuelta de Ilinden, en Kruševo.",
+          "notes": "El Makedonium, monumento a la revuelta de Ilinden, en Krusevo.",
           "source": {
             "label": "Notas propias del viaje (planificación marzo 2025)"
           }
@@ -281,7 +281,7 @@
       },
       "stops": [
         {
-          "name": "Mezquita pintada de Tetovo (Šarena Džamija)",
+          "name": "Mezquita pintada de Tetovo (Sarena Dzamija)",
           "lat": 42.0095,
           "lng": 20.9712,
           "kind": "sight",
