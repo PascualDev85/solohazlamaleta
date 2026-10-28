@@ -343,4 +343,22 @@
   .search [hidden] {
     display: none !important;
   }
+
+  // Without JavaScript the panel is a plain list: no field, no suggestions.
+  // With it, an inline script marks the panel (.search--js) before its first
+  // paint, so it shows the script's starting state from the start: the field
+  // and the suggestions, no results until a query. The script then adds
+  // .search--ready and takes over with [hidden].
+  .search:not(.search--js) :is([data-search-field], [data-search-suggest]) {
+    display: none;
+  }
+
+  .search--js:not(.search--ready) .search__group:not([data-search-suggest]) {
+    display: none;
+  }
+
+  .search:not(.search--js) .search__status-suggest,
+  .search--js .search__status-list {
+    display: none;
+  }
 }
