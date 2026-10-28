@@ -1,0 +1,372 @@
+{
+  "meta": {
+    "lang": "es",
+    "destination": "macedonia del norte",
+    "title": "Macedonia del Norte en coche en 8 días: de Ohrid a Mavrovo entrando por Tirana",
+    "description": "Ruta real en coche de 8 días por Macedonia del Norte entrando y saliendo por Tirana: Ohrid, Bitola, Prilep, Skopie, Matka y Mavrovo. Guía en borrador.",
+    "type": "itinerary",
+    "days": [
+      8
+    ],
+    "tripDone": null,
+    "updatedAt": "2026-10-28",
+    "draft": true
+  },
+  "variants": {
+    "8": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "summary": {
+    "forWho": "Para grupos que quieran recorrer Macedonia del Norte en coche de alquiler en poco más de una semana, entrando y saliendo por el aeropuerto de Tirana.",
+    "budgetPerPerson": {
+      "min": 600,
+      "max": 650
+    },
+    "bestSeason": "Viaje planificado a finales de marzo y primeros de abril. PENDIENTE AUTOR: confirmar si esa época es la recomendable o conviene otra.",
+    "gettingAround": "Coche de alquiler imprescindible, recogido en el aeropuerto de Tirana. Es una ruta lineal: no se vuelve a la misma base, se duerme en cada parada.",
+    "baseArea": "Sin base fija: ruta en coche con alojamiento distinto cada noche (Tirana, Ohrid, Prilep, Skopie, Matka y Mavrovo).",
+    "pace": "medium"
+  },
+  "groups": [
+    "couple",
+    "friends",
+    "family_seniors"
+  ],
+  "days": [
+    {
+      "day": 1,
+      "title": "Llegada a Tirana y cruce a Ohrid",
+      "summary": "Noche de llegada en Tirana entre el 27 y el 28 de marzo, recogida del coche de alquiler en el aeropuerto y cruce de la frontera hacia Ohrid por el paso de Qafë Thanë.",
+      "physicalLevel": {
+        "walkingKm": 2,
+        "hills": "none"
+      },
+      "stops": [
+        {
+          "name": "Aeropuerto de Tirana (recogida del coche)",
+          "lat": 41.4147,
+          "lng": 19.7206,
+          "kind": "transport",
+          "durationMin": 60,
+          "travelToNextMin": 210,
+          "notes": "Llegada nocturna el 27 de marzo; noche en alojamiento cerca del aeropuerto antes de recoger el coche de alquiler por la mañana. Trayecto hasta Ohrid por Qafë Thanë: aprox. 3-3,5 h (150 km). PENDIENTE AUTOR: alojamiento concreto de esa noche (las notas dicen Hostel Rinas) y precio real.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        },
+        {
+          "name": "Ohrid (llegada)",
+          "lat": 41.1175,
+          "lng": 20.8016,
+          "kind": "stay",
+          "durationMin": 60,
+          "notes": "Llegada a Ohrid por la tarde/noche del 28 de marzo. PENDIENTE AUTOR: alojamiento concreto (las notas dicen Apartments Kanevce) y precio real.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR: qué haríais distinto en este día de llegada.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR.",
+        "family_seniors": "PENDIENTE AUTOR: valorar si el vuelo nocturno y recoger el coche a primera hora son razonables para mayores."
+      }
+    },
+    {
+      "day": 2,
+      "title": "Ohrid completo: casco antiguo, iglesias y el lago",
+      "summary": "Día entero en Ohrid: el casco antiguo y sus iglesias, el paseo junto al lago y la excursión al monasterio de San Naum.",
+      "physicalLevel": {
+        "walkingKm": 6,
+        "hills": "some"
+      },
+      "stops": [
+        {
+          "name": "Ohrid (casco antiguo y lago)",
+          "lat": 41.1175,
+          "lng": 20.8016,
+          "kind": "sight",
+          "durationMin": 360,
+          "travelToNextMin": 50,
+          "notes": "Qué ver: iglesia de San Juan de Kaneo, casco antiguo, teatro antiguo, iglesia de Santa Sofía, Plaosnik, la playa y el muelle, la bahía de los Huesos, paseo en barco por el lago y el pueblo de Trpejca. Actividad opcional: parapente. PENDIENTE AUTOR: tiempo real dedicado a cada parada y precio de entradas/parapente.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        },
+        {
+          "name": "Monasterio de San Naum",
+          "lat": 40.9122,
+          "lng": 20.745,
+          "kind": "sight",
+          "durationMin": 90,
+          "notes": "A unos 29 km al sur de Ohrid, cerca de la frontera con Albania. PENDIENTE AUTOR: coste de la entrada.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR: valorar recomendar el restaurante Fisherman's House en Ohrid; falta confirmar precio y si llegó a reservarse.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR: el parapente es una actividad opcional de este día, confirmar precio y proveedor.",
+        "family_seniors": "PENDIENTE AUTOR: el casco antiguo de Ohrid tiene cuestas; confirmar si fue manejable para mayores."
+      }
+    },
+    {
+      "day": 3,
+      "title": "Bitola, el monumento de Ilinden en Kruševo y noche en Prilep",
+      "summary": "De Ohrid a Prilep parando en Bitola y en el monumento de Ilinden, en Kruševo. Trayecto total aprox. 3 h (160 km).",
+      "physicalLevel": {
+        "walkingKm": 4,
+        "hills": "some"
+      },
+      "stops": [
+        {
+          "name": "Bitola",
+          "lat": 41.0297,
+          "lng": 21.3347,
+          "kind": "sight",
+          "durationMin": 150,
+          "travelToNextMin": 40,
+          "notes": "Qué ver: el centro histórico (Shirok Sokak). PENDIENTE AUTOR: detalle de qué se visitó exactamente.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        },
+        {
+          "name": "Monumento de Ilinden (Kruševo)",
+          "lat": 41.3719,
+          "lng": 21.2489,
+          "kind": "sight",
+          "durationMin": 60,
+          "travelToNextMin": 40,
+          "notes": "El Makedonium, monumento a la revuelta de Ilinden, en Kruševo.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR: valorar recomendar probar el burek (empanada) en esta zona; falta confirmar dónde y precio.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR.",
+        "family_seniors": "PENDIENTE AUTOR."
+      }
+    },
+    {
+      "day": 4,
+      "title": "Prilep y las Torres de Marko, noche en Skopie",
+      "summary": "De Prilep a Skopie, con parada en la fortaleza de Markovi Kuli (Torres de Marko). Trayecto aprox. 1 h 45 min (125 km).",
+      "physicalLevel": {
+        "walkingKm": 4,
+        "hills": "many"
+      },
+      "stops": [
+        {
+          "name": "Prilep y Markovi Kuli",
+          "lat": 41.3346,
+          "lng": 21.5531,
+          "kind": "sight",
+          "durationMin": 120,
+          "travelToNextMin": 105,
+          "notes": "Qué ver: el centro de Prilep y la fortaleza de Markovi Kuli (Torres de Marko).",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR.",
+        "family_seniors": "PENDIENTE AUTOR: Markovi Kuli es una subida a una fortaleza; confirmar el desnivel real."
+      }
+    },
+    {
+      "day": 5,
+      "title": "Skopie: puente de Piedra, fortaleza Kale y el monte Vodno",
+      "summary": "Día completo en Skopie: el centro histórico junto al río y la subida al monte Vodno.",
+      "physicalLevel": {
+        "walkingKm": 7,
+        "hills": "some"
+      },
+      "stops": [
+        {
+          "name": "Skopie (centro histórico)",
+          "lat": 41.9959,
+          "lng": 21.4318,
+          "kind": "sight",
+          "durationMin": 240,
+          "travelToNextMin": 30,
+          "notes": "Qué ver: puente de Piedra, plaza de Macedonia, fortaleza de Kale, antiguo bazar, casa memorial de la Madre Teresa, museo de la ciudad, iglesia de San Clemente de Ohrid y parque de la ciudad.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        },
+        {
+          "name": "Monte Vodno y Cruz del Milenio",
+          "lat": 41.9538,
+          "lng": 21.3999,
+          "kind": "sight",
+          "durationMin": 90,
+          "notes": "Mirador sobre Skopie. PENDIENTE AUTOR: cómo se subió (teleférico o carretera) y coste.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR.",
+        "family_seniors": "PENDIENTE AUTOR: confirmar cómo se subió al monte Vodno para valorar la opción con mayores."
+      }
+    },
+    {
+      "day": 6,
+      "title": "Skopie → Matka: barco, cueva y la cascada de Leshnica",
+      "summary": "De Skopie al cañón de Matka. Trayecto aprox. 1 h 15 min (45 km).",
+      "physicalLevel": {
+        "walkingKm": 3,
+        "hills": "some"
+      },
+      "stops": [
+        {
+          "name": "Cañón de Matka",
+          "lat": 41.9654,
+          "lng": 21.3089,
+          "kind": "activity",
+          "durationMin": 240,
+          "notes": "Actividades: paseo en barco por el embalse, visita a la cueva y la cascada de Leshnica. PENDIENTE AUTOR: precio del barco y de la entrada a la cueva.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR.",
+        "family_seniors": "PENDIENTE AUTOR."
+      }
+    },
+    {
+      "day": 7,
+      "title": "Matka → Tetovo, el monasterio de Bigorski y Mavrovo",
+      "summary": "De Matka al parque nacional de Mavrovo, parando en la mezquita pintada de Tetovo y el monasterio de Bigorski. Trayecto aprox. 1 h 45 min (90 km).",
+      "physicalLevel": {
+        "walkingKm": 4,
+        "hills": "some"
+      },
+      "stops": [
+        {
+          "name": "Mezquita pintada de Tetovo (Šarena Džamija)",
+          "lat": 42.0095,
+          "lng": 20.9712,
+          "kind": "sight",
+          "durationMin": 45,
+          "travelToNextMin": 40,
+          "notes": "Mezquita pintada de Tetovo.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        },
+        {
+          "name": "Monasterio de Bigorski",
+          "lat": 41.7919,
+          "lng": 20.6453,
+          "kind": "sight",
+          "durationMin": 60,
+          "travelToNextMin": 35,
+          "notes": "Según las notas, cerca también está la cascada de Duf. PENDIENTE AUTOR: ubicación exacta de la cascada de Duf, no localizada con certeza.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR.",
+        "family_seniors": "PENDIENTE AUTOR."
+      }
+    },
+    {
+      "day": 8,
+      "title": "Mavrovo → Tirana: devolución del coche y vuelo",
+      "summary": "Última mañana en el parque nacional de Mavrovo y regreso a Tirana para devolver el coche y coger el vuelo. Trayecto aprox. 3 h (150 km).",
+      "physicalLevel": {
+        "walkingKm": 3,
+        "hills": "some"
+      },
+      "stops": [
+        {
+          "name": "Parque Nacional de Mavrovo",
+          "lat": 41.6894,
+          "lng": 20.7158,
+          "kind": "sight",
+          "durationMin": 120,
+          "travelToNextMin": 180,
+          "notes": "Mañana libre: lo que falte de la ruta o, según las notas, un spa en Tirana.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        },
+        {
+          "name": "Tirana: devolución del coche y vuelo",
+          "lat": 41.4147,
+          "lng": 19.7206,
+          "kind": "transport",
+          "durationMin": 60,
+          "startTime": "15:00",
+          "notes": "Devolver el coche hacia las 15:00-15:30. Vuelo según las notas a las 18:00. PENDIENTE AUTOR: las notas dan dos horas distintas de llegada al aeropuerto (16:00 y 18:00); confirmar cuál es la correcta.",
+          "source": {
+            "label": "Notas propias del viaje (planificación marzo 2025)"
+          }
+        }
+      ],
+      "food": [],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {
+        "couple": "PENDIENTE AUTOR.",
+        "friends": "PENDIENTE AUTOR.",
+        "family_seniors": "PENDIENTE AUTOR."
+      }
+    }
+  ],
+  "lodging": [],
+  "bookingChecklist": [],
+  "pitfalls": [
+    "Pasaporte o DNI vigente, permiso de conducir vigente y la tarjeta del seguro del coche (Green Card si aplica).",
+    "Comprobar las restricciones de la tarjeta de crédito para alquileres de coche entre países (Albania y Macedonia del Norte).",
+    "Algunos alojamientos de la ruta suelen llenarse (las notas citan Grizzly Igloo en Skopie y Canyon Matka Hotel): reservar con antelación.",
+    "SIM local: One Albania o Vodafone, en Tirana.",
+    "Dos monedas en la ruta: lek albanés (ALL) en Albania y denar (MKD) en Macedonia del Norte."
+  ],
+  "faq": [],
+  "related": []
+}
