@@ -1,0 +1,67 @@
+// The 404 page: the v2 site frame (fonts, tokens, header and footer) without
+// the guide's components, so the page stays a few KB.
+@use "v2/fonts";
+@use "v2/tokens";
+@use "v2/base";
+
+[data-design="v2"] .not-found {
+  max-width: var(--measure-text);
+  margin-inline: auto;
+  padding-block: var(--space-lg) var(--space-md);
+
+  h1 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .not-found__lede {
+    font-size: var(--step-1);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  // The main exit, sized as a touch target (44px).
+  .not-found__home {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: var(--space-md);
+    border-radius: 999px;
+    background: var(--color-pill-bg);
+    color: var(--color-pill-text);
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .not-found__label {
+    font-size: var(--step-0);
+    font-family: var(--font-display);
+    color: var(--color-label);
+    margin-block: var(--space-xl) var(--space-sm);
+  }
+
+  .not-found__guides {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding-block: var(--space-sm);
+      border-top: 1px solid var(--color-border);
+    }
+
+    a {
+      display: inline-block;
+      min-height: 44px;
+      padding-block: var(--space-2xs);
+      font-family: var(--font-display);
+    }
+  }
+
+  .not-found__meta {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+  }
+}

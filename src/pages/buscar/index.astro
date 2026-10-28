@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SearchPanel from '../../components/search/SearchPanel.astro';
+import '../../styles/search-v2.scss';
+import { loadCompiledGuide } from '../../lib/engine-guide.ts';
+import { buildSearchIndex, legacySearchGuide } from '../../lib/search-index.ts';
+import { ENGINE_GUIDE_SOURCES } from '../../lib/guide-list.ts';
+
+// Every guide, engine and legacy, drafts marked as on the landing page.
+const guides = [
+  ...buildSearchIndex(
+    await Promise.all(ENGINE_GUIDE_SOURCES.map((source) => loadCompiledGuide(source.guide, source.places))),
+  ),
+  ...(await getCollection('guides')).map((guide) => legacySearchGuide(guide.id, guide.data)),
+];
+---
+
+<BaseLayout
+  title="Buscar — Solo Haz la Maleta"
+  description="Busca un destino, una guía o un lugar y salta al día en que se visita."
+  design="v2"
+  noindex
+>
+  <div class="search-page">
+    <h1 class="search-page__title">Buscar</h1>
+    <SearchPanel guides={guides} id="search" level={2} />
+  </div>
+</BaseLayout>
+
+<style>
+  .search-page {
+    max-width: 44rem;
+    margin-inline: auto;
+  }
+
+  .search-page__title {
+    margin-block: var(--space-md);
+  }
+</style>

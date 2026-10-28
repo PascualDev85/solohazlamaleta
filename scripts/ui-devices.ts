@@ -11,6 +11,8 @@
 // that cannot install WebKit; the report says so on every iPhone row.
 import { chromium, devices, webkit, type Browser, type BrowserContextOptions, type Page } from 'playwright'
 import { mkdir, rm } from 'node:fs/promises'
+import { createRequire } from 'node:module'
+import { ANDROIDS, IPHONES, descriptorsFor } from './device-profiles.ts'
 import { PANELS, dayCardLineIssues, daySlide, headerOverlap } from './ui-shared.ts'
 
 const [base, page = '/islandia/islandia-en-camper-13-dias/'] = process.argv.slice(2)
@@ -27,31 +29,26 @@ interface Device {
   name: string
   engine: Engine
   options: BrowserContextOptions
-  /** No home button: iOS reserves a strip at the bottom (safe area). */
-  homeIndicator: boolean
 }
 
-// Current phones only: iPhone SE 3 (2022) and iPhone 12 onwards; Android from
-// the Pixel 5 and Galaxy S9+ era onwards, plus a generic small Android.
-const IPHONES = [
-  'iPhone SE (3rd gen)', 'iPhone 12', 'iPhone 13', 'iPhone 13 Mini', 'iPhone 14', 'iPhone 14 Pro',
-  'iPhone 14 Pro Max', 'iPhone 15', 'iPhone 15 Pro Max', 'iPhone 16', 'iPhone 16e', 'iPhone 16 Pro',
-  'iPhone 16 Pro Max', 'iPhone 17', 'iPhone 17 Pro Max',
-]
-const ANDROIDS = ['Pixel 5', 'Pixel 7', 'Pixel 8 Pro', 'Pixel 9', 'Galaxy S9+', 'Galaxy S24', 'Galaxy A55']
-
-const descriptor = (name: string): BrowserContextOptions => {
-  const { defaultBrowserType: _, ...options } = devices[name]
-  return options
+// A model this Playwright does not know stops the run before any browser
+// starts (scripts/device-profiles.ts). The last profile is the Galaxy S24
+// again, the base of the generic small Android.
+const { version } = createRequire(import.meta.url)('playwright/package.json') as { version: string }
+let profiles: ReturnType<typeof descriptorsFor>
+try {
+  profiles = descriptorsFor([...IPHONES, ...ANDROIDS, 'Galaxy S24'], devices, version)
+} catch (error) {
+  console.error((error as Error).message)
+  process.exit(2)
 }
 const DEVICES: Device[] = [
-  ...IPHONES.filter((n) => devices[n]).map((name) => ({ name, engine: 'webkit' as const, options: descriptor(name), homeIndicator: !name.includes('SE') })),
-  ...ANDROIDS.filter((n) => devices[n]).map((name) => ({ name, engine: 'chromium' as const, options: descriptor(name), homeIndicator: true })),
+  ...profiles.slice(0, IPHONES.length).map((d) => ({ ...d, engine: 'webkit' as const })),
+  ...profiles.slice(IPHONES.length, -1).map((d) => ({ ...d, engine: 'chromium' as const })),
   {
     name: 'Android 360×800 @3x',
     engine: 'chromium',
-    options: { ...descriptor('Galaxy S24'), viewport: { width: 360, height: 800 }, screen: { width: 360, height: 800 }, deviceScaleFactor: 3 },
-    homeIndicator: true,
+    options: { ...profiles.at(-1)!.options, viewport: { width: 360, height: 800 }, screen: { width: 360, height: 800 }, deviceScaleFactor: 3 },
   },
 ]
 

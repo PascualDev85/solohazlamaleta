@@ -1,0 +1,17 @@
+// The destination hub in the redesign (<html data-design="v2">). Imported only
+// by the hub, so the guide neither loads nor matches its own pieces: the
+// guide's partials it reuses are listed here one by one, and only those.
+@use "v2/fonts";
+@use "v2/tokens";
+@use "v2/base";
+@use "v2/hero";
+@use "v2/overview";
+@use "v2/trip-facts";
+@use "v2/section-icons";
+@use "v2/guide-index";
+@use "v2/section-title";
+@use "v2/transport";
+@use "v2/practical";
+@use "v2/faq";
+@use "v2/guide";
+@use "v2/hub";

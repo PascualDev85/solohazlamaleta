@@ -1079,26 +1079,11 @@ pitfalls:
 
 terrain_tips:
   - "Kvernufoss: el parking de la cascada cuesta 750 ISK, pero el del Museo de Skógar, justo al lado, es gratis, y el sendero sale por detrás del museo."
-  - "Dyrhólaey tiene dos zonas con parking propio, la baja (Lágey, junto a las playas negras) y la alta (Háey, con el faro): el mismo ticket de 1.000 ISK vale para los dos durante el mismo día."
+  - "Dyrhólaey tiene dos zonas con parking propio, la baja (Lágey, junto a las playas negras) y la alta (Háey, con el faro): el mismo ticket vale para las dos: 750 ISK con un vehículo de hasta 5 plazas y 1.000 ISK de 6 a 9, válido 24 horas."
   - "App Vedur (tiempo oficial islandés): el tiempo cambia en minutos."
   - "App Gas Map Iceland para gasolineras más baratas."
   - "Diamond Beach y Jökulsárlón están separadas por la Ring Road: son dos sitios distintos, cruzar con cuidado."
   - "Gljúfrafoss está a 500 metros de Seljalandsfoss, poca gente llega."
-
-practical:
-  documents:
-    - "DNI o pasaporte (Islandia es espacio Schengen)"
-    - "Carnet de conducir (el español es válido)"
-    - "Tarjeta de crédito con margen para fianza del camper (puede ser 1.000-2.000 €)"
-  plugs: "Tipo F (igual que España). Sin adaptador."
-  apps:
-    - "Vedur (tiempo oficial)"
-    - "Gas Map Iceland (gasolineras baratas)"
-    - "Maps.me (offline: imprescindible sin cobertura)"
-    - "Safe Travel Iceland (alertas de seguridad vial)"
-  tips:
-    - "Cocinar en el camper es lo que hace viable el presupuesto. Comer fuera en Islandia puede ser 3-4 veces más caro que en España."
-    - "Se puede rellenar la botella de agua gratis en casi cualquier parking, gasolinera o restaurante — el agua del grifo es potable en toda Islandia."
 
 faq:
   - q: "¿Cuánto cuesta viajar a Islandia en camper 13 días?"
@@ -1106,9 +1091,6 @@ faq:
     schema: true
   - q: "¿Qué ruta es mejor, horaria o antihoraria?"
     a: "Nosotros hicimos la antihoraria (sur primero) y nos gustó: el sur tiene los atractivos más impactantes como aperitivo. El norte tiene menos turistas para el final."
-    schema: true
-  - q: "¿Hace falta 4x4 para la Ring Road?"
-    a: "No. La Ring Road está asfaltada y se hace sin problema con un camper estándar. El 4x4 solo es necesario para las F-roads, prohibidas para campers de alquiler estándar."
     schema: true
 
 adaptation_notes:

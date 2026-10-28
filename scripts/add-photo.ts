@@ -61,7 +61,9 @@ if (!slug) fail('No puedo sacar un nombre del fichero: pásalo con --name <slug>
 function findGuide(): string | undefined {
   if (values.guide) return values.guide
   const dir = join(GUIDES_DIR, destination)
-  const files = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.yaml')) : []
+  // A destination hub (type: hub) has no days, so it is never a photo's guide.
+  const isHub = (file: string) => /^type:\s*hub\s*$/m.test(readFileSync(join(dir, file), 'utf8'))
+  const files = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.yaml') && !isHub(f)) : []
   if (files.length === 1) return join(dir, files[0])
   if (day !== undefined) {
     fail(files.length === 0
