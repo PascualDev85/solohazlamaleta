@@ -477,6 +477,34 @@ for (const path of ['/', new URL(url).pathname]) {
   }
 }
 
+// 11. No layout shift while the search page starts (CLS was 0.12 on a slow
+//     CI runner, 2026-10-28: the script revealed the field and the
+//     suggestions and hid the results after the first paint). A 390px
+//     phone on Lighthouse's slow network with the CPU slowed 6x, every
+//     layout shift summed: under 0.01.
+for (const path of ['/buscar/', '/']) {
+  const tab = await browser.newPage({ viewport: { width: 390, height: 844 } })
+  const cdp = await tab.context().newCDPSession(tab)
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 6 })
+  // Lighthouse's mobile network: 150 ms round trip, 1.6 Mbps down.
+  await cdp.send('Network.enable')
+  await cdp.send('Network.emulateNetworkConditions', { offline: false, latency: 150, downloadThroughput: 1.6 * 1024 * 1024 / 8, uploadThroughput: 750 * 1024 / 8 })
+  await tab.addInitScript(() => {
+    const w = window as unknown as { __cls: number }
+    w.__cls = 0
+    new PerformanceObserver((list) => {
+      for (const entry of list.getEntries() as unknown as { value: number; hadRecentInput: boolean }[]) {
+        if (!entry.hadRecentInput) w.__cls += entry.value
+      }
+    }).observe({ type: 'layout-shift', buffered: true })
+  })
+  await tab.goto(new URL(path, base).href, { waitUntil: 'networkidle' })
+  await tab.waitForTimeout(1000)
+  const cls = await tab.evaluate(() => (window as unknown as { __cls: number }).__cls)
+  if (cls >= 0.01) fail(`${path}: layout shift while loading on a slow phone (CLS ${cls.toFixed(3)})`)
+  await tab.close()
+}
+
 await browser.close()
 
 if (failures.length) {
