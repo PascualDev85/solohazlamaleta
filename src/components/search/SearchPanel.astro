@@ -64,7 +64,11 @@ const photos = await Promise.all(featured.map((place) => (place.photo ? picture(
 ---
 
 <div class:list={['search', { 'search--dialog': dialog }]} data-search data-search-id={id} data-search-sync={dialog ? undefined : ''}>
-  <div class="search__bar" data-search-field hidden>
+  {/* Marks the panel before its first paint, so CSS shows the script's starting
+      state from the start: no layout shift when the script runs (CLS was 0.12
+      on a slow phone). Without JavaScript the mark never lands: a plain list. */}
+  <script is:inline>document.currentScript.parentElement.classList.add('search--js')</script>
+  <div class="search__bar" data-search-field>
     <label class="search__label" for={`${id}-input`}>Destino, guía, lugar o sección</label>
     <div class="search__box">
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5" /></svg>
@@ -89,16 +93,20 @@ const photos = await Promise.all(featured.map((place) => (place.photo ? picture(
   </div>
 
   <p class="search__status" role="status" data-search-status data-search-suggest-status={suggestStatus}>
-    {resultsSummary(counts)}
+    {/* Both texts in the HTML, so the line has its final height from the first
+        paint: the list's summary without JavaScript, the suggestions' with it.
+        The script replaces them with its own text once it runs. */}
+    <span class="search__status-list">{resultsSummary(counts)}</span>
+    <span class="search__status-suggest">{suggestStatus}</span>
   </p>
 
   <div class="search__results" id={`${id}-results`} aria-label="Resultados" data-search-results>
-    <div class="search__group search__group--chips" aria-labelledby={`${id}-s-destination`} data-search-suggest hidden>
+    <div class="search__group search__group--chips" aria-labelledby={`${id}-s-destination`} data-search-suggest>
       <Heading class="search__group-label" id={`${id}-s-destination`}>Destinos</Heading>
       {groups.destination.map((entry) => <a class="search__chip" href={entry.url} data-search-option>{entry.label}</a>)}
     </div>
     {featured.length > 0 && (
-      <div class="search__group search__group--featured" aria-labelledby={`${id}-s-place`} data-search-suggest hidden>
+      <div class="search__group search__group--featured" aria-labelledby={`${id}-s-place`} data-search-suggest>
         <Heading class="search__group-label" id={`${id}-s-place`}>Lugares destacados</Heading>
         {featured.map((place, i) => {
           const photo = photos[i];
@@ -313,7 +321,7 @@ const photos = await Promise.all(featured.map((place) => (place.photo ? picture(
 
     // /buscar/?q=gullfoss starts with the search done: a shared link, or the header's button.
     if (root.dataset.searchSync !== undefined) input.value = new URLSearchParams(location.search).get('q') ?? '';
-    root.querySelector<HTMLElement>('[data-search-field]')!.hidden = false;
     update(true);
+    root.classList.add('search--ready');
   }
 </script>
