@@ -54,12 +54,13 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking gratuito. Hay baños."
+    notes: "Hay baños, incluidos en el aparcamiento."
     verified_at: 2025-09-12
   parking:
-    price: 0
+    price: 1080
     currency: ISK
-    verified_at: 2026-10-04
+    period_hours: 4
+    verified_at: 2026-10-28
   description: "Cascada de dos saltos escalonados en el río Hvítá, parada central del Círculo Dorado y una de las cascadas más visitadas de Islandia."
   notes: "Mejor desde el mirador inferior. Con lluvia, el spray moja completamente."
 
@@ -156,11 +157,11 @@
   lat: 65.6817
   lng: -17.5506
   type: monument
-  verified_at: 2025-09-20
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
-    notes: "Parking gratuito en el lado este. Entrada a los baños de pago, 200-300 ISK según precios actuales."
+    notes: "Parking gratuito en el lado este. Hay baños en Fosshóll."
     verified_at: 2025-09-20
   parking:
     price: 0
@@ -186,9 +187,9 @@
   lat: 65.8973
   lng: -18.4166
   type: activity
-  verified_at: 2025-09-20
+  verified_at: 2026-10-28
   description: "Pueblo pesquero al norte de Akureyri, punto de salida habitual para excursiones de avistamiento de ballenas en el fiordo de Eyjafjörður."
-  notes: "Pueblo pesquero al norte de Akureyri, salidas de avistamiento de ballenas en el fiordo Eyjafjörður. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
+  notes: "Pueblo pesquero al norte de Akureyri, salidas de avistamiento de ballenas en el fiordo Eyjafjörður todo el año, de unas 2-2,5 h; en 2026, 12.300 ISK por adulto. Coordenadas y datos de referencia general, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: migandifoss
   name: Mígandifoss
@@ -218,7 +219,7 @@
   lng: -19.3683035
   maps_url: https://maps.google.com/?cid=16947982334766463916
   type: monument
-  verified_at: 2025-09-21
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
@@ -234,12 +235,12 @@
   lat: 65.5375
   lng: -19.5000
   type: museum
-  verified_at: 2025-09-21
+  verified_at: 2026-10-28
   entry:
-    price: 0
+    price: 2200
     currency: ISK
-    notes: "Parking gratuito. Hay baños."
-    verified_at: 2025-09-21
+    notes: "Entrada al museo en 2026 por adulto (2.400 ISK en 2027); gratis para menores de 18. Del 20 de mayo al 20 de septiembre abre a diario de 10:00 a 18:00; del 21 de octubre al 31 de marzo, con cita. Parking gratuito y baños."
+    verified_at: 2026-10-28
   parking:
     price: 0
     currency: ISK
@@ -254,11 +255,11 @@
   lat: 65.4200
   lng: -19.4200
   type: monument
-  verified_at: 2025-09-21
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
-    notes: "Parking gratuito. Hay baños. Solo se puede ver por fuera."
+    notes: "Parking gratuito. Hay baños. Del 1 de junio al 31 de agosto se visita por dentro, de 12:00 a 18:00 salvo los lunes (con entrada); el resto del año, solo por fuera."
     verified_at: 2025-09-21
   parking:
     price: 0
@@ -334,18 +335,18 @@
   lat: 64.7642
   lng: -23.9066
   type: park
-  verified_at: 2025-09-22
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
-    notes: "Parking gratuito."
+    notes: "Los baños de la playa cierran en invierno (desde el 13 de octubre); hay baños abiertos las 24 h en Malarrif y Hellissandur."
     verified_at: 2025-09-22
   parking:
-    price: 0
+    price: 1100
     currency: ISK
-    verified_at: 2026-10-04
+    verified_at: 2026-10-28
   description: "Playa de guijarros negros dentro del Parque Nacional de Snæfellsjökull, con restos de un naufragio pesquero y piedras tradicionales usadas antiguamente para medir la fuerza de los pescadores. Junto a la playa de Dritvik."
-  notes: "Desde el aparcamiento gratuito se baja a pie a la playa; un sendero corto por el acantilado lleva a la vecina playa de Dritvík. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "El aparcamiento paga la tarifa del Parque Nacional, que vale ese día hasta medianoche para todos los aparcamientos de pago del parque. Desde él se baja a pie a la playa; un sendero corto por el acantilado lleva a la vecina playa de Dritvík. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: londrangar
   name: Londrangar
@@ -355,7 +356,7 @@
   type: viewpoint
   verified_at: 2025-09-22
   description: "Dos formaciones rocosas volcánicas junto al mar, restos erosionados de un antiguo cráter, en la costa sur de la península de Snæfellsnes."
-  notes: "Se ven desde un mirador a pocos minutos a pie del aparcamiento, que es gratuito. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se ven desde un mirador a pocos minutos a pie del aparcamiento, dentro del Parque Nacional: si ese día ya se pagó su tarifa en otro aparcamiento del parque, vale también aquí. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: hellnar
   name: Mirador de Hellnar
@@ -364,7 +365,7 @@
   lat: 64.7527
   lng: -23.6674
   type: viewpoint
-  verified_at: 2025-09-22
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
@@ -383,7 +384,7 @@
   lat: 64.76634019756787
   lng: -23.627827329417897
   type: area
-  verified_at: 2025-09-22
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
@@ -422,7 +423,7 @@
   lat: 64.8270
   lng: -23.3850
   type: monument
-  verified_at: 2025-09-22
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
@@ -444,7 +445,7 @@
   # "Perlan Parking" place card (CID from the author's Google Maps link).
   maps_url: https://maps.google.com/?cid=8380459146851401703
   type: area
-  verified_at: 2025-09-11
+  verified_at: 2026-10-28
   parking:
     price: 0
     currency: ISK
@@ -470,9 +471,13 @@
   lat: 64.0180
   lng: -16.9770
   type: monument
-  verified_at: 2025-09-15
+  verified_at: 2026-10-28
+  parking:
+    price: 1110
+    currency: ISK
+    verified_at: 2026-10-28
   description: "Cascada del Parque Nacional de Vatnajökull, en la zona de Skaftafell, enmarcada por columnas de basalto negro de formación hexagonal."
-  notes: "Se llega a pie desde el aparcamiento de Skaftafell por el sendero señalizado S2, en subida, pasando por Hundafoss. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Se llega a pie desde el aparcamiento de Skaftafell, de pago (la mitad si ese día ya se pagó en Jökulsárlón), por el sendero señalizado S2, en subida, pasando por Hundafoss. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: svinafellsjokull
   name: Svínafellsjökull
@@ -512,7 +517,7 @@
   lat: 64.0206
   lng: -16.3799
   type: monument
-  verified_at: 2025-09-16
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
@@ -582,9 +587,9 @@
   lat: 64.8167
   lng: -13.8700
   type: area
-  verified_at: 2025-09-17
+  verified_at: 2026-10-28
   description: "Pueblo de pescadores del este de Islandia, conocido por Steinasafn Petru, un museo privado de minerales y piedras semipreciosas."
-  notes: "Pueblo de pescadores del este, conocido por el museo de minerales Petra. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Pueblo de pescadores del este, conocido por el museo de minerales Petra (abre del 1 de mayo al 15 de octubre, de 9:00 a 17:00; 2.200 ISK desde los 14 años). Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: reydarfjordur
   name: Reyðarfjörður
@@ -602,7 +607,7 @@
   lat: 65.2667
   lng: -14.3833
   type: monument
-  verified_at: 2025-09-17
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
@@ -612,8 +617,8 @@
     price: 0
     currency: ISK
     verified_at: 2026-10-04
-  description: "Cascada cercana a Egilsstaðir con una cueva detrás de la caída de agua."
-  notes: "Cascada con una cueva detrás, accesible con una caminata corta cerca de Egilsstaðir. Unos 30 minutos de caminata desde el parking hasta la cascada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  description: "Cascada cercana a Egilsstaðir. Tenía una cueva detrás de la caída de agua, que se ha derrumbado."
+  notes: "Cascada accesible con una caminata corta cerca de Egilsstaðir; la cueva que tenía detrás se ha derrumbado. Unos 30 minutos de caminata desde el parking hasta la cascada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: gufufoss
   name: Gufufoss
@@ -621,7 +626,7 @@
   lat: 65.2667
   lng: -13.9833
   type: monument
-  verified_at: 2025-09-17
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
@@ -651,9 +656,9 @@
   lat: 65.2667
   lng: -14.4000
   type: activity
-  verified_at: 2025-09-17
+  verified_at: 2026-10-28
   description: "Piscinas geotérmicas flotantes sobre el lago Urriðavatn, cerca de Egilsstaðir, con agua caliente procedente de fuentes termales del propio lago."
-  notes: "Piscinas geotérmicas flotantes en el lago Urriðavatn, cerca de Egilsstaðir. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Piscinas geotérmicas flotantes en el lago Urriðavatn, cerca de Egilsstaðir. Entrada de adulto (16+), 7.690 ISK; del 16 de septiembre al 14 de junio abre de 12:00 a 22:00, y del 15 de junio al 15 de septiembre, de 10:00 a 23:00. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: vestdalsfossar
   name: Vestdalsfossar
@@ -661,7 +666,7 @@
   lat: 65.2833
   lng: -13.9833
   type: monument
-  verified_at: 2025-09-17
+  verified_at: 2026-10-28
   description: "Conjunto de cascadas en el valle de Vestdalur, a la entrada de Seyðisfjörður, con vistas al fiordo."
   notes: "Se llega con una caminata corta, de unos 5 minutos desde el parking. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -671,7 +676,7 @@
   lat: 65.3333
   lng: -14.9333
   type: monument
-  verified_at: 2025-09-18
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
@@ -712,7 +717,7 @@
   lat: 65.8142
   lng: -16.3833
   type: monument
-  verified_at: 2025-09-18
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
@@ -731,7 +736,7 @@
   lat: 65.6333
   lng: -16.8833
   type: viewpoint
-  verified_at: 2025-09-18
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
@@ -750,9 +755,13 @@
   lat: 65.1028
   lng: -14.6167
   type: monument
-  verified_at: 2025-09-18
+  verified_at: 2026-10-28
+  parking:
+    price: 1000
+    currency: ISK
+    verified_at: 2026-10-28
   description: "Cascada de 128 m de caída en el río Hengifossá, sobre el lago Lagarfljót. Su pared muestra capas de basalto separadas por franjas de arcilla roja."
-  notes: "Caminata de ida y vuelta de unas 2-3 horas desde el aparcamiento, con subida continua; a mitad de camino se pasa junto a Litlanesfoss, con columnas de basalto. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Unos 5 km ida y vuelta desde el aparcamiento (de pago; gratis si se está menos de 15 minutos), con 40-60 minutos de subida continua; a mitad de camino se pasa junto a Litlanesfoss, con columnas de basalto. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: krafla_viti
   name: "Krafla (cráter Víti)"
@@ -822,7 +831,7 @@
   lat: 65.5833
   lng: -16.8972
   type: park
-  verified_at: 2025-09-19
+  verified_at: 2026-10-28
   entry:
     price: 0
     currency: ISK
@@ -872,9 +881,9 @@
   lat: 65.5700
   lng: -17.0100
   type: viewpoint
-  verified_at: 2025-09-19
+  verified_at: 2026-10-28
   description: "Grupo de pseudocráteres en la orilla sur del lago Mývatn, formados por explosiones de vapor cuando una colada de lava cubrió terreno encharcado. No son volcanes: no tienen conducto propio de magma."
-  notes: "Grupo de pseudocráteres volcánicos junto al lago Mývatn, con sendero circular corto. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Grupo de pseudocráteres volcánicos junto al lago Mývatn, con un sendero circular de 1,5 km. Los baños del lugar son solo para clientes de sus negocios. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: glymur
   name: Glymur
@@ -883,9 +892,9 @@
   lat: 64.3972
   lng: -21.2567
   type: monument
-  verified_at: 2025-09-23
+  verified_at: 2026-10-28
   description: "Cascada del río Botnsá, con unos 198 metros de caída, en el fondo del fiordo de Hvalfjörður."
-  notes: "Accesible solo a pie, por una ruta de montaña de 2-3 horas ida y vuelta hasta la base. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Accesible solo a pie, por una ruta de montaña de unas 4 horas ida y vuelta. En invierno el sendero puede ser peligroso. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: reykjadalur
   name: "Reykjadalur (valle termal)"
@@ -1018,7 +1027,12 @@
   lat: 64.0145
   lng: -16.9760
   type: monument
-  verified_at: 2025-09-15
+  verified_at: 2026-10-28
+  parking:
+    price: 1110
+    currency: ISK
+    shared_with: svartifoss
+    verified_at: 2026-10-28
   description: "Cascada en el sendero de Skaftafell hacia Svartifoss, dentro del Parque Nacional de Vatnajökull."
   notes: "Parada corta de camino a Svartifoss, en la misma ruta señalizada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
@@ -1039,9 +1053,13 @@
   lat: 65.5219
   lng: -13.8167
   type: viewpoint
-  verified_at: 2025-09-17
+  verified_at: 2026-10-28
+  parking:
+    price: 1000
+    currency: ISK
+    verified_at: 2026-10-28
   description: "Puerto en Borgarfjörður Eystri, en el este de Islandia, con una colonia de frailecillos visitable en temporada."
-  notes: "La época habitual de avistamiento de frailecillos es de abril a agosto aproximadamente; fuera de esas fechas no hay garantía de verlos. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Los frailecillos están en Hafnarhólmi de mediados de abril a primeros de agosto; fuera de esas fechas no hay garantía de verlos. El aparcamiento de Hafnarhólmi es de pago y solo abre en esa temporada. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: jardgangalaug
   name: "Jarðgangalaug"
@@ -1064,7 +1082,7 @@
   entry:
     price: 0
     currency: ISK
-    notes: "Parking gratuito."
+    notes: "Dentro del Parque Nacional de Snæfellsjökull: si ese día ya se pagó su tarifa en otro aparcamiento del parque, vale también aquí."
     verified_at: 2025-09-22
   parking:
     price: 0
@@ -1365,10 +1383,10 @@
   lat: 63.82194
   lng: -20.07389
   type: museum
-  verified_at: 2025-09-13
+  verified_at: 2026-10-28
   source_url: https://thjodminjasafn.is/en/soguleg-husasofn/keldur
   description: "Conjunto de casas de turba en Rangárvellir, con la vivienda más antigua conservada de Islandia. Forma parte del Museo Nacional."
-  notes: "Abierto en verano; entrada de pago. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Abierto del 1 de junio al 31 de agosto; entrada de pago. En septiembre está cerrado. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: gluggafoss
   name: Gluggafoss (Merkjárfoss)
@@ -1378,8 +1396,12 @@
   lng: -19.890705
   type: monument
   verified_at: 2025-09-13
+  parking:
+    price: 1000
+    currency: ISK
+    verified_at: 2026-10-28
   description: "Cascada del río Merkjá en Fljótshlíð, con huecos y túneles en la roca por los que asoma el agua: de ahí el nombre, \"cascada de las ventanas\"."
-  notes: "Junto a la carretera 261, con aparcamiento al pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Junto a la carretera 261, con aparcamiento de pago al pie. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
 - place_id: seljavallalaug
   name: Piscina de Seljavallalaug
@@ -1490,7 +1512,7 @@
   lat: 63.5600
   lng: -18.3150
   type: monument
-  verified_at: 2025-09-15
+  verified_at: 2026-10-28
   description: "Cresta de lava junto a la Ring Road, en el arenal de Mýrdalssandur, cubierta de pequeños montones de piedras que levantan los viajeros siguiendo una antigua costumbre."
   notes: "Junto a la carretera, con aparcamiento (el autor lo anotó como gratuito). Parada corta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
 
