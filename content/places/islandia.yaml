@@ -214,8 +214,9 @@
 - place_id: grafarkirkja
   name: Grafarkirkja
   destination: islandia
-  lat: 65.6270
-  lng: -19.9500
+  lat: 65.869676
+  lng: -19.3683035
+  maps_url: https://maps.google.com/?cid=16947982334766463916
   type: monument
   verified_at: 2025-09-21
   entry:
@@ -224,7 +225,7 @@
     notes: "Gratuito, pero actualmente cerrada por dentro."
     verified_at: 2025-09-21
   description: "Pequeña iglesia de turba del siglo XVII en Höfðaströnd, en la orilla oriental de Skagafjörður, considerada la iglesia más antigua que se conserva en Islandia."
-  notes: "Junto a la carretera 76, unos kilómetros al sur de Hofsós; se llega a pie desde un pequeño aparcamiento por un camino corto. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Junto a la carretera 76, unos kilómetros al sur de Hofsós; se llega a pie desde un pequeño aparcamiento por un camino corto."
 
 - place_id: glaumbaer
   name: "Granja de Glaumbær"
@@ -687,8 +688,9 @@
   name: "Stuðlagil (lado este)"
   short_name: "Stuðlagil"
   destination: islandia
-  lat: 65.3064
-  lng: -15.5597
+  lat: 65.1753672
+  lng: -15.2690293
+  maps_url: https://maps.google.com/?cid=18044108633390853355
   type: viewpoint
   verified_at: 2025-09-18
   entry:
@@ -701,7 +703,7 @@
     currency: ISK
     verified_at: 2026-10-22
   description: "Cañón de columnas de basalto formado por el río Jökla. Quedó al descubierto y se hizo conocido después de que un embalse aguas arriba redujera el caudal del río."
-  notes: "Cañón de columnas de basalto, acceso desde el lado este sin cruzar el río — es el único de los dos lados desde el que se puede bajar al cañón (con cuidado); el otro lado solo permite verlo desde arriba. Ruta de unos 5 km, unos 45 minutos de ida y otros 45 de vuelta. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Cañón de columnas de basalto, acceso desde el lado este sin cruzar el río — es el único de los dos lados desde el que se puede bajar al cañón (con cuidado); el otro lado solo permite verlo desde arriba. Ruta de unos 5 km, unos 45 minutos de ida y otros 45 de vuelta. El aparcamiento del lado este no es el del primer puente: hay que cruzar el puente y seguir unos 2,4 km en coche."
 
 - place_id: dettifoss_selfoss
   name: "Dettifoss y Selfoss"
@@ -1094,8 +1096,9 @@
 - place_id: landbrotalaug
   name: "Landbrotalaug"
   destination: islandia
-  lat: 64.7867
-  lng: -22.8333
+  lat: 64.8330923
+  lng: -22.3163957
+  maps_url: https://maps.google.com/?cid=3050813630853122531
   type: activity
   verified_at: 2025-09-22
   entry:
@@ -1108,7 +1111,7 @@
     currency: ISK
     verified_at: 2026-10-04
   description: "Poza termal natural pequeña, junto a la carretera en el sur de la península de Snæfellsnes."
-  notes: "Poza pequeña; puede estar llena de gente y con poca profundidad de agua según el momento. Coordenadas aproximadas, pendientes de confirmar por el autor antes de publicar."
+  notes: "Poza pequeña; puede estar llena de gente y con poca profundidad de agua según el momento."
 
 - place_id: raudhals
   name: "Volcán Raudhals"
