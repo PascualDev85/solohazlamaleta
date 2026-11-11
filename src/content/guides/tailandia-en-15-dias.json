@@ -1,0 +1,665 @@
+{
+  "meta": {
+    "lang": "es",
+    "destination": "tailandia",
+    "title": "Tailandia en 15 días: Bangkok, Ayutthaya, Chiang Mai, Phi Phi, Ao Nang y Koh Lipe",
+    "description": "Itinerario de 15 días por Tailandia: Bangkok, Ayutthaya, Chiang Mai, Phi Phi, Ao Nang/Railay y Koh Lipe. Borrador, con precios y alojamiento pendientes.",
+    "type": "itinerary",
+    "days": [15],
+    "tripDone": null,
+    "updatedAt": "2026-10-21",
+    "draft": true
+  },
+  "variants": {
+    "15": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  },
+  "summary": {
+    "forWho": "PENDIENTE AUTOR: para quién recomendarías este itinerario. Recorre Bangkok, una excursión a Ayutthaya, Chiang Mai y tres zonas de playa en el mar de Andamán (Koh Phi Phi, Ao Nang/Railay y Koh Lipe).",
+    "budgetPerPerson": { "min": 0, "max": 0 },
+    "bestSeason": "Noviembre a abril, según las notas, para el mar de Andamán (Phi Phi, Ao Nang, Koh Lipe). Marzo a mayo son los meses más calurosos, y de febrero a abril hay quema agrícola (humo) en el centro y el norte, donde están Chiang Mai y Ayutthaya. PENDIENTE AUTOR: confirmar si repetiríais el viaje en otra época.",
+    "gettingAround": "Bus, tren y Grab/tuk-tuk en Bangkok; tren a Ayutthaya y moto de alquiler allí; ferris entre Phi Phi, Ao Nang/Railay y tours en lancha a las islas. PENDIENTE AUTOR: cómo se viajó de Bangkok a Chiang Mai, de Chiang Mai a Koh Phi Phi y de Ao Nang a Koh Lipe; las notas no lo dicen.",
+    "baseArea": "Ruta por varias zonas de Tailandia, sin una única base: Bangkok (con excursión de un día a Ayutthaya), Chiang Mai, Koh Phi Phi, Ao Nang/Railay y Koh Lipe.",
+    "pace": "intense"
+  },
+  "groups": ["couple", "friends", "family_seniors"],
+  "days": [
+    {
+      "day": 1,
+      "title": "Llegada a Bangkok",
+      "summary": "Vuelo de llegada a Suvarnabhumi, cambio de dinero y SIM en el propio aeropuerto, bus al alojamiento junto a Khao San y atardecer a elegir entre el Golden Mountain y un rooftop.",
+      "physicalLevel": { "walkingKm": 2, "hills": "none" },
+      "stops": [
+        {
+          "name": "Aeropuerto Suvarnabhumi (BKK)",
+          "lat": 13.69,
+          "lng": 100.7501,
+          "kind": "transport",
+          "durationMin": 60,
+          "startTime": "13:40",
+          "travelToNextMin": 60,
+          "notes": "Cambio de dinero en SuperRich (naranja), nivel -2 (B), zona del Airport Rail Link; las notas apuntan mirar también Value+, justo al lado. SIM de datos ilimitados (TrueMove o AIS) en el nivel 3. Comida rápida en Magic Food Point (street food dentro del aeropuerto), según las notas.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Zona de Khao San / Phra Athit Road",
+          "lat": 13.7589,
+          "lng": 100.4977,
+          "kind": "stay",
+          "durationMin": 480,
+          "notes": "Bus S1 desde el nivel 1 del aeropuerto (60 THB), bajada en la parada de referencia 'Mad Monkey / Phra Athit Road', según las notas. Check-in y descanso corto, cena cerca del alojamiento. Por la noche, paseo por Rambuttri Road (más tranquila) o Khao San Road (más animada), con parada opcional en el puente de Phra Arthit para fotos nocturnas. PENDIENTE AUTOR: alojamiento exacto; las notas solo dan la parada del bus como referencia.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Golden Mountain (Wat Saket)",
+          "lat": 13.754,
+          "lng": 100.5062,
+          "kind": "sight",
+          "durationMin": 60,
+          "notes": "Subida de una hora con fotos; vistas panorámicas sobre la ciudad antigua. Las notas dan una alternativa para el mismo atardecer: el Three Sixty Lounge del Millennium Hilton Bangkok (zona Riverside, vistas 360º al río), descrito como la opción más moderna frente a esta más cultural. PENDIENTE AUTOR: cuál de las dos se hizo.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 2,
+      "title": "Templos del casco antiguo, río y Chinatown",
+      "summary": "Ruta de templos a pie por la mañana (Gran Palacio, Wat Ratchabophit, Wat Suthat, Wat Pho), cruce en ferry a Wat Arun y tarde en Chinatown.",
+      "physicalLevel": { "walkingKm": 8, "hills": "none" },
+      "stops": [
+        {
+          "name": "Gran Palacio y Wat Phra Kaew (Buda Esmeralda)",
+          "lat": 13.75,
+          "lng": 100.4913,
+          "kind": "sight",
+          "durationMin": 135,
+          "travelToNextMin": 10,
+          "notes": "Entrada: 500 THB, según las notas. Entrar por la puerta 'Gate of Wiset Chaisri' para evitar cola, según las notas.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Ratchabophit",
+          "lat": 13.7488,
+          "lng": 100.4973,
+          "kind": "sight",
+          "durationMin": 30,
+          "travelToNextMin": 40,
+          "notes": "10 minutos a pie desde el Gran Palacio. Entrada gratis o con donativo, según las notas. Las notas incluyen también Wat Ratchapradit entre esta parada y la siguiente (5 min a pie, gratis, 20 min); PENDIENTE AUTOR: no se añade como parada propia por no tener sus coordenadas confirmadas.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Suthat y el Giant Swing",
+          "lat": 13.7514,
+          "lng": 100.5007,
+          "kind": "sight",
+          "durationMin": 45,
+          "travelToNextMin": 10,
+          "notes": "40 minutos a pie desde la parada anterior. Entrada: 50-100 THB, según las notas.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Pho (Buda Reclinado)",
+          "lat": 13.7465,
+          "lng": 100.493,
+          "kind": "sight",
+          "durationMin": 60,
+          "travelToNextMin": 5,
+          "notes": "Traslado en Grab o tuk-tuk desde Wat Suthat, 10 minutos, 200 THB según las notas.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Arun",
+          "lat": 13.7437,
+          "lng": 100.4888,
+          "kind": "sight",
+          "durationMin": 60,
+          "travelToNextMin": 45,
+          "notes": "Cruce en ferry desde el embarcadero de Tha Tien (5 minutos, 100-200 THB según las notas).",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Chinatown (Yaowarat) y Wat Traimit (Buda de Oro)",
+          "lat": 13.7392,
+          "lng": 100.5129,
+          "kind": "sight",
+          "durationMin": 150,
+          "notes": "Desde Wat Arun, ferry local hasta el embarcadero de Rachawongse, según las notas, y desde ahí a pie hasta Chinatown (PENDIENTE AUTOR: confirmar tiempo de ese trayecto). Entrada al Buda de Oro: 40-50 THB, según las notas. Para explorar sin prisa: Yaowarat Road, Sampeng Lane y Soi Itsaranuphap. PENDIENTE AUTOR: dónde cenar; las notas dan varias opciones de street food en la zona (puestos de Yaowarat) sin elegir una.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 3,
+      "title": "Excursión a Ayutthaya",
+      "summary": "Día completo en Ayutthaya en moto de alquiler, recorriendo siete templos del antiguo recinto real, con vuelta a Bangkok antes de las 18:00-18:30.",
+      "physicalLevel": { "walkingKm": 4, "hills": "none" },
+      "stops": [
+        {
+          "name": "Tren a Ayutthaya",
+          "lat": 13.7465,
+          "lng": 100.5436,
+          "kind": "transport",
+          "durationMin": 90,
+          "startTime": "07:00",
+          "travelToNextMin": 5,
+          "notes": "Salida desde Bangkok entre las 07:00 y las 08:00, según las notas, preferiblemente desde la estación de Krung Thep Aphiwat o la antigua estación central (Hua Lamphong), que las notas señalan como mejor opción. PENDIENTE AUTOR: confirmar estación de salida y duración exacta del trayecto.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Alquiler de moto frente a la estación de Ayutthaya",
+          "lat": 14.356621,
+          "lng": 100.581923,
+          "kind": "transport",
+          "durationMin": 15,
+          "notes": "Moto de alquiler todo el día por 150 THB, según las notas (alternativa citada: December House, unos 220 THB). Coordenada exacta de las notas.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Phu Khao Thong",
+          "lat": 14.3756,
+          "lng": 100.5349,
+          "kind": "sight",
+          "durationMin": 35,
+          "travelToNextMin": 10,
+          "notes": "El más alejado del centro; se empieza aquí. Gran stupa dorado, fotos panorámicas.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Yai Chai Mongkhon",
+          "lat": 14.3445,
+          "lng": 100.5704,
+          "kind": "sight",
+          "durationMin": 30,
+          "travelToNextMin": 15,
+          "notes": "Muy cerca del anterior. Gran Buda reclinado y chedi dorado.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Mahathat",
+          "lat": 14.3568,
+          "lng": 100.5684,
+          "kind": "sight",
+          "durationMin": 35,
+          "travelToNextMin": 5,
+          "notes": "Entrada incluida en el bono de 220 THB para los templos del centro, según las notas. Famosa cabeza de Buda entre las raíces de un árbol.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Ratchaburana",
+          "lat": 14.3572,
+          "lng": 100.5682,
+          "kind": "sight",
+          "durationMin": 30,
+          "travelToNextMin": 10,
+          "notes": "Junto a Wat Mahathat, dentro del mismo bono de 220 THB. Cripta subterránea con murales antiguos.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Phra Si Sanphet",
+          "lat": 14.3585,
+          "lng": 100.5563,
+          "kind": "sight",
+          "durationMin": 50,
+          "travelToNextMin": 10,
+          "notes": "Dentro del bono de 220 THB. Antiguo templo real; las notas agrupan aquí también Wat Phra Mongkhon Bophit (gran Buda de bronce), muy cerca.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Lokayasutharam",
+          "lat": 14.3556,
+          "lng": 100.5466,
+          "kind": "sight",
+          "durationMin": 25,
+          "travelToNextMin": 15,
+          "notes": "Buda reclinado al aire libre.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Chaiwatthanaram",
+          "lat": 14.3444,
+          "lng": 100.5416,
+          "kind": "sight",
+          "durationMin": 50,
+          "notes": "El más fotogénico, junto al río; ideal para fotos de atardecer, según las notas. PENDIENTE AUTOR: dónde comer en Ayutthaya; las notas dan varias opciones (Sala Ayutthaya Café, Malakor, Phak Wan, Lung Lek Boat Noodle) sin elegir una.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR: las notas dicen volver a Bangkok antes de las 18:00-18:30 y, ya en la ciudad, dejan abiertas una ducha y masaje (Urban Thai massage and spa) y un mercado nocturno a elegir entre Asiatique The Riverfront, Train Night Market, Ratchada Train Night Market u Owl Night Market. Confirmar qué se hizo.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 4,
+      "title": "Chiang Mai: templos del casco amurallado",
+      "summary": "Llegada a Chiang Mai y ruta de templos a pie por la ciudad amurallada, con el mercado nocturno al final del día.",
+      "physicalLevel": { "walkingKm": 5, "hills": "none" },
+      "stops": [
+        {
+          "name": "Llegada a Chiang Mai",
+          "lat": 18.7883,
+          "lng": 98.9853,
+          "kind": "transport",
+          "durationMin": 60,
+          "startTime": "09:00",
+          "notes": "PENDIENTE AUTOR: cómo se llegó de Bangkok a Chiang Mai (vuelo, tren o bus); las notas no lo dicen. Alojamiento de las notas: Nanya Hotel Chiang Mai.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Phra Singh",
+          "lat": 18.78875,
+          "lng": 98.98121,
+          "kind": "sight",
+          "durationMin": 50,
+          "startTime": "10:30",
+          "notes": "Primero de la ruta de templos a pie, con una duración total citada de 3 a 3,5 horas para los cinco templos.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Chedi Luang",
+          "lat": 18.7869,
+          "lng": 98.9857,
+          "kind": "sight",
+          "durationMin": 40,
+          "notes": "Dentro de la misma ruta de templos del casco amurallado.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Phan Tao",
+          "lat": 18.7891,
+          "lng": 98.9859,
+          "kind": "sight",
+          "durationMin": 30,
+          "notes": "Junto a Wat Chedi Luang. Las notas incluyen también Wat Lok Moli en esta ruta; PENDIENTE AUTOR: no se añade como parada propia por no tener sus coordenadas confirmadas.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Chiang Man",
+          "lat": 18.7939,
+          "lng": 98.9894,
+          "kind": "sight",
+          "durationMin": 35,
+          "travelToNextMin": 30,
+          "notes": "El templo más antiguo de Chiang Mai, según las notas. Comida a mediodía: las notas marcan el Khao Soi (plato típico de la zona) como imprescindible. PENDIENTE AUTOR: dónde comer; las notas dan varios restaurantes concretos sin elegir uno.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Muralla, foso y Puerta Tha Phae",
+          "lat": 18.7877,
+          "lng": 98.993,
+          "kind": "sight",
+          "durationMin": 30,
+          "travelToNextMin": 10,
+          "notes": "Puntos de interés de la Old City tras la comida.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Sri Suphan (Templo de Plata)",
+          "lat": 18.7818,
+          "lng": 98.9834,
+          "kind": "sight",
+          "durationMin": 40,
+          "travelToNextMin": 45,
+          "notes": "Junto a la Lanna Art Isans Gallery, que las notas citan para un anillo o brazalete artesanal.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Night Bazaar",
+          "lat": 18.7869,
+          "lng": 99.0003,
+          "kind": "sight",
+          "durationMin": 120,
+          "startTime": "19:30",
+          "notes": "Mercado nocturno diario; las notas apuntan también el Ploen Ruedee Night Market como opción cercana para cenar con street food.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 5,
+      "title": "Chiang Mai: Monk's Trail y Doi Suthep",
+      "summary": "Subida por el sendero de los monjes hasta Wat Pha Lat y después Wat Doi Suthep, con tarde de descanso en el hotel.",
+      "physicalLevel": { "walkingKm": 7, "hills": "many" },
+      "stops": [
+        {
+          "name": "Wat Pha Lat (Monk's Trail)",
+          "lat": 18.7999,
+          "lng": 98.93456,
+          "kind": "sight",
+          "durationMin": 60,
+          "startTime": "08:30",
+          "travelToNextMin": 20,
+          "notes": "Subida a pie por el Monk's Trail. PENDIENTE AUTOR: confirmar el punto exacto de inicio del sendero, que las notas no dan con precisión.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Wat Phra That Doi Suthep",
+          "lat": 18.8048,
+          "lng": 98.9217,
+          "kind": "sight",
+          "durationMin": 60,
+          "travelToNextMin": 150,
+          "notes": "Las notas añaden después la cascada de Wang Bua Ban (entrada gratuita, cerca de Pha Ngoep); PENDIENTE AUTOR: no se añade como parada propia por no tener sus coordenadas confirmadas. Comida en Isaab Ros Sab, según las notas (PENDIENTE AUTOR: dónde comer, no se traslada el nombre del restaurante a la guía como recomendación).",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR: la tarde queda para piscina, ducha y una cafetería (las notas citan Fern Forest Cafe o Versailles de Flore) y un masaje (Lila Thai Massage u otra opción), sin confirmar cuál se eligió. Noche de nuevo en la zona del mercado nocturno.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 6,
+      "title": "Llegada a Koh Phi Phi",
+      "summary": "Llegada a la isla hacia el mediodía, tarde de playa en Tonsai y atardecer en Loh Dalum.",
+      "physicalLevel": { "walkingKm": 2, "hills": "none" },
+      "stops": [
+        {
+          "name": "Llegada a Koh Phi Phi (Tonsai)",
+          "lat": 7.7407,
+          "lng": 98.7784,
+          "kind": "stay",
+          "durationMin": 180,
+          "startTime": "13:00",
+          "notes": "PENDIENTE AUTOR: cómo se viajó de Chiang Mai a Koh Phi Phi; las notas no especifican el vuelo o traslado hasta la isla. Check-in en PP Casita, según las notas. Chapuzón en la piscina del alojamiento y recorrido de Tonsai Beach.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Loh Dalum Beach",
+          "lat": 7.7434,
+          "lng": 98.7773,
+          "kind": "sight",
+          "durationMin": 90,
+          "notes": "Atardecer en esta playa. Por la noche, paseo por Tonsai Village y shows de fuego en la playa (Slinky's Bar o Freedom Bar, según las notas).",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 7,
+      "title": "Tour de un día en barco por Koh Phi Phi",
+      "summary": "Tour completo de 10 horas con la agencia Phi Phi Latino; noche tranquila en la playa.",
+      "physicalLevel": { "walkingKm": 1, "hills": "none" },
+      "stops": [
+        {
+          "name": "Tour en barco por Phi Phi (Phi Phi Latino)",
+          "lat": 7.7407,
+          "lng": 98.7784,
+          "kind": "activity",
+          "durationMin": 720,
+          "startTime": "07:30",
+          "notes": "Tour completo, salida y regreso en torno a las 07:30-19:30, según las notas. Las notas no detallan las paradas concretas del tour. Noche en modo chill: las notas dan como opciones Carlito's Bar (ambiente relajado en la arena) o The Mango Garden (postre/smoothie bowl), sin elegir una.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 8,
+      "title": "Playas, viewpoints y atardecer en Koh Phi Phi",
+      "summary": "Día de playas según lo visto en el tour, subida a los miradores al atardecer y última noche en la isla.",
+      "physicalLevel": { "walkingKm": 4, "hills": "some" },
+      "stops": [
+        {
+          "name": "Long Beach",
+          "lat": 7.7319,
+          "lng": 98.7784,
+          "kind": "sight",
+          "durationMin": 120,
+          "notes": "Comida en la zona. Las notas dan como alternativa la Nui Beach (más salvaje, buen snorkel, en taxi boat o kayak) y citan también Shark Point y Loh Moo Dee Beach/Loh Ba Kao, estas últimas con un signo de interrogación en las propias notas. PENDIENTE AUTOR: cuál de las playas se hizo finalmente; solo se deja esta parada por ser la única con ubicación confiable.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR: subida a los Phi Phi Viewpoint 1 y 2 para ver la puesta de sol (30 THB cada mirador según las notas, 15 min de subida y 15 min de puesta de sol). No se añaden como parada propia por no tener sus coordenadas exactas confirmadas. Última cena: las notas dan como opciones Only Noodles o Acqua Restaurant Phi Phi, sin elegir una.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 9,
+      "title": "De Koh Phi Phi a Ao Nang, con Railay Beach",
+      "summary": "Ferry a primera hora a Ao Nang y, a media mañana, viaje en longtail boat a Railay con su mirador, kayak y playa de Phra Nang.",
+      "physicalLevel": { "walkingKm": 5, "hills": "some" },
+      "stops": [
+        {
+          "name": "Ao Nang",
+          "lat": 8.033,
+          "lng": 98.822,
+          "kind": "stay",
+          "durationMin": 60,
+          "notes": "Ferry de primera hora desde Phi Phi. Check-in o solo dejar las maletas antes de ir a Railay. PENDIENTE AUTOR: alojamiento concreto.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Railay West Beach",
+          "lat": 8.0083,
+          "lng": 98.8372,
+          "kind": "sight",
+          "durationMin": 60,
+          "notes": "Longtail boat ida y vuelta, 200-250 THB, con horario de 8:00 a 18:00, según las notas. Kayak en Railay desde aquí (Ramilay kayak, 2 horas, 300 THB según las notas).",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Railay Viewpoint",
+          "lat": 8.0101,
+          "lng": 98.8414,
+          "kind": "sight",
+          "durationMin": 40,
+          "notes": "Subida corta pero intensa; vistas 'brutales', según las notas (recomiendan zapatillas). Las notas citan también un paseo por el manglar en Railay East como parada rápida antes de esto.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Phra Nang Beach",
+          "lat": 8.0036,
+          "lng": 98.8372,
+          "kind": "sight",
+          "durationMin": 90,
+          "notes": "Incluye la Princess Cave (cueva de la fertilidad) y grutas cercanas; las notas apuntan una playa justo detrás por uno de los senderos. Comida en la zona: las notas no confirman dónde. Puesta de sol vista desde el barco de vuelta a Ao Nang.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 10,
+      "title": "Tour a las islas Hong",
+      "summary": "Medio día de tour en barco a las islas Hong con la agencia Watsaya Tour.",
+      "physicalLevel": { "walkingKm": 1, "hills": "none" },
+      "stops": [
+        {
+          "name": "Tour islas Hong (Watsaya Tour)",
+          "lat": 8.0931,
+          "lng": 98.7181,
+          "kind": "activity",
+          "durationMin": 360,
+          "startTime": "08:00",
+          "notes": "Salida habitual entre las 8:00 y las 8:30, regreso entre las 14:00 y las 15:00. Precio: 1.100 THB con todos los servicios, según las notas. Tarde de descanso en el hotel y piscina; las notas dejan abierto un masaje y un paseo por el Monkey Trail.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 11,
+      "title": "Tour de 7 islas, snorkel y bioluminiscencia",
+      "summary": "Día completo en barco con snorkel, atardecer y bioluminiscencia, con la misma agencia que el día anterior.",
+      "physicalLevel": { "walkingKm": 1, "hills": "none" },
+      "stops": [
+        {
+          "name": "Tour 7 islas + atardecer + bioluminiscencia (Watsaya Tour)",
+          "lat": 8.033,
+          "lng": 98.822,
+          "kind": "activity",
+          "durationMin": 480,
+          "notes": "Precio: 1.000 THB con todos los servicios, según las notas. Las notas dan el horario como '12:00/12:30-07:30/20:00', que no es coherente (una salida a mediodía no puede terminar a las 7:30 de la mañana); PENDIENTE AUTOR: confirmar el horario real. Las notas no nombran las islas concretas del tour. Noche: mercado nocturno en Ao Nang o Krabi.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 12,
+      "title": "Llegada a Koh Lipe",
+      "summary": "Llegada a la isla hacia el mediodía, paseo por Walking Street y atardecer en Sunset Beach.",
+      "physicalLevel": { "walkingKm": 2, "hills": "none" },
+      "stops": [
+        {
+          "name": "Llegada a Koh Lipe (Pattaya Beach)",
+          "lat": 6.4773,
+          "lng": 99.3042,
+          "kind": "stay",
+          "durationMin": 60,
+          "startTime": "13:00",
+          "notes": "PENDIENTE AUTOR: cómo se viajó de Ao Nang a Koh Lipe; las notas no especifican el traslado. Check-in en el hotel; comida en algún puesto o restaurante paseando por Walking Street.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        },
+        {
+          "name": "Sunset Beach (Koh Lipe)",
+          "lat": 6.4756,
+          "lng": 99.2965,
+          "kind": "sight",
+          "durationMin": 90,
+          "notes": "Paseo y baño al atardecer. Por la noche, cena (las notas citan Castaway Restaurant o Elephant Bar, sin elegir una) y paseo nocturno por Walking Street.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 13,
+      "title": "Tour en lancha a calas y playas secretas",
+      "summary": "Tour completo de mañana y mediodía a playas y calas de la zona, con snorkel en arrecifes de coral.",
+      "physicalLevel": { "walkingKm": 1, "hills": "none" },
+      "stops": [
+        {
+          "name": "Tour en lancha por Koh Lipe",
+          "lat": 6.4773,
+          "lng": 99.3042,
+          "kind": "activity",
+          "durationMin": 360,
+          "startTime": "09:00",
+          "notes": "De 09:00 a 15:00 aprox., según las notas: Pattaya Beach, Jabang Beach, y sunrise/sunset vistas desde el mar, con snorkel en arrecifes de coral y picnic en una cala escondida. PENDIENTE AUTOR: coordenadas de Jabang Beach y de la cala del picnic; no se dan como paradas propias por no tener ubicación confirmada.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 14,
+      "title": "Snorkel en Koh Adang y Koh Rawi",
+      "summary": "Excursión de snorkel a las islas vecinas con baños y fotos en calas escondidas.",
+      "physicalLevel": { "walkingKm": 2, "hills": "none" },
+      "stops": [
+        {
+          "name": "Koh Adang",
+          "lat": 6.5195,
+          "lng": 99.285,
+          "kind": "activity",
+          "durationMin": 240,
+          "notes": "Excursión de snorkel que incluye Koh Adang y Koh Rawi, con baños y fotos en calas escondidas, según las notas. Las notas también dan una coordenada propia para una pequeña cala en marea cerca de Koh Lipe (6,490769, 99,298220), descrita como 'playa Maricilla'; se deja fuera de esta parada por no estar claro si se visitó en esta excursión o por separado.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR: atardecer con cóctel en la playa y cena (las notas citan Serendipity Restaurant o de nuevo Castaway Restaurant), sin confirmar.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    },
+    {
+      "day": 15,
+      "title": "Última mañana y despedida de Koh Lipe",
+      "summary": "Mañana libre entre Sunset Beach y Walking Street, último baño y vuelo de vuelta.",
+      "physicalLevel": { "walkingKm": 1, "hills": "none" },
+      "stops": [
+        {
+          "name": "Sunset Beach (Koh Lipe)",
+          "lat": 6.4756,
+          "lng": 99.2965,
+          "kind": "sight",
+          "durationMin": 120,
+          "notes": "Mañana libre: Sunset Beach o explorar Walking Street. Último baño y paseo por la playa antes del check-out, según las notas.",
+          "source": { "label": "Notas propias del viaje a Tailandia" }
+        }
+      ],
+      "localTip": "PENDIENTE AUTOR.",
+      "planB": "PENDIENTE AUTOR.",
+      "groupAdjustments": {}
+    }
+  ],
+  "lodging": [
+    {
+      "zone": "Bangkok (zona de Khao San)",
+      "pros": [
+        "PENDIENTE AUTOR: alojamiento exacto; las notas solo dan como referencia la parada del bus S1 ('Mad Monkey / Phra Athit Road'), sin confirmar si ese fue el alojamiento."
+      ],
+      "cons": ["PENDIENTE AUTOR."],
+      "picks": []
+    },
+    {
+      "zone": "Chiang Mai",
+      "pros": ["Se alojaron en el Nanya Hotel Chiang Mai, según las notas."],
+      "cons": ["PENDIENTE AUTOR: valorar el alojamiento."],
+      "picks": []
+    },
+    {
+      "zone": "Koh Phi Phi",
+      "pros": ["Check-in en PP Casita, según las notas."],
+      "cons": ["PENDIENTE AUTOR: valorar el alojamiento."],
+      "picks": []
+    },
+    {
+      "zone": "Ao Nang",
+      "pros": ["PENDIENTE AUTOR: alojamiento concreto; las notas no lo nombran."],
+      "cons": ["PENDIENTE AUTOR."],
+      "picks": []
+    },
+    {
+      "zone": "Koh Lipe",
+      "pros": ["PENDIENTE AUTOR: alojamiento concreto; las notas no lo nombran."],
+      "cons": ["PENDIENTE AUTOR."],
+      "picks": []
+    }
+  ],
+  "bookingChecklist": [
+    {
+      "item": "SIM de datos (TrueMove o AIS) a la llegada al aeropuerto de Bangkok, según las notas.",
+      "when": "Día 1, al llegar."
+    },
+    {
+      "item": "Permiso internacional de conducir (tipo A) si se quiere alquilar moto en Ayutthaya o Chiang Mai; en España se solicita en la DGT, según las notas.",
+      "when": "Con antelación, antes del viaje."
+    },
+    {
+      "item": "PENDIENTE AUTOR: confirmar y reservar los tours en barco de Phi Phi (Phi Phi Latino), Ao Nang (Watsaya Tour) y Koh Lipe; las notas no dicen si se reservaron con antelación o in situ.",
+      "when": "PENDIENTE AUTOR."
+    }
+  ],
+  "pitfalls": [
+    "Los cajeros automáticos cobran una comisión fija de unos 220 THB de los bancos tailandeses, aparte de la que cobre el banco de origen, según las notas.",
+    "Pagar con tarjeta tiene un recargo del 3% del importe (hasta el 5% en las islas), que suele pagar quien compra, según las notas.",
+    "Para entrar a los templos, hombros y rodillas tapados; en el Gran Palacio los hombres necesitan además pantalón largo, según las notas.",
+    "No cambiar dinero en la primera casa de cambio que se encuentre, ni en hoteles, ni grandes cantidades en los aeropuertos: peor cambio y menos garantías, según las notas.",
+    "No beber agua del grifo, según las notas."
+  ],
+  "faq": [],
+  "related": []
+}
